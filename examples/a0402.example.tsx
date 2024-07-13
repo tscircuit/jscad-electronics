@@ -1,3 +1,10 @@
+import { A0402 } from "../lib/A0402"
+import { JsCadFixture } from "jscad-fiber"
+
 export default () => {
-  return <div>a0402</div>
+  return (
+    <JsCadFixture>
+      <A0402 />
+    </JsCadFixture>
+  )
 }
