@@ -1,0 +1,4 @@
+{
+  "fixtureFileSuffix": "example",
+  "plugins": ["react-cosmos-plugin-vite"]
+}
