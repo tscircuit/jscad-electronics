@@ -6,14 +6,16 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
-    "@tscircuit/footprinter": "^0.0.45",
     "@tscircuit/soup": "^0.0.41",
     "@types/react": "^18.3.3",
-    "jscad-fiber": "^0.0.3",
+    "jscad-fiber": "^0.0.25",
     "react": "^18.3.1",
     "react-cosmos": "^6.1.1",
     "react-cosmos-plugin-vite": "^6.1.1",
     "react-dom": "^18.3.1",
     "vite": "^5.3.3"
+  },
+  "dependencies": {
+    "@tscircuit/footprinter": "^0.0.47"
   }
 }
