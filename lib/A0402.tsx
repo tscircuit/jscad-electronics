@@ -1,9 +1,30 @@
-import { Cube } from "jscad-fiber"
+import { Cuboid } from "jscad-fiber"
 
-// 0402 dimensions:
-// https://www.mouser.com/datasheet/2/308/chp_0402-150053.pdf
-// LENGTH: 1mm
-// WIDTH: 0.5mm
-// HEIGHT: 0.32mm
+const fullLength = 1.0
+const width = 0.5
+const height = 0.5
+const terminatorWidth = 0.2
 
-export const A0402 = () => <Cube size={10} />
+const bodyLength = fullLength - (terminatorWidth * 2)
+
+export const A0402 = () => {
+  return (
+    <>
+      <Cuboid
+        size={[bodyLength, height, width]}
+        offset={[0, height / 2, 0]}
+        color="#333"
+      />
+      <Cuboid
+        size={[terminatorWidth, height, width]}
+        offset={[fullLength / 2 - terminatorWidth / 2, height / 2, 0]}
+        color="#ccc"
+      />
+      <Cuboid
+        size={[terminatorWidth, height, width]}
+        offset={[-fullLength / 2 + terminatorWidth / 2, height / 2, 0]}
+        color="#ccc"
+      />
+    </>
+  )
+}
