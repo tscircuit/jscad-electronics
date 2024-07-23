@@ -1,11 +1,11 @@
-import { A0402 } from "../lib/A0402"
+import { A0603 } from "../lib/A0603"
 import { JsCadFixture } from "jscad-fiber"
 import { ExtrudedPads } from "../src/lib/ExtrudedPads"
 
 export default () => {
   return (
     <JsCadFixture>
-      {/* <A0603 /> */}
+      <A0603 />
       <ExtrudedPads footprint="0603" />
     </JsCadFixture>
   )
