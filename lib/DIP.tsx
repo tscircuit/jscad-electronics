@@ -4,21 +4,25 @@ import { Polygon, ExtrudeLinear } from "jscad-fiber"
 // DIP components look like this:
 // https://github.com/nophead/NopSCADlib/raw/master/tests/png/dip.png
 
-export const DIPPinLeg = ({ x, y } : { x: number, y: number }) => {
+export const DIPPinLeg = ({ x, y }: { x: number; y: number }) => {
   return null
 }
 
-export const DIP = ({numPins = 8} : { numPins?: number }) => {
+export const Dip = ({ numPins = 8 }: { numPins?: number }) => {
   return (
     <ExtrudeLinear height={10}>
-      <Polygon points={[
-        [0, 0],
-        [1, 2],
-        [5, 2],
-        [6, 0],
-        [5, -2],
-        [1, -2],
-      ]} />
+      <Polygon
+        points={[
+          [0, 0],
+          [1, 2],
+          [5, 2],
+          [6, 0],
+          [5, -2],
+          [1, -2],
+        ]}
+      />
     </ExtrudeLinear>
   )
 }
+
+export const DualInlinePackage = Dip

@@ -1,4 +1,5 @@
 {
   "fixtureFileSuffix": "example",
-  "plugins": ["react-cosmos-plugin-vite"]
+  "plugins": ["react-cosmos-plugin-vite"],
+  "decoratorFile": "cosmos.decorator.tsx"
 }

@@ -1,18 +1,14 @@
-import { JsCadFixture } from "jscad-fiber"
+import { Colorize, Cylinder, JsCadFixture, Rotate, Sphere } from "jscad-fiber"
 import { ExtrudedPads } from "../src/lib/ExtrudedPads"
 import { SmdChipLead } from "../lib/SmdChipLead"
+import { Tssop } from "../lib/Tssop"
 
 // Dimensions are for a na555 IC SOIC package
 export default () => {
   return (
     <JsCadFixture>
-      <SmdChipLead
-        width={0.25}
-        thickness={0.15}
-        padContactLength={0.6}
-        bodyDistance={(6.4 - 4.4) / 2}
-        height={0.8}
-      />
+      <Tssop pinCount={8} />
+      <ExtrudedPads footprint="tssop8_legsoutside_p1.27mm" />
     </JsCadFixture>
   )
 }
