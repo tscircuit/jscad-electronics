@@ -1,4 +1,10 @@
-import { Polygon, ExtrudeLinear } from "jscad-fiber"
+import {
+  Polygon,
+  ExtrudeLinear,
+  Translate,
+  Rotate,
+  Colorize,
+} from "jscad-fiber"
 import { getExpandedStroke } from "./utils/getExpandedStroke"
 
 export interface SmdChipLeadProps {
@@ -8,6 +14,9 @@ export interface SmdChipLeadProps {
   padContactLength: number
   bodyDistance: number
   curveLength?: number
+  rotation?: number
+  positionAnchor?: "outer-edge"
+  position?: { x: number; y: number; z?: number }
 }
 
 function calculateSCurve(
@@ -45,7 +54,8 @@ function calculateSCurve(
  * Curved lead for an SMD chip
  */
 export const SmdChipLead = (props: SmdChipLeadProps) => {
-  const { thickness, width, padContactLength, bodyDistance, height } = props
+  const { thickness, width, padContactLength, bodyDistance, height, rotation } =
+    props
 
   const N = 15
 
@@ -67,8 +77,16 @@ export const SmdChipLead = (props: SmdChipLeadProps) => {
 
   const polygon = getExpandedStroke(points, thickness)
   return (
-    <ExtrudeLinear height={width}>
-      <Polygon points={polygon.map((p) => [p.x, p.y])} />
-    </ExtrudeLinear>
+    <Colorize color="#fff">
+      <Translate offset={{ z: 0, y: 0, x: 0, ...props.position }}>
+        <Rotate rotation={[0, rotation ?? 0, 0]}>
+          <Translate offset={{ x: 0, y: 0, z: -width / 2 }}>
+            <ExtrudeLinear height={width}>
+              <Polygon points={polygon.map((p) => [p.x, p.y])} />
+            </ExtrudeLinear>
+          </Translate>
+        </Rotate>
+      </Translate>
+    </Colorize>
   )
 }
