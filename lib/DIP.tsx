@@ -1,4 +1,4 @@
-import { Polygon, ExtrudeLinear } from "jscad-fiber"
+import { Polygon, ExtrudeLinear, Rotate } from "jscad-fiber"
 
 // M 0 0 L 1 2 L 5 2 L 6 0 L 5 -2 L 1 -2
 // DIP components look like this:
