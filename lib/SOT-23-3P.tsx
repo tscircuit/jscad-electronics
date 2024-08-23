@@ -1,55 +1,71 @@
-import { Cuboid, Translate } from "jscad-fiber";
+import { ChipBody } from "./ChipBody";
 import { SmdChipLead } from "./SmdChipLead";
 
-const BODY_LENGTH = 2.92;
-const BODY_WIDTH = 1.3;
-const BODY_HEIGHT = 0.95;
-const PIN_WIDTH = 0.45;
-const PIN_LENGTH = 1.0;
-const LEAD_SPACING = 2.37;
-
 export const SOT233P = () => {
+  const fullWidth = 1.25;
+  const fullLength = 2.92;
+
   return (
     <>
-      <Cuboid
-        size={[BODY_LENGTH, BODY_WIDTH, BODY_HEIGHT]}
-        offset={[0, BODY_HEIGHT / 2, 0]}
-        color="#333"
+      {/* Lead 1 */}
+      <SmdChipLead
+        key={1}
+        position={{
+          x: -fullWidth / 2,
+          y: 0,
+          z: 0,
+        }}
+        width={0.25}
+        thickness={0.15}
+        padContactLength={0.6}
+        bodyDistance={(1.25 - 0.5) / 2}
+        height={0.55}
+        curveLength={0.3}
       />
 
-      <Translate
-        offset={[-BODY_LENGTH / 2 + PIN_WIDTH / 2, -BODY_HEIGHT / 2, 0]}
-      >
-        <SmdChipLead
-          width={PIN_WIDTH}
-          thickness={0.15}
-          padContactLength={0.6}
-          bodyDistance={(LEAD_SPACING - BODY_WIDTH) / 2}
-          height={PIN_LENGTH}
-        />
-      </Translate>
+      {/* Lead 2 */}
+      <SmdChipLead
+        key={2}
+        rotation={Math.PI}
+        position={{
+          x: fullWidth / 2,
+          y: 0,
+          z: -fullLength / 2 + 0.95,
+        }}
+        width={0.25}
+        thickness={0.15}
+        padContactLength={0.6}
+        bodyDistance={(1.25 - 0.5) / 2}
+        height={0.55}
+        curveLength={0.3}
+      />
 
-      <Translate offset={[0, -BODY_HEIGHT / 2, 0]}>
-        <SmdChipLead
-          width={PIN_WIDTH}
-          thickness={0.15}
-          padContactLength={0.6}
-          bodyDistance={(LEAD_SPACING - BODY_WIDTH) / 2}
-          height={PIN_LENGTH}
-        />
-      </Translate>
+      {/* Lead 3 */}
+      <SmdChipLead
+        key={3}
+        rotation={Math.PI}
+        position={{
+          x: fullWidth / 2,
+          y: 0,
+          z: fullLength / 2 - 0.95,
+        }}
+        width={0.25}
+        thickness={0.15}
+        padContactLength={0.6}
+        bodyDistance={(1.25 - 0.5) / 2}
+        height={0.55}
+        curveLength={0.3}
+      />
 
-      <Translate
-        offset={[BODY_LENGTH / 2 - PIN_WIDTH / 2, -BODY_HEIGHT / 2, 0]}
-      >
-        <SmdChipLead
-          width={PIN_WIDTH}
-          thickness={0.15}
-          padContactLength={0.6}
-          bodyDistance={(LEAD_SPACING - BODY_WIDTH) / 2}
-          height={PIN_LENGTH}
-        />
-      </Translate>
+      {/* Chip Body */}
+      <ChipBody
+        center={{ x: 0, y: 0, z: 0 }}
+        width={fullWidth}
+        length={fullLength}
+        height={1.52}
+      />
     </>
   );
 };
+
+export default SOT233P;

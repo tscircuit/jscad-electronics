@@ -8,7 +8,7 @@
     "@biomejs/biome": "^1.8.3",
     "@tscircuit/soup": "^0.0.41",
     "@types/react": "^18.3.3",
-    "jscad-fiber": "^0.0.36",
+    "jscad-fiber": "^0.0.57",
     "react": "^18.3.1",
     "react-cosmos": "^6.1.1",
     "react-cosmos-plugin-vite": "^6.1.1",
