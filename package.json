@@ -2,7 +2,8 @@
   "name": "jscad-electronics",
   "version": "0.0.1",
   "scripts": {
-    "start": "cosmos"
+    "start": "cosmos",
+    "build": "cosmos-export"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
