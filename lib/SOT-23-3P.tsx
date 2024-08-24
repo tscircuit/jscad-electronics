@@ -9,6 +9,8 @@ export const SOT233P = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
   const leadThickness = 0.15;
   const leadHeight = 0.95;
   const padContactLength = 0.6;
+  const leadYOffset = 0.1;
+  const bodyYOffset = -0.11;
 
   return (
     <>
@@ -18,7 +20,7 @@ export const SOT233P = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
         rotation={Math.PI}
         position={{
           x: fullWidth / 2,
-          y: 0,
+          y: leadYOffset,
           z: -0.95,
         }}
         width={leadWidth}
@@ -32,7 +34,7 @@ export const SOT233P = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
         rotation={Math.PI}
         position={{
           x: fullWidth / 2,
-          y: 0,
+          y: leadYOffset,
           z: 0.95,
         }}
         width={leadWidth}
@@ -47,7 +49,7 @@ export const SOT233P = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
         key={3}
         position={{
           x: -fullWidth / 2,
-          y: 0,
+          y: leadYOffset,
           z: 0,
         }}
         width={leadWidth}
@@ -59,7 +61,7 @@ export const SOT233P = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
 
       {/* Chip Body */}
       <ChipBody
-        center={{ x: 0, y: bodyHeight / 2, z: 0 }}
+        center={{ x: 0, y: bodyHeight / 2 + bodyYOffset, z: 0 }}
         width={bodyWidth}
         length={bodyLength}
         height={bodyHeight}
