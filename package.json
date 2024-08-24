@@ -17,6 +17,6 @@
     "vite": "^5.3.3"
   },
   "dependencies": {
-    "@tscircuit/footprinter": "^0.0.47"
+    "@tscircuit/footprinter": "^0.0.50"
   }
 }
