@@ -2,6 +2,7 @@ import type { AnySoupElement } from "@tscircuit/soup"
 import { fp } from "@tscircuit/footprinter"
 import { FootprintPad } from "./FootprintPad"
 import { FootprintPlatedHole } from "./FootprintPlatedHole"
+import { Union } from "jscad-fiber"
 
 export const ExtrudedPads = ({
   soup,
