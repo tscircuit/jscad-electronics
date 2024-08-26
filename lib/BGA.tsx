@@ -1,15 +1,15 @@
-import { Cuboid, Sphere, Translate, Colorize } from "jscad-fiber";
+import { Cuboid, Sphere, Translate, Colorize } from "jscad-fiber"
 
 interface BGAProps {
-  packageWidth?: number;
-  packageLength?: number;
-  packageHeight?: number;
-  standoffHeight?: number;
-  ballPitch?: number;
-  ballDiameter?: number;
-  ballRows?: number;
-  ballColumns?: number;
-  missingBalls?: number[];
+  packageWidth?: number
+  packageLength?: number
+  packageHeight?: number
+  standoffHeight?: number
+  ballPitch?: number
+  ballDiameter?: number
+  ballRows?: number
+  ballColumns?: number
+  missingBalls?: number[]
 }
 
 export const BGA = ({
@@ -23,7 +23,7 @@ export const BGA = ({
   ballColumns = 8,
   missingBalls = [],
 }: BGAProps) => {
-  const bodyHeight = packageHeight - standoffHeight;
+  const bodyHeight = packageHeight - standoffHeight
 
   return (
     <>
@@ -37,19 +37,19 @@ export const BGA = ({
 
       {/* Balls */}
       {Array.from({ length: ballRows * ballColumns }).map((_, index) => {
-        if (missingBalls.includes(index + 1)) return null;
+        if (missingBalls.includes(index + 1)) return null
 
-        const row = Math.floor(index / ballColumns);
-        const col = index % ballColumns;
-        const x = (col - (ballColumns - 1) / 2) * ballPitch;
-        const y = (row - (ballRows - 1) / 2) * ballPitch;
+        const row = Math.floor(index / ballColumns)
+        const col = index % ballColumns
+        const x = (col - (ballColumns - 1) / 2) * ballPitch
+        const y = (row - (ballRows - 1) / 2) * ballPitch
 
         return (
           <Translate key={index} center={[x, y, standoffHeight / 2]}>
-            <Sphere radius={ballDiameter / 2} />
+            <Sphere segments={12} radius={ballDiameter / 2} />
           </Translate>
-        );
+        )
       })}
     </>
-  );
-};
+  )
+}
