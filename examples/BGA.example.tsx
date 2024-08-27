@@ -5,9 +5,9 @@ import { ExtrudedPads } from "../src/lib/ExtrudedPads";
 
 export default () => {
   return (
-    <JsCadFixture>
-      <BGA />
-    {/* <ExtrudedPads footprint="bga64" /> */}
+    <JsCadFixture zAxisUp>
+      <BGA footprintString="bga64" />
+    <ExtrudedPads footprint="bga64" />
     </JsCadFixture>
   );
 };

@@ -1,4 +1,6 @@
-import { Cuboid, Sphere, Translate, Colorize } from "jscad-fiber";
+import { Cuboid, Sphere, Translate, Colorize, Rotate } from "jscad-fiber";
+import { fp } from "@tscircuit/footprinter";
+import { useMemo } from "react";
 
 interface BGAProps {
   packageWidth?: number;
@@ -10,6 +12,7 @@ interface BGAProps {
   ballRows?: number;
   ballColumns?: number;
   missingBalls?: number[];
+  footprintString?: string;
 }
 
 export const BGA = ({
@@ -22,34 +25,65 @@ export const BGA = ({
   ballRows = 8,
   ballColumns = 8,
   missingBalls = [],
+  footprintString,
 }: BGAProps) => {
   const bodyHeight = packageHeight - standoffHeight;
+  const bodyOffset = 1.3; 
+  const ballOffset = 0;
+
+  const ballsSoup = useMemo(() => {
+    if (!footprintString) return null;
+    const result = fp.string(footprintString);
+    return result.soup();
+  }, [footprintString]);
 
   return (
     <>
       {/* Package body */}
       <Colorize color="#555">
-        <Cuboid
-          size={[packageWidth, packageLength, bodyHeight]}
-          center={[0, 0, standoffHeight + bodyHeight / 2]}
-        />
+        <Rotate rotation={[190, 0, 0]}>
+          <Translate center={[0, 0, -bodyOffset]}>
+            <Cuboid
+              size={[packageWidth, packageLength, bodyHeight]}
+              center={[0, 0, standoffHeight + bodyHeight / 2]}
+            />
+          </Translate>
+        </Rotate>
       </Colorize>
 
-      {/* Balls */}
-      {Array.from({ length: ballRows * ballColumns }).map((_, index) => {
-        if (missingBalls.includes(index + 1)) return null;
+      {/* Balls via ball parameters */}
+      {!footprintString &&
+        Array.from({ length: ballRows * ballColumns }).map((_, index) => {
+          if (missingBalls.includes(index + 1)) return null;
 
-        const row = Math.floor(index / ballColumns);
-        const col = index % ballColumns;
-        const x = (col - (ballColumns - 1) / 2) * ballPitch;
-        const y = (row - (ballRows - 1) / 2) * ballPitch;
+          const row = Math.floor(index / ballColumns);
+          const col = index % ballColumns;
+          const x = (col - (ballColumns - 1) / 2) * ballPitch;
+          const y = (row - (ballRows - 1) / 2) * ballPitch;
 
-        return (
-          <Translate key={index} center={[x, y, standoffHeight / 2]}>
-            <Sphere radius={ballDiameter / 2} />
-          </Translate>
-        );
-      })}
+          return (
+              <Translate center={[x, y, standoffHeight / 2 - ballOffset]}>
+                <Sphere radius={ballDiameter / 2} />
+              </Translate>
+          );
+        })}
+
+      {/* Balls via footprint string */}
+      {ballsSoup &&
+        ballsSoup.map((elm) => {
+          if (elm.type === "pcb_smtpad") {
+            return (
+              <Rotate key={elm.pcb_smtpad_id} rotation={[190, 0, 0]}>
+                <Translate
+                  center={[elm.x, elm.y, standoffHeight / 2 - ballOffset]}
+                >
+                  <Sphere radius={ballDiameter / 2} />
+                </Translate>
+              </Rotate>
+            );
+          }
+          return null;
+        })}
     </>
   );
 };
