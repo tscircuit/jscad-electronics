@@ -28,8 +28,8 @@ export const BGA = ({
   footprintString,
 }: BGAProps) => {
   const bodyHeight = packageHeight - standoffHeight;
-  const bodyOffset = 1.3; 
-  const ballOffset = 0;
+  const bodyOffset = 1.4;
+  const ballOffset = 0.1;
 
   const ballsSoup = useMemo(() => {
     if (!footprintString) return null;
@@ -41,7 +41,7 @@ export const BGA = ({
     <>
       {/* Package body */}
       <Colorize color="#555">
-        <Rotate rotation={[190, 0, 0]}>
+        <Rotate rotation={[(90 / 180) * Math.PI, 0, 0]}>
           <Translate center={[0, 0, -bodyOffset]}>
             <Cuboid
               size={[packageWidth, packageLength, bodyHeight]}
@@ -62,9 +62,9 @@ export const BGA = ({
           const y = (row - (ballRows - 1) / 2) * ballPitch;
 
           return (
-              <Translate center={[x, y, standoffHeight / 2 - ballOffset]}>
-                <Sphere radius={ballDiameter / 2} />
-              </Translate>
+            <Translate center={[x, y, standoffHeight / 2 - ballOffset]}>
+              <Sphere radius={ballDiameter / 2} />
+            </Translate>
           );
         })}
 
@@ -73,7 +73,10 @@ export const BGA = ({
         ballsSoup.map((elm) => {
           if (elm.type === "pcb_smtpad") {
             return (
-              <Rotate key={elm.pcb_smtpad_id} rotation={[190, 0, 0]}>
+              <Rotate
+                key={elm.pcb_smtpad_id}
+                rotation={[(90 / 180) * Math.PI, 0, 0]}
+              >
                 <Translate
                   center={[elm.x, elm.y, standoffHeight / 2 - ballOffset]}
                 >
