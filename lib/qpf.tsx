@@ -1,79 +1,105 @@
-import React from "react";
-import { Translate, Colorize, Cylinder, Rotate } from "jscad-fiber";
-import { SmdChipLead, type SmdChipLeadProps } from "./SmdChipLead";
 import { ChipBody } from "./ChipBody";
+import { SmdChipLead } from "./SmdChipLead";
 
-interface QFPProps {
-  size: number;
-  height: number;
-  pinCount: number;
-  pinWidth: number;
-  pinThickness: number;
-  pinLength: number;
-  bodyColor?: string;
-  pinColor?: string;
-}
-
-export const QFP: React.FC<QFPProps> = ({
-  size,
-  height,
+export const QFP = ({
   pinCount,
-  pinWidth,
-  pinThickness,
-  pinLength,
+  fullWidth = 10,
+}: {
+  pinCount: number;
+  fullWidth?: number;
 }) => {
-  const pinsPerSide = pinCount / 4;
-  const pinSpacing = size / pinsPerSide;
-
-  const pinProps: SmdChipLeadProps = {
-    thickness: pinThickness,
-    width: pinWidth,
-    height: height / 2,
-    padContactLength: pinLength * 0.4,
-    bodyDistance: pinLength,
-    curveLength: pinLength * 0.3,
-  };
+  const sidePinCount = pinCount / 4;
+  const pinSpacing = 0.65;
+  const fullLength = fullWidth; 
+  const pinOffsetToCenter = ((sidePinCount - 1) * pinSpacing) / 2;
+  
+  const bodyWidth = fullWidth - 2;
+  const bodyLength = fullLength - 2;
+  const leadHeight = 0.8;
+  const leadWidth = 0.25;
+  const leadThickness = 0.15;
+  const padContactLength = 0.6;
+  const bodyDistance = (fullWidth - bodyWidth) / 2;
 
   return (
     <>
-      {/* Package body */}
-        <ChipBody
-          center={{ x: 0, y: 0, z: height / 2 }}
-          width={size}
-          length={size}
-          height={height}
+      {/* Pins on the left side */}
+      {Array.from({ length: sidePinCount }).map((_, i) => (
+        <SmdChipLead
+          key={`left-${i}`}
+          position={{
+            x: -fullWidth / 2,
+            y: 0,
+            z: i * pinSpacing - pinOffsetToCenter,
+          }}
+          width={leadWidth}
+          thickness={leadThickness}
+          padContactLength={padContactLength}
+          bodyDistance={bodyDistance}
+          height={leadHeight}
         />
+      ))}
+      
+      {/* Pins on the right side */}
+      {Array.from({ length: sidePinCount }).map((_, i) => (
+        <SmdChipLead
+          key={`right-${i}`}
+          rotation={Math.PI}
+          position={{
+            x: fullWidth / 2,
+            y: 0,
+            z: i * pinSpacing - pinOffsetToCenter,
+          }}
+          width={leadWidth}
+          thickness={leadThickness}
+          padContactLength={padContactLength}
+          bodyDistance={bodyDistance}
+          height={leadHeight}
+        />
+      ))}
+      
+      {/* Pins on the bottom side */}
+      {Array.from({ length: sidePinCount }).map((_, i) => (
+        <SmdChipLead
+          key={`bottom-${i}`}
+          rotation={Math.PI / 2}
+          position={{
+            x: i * pinSpacing - pinOffsetToCenter,
+            y: 0,
+            z: -fullLength / 2,
+          }}
+          width={leadWidth}
+          thickness={leadThickness}
+          padContactLength={padContactLength}
+          bodyDistance={bodyDistance}
+          height={leadHeight}
+        />
+      ))}
+      
+      {/* Pins on the top side */}
+      {Array.from({ length: sidePinCount }).map((_, i) => (
+        <SmdChipLead
+          key={`top-${i}`}
+          rotation={-Math.PI / 2}
+          position={{
+            x: i * pinSpacing - pinOffsetToCenter,
+            y: 0,
+            z: fullLength / 2,
+          }}
+          width={leadWidth}
+          thickness={leadThickness}
+          padContactLength={padContactLength}
+          bodyDistance={bodyDistance}
+          height={leadHeight}
+        />
+      ))}
 
-      {/* Pins */}
-      {Array.from({ length: pinCount }).map((_, index) => {
-        const side = Math.floor(index / pinsPerSide);
-        const sideIndex = index % pinsPerSide;
-        const pinPosition = sideIndex * pinSpacing - size / 2 + pinSpacing / 2;
-        
-        const positions = [
-          [pinPosition, size / 2 + pinLength / 2, Math.PI],
-          [size / 2 + pinLength / 2, -pinPosition, Math.PI * 1.5],
-          [-pinPosition, -size / 2 - pinLength / 2, 0],
-          [-size / 2 - pinLength / 2, pinPosition, Math.PI * 0.5],
-        ];
-
-        const [x, y, rotation] = positions[side] as [number, number, number];
-
-        return (
-          <Rotate rotation={[(90 / 180) * Math.PI, 0, 0]}>
-            <SmdChipLead
-              key={index}
-              rotation={rotation}
-              position={{ x, y, z: 0 }}
-              width={pinWidth}
-              thickness={pinThickness}
-              padContactLength={pinProps.padContactLength!}
-              bodyDistance={pinProps.bodyDistance!}
-              height={pinProps.height!}
-            />
-          </Rotate>
-        );
-      })}
+      <ChipBody
+        center={{ x: 0, y: leadHeight / 2, z: 0 }}
+        width={bodyWidth}
+        length={bodyLength}
+        height={1.5}
+      />
     </>
   );
 };
