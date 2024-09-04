@@ -9,10 +9,10 @@ export const QFP = ({
   fullWidth?: number;
 }) => {
   const sidePinCount = pinCount / 4;
-  const pinSpacing = 0.65;
-  const fullLength = fullWidth; 
+  const pinSpacing = 0.5; 
+  const fullLength = fullWidth;
   const pinOffsetToCenter = ((sidePinCount - 1) * pinSpacing) / 2;
-  
+
   const bodyWidth = fullWidth - 2;
   const bodyLength = fullLength - 2;
   const leadHeight = 0.8;
@@ -39,7 +39,7 @@ export const QFP = ({
           height={leadHeight}
         />
       ))}
-      
+
       {/* Pins on the right side */}
       {Array.from({ length: sidePinCount }).map((_, i) => (
         <SmdChipLead
@@ -57,12 +57,12 @@ export const QFP = ({
           height={leadHeight}
         />
       ))}
-      
+
       {/* Pins on the bottom side */}
       {Array.from({ length: sidePinCount }).map((_, i) => (
         <SmdChipLead
           key={`bottom-${i}`}
-          rotation={Math.PI / 2}
+          rotation={-5 * Math.PI / 2}
           position={{
             x: i * pinSpacing - pinOffsetToCenter,
             y: 0,
@@ -75,12 +75,12 @@ export const QFP = ({
           height={leadHeight}
         />
       ))}
-      
+
       {/* Pins on the top side */}
       {Array.from({ length: sidePinCount }).map((_, i) => (
         <SmdChipLead
           key={`top-${i}`}
-          rotation={-Math.PI / 2}
+          rotation={5 * Math.PI / 2} 
           position={{
             x: i * pinSpacing - pinOffsetToCenter,
             y: 0,
