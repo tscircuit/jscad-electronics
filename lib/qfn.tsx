@@ -1,4 +1,4 @@
-import { ChipBody } from "./ChipBody";
+import { Cuboid } from 'jscad-fiber';
 
 export const QFN = ({
   fullWidth = 5,
@@ -11,11 +11,9 @@ export const QFN = ({
   const bodyLength = fullWidth ;
 
   return (
-    <ChipBody
+    <Cuboid
       center={{ x: 0, y: height / 2, z: 0 }}
-      width={bodyWidth}
-      length={bodyLength}
-      height={height}
+      size={[bodyWidth, height, bodyLength]}
     />
   );
 };
