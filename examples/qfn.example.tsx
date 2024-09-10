@@ -5,7 +5,7 @@ import { ExtrudedPads } from "../src/lib/ExtrudedPads";
 export default () => {
   return (
     <JsCadFixture zAxisUp>
-      <QFN/>
+      <QFN fullWidth={4} height={0.8} thermalPadSize={2} />
       <ExtrudedPads footprint="qfn16" />
     </JsCadFixture>
   );
