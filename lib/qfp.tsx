@@ -3,7 +3,7 @@ import { SmdChipLead } from "./SmdChipLead";
 
 export const QFP = ({
   pinCount,
-  fullWidth = 10,
+  fullWidth = pinCount === 80 ? 14 : 10,
 }: {
   pinCount: number;
   fullWidth?: number;

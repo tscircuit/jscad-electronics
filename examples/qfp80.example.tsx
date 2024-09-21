@@ -1,5 +1,5 @@
 import { JsCadFixture } from "jscad-fiber";
-import { QFP } from "../lib/qfp80";
+import { QFP } from "../lib/qfp";
 import { ExtrudedPads } from "../src/lib/ExtrudedPads";
 
 export default () => {
