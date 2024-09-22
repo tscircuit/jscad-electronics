@@ -3,13 +3,12 @@ import { SmdChipLead } from "./SmdChipLead";
 
 export const QFP = ({
   pinCount,
-  fullWidth = pinCount === 80 ? 14 : 10,
 }: {
   pinCount: number;
-  fullWidth?: number;
 }) => {
   const sidePinCount = pinCount / 4;
-  const pinSpacing = 0.5; 
+  const pinSpacing = 0.5;
+  const fullWidth = pinSpacing * sidePinCount + 4;
   const fullLength = fullWidth;
   const pinOffsetToCenter = ((sidePinCount - 1) * pinSpacing) / 2;
 
