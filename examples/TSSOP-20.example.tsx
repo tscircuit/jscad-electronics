@@ -1,7 +1,6 @@
 import { JsCadFixture } from "jscad-fiber"
-import { ExtrudedPads } from "../src/lib/ExtrudedPads"
+import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { Tssop20 } from "../lib/TSSOP-20"
-
 
 export default () => {
   return (
