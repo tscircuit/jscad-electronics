@@ -1,6 +1,6 @@
 import { Dip } from "../lib/DIP"
 import { JsCadFixture } from "jscad-fiber"
-import { ExtrudedPads } from "../src/lib/ExtrudedPads"
+import { ExtrudedPads } from "../lib/ExtrudedPads"
 
 export default () => {
   return (

@@ -1,5 +1,5 @@
 import { JsCadFixture } from "jscad-fiber"
-import { ExtrudedPads } from "../src/lib/ExtrudedPads"
+import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { SmdChipLead } from "../lib/SmdChipLead"
 
 // Dimensions are for a na555 IC SOIC package

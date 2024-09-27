@@ -1,5 +1,5 @@
 import { Colorize, Cylinder, JsCadFixture, Rotate, Sphere } from "jscad-fiber"
-import { ExtrudedPads } from "../src/lib/ExtrudedPads"
+import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { SmdChipLead } from "../lib/SmdChipLead"
 import { Tssop } from "../lib/Tssop"
 

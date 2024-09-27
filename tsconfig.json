@@ -10,6 +10,11 @@
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
     "jsx": "react-jsx",
+    "baseUrl": "./",
+    "paths": {
+      "src/*": ["src/*"],
+      "lib/*": ["lib/*"]
+    },
     // Enable strict type checking so you can catch bugs early
     "strict": true,
     "noUncheckedIndexedAccess": true,
