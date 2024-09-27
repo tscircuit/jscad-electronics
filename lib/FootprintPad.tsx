@@ -5,8 +5,8 @@ export const FootprintPad = ({ pad }: { pad: PCBSMTPad }) => {
   if (pad.shape === "rect") {
     return (
       <Colorize color={[255, 0, 0]}>
-        <Translate offset={[pad.x, 0, pad.y]}>
-          <Cuboid size={[pad.width, 0.01, pad.height]} />
+        <Translate offset={[pad.x, pad.y, 0]}>
+          <Cuboid size={[pad.width, pad.height, 0.01]} />
         </Translate>
       </Colorize>
     )
