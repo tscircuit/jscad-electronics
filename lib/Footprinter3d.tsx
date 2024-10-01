@@ -1,5 +1,5 @@
 import { fp } from "@tscircuit/footprinter"
-import { Dip } from "./DIP"
+import { Dip } from "./Dip"
 import { Tssop } from "./Tssop"
 
 /**
