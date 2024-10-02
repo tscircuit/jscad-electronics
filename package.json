@@ -13,6 +13,7 @@
   "scripts": {
     "start": "cosmos",
     "build": "tsup ./lib/index.ts --dts --format esm",
+    "vercel-build": "bun run build:site",
     "build:site": "cosmos-export"
   },
   "devDependencies": {
