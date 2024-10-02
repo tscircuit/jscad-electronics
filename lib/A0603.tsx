@@ -13,18 +13,18 @@ export const A0603 = () => {
   return (
     <>
       <Cuboid
-        size={[bodyLength, height, width]}
-        offset={[0, height / 2, 0]}
+        size={[bodyLength, width, height]}
+        offset={[0, 0, height / 2]}
         color="#333"
       />
       <Cuboid
-        size={[terminatorLength, height, width]}
-        offset={[fullLength / 2 - terminatorLength / 2, height / 2, 0]}
+        size={[terminatorLength, width, height]}
+        offset={[fullLength / 2 - terminatorLength / 2, 0, height / 2]}
         color="#ccc"
       />
       <Cuboid
-        size={[terminatorLength, height, width]}
-        offset={[-fullLength / 2 + terminatorLength / 2, height / 2, 0]}
+        size={[terminatorLength, width, height]}
+        offset={[-fullLength / 2 + terminatorLength / 2, 0, height / 2]}
         color="#ccc"
       />
     </>

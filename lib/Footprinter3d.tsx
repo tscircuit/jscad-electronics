@@ -13,6 +13,10 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <Dip numPins={fpJson.num_pins} />
     case "tssop":
       return <Tssop pinCount={fpJson.num_pins} />
+    case "soic":
+      return null // TODO
+    case "passive": // 0402, 0603, etc
+      return null
   }
   return null
 }
