@@ -1,5 +1,5 @@
 import { fp } from "@tscircuit/footprinter"
-import { Dip } from "./Dip"
+import { Dip } from "./DualInlinePackage"
 import { Tssop } from "./Tssop"
 import { A0402 } from "./A0402"
 import { A0603 } from "./A0603"

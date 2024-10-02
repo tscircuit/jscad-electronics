@@ -1,4 +1,4 @@
-import { Dip } from "../lib/Dip"
+import { Dip } from "../lib/DualInlinePackage"
 import { JsCadFixture } from "jscad-fiber"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 
