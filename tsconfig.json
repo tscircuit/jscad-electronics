@@ -23,18 +23,9 @@
     "module": "preserve",
     "noEmit": true,
     // Include the DOM types
-    "lib": [
-      "es2022",
-      "dom",
-      "dom.iterable"
-    ]
+    "lib": ["es2022", "dom", "dom.iterable"]
   },
   // Include the necessary files for your project
-  "include": [
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }

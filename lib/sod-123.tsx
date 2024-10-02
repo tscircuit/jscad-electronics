@@ -1,18 +1,18 @@
-import { ChipBody } from "./ChipBody";
-import { SmdChipLead } from "./SmdChipLead";
+import { ChipBody } from "./ChipBody"
+import { SmdChipLead } from "./SmdChipLead"
 
 export const SOD123 = ({ fullWidth = 3.8, fullLength = 1.6 }) => {
-  const bodyWidth = 2.9;
-  const bodyLength = 1.3;
-  const bodyHeight = 1.1;
-  const leadWidth = 0.8;
-  const leadThickness = 0.15;
-  const leadHeight = 0.5;
-  const padContactLength = 0.4;
+  const bodyWidth = 2.9
+  const bodyLength = 1.3
+  const bodyHeight = 1.1
+  const leadWidth = 0.8
+  const leadThickness = 0.15
+  const leadHeight = 0.5
+  const padContactLength = 0.4
   const leadYOffset = leadHeight / 1 - 0.4
-  const bodyYOffset = (leadHeight / 2) - 0.4;
+  const bodyYOffset = leadHeight / 2 - 0.4
 
-  const bodyDistance = (fullWidth - bodyWidth) / 2;
+  const bodyDistance = (fullWidth - bodyWidth) / 2
 
   return (
     <>
@@ -55,7 +55,7 @@ export const SOD123 = ({ fullWidth = 3.8, fullLength = 1.6 }) => {
         height={bodyHeight}
       />
     </>
-  );
-};
+  )
+}
 
-export default SOD123;
+export default SOD123

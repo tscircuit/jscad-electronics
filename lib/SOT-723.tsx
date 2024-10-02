@@ -13,10 +13,10 @@ const getCcwSot723Coords = (pn: number) => {
 export const SOT723 = () => {
   const bodyWidth = 1.2
   const bodyLength = 1.2
-  const bodyHeight = 0.5 
+  const bodyHeight = 0.5
   const leadWidth = 0.32
   const leadLength = 0.3
-  const leadHeight = 0.1  
+  const leadHeight = 0.1
   const centerLeadWidth = 0.42
 
   return (
@@ -33,16 +33,18 @@ export const SOT723 = () => {
         const { x, y } = getCcwSot723Coords(pn)
         return (
           <Translate key={`lead-${pn}`} center={[x, 0, y]}>
-            <Cuboid size={[
-              pn === 1 ? centerLeadWidth : leadWidth,
-              leadHeight,
-              leadLength
-            ]} />
+            <Cuboid
+              size={[
+                pn === 1 ? centerLeadWidth : leadWidth,
+                leadHeight,
+                leadLength,
+              ]}
+            />
           </Translate>
         )
       })}
     </>
-  );
-};
+  )
+}
 
 export default SOT723
