@@ -2,23 +2,33 @@
   "name": "jscad-electronics",
   "type": "module",
   "version": "0.0.1",
+  "main": "./dist/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/tscircuit/jscad-electronics"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "start": "cosmos",
-    "build": "cosmos-export"
+    "build": "tsup ./lib/index.ts --dts --format esm",
+    "vercel-build": "bun run build:site",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "build:site": "cosmos-export"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
     "@tscircuit/soup": "^0.0.41",
-    "@types/react": "^18.3.3",
-    "jscad-fiber": "^0.0.63",
+    "@types/react": "^18.3.10",
+    "@types/react-dom": "^18.3.0",
+    "jscad-fiber": "^0.0.64",
     "react": "^18.3.1",
     "react-cosmos": "^6.1.1",
     "react-cosmos-plugin-vite": "^6.1.1",
     "react-dom": "^18.3.1",
+    "tsup": "^8.3.0",
     "vite": "^5.3.3",
     "vite-tsconfig-paths": "^5.0.1"
   },

@@ -1,12 +1,12 @@
-import { Dip } from "../lib/DIP"
+import { Dip } from "../lib/DualInlinePackage"
 import { JsCadFixture } from "jscad-fiber"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 
 export default () => {
   return (
-    <JsCadFixture zAxisUp>
-      {/* <DIP /> */}
-      <ExtrudedPads footprint="dip8" />
+    <JsCadFixture zAxisUp showGrid>
+      <Dip />
+      <ExtrudedPads footprint="dip8_w5.08" />
     </JsCadFixture>
   )
 }

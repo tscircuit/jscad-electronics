@@ -5,7 +5,7 @@ import { SmdChipLead } from "../lib/SmdChipLead"
 // Dimensions are for a na555 IC SOIC package
 export default () => {
   return (
-    <JsCadFixture zAxisUp>
+    <JsCadFixture zAxisUp showGrid>
       <SmdChipLead
         width={0.25}
         thickness={0.15}

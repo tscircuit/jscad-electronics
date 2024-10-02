@@ -79,7 +79,7 @@ export const SmdChipLead = (props: SmdChipLeadProps) => {
   return (
     <Colorize color="#fff">
       <Translate offset={{ z: 0, y: 0, x: 0, ...props.position }}>
-        <Rotate rotation={[0, rotation ?? 0, 0]}>
+        <Rotate rotation={["90deg", 0, rotation ?? 0]}>
           <Translate offset={{ x: 0, y: 0, z: -width / 2 }}>
             <ExtrudeLinear height={width}>
               <Polygon points={polygon.map((p) => [p.x, p.y])} />

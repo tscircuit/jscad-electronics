@@ -37,10 +37,10 @@ export const SOT563 = ({ fullWidth = 2.0, fullLength = 1.6 }) => {
           center={[fullWidth / 2 - leadWidth / 2, 0, yOffset * leadSpacing]}
         >
           <Cuboid size={[leadWidth, leadHeight, leadLength]} />
-        </Translate>
+        </Translate>,
       ])}
     </>
-  );
-};
+  )
+}
 
 export default SOT563

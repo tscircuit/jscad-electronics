@@ -7,13 +7,13 @@ export default defineConfig({
   },
   plugins: [tsconfigPaths()],
   define: {
-    "global": {}
+    global: {},
   },
-  "build": {
+  build: {
     rollupOptions: {
       output: {
-        manualChunks: undefined
-      }
-    }
-  }
+        manualChunks: undefined,
+      },
+    },
+  },
 })

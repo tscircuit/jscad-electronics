@@ -5,5 +5,5 @@ import "./main.css"
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <div>vite default entrypoint</div>
-  </React.StrictMode>
+  </React.StrictMode>,
 )
