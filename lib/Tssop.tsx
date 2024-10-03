@@ -1,4 +1,4 @@
-import { fp } from "@tscircuit/footprinter";
+import { fp } from "@tscircuit/footprinter"
 import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 
@@ -8,9 +8,8 @@ export const Tssop = ({
   fpJson,
   fullWidth = 6.4,
 }: { pinCount?: number; fullWidth?: number; fpJson: any }) => {
-
   const sidePinLength = Math.ceil(fpJson.num_pins / 2)
-  const fullLength = fpJson.p * fpJson.num_pins / 2 + (fpJson.pw / 2)
+  const fullLength = (fpJson.p * fpJson.num_pins) / 2 + fpJson.pw / 2
   const pinOffsetToCenter = ((sidePinLength - 1) * fpJson.p) / 2
   return (
     <>
@@ -36,7 +35,7 @@ export const Tssop = ({
           position={{
             x: fpJson.w / 2 + fpJson.pl * 2,
             y: i * fpJson.p - pinOffsetToCenter,
-            z: 0
+            z: 0,
           }}
           width={fpJson.pw}
           thickness={0.25}
