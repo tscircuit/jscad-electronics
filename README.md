@@ -9,6 +9,11 @@
 
 jscad-electronics is a library of 3D electronic component models for use with [JSCAD](https://github.com/jscad/OpenJSCAD.org) and [tscircuit](https://github.com/tscircuit/tscircuit). It provides accurate and customizable 3D models for various electronic components, making it easier to create 3D representations of PCBs and electronic assemblies.
 
+Contribution Guide:
+
+[![image](https://github.com/user-attachments/assets/92236fbf-8b59-4984-9b97-0f12f24de7c8)](https://youtu.be/DHGW_DFhJao)
+
+
 ## Features
 
 - Wide range of electronic component models (e.g., resistors, capacitors, ICs, connectors)
