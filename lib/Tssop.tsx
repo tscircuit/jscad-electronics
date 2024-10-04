@@ -25,14 +25,14 @@ export const Tssop = ({
         <SmdChipLead
           key={i}
           position={{
-            x: -bodyWidth / 2 - pl * 2,
+            x: -bodyWidth / 2 - 0.9,
             y: i * p - pinOffsetToCenter,
             z: 0,
           }}
           width={pw}
           thickness={0.25}
           padContactLength={pl}
-          bodyDistance={pl + 0.6}
+          bodyDistance={pl + 0.4}
           height={0.8}
         />
       ))}
@@ -41,14 +41,14 @@ export const Tssop = ({
           key={i}
           rotation={Math.PI}
           position={{
-            x: bodyWidth / 2 + pl * 2,
+            x: bodyWidth / 2 + 0.9,
             y: i * p - pinOffsetToCenter,
             z: 0,
           }}
           width={pw}
           thickness={0.25}
           padContactLength={pl}
-          bodyDistance={pl + 0.6}
+          bodyDistance={pl + 0.4}
           height={0.8}
         />
       ))}

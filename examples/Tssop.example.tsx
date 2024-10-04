@@ -7,8 +7,8 @@ import { Tssop } from "../lib/Tssop"
 export default () => {
   return (
     <JsCadFixture zAxisUp>
-      <Tssop pinCount={8} />
-      <ExtrudedPads footprint="tssop8_legsoutside_p1.27mm" />
+      <Tssop pinCount={8} pl={0.6} pw={0.2} p={1.27} bodyWidth={4.5} />
+      <ExtrudedPads footprint="tssop8_legsoutside_w4.5mm_p1.27mm_pl0.6mm_pw0.2mm" />
     </JsCadFixture>
   )
 }
