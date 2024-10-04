@@ -1,7 +1,7 @@
 {
   "name": "jscad-electronics",
   "type": "module",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "main": "./dist/index.js",
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
     "@tscircuit/soup": "^0.0.41",
     "@types/react": "^18.3.10",
     "@types/react-dom": "^18.3.0",
-    "jscad-fiber": "^0.0.64",
+    "jscad-fiber": "^0.0.67",
     "react": "^18.3.1",
     "react-cosmos": "^6.1.1",
     "react-cosmos-plugin-vite": "^6.1.1",
@@ -33,6 +33,6 @@
     "vite-tsconfig-paths": "^5.0.1"
   },
   "dependencies": {
-    "@tscircuit/footprinter": "^0.0.63"
+    "@tscircuit/footprinter": "^0.0.64"
   }
 }
