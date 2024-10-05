@@ -1,21 +1,20 @@
 import { Cuboid, Translate, Rotate, Colorize } from "jscad-fiber"
 
-export const SOT563 = ({ fullWidth = 2.0, fullLength = 1.6 }) => {
-  const bodyWidth = 1.6
+export const SOT563 = ({ fullWidth = 1.94, fullLength = 1.6 }) => {
+  const bodyWidth = 1.2
   const bodyLength = 1.6
   const bodyHeight = 0.55
   const leadWidth = 0.3
-  const leadLength = 0.2
-  const leadHeight = 0.1
+  const leadLength = 0.67
+  const leadHeight = 0.13
   const leadSpacing = 0.5
-  const bodyYOffset = leadHeight / 2
   const bodyZOffset = -0.3
 
   return (
     <>
       {/* Main body - rotated 90 degrees around X-axis */}
-      <Rotate rotation={[(90 / 180) * Math.PI, 0, 0]}>
-        <Translate center={[0, bodyYOffset, bodyZOffset]}>
+      <Rotate rotation={[45 * Math.PI, 0, 0]}>
+        <Translate center={[0, 0, bodyZOffset]}>
           <Colorize color="grey">
             <Cuboid size={[bodyWidth, bodyLength, bodyHeight]} />
           </Colorize>
@@ -25,18 +24,19 @@ export const SOT563 = ({ fullWidth = 2.0, fullLength = 1.6 }) => {
       {/* Leads */}
       {[-1, 0, 1].flatMap((yOffset, index) => [
         // Left lead
+
         <Translate
           key={`left-${index}`}
-          center={[-fullWidth / 2 + leadWidth / 2, 0, yOffset * leadSpacing]}
+          center={[-bodyWidth / 2 - 0.03, yOffset * leadSpacing, 0]}
         >
-          <Cuboid size={[leadWidth, leadHeight, leadLength]} />
+          <Cuboid size={[leadLength, leadWidth, leadHeight]} />
         </Translate>,
         // Right lead
         <Translate
           key={`right-${index}`}
-          center={[fullWidth / 2 - leadWidth / 2, 0, yOffset * leadSpacing]}
+          center={[bodyWidth / 2 + 0.03, yOffset * leadSpacing, 0]}
         >
-          <Cuboid size={[leadWidth, leadHeight, leadLength]} />
+          <Cuboid size={[leadLength, leadWidth, leadHeight]} />
         </Translate>,
       ])}
     </>
