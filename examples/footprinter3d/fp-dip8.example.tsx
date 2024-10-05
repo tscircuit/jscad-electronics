@@ -6,7 +6,7 @@ const footprint = "dip8"
 
 export default () => {
   return (
-    <JsCadFixture zAxisUp>
+    <JsCadFixture zAxisUp showGrid>
       <Footprinter3d footprint={footprint} />
       <ExtrudedPads footprint={footprint} />
     </JsCadFixture>

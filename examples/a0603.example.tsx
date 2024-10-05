@@ -4,7 +4,7 @@ import { ExtrudedPads } from "../lib/ExtrudedPads"
 
 export default () => {
   return (
-    <JsCadFixture zAxisUp>
+    <JsCadFixture zAxisUp showGrid>
       <A0603 />
       <ExtrudedPads footprint="0603" />
     </JsCadFixture>

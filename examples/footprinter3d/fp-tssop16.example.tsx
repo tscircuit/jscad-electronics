@@ -6,7 +6,7 @@ const footprint = "tssop16_w4.5mm_p0.65mm_pl0.6mm_pw0.2mm"
 
 export default () => {
   return (
-    <JsCadFixture zAxisUp>
+    <JsCadFixture zAxisUp showGrid>
       <Footprinter3d footprint={footprint} />
       <ExtrudedPads footprint={footprint} />
     </JsCadFixture>

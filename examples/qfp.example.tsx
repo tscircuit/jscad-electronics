@@ -4,7 +4,7 @@ import { ExtrudedPads } from "../lib/ExtrudedPads"
 
 export default () => {
   return (
-    <JsCadFixture zAxisUp>
+    <JsCadFixture zAxisUp showGrid>
       <QFP pinCount={48} />
       <ExtrudedPads footprint="qfp48" />
     </JsCadFixture>
