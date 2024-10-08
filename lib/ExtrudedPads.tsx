@@ -1,4 +1,4 @@
-import type { AnySoupElement } from "@tscircuit/soup"
+import type { AnyCircuitElement } from "circuit-json"
 import { fp } from "@tscircuit/footprinter"
 import { FootprintPad } from "./FootprintPad"
 import { FootprintPlatedHole } from "./FootprintPlatedHole"
@@ -6,9 +6,9 @@ import { FootprintPlatedHole } from "./FootprintPlatedHole"
 export const ExtrudedPads = ({
   soup,
   footprint,
-}: { soup?: AnySoupElement[]; footprint?: string }) => {
+}: { soup?: AnyCircuitElement[]; footprint?: string }) => {
   if (!soup && footprint) {
-    soup = fp.string(footprint).soup()
+    soup = fp.string(footprint).circuitJson()
   }
 
   if (!soup) throw new Error("No soup or footprint provided to ExtrudedPads")

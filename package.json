@@ -20,7 +20,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
-    "@tscircuit/soup": "^0.0.41",
     "@types/react": "^18.3.10",
     "@types/react-dom": "^18.3.0",
     "jscad-fiber": "^0.0.67",
@@ -33,6 +32,7 @@
     "vite-tsconfig-paths": "^5.0.1"
   },
   "dependencies": {
-    "@tscircuit/footprinter": "^0.0.64"
+    "@tscircuit/footprinter": "^0.0.67",
+    "circuit-json": "^0.0.84"
   }
 }

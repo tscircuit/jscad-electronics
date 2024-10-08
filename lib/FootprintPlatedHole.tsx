@@ -1,7 +1,7 @@
-import type { PCBPlatedHole, PCBSMTPad } from "@tscircuit/soup"
+import type { PcbPlatedHole } from "circuit-json"
 import { Colorize, Cuboid, Translate, Cylinder } from "jscad-fiber"
 
-export const FootprintPlatedHole = ({ hole }: { hole: PCBPlatedHole }) => {
+export const FootprintPlatedHole = ({ hole }: { hole: PcbPlatedHole }) => {
   if (hole.shape === "circle") {
     return (
       <Colorize color={[255, 0, 0]}>

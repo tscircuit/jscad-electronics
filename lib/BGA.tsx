@@ -34,7 +34,7 @@ export const BGA = ({
   const ballsSoup = useMemo(() => {
     if (!footprintString) return null
     const result = fp.string(footprintString)
-    return result.soup()
+    return result.circuitJson()
   }, [footprintString])
 
   return (
