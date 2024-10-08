@@ -1,7 +1,7 @@
-import type { PCBSMTPad } from "@tscircuit/soup"
+import type { PcbSmtPad } from "circuit-json"
 import { Colorize, Cuboid, Translate } from "jscad-fiber"
 
-export const FootprintPad = ({ pad }: { pad: PCBSMTPad }) => {
+export const FootprintPad = ({ pad }: { pad: PcbSmtPad }) => {
   if (pad.shape === "rect") {
     return (
       <Colorize color={[255, 0, 0]}>
