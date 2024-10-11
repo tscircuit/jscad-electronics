@@ -1,4 +1,3 @@
-import { fp } from "@tscircuit/footprinter"
 import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 
