@@ -13,16 +13,14 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
 
   switch (fpJson.fn) {
     case "dip":
-      return (
-        <Dip numPins={fpJson.num_pins} pitch={fpJson.p} bodyWidth={fpJson.w} />
-      )
+      return <Dip numPins={fpJson.num_pins} />
     case "tssop":
       return (
         <Tssop
           pinCount={fpJson.num_pins}
-          leadLength={fpJson.pl}
-          LeadWidth={fpJson.pw}
-          patch={fpJson.p}
+          pl={fpJson.pl}
+          pw={fpJson.pw}
+          p={fpJson.p}
           bodyWidth={fpJson.w}
         />
       )
@@ -30,9 +28,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return (
         <Tssop
           pinCount={fpJson.num_pins}
-          leadLength={fpJson.pl}
-          LeadWidth={fpJson.pw}
-          patch={fpJson.p}
+          pl={fpJson.pl}
+          pw={fpJson.pw}
+          p={fpJson.p}
           bodyWidth={fpJson.w}
         />
       ) // TODO switch to SOIC

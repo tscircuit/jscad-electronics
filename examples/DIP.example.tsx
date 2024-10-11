@@ -6,7 +6,7 @@ export default () => {
   return (
     <JsCadFixture zAxisUp showGrid>
       <Dip />
-      <ExtrudedPads footprint="dip8" />
+      <ExtrudedPads footprint="dip8_w5.08" />
     </JsCadFixture>
   )
 }

@@ -96,7 +96,7 @@ export const Dip = ({
       })}
       <ChipBody
         width={bodyWidth}
-        length={numPinsOnEachSide * pitch + 0.5}
+        length={(10 / 4) * numPinsOnEachSide}
         height={5.1 - 0.5}
         heightAboveSurface={0.5}
         center={{ x: 0, y: 0, z: 0 }}

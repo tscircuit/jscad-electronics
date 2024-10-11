@@ -5,20 +5,20 @@ import { SmdChipLead } from "./SmdChipLead"
 // TODO use mm to convert width to mm (and accept strings)
 export const Tssop = ({
   pinCount,
-  leadLength,
-  LeadWidth,
-  patch,
+  pl,
+  pw,
+  p,
   bodyWidth,
 }: {
   pinCount: number
-  patch: number
-  LeadWidth: number
-  leadLength: number
+  p: number
+  pw: number
+  pl: number
   bodyWidth: number
 }) => {
   const sidePinLength = Math.ceil(pinCount / 2)
-  const fullLength = (patch * pinCount) / 2 + LeadWidth / 2
-  const pinOffsetToCenter = ((sidePinLength - 1) * patch) / 2
+  const fullLength = (p * pinCount) / 2 + pw / 2
+  const pinOffsetToCenter = ((sidePinLength - 1) * p) / 2
   return (
     <>
       {Array.from({ length: sidePinLength }).map((_, i) => (
@@ -26,13 +26,13 @@ export const Tssop = ({
           key={i}
           position={{
             x: -bodyWidth / 2 - 0.9,
-            y: i * patch - pinOffsetToCenter,
+            y: i * p - pinOffsetToCenter,
             z: 0,
           }}
-          width={LeadWidth}
+          width={pw}
           thickness={0.25}
-          padContactLength={leadLength}
-          bodyDistance={leadLength + 0.4}
+          padContactLength={pl}
+          bodyDistance={pl + 0.4}
           height={0.8}
         />
       ))}
@@ -42,13 +42,13 @@ export const Tssop = ({
           rotation={Math.PI}
           position={{
             x: bodyWidth / 2 + 0.9,
-            y: i * patch - pinOffsetToCenter,
+            y: i * p - pinOffsetToCenter,
             z: 0,
           }}
-          width={LeadWidth}
+          width={pw}
           thickness={0.25}
-          padContactLength={leadLength}
-          bodyDistance={leadLength + 0.4}
+          padContactLength={pl}
+          bodyDistance={pl + 0.4}
           height={0.8}
         />
       ))}
