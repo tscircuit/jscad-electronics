@@ -17,7 +17,7 @@ export const Tssop = ({
   bodyWidth: number
 }) => {
   const sidePinLength = Math.ceil(pinCount / 2)
-  const fullLength = (pitch * pinCount) / 2 + LeadWidth / 2
+  const fullLength = (pitch * pinCount) / 2 + leadWidth / 2
   const pinOffsetToCenter = ((sidePinLength - 1) * pitch) / 2
   return (
     <>
