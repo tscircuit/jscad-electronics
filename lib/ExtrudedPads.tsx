@@ -8,7 +8,7 @@ export const ExtrudedPads = ({
   footprint,
 }: { soup?: AnyCircuitElement[]; footprint?: string }) => {
   if (!soup && footprint) {
-    soup = fp.string(footprint).circuitJson()
+    soup = fp.string(footprint).circuitJson() as AnyCircuitElement[]
   }
 
   if (!soup) throw new Error("No soup or footprint provided to ExtrudedPads")
