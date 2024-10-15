@@ -20,7 +20,7 @@ export const USB_A = ({
   outerWidth = 12, // Overall width of the connector
   outerHeight = 4.5, // Overall height of the connector
   outerDepth = 14, // Overall depth of the connector
-  metalThickness = 0.5, // Thickness of the metal casing
+  metalThickness = 0.28, // Thickness of the metal casing
   innerHeight = 2.5, // Height of the plastic part inside
   innerWidth = 10, // Width of the plastic part inside
   innerDepth = 10, // Depth of the plastic part inside
@@ -174,7 +174,7 @@ export const USB_A = ({
 
   // Outer plate
   const outerPlate = useMemo(() => {
-    const thickness = 0.4
+    const thickness = 0.2
     return (
       <Cuboid
         color={innerColor}
