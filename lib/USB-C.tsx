@@ -246,7 +246,7 @@ export const USB_C = ({
         <Cuboid
           color={outerColor}
           key={index}
-          center={{ x: pos.x, y: pos.y - pos.width/2 , z: pos.z }}
+          center={{ x: pos.x, y: pos.y - pos.width / 2, z: pos.z }}
           size={
             [pos.thickness, pos.width, pos.height] as [number, number, number]
           }
