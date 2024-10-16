@@ -1,4 +1,4 @@
-import { Cuboid } from "jscad-fiber"
+import { Cuboid,Cylinder,Subtract } from "jscad-fiber"
 
 export const SmdLED = ({
   footprint,
@@ -13,6 +13,7 @@ export const SmdLED = ({
   let padThickness: number
   let bodyLength: number
   let bodyWidth: number
+  let curvedRadius: number
 
   switch (footprint) {
     case "0402":
@@ -20,9 +21,10 @@ export const SmdLED = ({
         padWidth = 0.6
         padLength = 0.7
         padGap = 0.5
-        padThickness = 0.1
-        bodyLength = padWidth + padGap * 2
+        padThickness = 0.05
+        bodyLength = padWidth*1.5 + padGap * 2 
         bodyWidth = padLength
+        curvedRadius = 0.35
       }
       break
     case "0603":
@@ -30,9 +32,10 @@ export const SmdLED = ({
         padWidth = 0.8
         padLength = 1
         padGap = 0.8
-        padThickness = 0.1
-        bodyLength = padWidth + padGap * 2
+        padThickness = 0.05
+        bodyLength = padWidth*1.5 + padGap * 2
         bodyWidth = padLength
+        curvedRadius = 0.3
       }
       break
     case "0805":
@@ -40,9 +43,10 @@ export const SmdLED = ({
         padWidth = 1
         padLength = 1.3
         padGap = 1
-        padThickness = 0.1
-        bodyLength = padWidth + padGap * 2
+        padThickness = 0.05
+        bodyLength = padWidth*1.5 + padGap * 2
         bodyWidth = padLength
+        curvedRadius = 0.4
       }
       break
   }
@@ -60,11 +64,18 @@ export const SmdLED = ({
         size={[padWidth, padLength, padThickness]}
         center={[padGap, 0, padThickness / 2]}
       />
+      <Subtract>
       <Cuboid
         color="#fff"
         size={[bodyLength, bodyWidth, padThickness]}
         center={[0, 0, padThickness * 1.5]}
-      />
+        />
+       
+      <Cylinder height={padLength} radius={curvedRadius} center={[-padWidth*2, 0, 0]} />
+      <Cylinder height={padLength} radius={curvedRadius} center={[padWidth*2, 0, 0]} />
+
+
+        </Subtract>
 
       {/* Plastic colored cube */}
       <Cuboid
@@ -72,6 +83,7 @@ export const SmdLED = ({
         size={[bodyLength / 2, padLength + 0.005, 0.4]}
         center={[0, 0, padThickness * 3.5]}
       />
+
     </>
   )
 }
