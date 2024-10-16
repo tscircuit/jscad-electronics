@@ -1,4 +1,4 @@
-import { Cuboid,Cylinder,Subtract } from "jscad-fiber"
+import { Cuboid, Cylinder, Subtract } from "jscad-fiber"
 
 export const SmdLED = ({
   footprint,
@@ -22,7 +22,7 @@ export const SmdLED = ({
         padLength = 0.7
         padGap = 0.5
         padThickness = 0.05
-        bodyLength = padWidth*1.5 + padGap * 2 
+        bodyLength = padWidth * 1.5 + padGap * 2
         bodyWidth = padLength
         curvedRadius = 0.35
       }
@@ -33,7 +33,7 @@ export const SmdLED = ({
         padLength = 1
         padGap = 0.8
         padThickness = 0.05
-        bodyLength = padWidth*1.5 + padGap * 2
+        bodyLength = padWidth * 1.5 + padGap * 2
         bodyWidth = padLength
         curvedRadius = 0.3
       }
@@ -44,7 +44,7 @@ export const SmdLED = ({
         padLength = 1.3
         padGap = 1
         padThickness = 0.05
-        bodyLength = padWidth*1.5 + padGap * 2
+        bodyLength = padWidth * 1.5 + padGap * 2
         bodyWidth = padLength
         curvedRadius = 0.4
       }
@@ -65,17 +65,23 @@ export const SmdLED = ({
         center={[padGap, 0, padThickness / 2]}
       />
       <Subtract>
-      <Cuboid
-        color="#fff"
-        size={[bodyLength, bodyWidth, padThickness]}
-        center={[0, 0, padThickness * 1.5]}
+        <Cuboid
+          color="#fff"
+          size={[bodyLength, bodyWidth, padThickness]}
+          center={[0, 0, padThickness * 1.5]}
         />
-       
-      <Cylinder height={padLength} radius={curvedRadius} center={[-padWidth*2, 0, 0]} />
-      <Cylinder height={padLength} radius={curvedRadius} center={[padWidth*2, 0, 0]} />
 
-
-        </Subtract>
+        <Cylinder
+          height={padLength}
+          radius={curvedRadius}
+          center={[-padWidth * 2, 0, 0]}
+        />
+        <Cylinder
+          height={padLength}
+          radius={curvedRadius}
+          center={[padWidth * 2, 0, 0]}
+        />
+      </Subtract>
 
       {/* Plastic colored cube */}
       <Cuboid
@@ -83,7 +89,6 @@ export const SmdLED = ({
         size={[bodyLength / 2, padLength + 0.005, 0.4]}
         center={[0, 0, padThickness * 3.5]}
       />
-
     </>
   )
 }
