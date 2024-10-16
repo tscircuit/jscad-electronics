@@ -6,7 +6,7 @@ export default () => {
   return (
     <JsCadFixture zAxisUp showGrid>
       <ExtrudedPads footprint="0805" />
-      <SmdLED footPrintType="0805" color="green" />
+      <SmdLED footprint="0805" color="green" />
     </JsCadFixture>
   )
 }

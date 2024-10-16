@@ -1,10 +1,10 @@
 import { Cuboid } from "jscad-fiber"
 
 export const SmdLED = ({
-  footPrintType,
+  footprint,
   color,
 }: {
-  footPrintType: "0402" | "0603" | "0805"
+  footprint: "0402" | "0603" | "0805"
   color?: string
 }) => {
   let padWidth: number
@@ -14,7 +14,7 @@ export const SmdLED = ({
   let bodyLength: number
   let bodyWidth: number
 
-  switch (footPrintType) {
+  switch (footprint) {
     case "0402":
       {
         padWidth = 0.6
