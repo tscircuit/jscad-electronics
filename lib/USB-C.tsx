@@ -1,4 +1,12 @@
-import { Cuboid, Translate, Colorize, Cylinder, Ellipsoid } from "jscad-fiber"
+import {
+  Cuboid,
+  Translate,
+  Colorize,
+  Cylinder,
+  Ellipsoid,
+  Rotate,
+  Subtract,
+} from "jscad-fiber"
 import { useMemo } from "react"
 
 interface USB_CProps {
@@ -74,41 +82,6 @@ export const USB_C = ({
         size: [flatMetalCasing, outerDepth, metalThickness],
       },
     ]
-    const numCuboids = 50 // Increase the number of segments to reduce space between bars (Resolution)
-    const radius = outerWidth / 10 // Adjust based on how curved you want it
-    const angleStep = Math.PI / numCuboids // Angle between each cuboid
-
-    // Loop to create the curved part
-    for (let i = 0; i <= numCuboids; i++) {
-      const angle = i * angleStep - Math.PI / 2 // Start from -90 degrees to 90 degrees
-
-      // Position for each cuboid along the curve
-      const x = radius * Math.cos(angle) + (outerWidth / 2 - outerWidth / 10)
-      const z = outerHeight / 2 + radius * 1.36 * Math.sin(angle) // Adjust z-axis to curve vertically
-
-      positions.push({
-        plate: "left curved",
-        x: -x,
-        y: 0,
-        z: z,
-        size: [metalThickness, outerDepth, metalThickness], // Thin cuboid
-      })
-    }
-    for (let i = 0; i <= numCuboids; i++) {
-      const angle = i * angleStep - Math.PI / 2 // Start from -90 degrees to 90 degrees
-
-      // Position for each cuboid along the curve
-      const x = radius * Math.cos(angle) + (outerWidth / 2 - outerWidth / 10)
-      const z = outerHeight / 2 + radius * 1.36 * Math.sin(angle) // Adjust z-axis to curve vertically
-
-      positions.push({
-        plate: "right curved",
-        x: x,
-        y: 0,
-        z: z,
-        size: [metalThickness, outerDepth, metalThickness], // Thin cuboid
-      })
-    }
 
     return positions.map((pos, index) => (
       <Colorize
@@ -120,6 +93,46 @@ export const USB_C = ({
           center={{ x: pos.x, y: pos.y, z: pos.z }}
         />
       </Colorize>
+    ))
+  }, [outerWidth, outerDepth, outerHeight, metalThickness, outerColor])
+  const curvedSides = useMemo(() => {
+    const positions = [
+      {
+        x: outerWidth / 3 + metalThickness * 2,
+        y: 0,
+        z: outerHeight / 2,
+      },
+      {
+        x: -outerWidth / 3 - metalThickness * 2,
+        y: 0,
+        z: outerHeight / 2,
+      },
+    ]
+    return positions.map((pos, index) => (
+      <Subtract color={outerColor}>
+        <Cylinder
+          rotation={[Math.PI / 2, 0, 0]}
+          key={index}
+          color={outerColor}
+          center={[pos.x, pos.y, pos.z]}
+          radius={outerHeight / 2}
+          height={outerDepth}
+        />
+        <Cylinder
+          rotation={[Math.PI / 2, 0, 0]}
+          key={index + 1}
+          color={"#c4c4c4"}
+          center={[
+            pos.x > 0
+              ? pos.x - metalThickness * 1.5
+              : pos.x + metalThickness * 1.5,
+            pos.y,
+            pos.z,
+          ]}
+          radius={outerHeight / 2 - metalThickness / 3}
+          height={outerDepth}
+        />
+      </Subtract>
     ))
   }, [outerWidth, outerDepth, outerHeight, metalThickness, outerColor])
 
@@ -319,6 +332,7 @@ export const USB_C = ({
       {cylinderPins}
       {backOuterSidePlate}
       {legs}
+      {curvedSides}
     </>
   )
 }
