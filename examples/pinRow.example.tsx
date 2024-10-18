@@ -4,8 +4,8 @@ import { PinRow } from "lib/PinRow"
 export default () => {
   return (
     <JsCadFixture zAxisUp showGrid>
-      <ExtrudedPads footprint="pinrow10_id0.3mm_p1mm_od0.4mm" />
-      <PinRow numberOfPins={10} pinDiameter={0.3} pitch={1} pinHeight={5} />
+      <ExtrudedPads footprint="pinrow5_id01mm_p2.54mm_od01.6mm" />
+      <PinRow numberOfPins={5} longSidePinLength={6} pitch={2.54} />
     </JsCadFixture>
   )
 }

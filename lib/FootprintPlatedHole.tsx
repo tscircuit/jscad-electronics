@@ -8,8 +8,8 @@ export const FootprintPlatedHole = ({ hole }: { hole: PcbPlatedHole }) => {
         <Translate offset={[hole.x, hole.y, 0]}>
           {/* <Rotate axis="z" angle={90}> */}
           <Subtract>
-            <Cylinder radius={hole.outer_diameter} height={0.01} />
-            <Cylinder radius={hole.hole_diameter} height={0.01} />
+            <Cylinder radius={hole.outer_diameter / 2} height={0.01} />
+            <Cylinder radius={hole.hole_diameter / 2} height={0.01} />
           </Subtract>
           {/* </Rotate> */}
         </Translate>

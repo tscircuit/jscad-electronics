@@ -1,43 +1,70 @@
-import { Cuboid, Cylinder } from "jscad-fiber"
+import { Cuboid, Cylinder, Union, HullChain, Colorize, Hull } from "jscad-fiber"
 
 export const PinRow = ({
   numberOfPins,
-  pitch = 2.539,
-  pinDiameter = 1,
-  pinHeight = 8,
+  pitch = 2.54,
+  longSidePinLength = 6,
 }: {
   numberOfPins: number
   pitch?: number
-  pinDiameter?: number
-  pinHeight?: number
+  longSidePinLength?: number
 }) => {
+  const pinThickness = 0.63
+  const bodyHeight = 2
+  const bodyWidth = numberOfPins * pitch
+  const shortSidePinLength = 3
+  const xoff = -((numberOfPins - 1) / 2) * pitch
   return (
     <>
+      <Cuboid
+        color="#222"
+        size={[bodyWidth, pinThickness * 3, bodyHeight]}
+        center={[0, 0, bodyHeight / 2]}
+      />
       {Array.from({ length: numberOfPins }, (_, i) => (
         <>
-          <Cuboid
-            color="#222"
-            size={[pitch * 1.5, pitch * 1.5, 1.5]}
-            center={[
-              i < numberOfPins / 2
-                ? i * pitch + pitch / 2
-                : (-i + numberOfPins / 2 - 1) * pitch + pitch / 2,
-              0,
-              0.75,
-            ]}
-          />
-          <Cylinder
-            color="gold"
-            height={pinHeight}
-            radius={pinDiameter}
-            center={[
-              i < numberOfPins / 2
-                ? i * pitch + pitch / 2
-                : (-i + numberOfPins / 2 - 1) * pitch + pitch / 2,
-              0,
-              0.75,
-            ]}
-          />
+          {/*Short pins (top) */}
+          <Colorize color="gold">
+            <Hull>
+              <Cuboid
+                color="gold"
+                size={[pinThickness, pinThickness, shortSidePinLength * 0.9]}
+                center={[
+                  xoff + i * pitch,
+                  0,
+                  bodyHeight * 0.9 + bodyHeight / 2,
+                ]}
+              />
+              <Cuboid
+                color="gold"
+                size={[
+                  pinThickness / 1.8,
+                  pinThickness / 1.8,
+                  shortSidePinLength,
+                ]}
+                center={[xoff + i * pitch, 0, bodyHeight + bodyHeight / 2]}
+              />
+            </Hull>
+          </Colorize>
+          {/*Long pins (bottom) */}
+          <Colorize color="gold">
+            <Hull>
+              <Cuboid
+                color="gold"
+                size={[pinThickness, pinThickness, longSidePinLength * 0.9]}
+                center={[xoff + i * pitch, 0, (-longSidePinLength / 2) * 0.9]}
+              />
+              <Cuboid
+                color="gold"
+                size={[
+                  pinThickness / 1.8,
+                  pinThickness / 1.8,
+                  longSidePinLength,
+                ]}
+                center={[xoff + i * pitch, 0, -longSidePinLength / 2]}
+              />
+            </Hull>
+          </Colorize>
         </>
       ))}
     </>
