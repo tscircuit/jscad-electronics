@@ -1,13 +1,16 @@
 import type { PcbPlatedHole } from "circuit-json"
-import { Colorize, Cuboid, Translate, Cylinder } from "jscad-fiber"
+import { Colorize, Cuboid, Translate, Cylinder, Subtract } from "jscad-fiber"
 
 export const FootprintPlatedHole = ({ hole }: { hole: PcbPlatedHole }) => {
   if (hole.shape === "circle") {
     return (
-      <Colorize color={[255, 0, 0]}>
+      <Colorize color="#b87333">
         <Translate offset={[hole.x, hole.y, 0]}>
           {/* <Rotate axis="z" angle={90}> */}
-          <Cylinder radius={hole.outer_diameter} height={0.01} />
+          <Subtract>
+            <Cylinder radius={hole.outer_diameter} height={0.01} />
+            <Cylinder radius={hole.hole_diameter} height={0.01} />
+          </Subtract>
           {/* </Rotate> */}
         </Translate>
       </Colorize>
