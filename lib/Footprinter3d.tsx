@@ -5,6 +5,7 @@ import { A0402 } from "./A0402"
 import { A0603 } from "./A0603"
 import { A0805 } from "./A0805"
 import { QFP } from "./qfp"
+import { PinRow } from "./PinRow"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -36,6 +37,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           bodyWidth={fpJson.w}
         />
       )
+    case "pinrow":
+      return <PinRow numberOfPins={fpJson.num_pins} pitch={fpJson.p} />
     case "soic":
       return (
         <Tssop

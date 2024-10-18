@@ -3,7 +3,7 @@ import tsconfigPaths from "vite-tsconfig-paths"
 
 export default defineConfig({
   optimizeDeps: {
-    needsInterop: ["@tscircuit/footprinter", "jscad-fiber", "@tscircuit/mm"],
+    needsInterop: ["jscad-fiber", "@tscircuit/mm"],
   },
   plugins: [tsconfigPaths()],
   define: {
