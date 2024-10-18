@@ -1,6 +1,6 @@
 import { JsCadFixture } from "jscad-fiber"
 import { ExtrudedPads } from "lib/index"
-import { PinRow } from "lib/Pinrow"
+import { PinRow } from "lib/PinRow"
 export default () => {
   return (
     <JsCadFixture zAxisUp showGrid>
