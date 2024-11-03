@@ -9,13 +9,13 @@ const terminatorLength = 0.3
 const width = 0.85
 const height = 0.6
 
-export const A0603 = () => {
+export const A0603 = ({ color = "#333" }) => {
   return (
     <>
       <Cuboid
         size={[bodyLength, width, height]}
         offset={[0, 0, height / 2]}
-        color="#333"
+        color={color}
       />
       <Cuboid
         size={[terminatorLength, width, height]}

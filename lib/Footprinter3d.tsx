@@ -10,8 +10,18 @@ import { PinRow } from "./PinRow"
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
  */
+
 export const Footprinter3d = ({ footprint }: { footprint: string }) => {
-  const fpJson = fp.string(footprint).json()
+  const fpJson = fp.string(footprint).json() as unknown as {
+    w: number
+    p: number
+    pl: number
+    pw: number
+    num_pins: number
+    fn: string
+    imperial: String
+  }
+
   switch (fpJson.fn) {
     case "dip":
       return (
@@ -39,6 +49,17 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       )
     case "pinrow":
       return <PinRow numberOfPins={fpJson.num_pins} pitch={fpJson.p} />
+
+    case "cap": {
+      switch (fpJson.imperial) {
+        case "0402":
+          return <A0402 color="#856c4d" />
+        case "0603":
+          return <A0603 color="#856c4d" />
+        case "0805":
+          return <A0805 color="#856c4d" />
+      }
+    }
     case "soic":
       return (
         <Tssop

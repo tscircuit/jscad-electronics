@@ -22,7 +22,7 @@
     "@biomejs/biome": "^1.9.3",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
-    "jscad-fiber": "^0.0.68",
+    "jscad-fiber": "^0.0.71",
     "react": "^18.3.1",
     "react-cosmos": "^6.2.0",
     "react-cosmos-plugin-vite": "^6.2.0",
@@ -32,7 +32,7 @@
     "vite-tsconfig-paths": "^5.0.1"
   },
   "dependencies": {
-    "@tscircuit/footprinter": "^0.0.70",
-    "circuit-json": "^0.0.84"
+    "@tscircuit/footprinter": "^0.0.82",
+    "circuit-json": "^0.0.92"
   }
 }
