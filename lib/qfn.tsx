@@ -56,7 +56,7 @@ export const QFN = ({
     const pn = pin_map[i + 1]!
     pinPositions.push({ pn, x, y, pw, pl })
   }
-  console.log(pinPositions.length)
+
   return (
     <>
       <Colorize color="grey">
