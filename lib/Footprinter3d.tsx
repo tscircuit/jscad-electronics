@@ -6,6 +6,7 @@ import { A0603 } from "./A0603"
 import { A0805 } from "./A0805"
 import { QFP } from "./qfp"
 import { PinRow } from "./PinRow"
+import QFN from "./qfn"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -15,10 +16,12 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
   const fpJson = fp.string(footprint).json() as unknown as {
     w: number
     p: number
+    h: number
     pl: number
     pw: number
     num_pins: number
     fn: string
+    thermalpad: { x: number; y: number }
     imperial: String
   }
 
@@ -45,6 +48,21 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           leadWidth={fpJson.pw}
           padContactLength={fpJson.pl}
           bodyWidth={fpJson.w}
+        />
+      )
+    case "qfn":
+      return (
+        <QFN
+          num_pins={fpJson.num_pins}
+          bodyWidth={fpJson.w}
+          bodyLength={fpJson.h}
+          pitch={fpJson.p}
+          padLength={fpJson.pl}
+          padWidth={fpJson.pw}
+          thermalPadSize={{
+            width: fpJson.thermalpad.x,
+            length: fpJson.thermalpad.y,
+          }}
         />
       )
     case "pinrow":

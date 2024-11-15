@@ -87,7 +87,7 @@ export const SmdLED = ({
       <Cuboid
         color={color}
         size={[bodyLength / 2, padLength + 0.005, 0.4]}
-        center={[0, 0, padThickness * 3.5]}
+        center={[0, 0, padThickness * 5]}
       />
     </>
   )
