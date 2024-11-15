@@ -1,29 +1,88 @@
 import { Cuboid, Colorize } from "jscad-fiber"
-
+import { getQuadCoords } from "./utils/getQuadCoords"
+import { getQuadPinMap } from "./utils/getQuadPinMap"
 export const QFN = ({
-  fullWidth = 5,
-  height = 0.8,
-  thermalPadSize = 2,
+  num_pins = 16,
+  bodyWidth = 9,
+  bodyLength = 9,
+  bodyThickness = 0.8,
+  thermalPadSize,
+  padWidth = 0.25,
+  padLength = 0.25,
+  pitch = 0.5,
+  thermalPadThickness = 0.05,
 }: {
-  fullWidth?: number
-  height?: number
-  thermalPadSize?: number
+  num_pins: number
+  bodyWidth?: number
+  bodyLength?: number
+  bodyThickness?: number
+  thermalPadSize?: {
+    width: number
+    length: number
+  }
+  padWidth?: number
+  padLength?: number
+  pitch?: number
+  thermalPadThickness?: number
 }) => {
-  const bodyWidth = fullWidth
-  const bodyLength = fullWidth
-  const thermalPadHeight = 0.1
+  const pin_map = getQuadPinMap({
+    num_pins,
+    cw: true,
+    ccw: true,
+  })
+  const pinPositions = []
+  const spc = num_pins / 4
+  for (let i = 0; i < num_pins; i++) {
+    const {
+      x,
+      y,
+      o: orientation,
+    } = getQuadCoords({
+      pin_count: num_pins,
+      pn: i + 1,
+      w: bodyWidth,
+      h: bodyLength,
+      p: pitch,
+      pl: padLength,
+      legsoutside: false,
+    })
+
+    let pw = padWidth
+    let pl = padLength
+    if (orientation === "vert") {
+      ;[pw, pl] = [pl, pw]
+    }
+
+    const pn = pin_map[i + 1]!
+    pinPositions.push({ pn, x, y, pw, pl })
+  }
+  console.log(pinPositions.length)
   return (
     <>
       <Colorize color="grey">
         <Cuboid
-          center={{ x: 0, y: 0, z: height / 2 }}
-          size={[bodyWidth, bodyLength, height]}
+          center={{ x: 0, y: 0, z: bodyThickness / 2 }}
+          size={[bodyWidth, bodyLength, bodyThickness]}
         />
       </Colorize>
-      <Cuboid
-        center={{ x: 0, y: 0, z: -thermalPadHeight / 2 }}
-        size={[thermalPadSize, thermalPadSize, thermalPadHeight]}
-      />
+      {pinPositions.map((p, i) => (
+        <Cuboid
+          key={i}
+          center={{ x: p.x, y: p.y, z: 0 }}
+          size={[p.pw, p.pl, thermalPadThickness]}
+        />
+      ))}
+      {thermalPadSize?.length !== undefined &&
+        thermalPadSize?.width !== undefined && (
+          <Cuboid
+            center={{ x: 0, y: 0, z: 0 }}
+            size={[
+              thermalPadSize.width,
+              thermalPadSize.length,
+              thermalPadThickness,
+            ]}
+          />
+        )}
     </>
   )
 }
