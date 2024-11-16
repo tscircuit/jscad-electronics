@@ -1,6 +1,6 @@
 import { Colorize, Cuboid, Cylinder, Subtract, Union } from "jscad-fiber"
 
-export const Board = ({
+export const StampBoard = ({
   bodyWidth = 21,
   boardThickness = 0.5,
   leadWidth = 1.6,
@@ -175,4 +175,4 @@ export const Board = ({
   )
 }
 
-export default Board
+export default StampBoard
