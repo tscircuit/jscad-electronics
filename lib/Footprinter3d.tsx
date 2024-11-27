@@ -7,6 +7,7 @@ import { A0805 } from "./A0805"
 import { QFP } from "./qfp"
 import { PinRow } from "./PinRow"
 import QFN from "./qfn"
+import SOT235 from "./SOT-235"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -78,6 +79,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           return <A0805 color="#856c4d" />
       }
     }
+    case "sot235":
+      return <SOT235 />
+
     case "soic":
       return (
         <Tssop
