@@ -1,4 +1,4 @@
-import { JsCadFixture } from "jscad-fiber"
+import { JsCadView } from "jscad-fiber"
 import { Footprinter3d } from "lib/Footprinter3d"
 import { ExtrudedPads } from "lib/ExtrudedPads"
 
@@ -6,9 +6,9 @@ const footprint = "dip8"
 
 export default () => {
   return (
-    <JsCadFixture zAxisUp showGrid>
+    <JsCadView zAxisUp showGrid>
       <Footprinter3d footprint={footprint} />
       <ExtrudedPads footprint={footprint} />
-    </JsCadFixture>
+    </JsCadView>
   )
 }
