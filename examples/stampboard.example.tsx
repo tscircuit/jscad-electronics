@@ -1,10 +1,10 @@
-import { JsCadFixture } from "jscad-fiber"
+import { JsCadView } from "jscad-fiber"
 import { ExtrudedPads } from "lib/ExtrudedPads"
 import StampBoard from "lib/stampboard"
 
 export default () => {
   return (
-    <JsCadFixture zAxisUp showGrid>
+    <JsCadView zAxisUp showGrid>
       <StampBoard
         bodyWidth={21}
         leadsTop={3}
@@ -16,6 +16,6 @@ export default () => {
       <ExtrudedPads
         footprint={"stampreceiver_left20_right20_bottom3_top3_w21mm_innerhole"}
       />
-    </JsCadFixture>
+    </JsCadView>
   )
 }

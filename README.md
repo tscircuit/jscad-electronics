@@ -13,7 +13,6 @@ Contribution Guide:
 
 [![image](https://github.com/user-attachments/assets/92236fbf-8b59-4984-9b97-0f12f24de7c8)](https://youtu.be/DHGW_DFhJao)
 
-
 ## Features
 
 - Wide range of electronic component models (e.g., resistors, capacitors, ICs, connectors)
@@ -34,15 +33,15 @@ npm install jscad-electronics
 Here's a basic example of how to use jscad-electronics with JSCAD:
 
 ```jsx
-import { JsCadFixture } from "jscad-fiber"
+import { JsCadView } from "jscad-fiber"
 import { SOT233P, ExtrudedPads } from "jscad-electronics"
 
 export default () => {
   return (
-    <JsCadFixture zAxisUp>
+    <JsCadView zAxisUp>
       <SOT233P />
       <ExtrudedPads footprint="sot23" />
-    </JsCadFixture>
+    </JsCadView>
   )
 }
 ```
