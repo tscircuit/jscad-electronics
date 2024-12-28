@@ -8,6 +8,12 @@ import { QFP } from "./qfp"
 import { PinRow } from "./PinRow"
 import QFN from "./qfn"
 import SOT235 from "./SOT-235"
+import { A0201 } from "./A0201"
+import { A01005 } from "./A01005"
+import { A1206 } from "./A1206"
+import { A1210 } from "./A1210"
+import { A2010 } from "./A2010"
+import { A2512 } from "./A2512"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -77,6 +83,18 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           return <A0603 color="#856c4d" />
         case "0805":
           return <A0805 color="#856c4d" />
+        case "0201":
+          return <A0201 color="#856c4d" />
+        case "01005":
+          return <A01005 color="#856c4d" />
+        case "1206":
+          return <A1206 color="#856c4d" />
+        case "1210":
+          return <A1210 color="#856c4d" />
+        case "2010":
+          return <A2010 color="#856c4d" />
+        case "2512":
+          return <A2512 color="#856c4d" />
       }
     }
     case "sot235":
@@ -101,6 +119,18 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <A0603 />
     case "0805":
       return <A0805 />
+    case "0201":
+      return <A0201 />
+    case "01005":
+      return <A01005 />
+    case "1206":
+      return <A1206 />
+    case "1210":
+      return <A1210 />
+    case "2010":
+      return <A2010 />
+    case "2512":
+      return <A2512 />
   }
   return null
 }

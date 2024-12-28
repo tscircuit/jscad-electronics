@@ -4,3 +4,4 @@ node_modules
 cosmos-export
 .aider*
 dist
+.env
