@@ -34,6 +34,8 @@ const svgPathPoints = normalizeOnY([
   { x: 20, y: 109 },
 ])
 
+const OFFSET_PIN_POSITION_Z = 0.3
+
 export const DipPinLeg = ({ x, y, z }: { x: number; y: number; z: number }) => {
   const isRotated = x > 0
   return (
@@ -90,7 +92,7 @@ export const Dip = ({
             key={i}
             x={(xRow * crossBodyPinWidth) / 2}
             y={yRow * pitch - ((numPinsOnEachSide - 1) / 2) * pitch}
-            z={5.47 / 2}
+            z={5.47 / 2 + OFFSET_PIN_POSITION_Z}
           />
         )
       })}
