@@ -39,7 +39,7 @@ export const QFP = ({
           position={{
             x: -fullWidth / 2,
             y: i * pitch - pinOffsetToCenter,
-            z: 0,
+            z: leadThickness / 2,
           }}
           width={leadWidth}
           thickness={leadThickness}
@@ -57,7 +57,7 @@ export const QFP = ({
           position={{
             x: fullWidth / 2,
             y: i * pitch - pinOffsetToCenter,
-            z: 0,
+            z: leadThickness / 2,
           }}
           width={leadWidth}
           thickness={leadThickness}
@@ -75,7 +75,7 @@ export const QFP = ({
           position={{
             x: i * pitch - pinOffsetToCenter,
             y: -fullLength / 2,
-            z: 0,
+            z: leadThickness / 2,
           }}
           width={leadWidth}
           thickness={leadThickness}
@@ -93,7 +93,7 @@ export const QFP = ({
           position={{
             x: i * pitch - pinOffsetToCenter,
             y: fullLength / 2,
-            z: 0,
+            z: leadThickness / 2,
           }}
           width={leadWidth}
           thickness={leadThickness}
@@ -104,7 +104,7 @@ export const QFP = ({
       ))}
 
       <ChipBody
-        center={{ x: 0, y: 0, z: leadHeight / 2 }}
+        center={{ x: 0, y: 0, z: leadThickness / 2 }}
         width={bodyWidth}
         length={bodyLength}
         height={1.5}

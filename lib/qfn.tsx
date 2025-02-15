@@ -68,14 +68,14 @@ export const QFN = ({
       {pinPositions.map((p, i) => (
         <Cuboid
           key={i}
-          center={{ x: p.x, y: p.y, z: 0 }}
+          center={{ x: p.x, y: p.y, z: thermalPadThickness / 2 }}
           size={[p.pw, p.pl, thermalPadThickness]}
         />
       ))}
       {thermalPadSize?.length !== undefined &&
         thermalPadSize?.width !== undefined && (
           <Cuboid
-            center={{ x: 0, y: 0, z: 0 }}
+            center={{ x: 0, y: 0, z: thermalPadThickness / 2 }}
             size={[
               thermalPadSize.width,
               thermalPadSize.length,
