@@ -5,7 +5,6 @@ export const FootprintPlatedHole = ({ hole }: { hole: PcbPlatedHole }) => {
   if (hole.shape === "circle") {
     return (
       <Colorize color="#b87333">
-        {/* Z index to move the footprint below the extruded pads */}
         <Translate offset={[hole.x, hole.y, 0]}>
           {/* <Rotate axis="z" angle={90}> */}
           <Subtract>

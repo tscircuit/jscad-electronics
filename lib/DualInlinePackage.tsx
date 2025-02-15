@@ -34,7 +34,8 @@ const svgPathPoints = normalizeOnY([
   { x: 20, y: 109 },
 ])
 
-const OFFSET_PIN_POSITION_Z = 0.3
+const DIP_PIN_HEIGHT = 5.47
+const heightAboveSurface = 0.5
 
 export const DipPinLeg = ({ x, y, z }: { x: number; y: number; z: number }) => {
   const isRotated = x > 0
@@ -92,16 +93,16 @@ export const Dip = ({
             key={i}
             x={(xRow * crossBodyPinWidth) / 2}
             y={yRow * pitch - ((numPinsOnEachSide - 1) / 2) * pitch}
-            z={5.47 / 2 + OFFSET_PIN_POSITION_Z}
+            z={DIP_PIN_HEIGHT / 2 + heightAboveSurface}
           />
         )
       })}
       <ChipBody
         width={bodyWidth}
         length={numPinsOnEachSide * pitch + 0.5}
-        height={5.1 - 0.5}
-        heightAboveSurface={0.5}
-        center={{ x: 0, y: 0, z: 0 }}
+        height={DIP_PIN_HEIGHT - heightAboveSurface}
+        heightAboveSurface={heightAboveSurface}
+        center={{ x: 0, y: 0, z: heightAboveSurface }}
       />
     </>
   )
