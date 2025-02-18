@@ -16,24 +16,24 @@ export const FemaleHeader = ({
   const xoff = -((numberOfPins - 1) / 2) * pitch
   const Body = (
     <Colorize color="#1a1a1a">
-    <Subtract>
-       <Cuboid
-        color="#000"
-        size={[bodyWidth, pinThickness * 3, bodyHeight]}
-        center={[0, 0, bodyHeight / 2]}
-      />
-     {Array.from({ length: numberOfPins }, (_, i) => (
+      <Subtract>
+        <Cuboid
+          color="#000"
+          size={[bodyWidth, pinThickness * 3, bodyHeight]}
+          center={[0, 0, bodyHeight / 2]}
+        />
+        {Array.from({ length: numberOfPins }, (_, i) => (
           <Cuboid
             size={[gapWidth, gapWidth, bodyHeight]}
-            center={[xoff + i * pitch, 0, (bodyHeight/2) ]}
+            center={[xoff + i * pitch, 0, bodyHeight / 2]}
           />
-      ))}
-    </Subtract>
+        ))}
+      </Subtract>
     </Colorize>
   )
   return (
     <>
-        {Body}
+      {Body}
       {Array.from({ length: numberOfPins }, (_, i) => (
         <>
           {/*Long pins (bottom) */}
@@ -46,20 +46,15 @@ export const FemaleHeader = ({
               />
               <Cuboid
                 color="silver"
-                size={[
-                  pinThickness / 1.8,
-                  pinThickness / 1.8,
-                  legsLength,
-                ]}
+                size={[pinThickness / 1.8, pinThickness / 1.8, legsLength]}
                 center={[xoff + i * pitch, 0, -legsLength / 2]}
               />
-             
             </Hull>
             <Cuboid
-                color="silver"
-                size={[gapWidth, gapWidth, gapWidth * 0.5]}
-                center={[xoff + i * pitch, 0, (gapWidth / 2) * 0.5]}
-              />
+              color="silver"
+              size={[gapWidth, gapWidth, gapWidth * 0.5]}
+              center={[xoff + i * pitch, 0, (gapWidth / 2) * 0.5]}
+            />
           </Colorize>
         </>
       ))}

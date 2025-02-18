@@ -1,4 +1,4 @@
-import { FemaleHeader } from "lib/FemaleHeader";
+import { FemaleHeader } from "lib/FemaleHeader"
 import { JsCadView } from "jscad-fiber"
 import { ExtrudedPads } from "lib/index"
 export default () => {
