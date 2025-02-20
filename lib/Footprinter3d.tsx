@@ -14,6 +14,7 @@ import { A1206 } from "./A1206"
 import { A1210 } from "./A1210"
 import { A2010 } from "./A2010"
 import { A2512 } from "./A2512"
+import { FemaleHeader } from "./FemaleHeader"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -30,6 +31,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     fn: string
     thermalpad: { x: number; y: number }
     imperial: String
+    male: boolean
+    female: boolean
   }
 
   switch (fpJson.fn) {
@@ -73,7 +76,10 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         />
       )
     case "pinrow":
-      return <PinRow numberOfPins={fpJson.num_pins} pitch={fpJson.p} />
+      if (fpJson.male)
+        return <PinRow numberOfPins={fpJson.num_pins} pitch={fpJson.p} />
+      if (fpJson.female)
+        return <FemaleHeader numberOfPins={fpJson.num_pins} pitch={fpJson.p} />
 
     case "cap": {
       switch (fpJson.imperial) {
