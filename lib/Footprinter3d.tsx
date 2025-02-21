@@ -15,6 +15,7 @@ import { A1210 } from "./A1210"
 import { A2010 } from "./A2010"
 import { A2512 } from "./A2512"
 import { FemaleHeader } from "./FemaleHeader"
+import { PushButton } from "./PushButton"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -33,6 +34,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     imperial: String
     male: boolean
     female: boolean
+    id: number //innerDiameter
+    od: number //outerDiameter
   }
 
   switch (fpJson.fn) {
@@ -105,7 +108,14 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     }
     case "sot235":
       return <SOT235 />
-
+    case "pushbutton":
+      return (
+        <PushButton
+          width={fpJson.w}
+          length={fpJson.h}
+          innerDiameter={fpJson.id}
+        />
+      )
     case "soic":
       return (
         <Tssop
