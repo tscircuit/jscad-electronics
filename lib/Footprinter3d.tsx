@@ -16,6 +16,7 @@ import { A2010 } from "./A2010"
 import { A2512 } from "./A2512"
 import { FemaleHeader } from "./FemaleHeader"
 import { PushButton } from "./PushButton"
+import { SOIC } from "./SOIC"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -118,14 +119,14 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       )
     case "soic":
       return (
-        <Tssop
+        <SOIC
           pinCount={fpJson.num_pins}
           leadLength={fpJson.pl}
           leadWidth={fpJson.pw}
           pitch={fpJson.p}
           bodyWidth={fpJson.w}
         />
-      ) // TODO switch to SOIC
+      )
   }
 
   switch (fpJson.imperial) {
