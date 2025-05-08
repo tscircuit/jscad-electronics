@@ -1,8 +1,8 @@
 import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 
-// TODO use mm to convert width to mm (and accept strings)
-export const Tssop = ({
+// SOIC typical body and lead dimensions
+export const SOIC = ({
   pinCount,
   leadLength,
   leadWidth,
@@ -16,9 +16,13 @@ export const Tssop = ({
   bodyWidth: number
 }) => {
   const sidePinCount = Math.ceil(pinCount / 2)
-  const fullLength = (pitch * pinCount) / 2 + leadWidth / 2
   const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2
   const leadThickness = 0.25
+  const bodyHeight = 1.0
+  const leadHeight = 0.8
+  const leadBodyOffset = leadLength * 0
+  const fullLength = pitch * (sidePinCount - 1) + leadWidth + 0.2
+  const bodyWidthAdjusted = bodyWidth * 0.55
 
   return (
     <>
@@ -26,15 +30,15 @@ export const Tssop = ({
         <SmdChipLead
           key={i}
           position={{
-            x: -bodyWidth / 2 - leadLength,
+            x: -bodyWidth / 2 - leadBodyOffset,
             y: i * pitch - pinOffsetToCenter,
             z: leadThickness / 2,
           }}
           width={leadWidth}
           thickness={leadThickness}
-          padContactLength={leadLength}
-          bodyDistance={leadLength + 1}
-          height={0.8}
+          padContactLength={leadLength / 2}
+          bodyDistance={leadLength + 0.2}
+          height={leadHeight}
         />
       ))}
       {Array.from({ length: sidePinCount }).map((_, i) => (
@@ -42,22 +46,22 @@ export const Tssop = ({
           key={i}
           rotation={Math.PI}
           position={{
-            x: bodyWidth / 2 + leadLength,
+            x: bodyWidth / 2 + leadBodyOffset,
             y: i * pitch - pinOffsetToCenter,
             z: leadThickness / 2,
           }}
           width={leadWidth}
           thickness={leadThickness}
-          padContactLength={leadLength}
-          bodyDistance={leadLength + 1}
-          height={0.8}
+          padContactLength={leadLength / 2}
+          bodyDistance={leadLength + 0.2}
+          height={leadHeight}
         />
       ))}
       <ChipBody
         center={{ x: 0, y: 0, z: leadThickness / 2 }}
-        width={bodyWidth - leadWidth - 1}
+        width={bodyWidthAdjusted}
         length={fullLength}
-        height={1.5}
+        height={bodyHeight}
       />
     </>
   )
