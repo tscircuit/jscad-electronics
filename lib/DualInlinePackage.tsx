@@ -1,4 +1,12 @@
-import { Polygon, ExtrudeLinear, Rotate, Translate, Union } from "jscad-fiber"
+import {
+  Polygon,
+  ExtrudeLinear,
+  Rotate,
+  Translate,
+  Union,
+  Subtract,
+  Cylinder,
+} from "jscad-fiber"
 import { ChipBody } from "./ChipBody"
 import { range } from "./utils/range"
 import { getExpandedStroke } from "./utils/getExpandedStroke"
@@ -81,6 +89,8 @@ export const Dip = ({
 }: { numPins?: number; pitch?: number; bodyWidth?: number }) => {
   const numPinsOnEachSide = Math.floor(numPins / 2)
   const crossBodyPinWidth = bodyWidth + 1
+  const bodyLength = numPinsOnEachSide * pitch + 0.5
+  const notchRadius = bodyWidth * 0.25
 
   return (
     <>
@@ -97,13 +107,29 @@ export const Dip = ({
           />
         )
       })}
-      <ChipBody
-        width={bodyWidth}
-        length={numPinsOnEachSide * pitch + 0.5}
-        height={DIP_PIN_HEIGHT - heightAboveSurface}
-        heightAboveSurface={heightAboveSurface}
-        center={{ x: 0, y: 0, z: heightAboveSurface }}
-      />
+      <Subtract>
+        <ChipBody
+          width={bodyWidth}
+          length={bodyLength}
+          height={DIP_PIN_HEIGHT - heightAboveSurface}
+          heightAboveSurface={heightAboveSurface}
+          center={{ x: 0, y: 0, z: heightAboveSurface }}
+        />
+        <Translate
+          offset={{
+            x: 0,
+            y: bodyLength / 2,
+            z:
+              heightAboveSurface +
+              (DIP_PIN_HEIGHT - heightAboveSurface) -
+              notchRadius,
+          }}
+        >
+          <Rotate rotation={[0, "90deg", 0]}>
+            <Cylinder height={bodyWidth * 1.1} radius={notchRadius} />
+          </Rotate>
+        </Translate>
+      </Subtract>
     </>
   )
 }
