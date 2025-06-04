@@ -117,16 +117,16 @@ export const Dip = ({
         />
         <Translate
           offset={{
-            x: 0,
-            y: bodyLength / 2,
+            x: bodyWidth / 2,
+            y: 0,
             z:
               heightAboveSurface +
               (DIP_PIN_HEIGHT - heightAboveSurface) -
               notchRadius,
           }}
         >
-          <Rotate rotation={[0, "90deg", 0]}>
-            <Cylinder height={bodyWidth * 1.1} radius={notchRadius} />
+          <Rotate rotation={["90deg", 0, 0]}>
+            <Cylinder height={bodyLength * 1.1} radius={notchRadius} />
           </Rotate>
         </Translate>
       </Subtract>
