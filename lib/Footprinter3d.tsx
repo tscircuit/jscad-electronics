@@ -17,6 +17,7 @@ import { A2512 } from "./A2512"
 import { FemaleHeader } from "./FemaleHeader"
 import { PushButton } from "./PushButton"
 import { SOIC } from "./SOIC"
+import { VSSOP } from "./VSSOP"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -38,6 +39,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     id: number //innerDiameter
     od: number //outerDiameter
   }
+  console.log(footprint, fpJson)
 
   switch (fpJson.fn) {
     case "dip":
@@ -52,6 +54,17 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           leadWidth={fpJson.pw}
           pitch={fpJson.p}
           bodyWidth={fpJson.w}
+        />
+      )
+    case "vssop":
+      return (
+        <VSSOP
+          pinCount={fpJson.num_pins as 8 | 10}
+          leadLength={fpJson.pl}
+          leadWidth={fpJson.pw}
+          pitch={fpJson.p}
+          bodyWidth={fpJson.w}
+          bodyLength={fpJson.h}
         />
       )
     case "qfp":
