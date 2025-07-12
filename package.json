@@ -32,7 +32,7 @@
     "vite-tsconfig-paths": "^5.0.1"
   },
   "dependencies": {
-    "@tscircuit/footprinter": "^0.0.132",
+    "@tscircuit/footprinter": "^0.0.193",
     "circuit-json": "^0.0.92"
   }
 }
