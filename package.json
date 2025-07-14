@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "start": "cosmos",
-    "build": "tsup ./lib/index.ts --dts --format esm",
+    "build": "tsup-node ./lib/index.ts --dts --format esm",
     "vercel-build": "bun run build:site",
     "format": "biome format --write .",
     "format:check": "biome format .",
@@ -35,6 +35,8 @@
   },
   "peerDependencies": {
     "@tscircuit/footprinter": "*",
-    "circuit-json": "*"
+    "circuit-json": "*",
+    "jscad-fiber": "*",
+    "react": "*"
   }
 }
