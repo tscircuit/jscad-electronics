@@ -57,6 +57,7 @@ jscad-electronics includes models for various components, including:
 - ICs (DIP, SOIC, TSSOP, QFN, QFP, BGA)
 - Diodes (SOD-123)
 - Transistors (SOT-23, SOT-563, SOT-723)
+- Multi-row pin headers
 - And more!
 
 Check the `lib` directory for a full list of available components.
@@ -67,6 +68,7 @@ Most components accept parameters for customization. For example:
 
 ```jsx
 <QFN fullWidth={4} height={0.8} thermalPadSize={2} />
+<PinRow numberOfPins={6} rows={2} />
 ```
 
 Refer to the individual component files for available customization options.
