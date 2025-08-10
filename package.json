@@ -3,6 +3,10 @@
   "type": "module",
   "version": "0.0.32",
   "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./planner": "./dist/footprinter-to-jscad-plan/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/tscircuit/jscad-electronics"
@@ -12,7 +16,7 @@
   ],
   "scripts": {
     "start": "cosmos",
-    "build": "tsup-node ./lib/index.ts --dts --format esm",
+    "build": "tsup-node ./lib/index.ts ./lib/footprinter-to-jscad-plan/index.ts --dts --format esm --metafile",
     "vercel-build": "bun run build:site",
     "format": "biome format --write .",
     "format:check": "biome format .",
@@ -20,18 +24,22 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.3",
+    "@tscircuit/footprinter": "^0.0.193",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
+    "circuit-json": "^0.0.92",
     "jscad-fiber": "^0.0.74",
+    "jscad-planner": "^0.0.13",
     "react": "^18.3.1",
     "react-cosmos": "^6.2.0",
     "react-cosmos-plugin-vite": "^6.2.0",
     "react-dom": "^18.3.1",
     "tsup": "^8.3.0",
     "vite": "^5.4.8",
-    "vite-tsconfig-paths": "^5.0.1",
-    "@tscircuit/footprinter": "^0.0.193",
-    "circuit-json": "^0.0.92"
+    "vite-tsconfig-paths": "^5.0.1"
+  },
+  "dependencies": {
+    "jscad-planner": "^0.0.13"
   },
   "peerDependencies": {
     "@tscircuit/footprinter": "*",
