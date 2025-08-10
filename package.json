@@ -13,6 +13,7 @@
   "scripts": {
     "start": "cosmos",
     "build": "tsup-node ./lib/index.ts --dts --format esm",
+    "build:planner": "tsup-node ./lib/planner.ts --dts --format esm --out-dir dist --tsconfig ./tsconfig.planner.json --external=jscad-planner --external=@tscircuit/footprinter --external=circuit-json",
     "vercel-build": "bun run build:site",
     "format": "biome format --write .",
     "format:check": "biome format .",
@@ -38,5 +39,8 @@
     "circuit-json": "*",
     "jscad-fiber": "*",
     "react": "*"
+  },
+  "dependencies": {
+    "jscad-planner": "^0.0.13"
   }
 }
