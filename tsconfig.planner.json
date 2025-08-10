@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "./planner"
+  },
+  "include": ["lib/**/*.ts", "lib/**/*.tsx"],
+  "exclude": ["node_modules", "dist", "examples"]
+}
