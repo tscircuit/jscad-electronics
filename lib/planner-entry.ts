@@ -1,9 +1,9 @@
-// Custom JSX pragma that transforms existing TSX components to use jscad-planner
+// JSX Runtime must be defined first before any components use it
 import { jscadPlanner } from "jscad-planner"
 
 // Utility function to convert hex color to RGB
 function hexToRgb(hex: string): [number, number, number] {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+  const result = /^#?([a-f\\d]{2})([a-f\\d]{2})([a-f\\d]{2})$/i.exec(hex)
   if (!result) return [0, 0, 0]
   return [
     parseInt(result[1]!, 16) / 255,
@@ -51,7 +51,6 @@ function createUnion(props: any) {
 function createRoundedCuboid(props: any) {
   const { size, offset = [0, 0, 0], color } = props
   
-  // For now, approximate with regular cuboid - could be enhanced
   let shape = jscadPlanner.primitives.cuboid({ size })
   
   if (offset[0] !== 0 || offset[1] !== 0 || offset[2] !== 0) {
@@ -69,11 +68,8 @@ function createRoundedCuboid(props: any) {
 function createPolygon(props: any) {
   const { points = [], height = 0.1 } = props
   
-  // Create a simple approximation with jscad-planner
   if (points.length < 3) return null
   
-  // For now, create a simple cuboid as placeholder
-  // This could be enhanced to create proper polygons
   const bounds = points.reduce((acc: any, point: any) => {
     acc.minX = Math.min(acc.minX, point[0])
     acc.maxX = Math.max(acc.maxX, point[0])
@@ -93,7 +89,7 @@ function createPolygon(props: any) {
   return shape
 }
 
-// Define JSX functions FIRST before they are used
+// JSX Runtime functions - MUST be defined before any components use them
 function Fragment({ children }: { children?: any[] | any }) {
   if (!children) return null
   
@@ -111,19 +107,16 @@ function createElement(type: any, props: any = {}, ...children: any[]): any {
   const { children: propsChildren, ...restProps } = props || {}
   const allChildren = children.length > 0 ? children : propsChildren
 
-  // Handle Fragment
   if (type === Fragment || type?.$$typeof === Symbol.for('react.fragment')) {
     return Fragment({ children: allChildren })
   }
 
-  // Handle jscad-fiber components - check by name/displayName
   const typeName = type?.displayName || type?.name || type
   
   if (typeName === 'Cuboid') {
     return createCuboid(restProps)
   }
   
-  // Handle other jscad-fiber components with basic shapes
   if (typeof typeName === 'string') {
     switch (typeName) {
       case 'Subtract':
@@ -140,7 +133,6 @@ function createElement(type: any, props: any = {}, ...children: any[]): any {
     }
   }
 
-  // Handle function components - call them with props and let them use our JSX runtime
   if (typeof type === 'function') {
     return type({ ...restProps, children: allChildren })
   }
@@ -156,16 +148,16 @@ function jsxs(type: any, props: any): any {
   return createElement(type, props)
 }
 
-// Make JSX functions available globally for immediate use
+// Set global JSX functions IMMEDIATELY at module load time
 ;(globalThis as any).jsx = jsx
-;(globalThis as any).jsxs = jsxs
+;(globalThis as any).jsxs = jsxs  
 ;(globalThis as any).Fragment = Fragment
 ;(globalThis as any).createElement = createElement
 
-// Export all components - they will use the custom JSX runtime automatically  
+// Import all components from index - they will use the globalThis JSX functions
 export * from './index'
 
-// Export the functions
+// Export the JSX functions
 export { Fragment, createElement, jsx, jsxs }
 
 // Export jscadPlanner for direct use

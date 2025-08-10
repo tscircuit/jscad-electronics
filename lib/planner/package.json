@@ -1,7 +1,0 @@
-{
-  "name": "jscad-planner-jsx",
-  "type": "module",
-  "exports": {
-    "./jsx-runtime": "./jsx-runtime.js"
-  }
-}
