@@ -20,7 +20,6 @@ async function importVanilla() {
 test("vanilla build preserves some color metadata (soic8)", async () => {
   const { getJscadModelForFootprint } = await importVanilla()
   const res = getJscadModelForFootprint("soic8")
-  console.log(JSON.stringify(res, null, 2))
   const withColor = res.geometries.filter((g) => g.color != null)
   expect(withColor.length).toBeGreaterThan(0)
 })
