@@ -1,4 +1,3 @@
-// Symbols representing supported primitives and operations
 export const Cuboid = Symbol("Cuboid")
 export const Cube = Symbol("Cube")
 export const Cylinder = Symbol("Cylinder")
@@ -14,7 +13,6 @@ export const Hull = Symbol("Hull")
 
 export const Colorize = Symbol("Colorize")
 
-// 2D + extrusion primitives used by some components
 export const Polygon = Symbol("Polygon")
 export const ExtrudeLinear = Symbol("ExtrudeLinear")
 
