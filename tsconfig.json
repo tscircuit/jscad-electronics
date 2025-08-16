@@ -23,7 +23,9 @@
     "module": "preserve",
     "noEmit": true,
     // Include the DOM types
-    "lib": ["es2022", "dom", "dom.iterable"]
+    "lib": ["es2022", "dom", "dom.iterable"],
+    // Include Bun types so modules like "bun:test" resolve during typechecking
+    "types": ["bun-types"]
   },
   // Include the necessary files for your project
   "include": ["**/*.ts", "**/*.tsx"],

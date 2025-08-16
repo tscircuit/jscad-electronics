@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "paths": {
+      "jscad-fiber": ["./lib/vanilla/primitives"],
+      "react": ["./lib/vanilla/react-shim"],
+      "react-dom": ["./lib/vanilla/react-shim"]
+    }
+  }
+}
