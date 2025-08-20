@@ -27,26 +27,24 @@
     "build:site": "cosmos-export",
     "test:vanilla": "bun run build && node tests/vanilla-smoke.mjs"
   },
-  "dependencies": {
-    "@jscad/modeling": "^2.12.5"
-  },
   "devDependencies": {
     "@biomejs/biome": "^1.9.3",
     "@tscircuit/footprinter": "^0.0.228",
     "@types/react": "19",
     "@types/react-dom": "19",
     "bun-types": "^1.2.20",
-    "circuit-json": "^0.0.92",
-    "react-cosmos": "^6.2.0",
-    "react-cosmos-plugin-vite": "^6.2.0",
+    "react-cosmos": "7.0.0",
+    "react-cosmos-plugin-vite": "7.0.0",
     "tsup": "^8.3.0",
     "vite": "^7.1.2",
     "vite-tsconfig-paths": "^5.0.1"
   },
   "peerDependencies": {
+    "three": "^0.179.1",
+    "@jscad/modeling": "^2.12.5",
+    "jscad-fiber": "^0.0.85",
     "@tscircuit/footprinter": "*",
-    "circuit-json": "*",
-    "jscad-fiber": "^0.0.84",
+    "circuit-json": "^0.0.232",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   }

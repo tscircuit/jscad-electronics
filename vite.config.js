@@ -9,6 +9,11 @@ export default defineConfig({
   define: {
     global: {},
   },
+  resolve: {
+    alias: {
+      "jscad-fiber": "jscad-fiber-shim.ts",
+    },
+  },
   build: {
     rollupOptions: {
       output: {
