@@ -66,7 +66,12 @@ export const BGA = ({
         ballsSoup.map((elm, index) => {
           if (elm.type === "pcb_smtpad") {
             return (
-              <Translate key={index} x={elm.x} y={elm.y} z={ballOffset}>
+              <Translate
+                key={index}
+                x={(elm as any).x}
+                y={(elm as any).y}
+                z={ballOffset}
+              >
                 <Sphere radius={ballDiameter / 2} />
               </Translate>
             )
