@@ -39,7 +39,6 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     id: number //innerDiameter
     od: number //outerDiameter
   }
-  console.log(footprint, fpJson)
 
   switch (fpJson.fn) {
     case "dip":
