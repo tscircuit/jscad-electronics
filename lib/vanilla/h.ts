@@ -1,7 +1,7 @@
 export type VNode = {
   type: any
   props: Record<string, any>
-  children: any[]
+  children?: any[]
 }
 
 export const Fragment = Symbol("Fragment")

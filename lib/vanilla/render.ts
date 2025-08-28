@@ -60,19 +60,19 @@ function renderNode(node: any, colorCtx?: Color): ColoredGeom[] {
   const { type, props, children } = node
 
   if (type === Fragment) {
-    return children.flatMap((c) => renderNode(c, colorCtx))
+    return (children ?? []).flatMap((c) => renderNode(c, colorCtx))
   }
 
   if (type === Colorize) {
     const newColor: Color = props?.color
-    return children.flatMap((c) => renderNode(c, newColor ?? colorCtx))
+    return (children ?? []).flatMap((c) => renderNode(c, newColor ?? colorCtx))
   }
 
   if (type === Translate) {
     const off = toVec3(
       props?.offset ?? { x: props?.x, y: props?.y, z: props?.z },
     )
-    const geoms = children.flatMap((c) => renderNode(c, colorCtx))
+    const geoms = (children ?? []).flatMap((c) => renderNode(c, colorCtx))
     return geoms.map(({ geom, color }) => ({
       geom: transforms.translate(off as any, geom),
       color: color ?? colorCtx,
@@ -91,7 +91,7 @@ function renderNode(node: any, colorCtx?: Color): ColoredGeom[] {
           degToRad(props?.y ?? 0),
           degToRad(props?.z ?? 0),
         ]
-    const geoms = children.flatMap((c) => renderNode(c, colorCtx))
+    const geoms = (children ?? []).flatMap((c) => renderNode(c, colorCtx))
     return geoms.map(({ geom, color }) => ({
       geom: transforms.rotateZ(
         rot[2],
@@ -102,7 +102,7 @@ function renderNode(node: any, colorCtx?: Color): ColoredGeom[] {
   }
 
   if (type === Union || type === Subtract || type === Hull) {
-    const geoms = children
+    const geoms = (children ?? [])
       .flatMap((c) => renderNode(c, colorCtx))
       .map((g) => g.geom)
     if (geoms.length === 0) return []
@@ -121,7 +121,7 @@ function renderNode(node: any, colorCtx?: Color): ColoredGeom[] {
   }
 
   if (type === ExtrudeLinear) {
-    const geoms2 = children
+    const geoms2 = (children ?? [])
       .flatMap((c) => renderNode(c, colorCtx))
       .map((g) => g.geom)
     if (geoms2.length === 0) return []
@@ -179,7 +179,7 @@ function renderNode(node: any, colorCtx?: Color): ColoredGeom[] {
   }
 
   // Unknown type -> recurse
-  return children.flatMap((c) => renderNode(c, colorCtx))
+  return (children ?? []).flatMap((c) => renderNode(c, colorCtx))
 }
 
 export function render(root: VNode): RenderResult {
