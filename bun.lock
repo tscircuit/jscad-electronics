@@ -10,6 +10,7 @@
         "@types/react-dom": "19",
         "@types/three": "^0.179.0",
         "bun-types": "^1.2.20",
+        "jscad-fiber": "^0.0.85",
         "react-cosmos": "7.0.0",
         "react-cosmos-plugin-vite": "7.0.0",
         "tsup": "^8.3.0",
@@ -25,6 +26,9 @@
         "react-dom": "19.1.0",
         "three": "^0.179.1",
       },
+      "optionalPeers": [
+        "jscad-fiber",
+      ],
     },
   },
   "packages": {
