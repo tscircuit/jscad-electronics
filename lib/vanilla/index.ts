@@ -1,6 +1,7 @@
 import { Footprinter3d } from "../Footprinter3d"
 import { h, Fragment, type VNode } from "./h"
 import { render, type RenderResult, type ColoredGeom } from "./render"
+export * from "./convertCSGToThreeGeom"
 
 export { h, Fragment }
 export type { VNode, RenderResult, ColoredGeom }
