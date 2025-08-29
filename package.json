@@ -38,6 +38,7 @@
     "react-cosmos-plugin-vite": "7.0.0",
     "tsup": "^8.3.0",
     "vite": "^7.1.2",
+    "jscad-fiber": "^0.0.85",
     "vite-tsconfig-paths": "^5.0.1"
   },
   "peerDependencies": {
@@ -48,5 +49,10 @@
     "circuit-json": "^0.0.232",
     "react": "19.1.0",
     "react-dom": "19.1.0"
+  },
+  "peerDependenciesMeta": {
+    "jscad-fiber": {
+      "optional": true
+    }
   }
 }
