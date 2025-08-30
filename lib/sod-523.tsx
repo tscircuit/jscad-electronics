@@ -1,70 +1,77 @@
-import { Colorize, Cuboid, Translate, RoundedCuboid } from "jscad-fiber"
+import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber"
 
-export const SOD523 = ({ fullWidth = 1.65, fullLength = 0.8 }) => {
-  const bodyWidth = 1.25
-  const bodyLength = 0.6
+export const SOD523 = () => {
+  // Dimensions (in mm, typical for SOD-523)
+  const totalWidth = 2.15
+  const bodyLength = 0.8
   const bodyHeight = 0.6
+  const padLength = 0.5
+  const padWidth = 0.6
+  const padThickness = 0.12
+  const bodyWidth = totalWidth - padLength
 
-  // Terminal contacts on shorter ends
-  const terminalWidth = (fullWidth - bodyWidth) / 2
-  const terminalLength = fullLength
-  const terminalHeight = 0.05 // Very thin, flush with bottom
+  // Pad offset from body (datasheet: ~0.15mm gap)
+  const padGap = 0.15
+  const leftPadX = -((bodyWidth + padLength) / 2 + padGap / 2)
+  const rightPadX = (bodyWidth + padLength) / 2 + padGap / 2
 
-  // Polarity marking line
-  const markingWidth = 0.08
-  const markingLength = fullLength * 0.7
-  const markingThickness = 0.01
+  // Tapered top
+  const taper = 0.2
+  const straightHeight = bodyHeight * 0.5
+
+  // Polarity mark
+  const markWidth = 0.08
+  const markLength = bodyLength * 0.7
+  const markHeight = 0.01
+
+  // Main body with taper
+  const body = (
+    <Colorize color="#555">
+      <Union>
+        {/* Lower straight section */}
+        <Translate z={straightHeight / 2}>
+          <Cuboid size={[bodyWidth, bodyLength, straightHeight]} />
+        </Translate>
+        {/* Tapered top section */}
+        <Hull>
+          <Translate z={straightHeight}>
+            <Cuboid size={[bodyWidth, bodyLength, 0.01]} />
+          </Translate>
+          <Translate z={bodyHeight}>
+            <Cuboid size={[bodyWidth - taper, bodyLength - taper, 0.01]} />
+          </Translate>
+        </Hull>
+      </Union>
+    </Colorize>
+  )
 
   return (
     <>
-      {/* Left terminal contact (cathode side) - flat silver metallic */}
-      <Colorize color="#E0E0E0">
-        <Translate
-          offset={{
-            x: -bodyWidth / 2 - terminalWidth / 2,
-            y: 0,
-            z: terminalHeight / 2,
-          }}
-        >
-          <Cuboid size={[terminalWidth, terminalLength, terminalHeight]} />
+      {/* Pads */}
+      <Colorize color="#ccc">
+        <Translate offset={{ x: leftPadX, y: 0, z: padThickness / 2 }}>
+          <Cuboid size={[padLength, padWidth, padThickness]} />
+        </Translate>
+        <Translate offset={{ x: rightPadX, y: 0, z: padThickness / 2 }}>
+          <Cuboid size={[padLength, padWidth, padThickness]} />
         </Translate>
       </Colorize>
-
-      {/* Right terminal contact (anode side) - flat silver metallic */}
-      <Colorize color="#E0E0E0">
-        <Translate
-          offset={{
-            x: bodyWidth / 2 + terminalWidth / 2,
-            y: 0,
-            z: terminalHeight / 2,
-          }}
-        >
-          <Cuboid size={[terminalWidth, terminalLength, terminalHeight]} />
-        </Translate>
-      </Colorize>
-
-      {/* Main rectangular body with slightly beveled sides */}
-      <Colorize color="#555">
-        <Translate offset={{ x: 0, y: 0, z: bodyHeight / 2 + terminalHeight }}>
-          <RoundedCuboid
-            roundRadius={0.03}
-            size={[bodyWidth, bodyLength, bodyHeight]}
-          />
-        </Translate>
-      </Colorize>
-
-      {/* Polarity marking line on top surface near cathode end */}
-      <Colorize color="#AAAAAA">
-        <Translate
-          offset={{
-            x: -bodyWidth / 2 + markingWidth / 2 + 0.05,
-            y: 0,
-            z: bodyHeight + terminalHeight + markingThickness / 2,
-          }}
-        >
-          <Cuboid size={[markingWidth, markingLength, markingThickness]} />
-        </Translate>
-      </Colorize>
+      {/* Body */}
+      <Translate offset={{ x: 0, y: 0, z: padThickness }}>
+        {body}
+        {/* Polarity marking line */}
+        <Colorize color="#bbb">
+          <Translate
+            offset={{
+              x: -bodyWidth / 2 + markWidth / 2 + 0.05,
+              y: 0,
+              z: bodyHeight / 2 + 0.01,
+            }}
+          >
+            <Cuboid size={[markWidth, markLength, markHeight]} />
+          </Translate>
+        </Colorize>
+      </Translate>
     </>
   )
 }
