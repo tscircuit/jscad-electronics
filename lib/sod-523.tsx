@@ -1,30 +1,26 @@
 import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber"
 
 export const SOD523 = () => {
-  // Dimensions (in mm, typical for SOD-523)
-  const totalWidth = 2.15
+  const resistWidth = 2.15
+  const resistLength = 1.4
   const bodyLength = 0.8
   const bodyHeight = 0.6
   const padLength = 0.5
   const padWidth = 0.6
   const padThickness = 0.12
-  const bodyWidth = totalWidth - padLength
+  const bodyWidth = resistWidth - padLength
 
-  // Pad offset from body (datasheet: ~0.15mm gap)
-  const padGap = 0.15
-  const leftPadX = -((bodyWidth + padLength) / 2 + padGap / 2)
-  const rightPadX = (bodyWidth + padLength) / 2 + padGap / 2
+  const padCenterDist = resistWidth - padLength
+  const leftPadX = -padCenterDist / 2
+  const rightPadX = padCenterDist / 2
 
-  // Tapered top
   const taper = 0.2
   const straightHeight = bodyHeight * 0.5
 
-  // Polarity mark
   const markWidth = 0.08
   const markLength = bodyLength * 0.7
   const markHeight = 0.01
 
-  // Main body with taper
   const body = (
     <Colorize color="#555">
       <Union>
