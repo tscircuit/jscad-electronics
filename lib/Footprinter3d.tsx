@@ -18,6 +18,7 @@ import { FemaleHeader } from "./FemaleHeader"
 import { PushButton } from "./PushButton"
 import { SOIC } from "./SOIC"
 import { VSSOP } from "./VSSOP"
+import { SOD523 } from "./SOD523"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -139,6 +140,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           bodyWidth={fpJson.w}
         />
       )
+    case "sod523":
+      return <SOD523 />
   }
 
   switch (fpJson.imperial) {
