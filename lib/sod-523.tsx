@@ -1,55 +1,43 @@
 import { ChipBody } from "./ChipBody"
-import { SmdChipLead } from "./SmdChipLead"
+import { Colorize, Cuboid, Translate } from "jscad-fiber"
 
 export const SOD523 = ({ fullWidth = 1.65, fullLength = 0.8 }) => {
   const bodyWidth = 1.25
   const bodyLength = 0.6
   const bodyHeight = 0.6
-  const leadWidth = 0.15
-  const leadThickness = 0.05
-  const leadHeight = 0.25
-  const padContactLength = 0.1
-  const leadYOffset = leadHeight / 1 - 0.15
-  const bodyYOffset = leadHeight / 2 - 0.15
 
-  const bodyDistance = (fullWidth - bodyWidth) / 2
+  const terminalWidth = (fullWidth - bodyWidth) / 2
+  const terminalLength = fullLength
+  const terminalHeight = 0.1
 
   return (
     <>
-      {/* Lead on the left side */}
-      <SmdChipLead
-        key={1}
-        position={{
-          x: -fullWidth / 2 + leadWidth / 2,
-          y: leadYOffset,
-          z: 0,
-        }}
-        width={leadWidth}
-        thickness={leadThickness}
-        padContactLength={padContactLength}
-        bodyDistance={bodyDistance}
-        height={leadHeight}
-      />
+      <Colorize color="#C0C0C0">
+        <Translate
+          offset={{
+            x: -bodyWidth / 2 - terminalWidth / 2,
+            y: 0,
+            z: terminalHeight / 2,
+          }}
+        >
+          <Cuboid size={[terminalWidth, terminalLength, terminalHeight]} />
+        </Translate>
+      </Colorize>
 
-      {/* Lead on the right side */}
-      <SmdChipLead
-        key={2}
-        rotation={Math.PI}
-        position={{
-          x: fullWidth / 2 - leadWidth / 2,
-          y: leadYOffset,
-          z: 0,
-        }}
-        width={leadWidth}
-        thickness={leadThickness}
-        padContactLength={padContactLength}
-        bodyDistance={bodyDistance}
-        height={leadHeight}
-      />
+      <Colorize color="#C0C0C0">
+        <Translate
+          offset={{
+            x: bodyWidth / 2 + terminalWidth / 2,
+            y: 0,
+            z: terminalHeight / 2,
+          }}
+        >
+          <Cuboid size={[terminalWidth, terminalLength, terminalHeight]} />
+        </Translate>
+      </Colorize>
 
-      {/* Chip Body */}
       <ChipBody
-        center={{ x: 0, y: bodyYOffset, z: 0 }}
+        center={{ x: 0, y: 0, z: 0 }}
         width={bodyWidth}
         length={bodyLength}
         height={bodyHeight}
