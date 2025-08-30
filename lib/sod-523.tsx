@@ -1,3 +1,8 @@
+523.tsx
+New
++80
+-0
+
 import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 
@@ -19,15 +24,19 @@ export const SOD523 = ({
   const _padWidth = !isNaN(parseFloat(padWidth as any))
     ? parseFloat(padWidth as any)
     : 0.6
-  const fullLength = _pitch + _padLength
-  const bodyLength = 1.6
-  const bodyWidth = 0.8
+
+  const fullWidth = _pitch + _padLength
+  const bodyWidth = 1.1
+  const bodyLength = 0.6
   const bodyHeight = 0.6
-  const leadWidth = _padWidth
+  const leadWidth = _padWidth * 0.5
   const leadThickness = 0.1
   const leadHeight = 0.2
   const padContactLength = _padLength * 0.3
-  const bodyDistance = (fullLength - bodyLength) / 2
+  const leadYOffset = leadHeight / 1 - 0.4
+  const bodyYOffset = leadHeight / 2 - 0.4
+
+  const bodyDistance = (fullWidth - bodyWidth) / 2
 
   return (
     <>
@@ -35,9 +44,9 @@ export const SOD523 = ({
       <SmdChipLead
         key={1}
         position={{
-          x: -fullLength / 2 + leadWidth / 2,
-          y: 0,
-          z: leadThickness / 2,
+          x: -fullWidth / 2 + leadWidth / 2,
+          y: leadYOffset,
+          z: 0,
         }}
         width={leadWidth}
         thickness={leadThickness}
@@ -51,9 +60,9 @@ export const SOD523 = ({
         key={2}
         rotation={Math.PI}
         position={{
-          x: fullLength / 2 - leadWidth / 2,
-          y: 0,
-          z: leadThickness / 2,
+          x: fullWidth / 2 - leadWidth / 2,
+          y: leadYOffset,
+          z: 0,
         }}
         width={leadWidth}
         thickness={leadThickness}
@@ -64,11 +73,10 @@ export const SOD523 = ({
 
       {/* Chip Body */}
       <ChipBody
-        center={{ x: 0, y: 0, z: leadThickness + bodyHeight / 2 }}
+        center={{ x: 0, y: bodyYOffset, z: 0 }}
         width={bodyWidth}
         length={bodyLength}
         height={bodyHeight}
-        heightAboveSurface={0}
       />
     </>
   )
