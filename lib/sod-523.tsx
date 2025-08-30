@@ -38,7 +38,7 @@ export const SOD523 = ({
         position={{
           x: -_pitch / 2 - padContactLength / 2,
           y: 0,
-          z: 0.1,
+          z: 0,
         }}
         width={leadWidth}
         thickness={leadThickness}
@@ -54,7 +54,7 @@ export const SOD523 = ({
         position={{
           x: _pitch / 2 + padContactLength / 2,
           y: 0,
-          z: 0.1,
+          z: 0,
         }}
         width={leadWidth}
         thickness={leadThickness}
@@ -69,7 +69,7 @@ export const SOD523 = ({
         width={bodyWidth}
         length={bodyLength}
         height={bodyHeight}
-        heightAboveSurface={leadHeight + 0.1}
+        heightAboveSurface={leadHeight}
       />
     </>
   )
