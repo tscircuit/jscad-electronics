@@ -1,26 +1,47 @@
-import { Cuboid } from "jscad-fiber"
-import { ChipBody } from "./ChipBody"
+import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber"
 
-export type SOD523Props = {
-  fullWidth?: number
-  fullLength?: number
-}
-
-export const SOD523 = ({ fullWidth = 1.6, fullLength = 0.8 }: SOD523Props) => {
-  const bodyWidthNominal = 1.2
-  const bodyLengthNominal = 0.7
+export const SOD523 = () => {
+  const fullWidth = 2.15
+  const bodyLength = 0.8
   const bodyHeight = 0.6
 
-  const padWidth = 0.3
-  const padLength = 0.2
+  const padWidth = 0.6
+  const padLength = 0.5
   const padThickness = 0.12
 
-  const maxBodyWidth = Math.max(0, fullWidth - 2 * padLength)
-  const bodyWidth = Math.min(bodyWidthNominal, maxBodyWidth)
-  const bodyLength = Math.min(bodyLengthNominal, fullLength)
+  const bodyWidth = fullWidth - padLength
+  const leftPadCenterX = -bodyWidth / 2 + padLength / 2 - 0.15 // 0.15 is the distance between the pad and the body as datasheet
+  const rightPadCenterX = bodyWidth / 2 - padLength / 2 + 0.15 // 0.15 is the distance between the pad and the body as datasheet
 
-  const leftPadCenterX = -fullWidth / 2 + padLength / 2
-  const rightPadCenterX = fullWidth / 2 - padLength / 2
+  // top taper happens only in last quarter
+  const taperOffset = 0.2
+  const straightHeight = bodyHeight * 0.5
+
+  const Body = (
+    <Colorize color="#222">
+      <Union>
+        {/* Straight bottom section */}
+        <Translate z={straightHeight / 2}>
+          <Cuboid size={[bodyWidth, bodyLength, straightHeight]} />
+        </Translate>
+
+        {/* Tapered top quarter */}
+        <Hull>
+          {/* bottom of taper (same size as straight section top) */}
+          <Translate z={straightHeight}>
+            <Cuboid size={[bodyWidth, bodyLength, 0.01]} />
+          </Translate>
+
+          {/* top of taper (smaller) */}
+          <Translate z={bodyHeight}>
+            <Cuboid
+              size={[bodyWidth - taperOffset, bodyLength - taperOffset, 0.01]}
+            />
+          </Translate>
+        </Hull>
+      </Union>
+    </Colorize>
+  )
 
   return (
     <>
@@ -36,13 +57,8 @@ export const SOD523 = ({ fullWidth = 1.6, fullLength = 0.8 }: SOD523Props) => {
         center={[rightPadCenterX, 0, padThickness / 2]}
       />
 
-      {/* Body */}
-      <ChipBody
-        center={{ x: 0, y: 0, z: 0 }}
-        width={bodyWidth}
-        length={bodyLength}
-        height={bodyHeight}
-      />
+      {/* Body (lifted above pads) */}
+      {Body}
     </>
   )
 }

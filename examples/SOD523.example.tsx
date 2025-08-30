@@ -5,6 +5,7 @@ export default function Example() {
   return (
     <JsCadView zAxisUp showGrid>
       <SOD523 />
+      <ExtrudedPads footprint="sod523" />
     </JsCadView>
   )
 }
