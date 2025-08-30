@@ -30,7 +30,7 @@ export const SOD523 = ({
   const padContactLength = _padLength * 0.3
   const bodyDistance = (fullWidth - bodyWidth) / 2
   const padThickness = 0.01
-  const padZOffset = 0
+  const padZOffset = leadThickness / 2
 
   return (
     <>
