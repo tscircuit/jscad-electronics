@@ -1,3 +1,4 @@
+import { SOD523 } from "./sod-523"
 import { fp } from "@tscircuit/footprinter"
 import { Dip } from "./DualInlinePackage"
 import { Tssop } from "./Tssop"
@@ -41,6 +42,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
   }
 
   switch (fpJson.fn) {
+    case "sod523":
+      return <SOD523 />
     case "dip":
       return (
         <Dip numPins={fpJson.num_pins} pitch={fpJson.p} bodyWidth={fpJson.w} />
@@ -139,6 +142,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           bodyWidth={fpJson.w}
         />
       )
+    case "sod523":
+      return <SOD523 />
   }
 
   switch (fpJson.imperial) {
