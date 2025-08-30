@@ -1,10 +1,10 @@
 import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 
-export const SOD523 = ({ fullWidth = 1.6, fullLength = 0.8 }) => {
-  const bodyWidth = 1.2
+export const SOD523 = ({ fullWidth = 1.65, fullLength = 0.8 }) => {
+  const bodyWidth = 1.25
   const bodyLength = 0.6
-  const bodyHeight = 0.55
+  const bodyHeight = 0.6
   const leadWidth = 0.15
   const leadThickness = 0.05
   const leadHeight = 0.25
