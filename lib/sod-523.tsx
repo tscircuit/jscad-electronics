@@ -1,8 +1,3 @@
-523.tsx
-New
-+80
--0
-
 import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 
