@@ -28,9 +28,6 @@ export const SOD523 = ({
   const leadThickness = 0.1
   const leadHeight = 0.2
   const padContactLength = _padLength * 0.3
-  const leadYOffset = leadHeight / 1 - 0.4
-  const bodyYOffset = leadHeight / 2 - 0.4
-
   const bodyDistance = (fullWidth - bodyWidth) / 2
 
   return (
@@ -39,8 +36,8 @@ export const SOD523 = ({
       <SmdChipLead
         key={1}
         position={{
-          x: -fullWidth / 2 + leadWidth / 2,
-          y: leadYOffset,
+          x: -_pitch / 2 - padContactLength / 2,
+          y: 0,
           z: 0.1,
         }}
         width={leadWidth}
@@ -55,8 +52,8 @@ export const SOD523 = ({
         key={2}
         rotation={Math.PI}
         position={{
-          x: fullWidth / 2 - leadWidth / 2,
-          y: leadYOffset,
+          x: _pitch / 2 + padContactLength / 2,
+          y: 0,
           z: 0.1,
         }}
         width={leadWidth}
@@ -68,10 +65,11 @@ export const SOD523 = ({
 
       {/* Chip Body */}
       <ChipBody
-        center={{ x: 0, y: bodyYOffset, z: 0 }}
+        center={{ x: 0, y: 0, z: 0 }}
         width={bodyWidth}
         length={bodyLength}
         height={bodyHeight}
+        heightAboveSurface={leadHeight + 0.1}
       />
     </>
   )
