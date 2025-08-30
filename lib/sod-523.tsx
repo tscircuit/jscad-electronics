@@ -41,7 +41,7 @@ export const SOD523 = ({
         position={{
           x: -fullWidth / 2 + leadWidth / 2,
           y: leadYOffset,
-          z: 0,
+          z: 0.1,
         }}
         width={leadWidth}
         thickness={leadThickness}
@@ -57,7 +57,7 @@ export const SOD523 = ({
         position={{
           x: fullWidth / 2 - leadWidth / 2,
           y: leadYOffset,
-          z: 0,
+          z: 0.1,
         }}
         width={leadWidth}
         thickness={leadThickness}
