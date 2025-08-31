@@ -9,8 +9,7 @@ export const SOD123 = ({ fullWidth = 3.8, fullLength = 1.6 }) => {
   const leadThickness = 0.15
   const leadHeight = 0.5
   const padContactLength = 0.4
-  const leadYOffset = leadHeight / 1 - 0.4
-  const bodyYOffset = leadHeight / 2 - 0.4
+  const padThickness = leadThickness / 2
 
   const bodyDistance = (fullWidth - bodyWidth) / 2
 
@@ -21,8 +20,8 @@ export const SOD123 = ({ fullWidth = 3.8, fullLength = 1.6 }) => {
         key={1}
         position={{
           x: -fullWidth / 2 + leadWidth / 2,
-          y: leadYOffset,
-          z: 0,
+          y: 0,
+          z: padThickness,
         }}
         width={leadWidth}
         thickness={leadThickness}
@@ -37,8 +36,8 @@ export const SOD123 = ({ fullWidth = 3.8, fullLength = 1.6 }) => {
         rotation={Math.PI}
         position={{
           x: fullWidth / 2 - leadWidth / 2,
-          y: leadYOffset,
-          z: 0,
+          y: 0,
+          z: padThickness,
         }}
         width={leadWidth}
         thickness={leadThickness}
@@ -49,7 +48,7 @@ export const SOD123 = ({ fullWidth = 3.8, fullLength = 1.6 }) => {
 
       {/* Chip Body */}
       <ChipBody
-        center={{ x: 0, y: bodyYOffset, z: 0 }}
+        center={{ x: 0, y: 0, z: 0 }}
         width={bodyWidth}
         length={bodyLength}
         height={bodyHeight}
