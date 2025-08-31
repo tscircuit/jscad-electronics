@@ -9,7 +9,7 @@ export const SOD123 = ({ fullWidth = 3.8, fullLength = 1.6 }) => {
   const leadThickness = 0.15
   const leadHeight = 0.5
   const padContactLength = 0.4
-  const padThikness = leadThickness / 2
+  const padThickness = leadThickness / 2
 
   const bodyDistance = (fullWidth - bodyWidth) / 2
 
@@ -21,7 +21,7 @@ export const SOD123 = ({ fullWidth = 3.8, fullLength = 1.6 }) => {
         position={{
           x: -fullWidth / 2 + leadWidth / 2,
           y: 0,
-          z: padThikness,
+          z: padThickness,
         }}
         width={leadWidth}
         thickness={leadThickness}
@@ -37,7 +37,7 @@ export const SOD123 = ({ fullWidth = 3.8, fullLength = 1.6 }) => {
         position={{
           x: fullWidth / 2 - leadWidth / 2,
           y: 0,
-          z: padThikness,
+          z: padThickness,
         }}
         width={leadWidth}
         thickness={leadThickness}
