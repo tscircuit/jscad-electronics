@@ -1,11 +1,4 @@
-import {
-  primitives,
-  transforms,
-  booleans,
-  hulls,
-  geometries,
-  extrusions,
-} from "@jscad/modeling"
+import type * as jscadModeling from "@jscad/modeling"
 
 import { Fragment, type VNode } from "./h"
 import {
@@ -24,6 +17,10 @@ import {
   ExtrudeLinear,
   type Color,
 } from "./primitives"
+
+interface RenderContext {
+  jscad: typeof jscadModeling
+}
 
 export type ColoredGeom = { geom: any; color?: Color }
 export type RenderResult = { geometries: ColoredGeom[] }
@@ -50,9 +47,17 @@ const toVec3 = (v: any): [number, number, number] => {
   return [0, 0, 0]
 }
 
-function renderNode(node: any, colorCtx?: Color): ColoredGeom[] {
+function renderNode(
+  node: any,
+  colorCtx: Color | undefined,
+  renderCtx: RenderContext,
+): ColoredGeom[] {
+  const {
+    jscad: { primitives, booleans, hulls, geometries, extrusions, transforms },
+  } = renderCtx
   if (node == null || node === false) return []
-  if (Array.isArray(node)) return node.flatMap((n) => renderNode(n, colorCtx))
+  if (Array.isArray(node))
+    return node.flatMap((n) => renderNode(n, colorCtx, renderCtx))
 
   // Already a geometry coming from user? ignore in our case
   if (!isVNode(node)) return []
@@ -60,19 +65,23 @@ function renderNode(node: any, colorCtx?: Color): ColoredGeom[] {
   const { type, props, children } = node
 
   if (type === Fragment) {
-    return (children ?? []).flatMap((c) => renderNode(c, colorCtx))
+    return (children ?? []).flatMap((c) => renderNode(c, colorCtx, renderCtx))
   }
 
   if (type === Colorize) {
     const newColor: Color = props?.color
-    return (children ?? []).flatMap((c) => renderNode(c, newColor ?? colorCtx))
+    return (children ?? []).flatMap((c) =>
+      renderNode(c, newColor ?? colorCtx, renderCtx),
+    )
   }
 
   if (type === Translate) {
     const off = toVec3(
       props?.offset ?? { x: props?.x, y: props?.y, z: props?.z },
     )
-    const geoms = (children ?? []).flatMap((c) => renderNode(c, colorCtx))
+    const geoms = (children ?? []).flatMap((c) =>
+      renderNode(c, colorCtx, renderCtx),
+    )
     return geoms.map(({ geom, color }) => ({
       geom: transforms.translate(off as any, geom),
       color: color ?? colorCtx,
@@ -91,7 +100,9 @@ function renderNode(node: any, colorCtx?: Color): ColoredGeom[] {
           degToRad(props?.y ?? 0),
           degToRad(props?.z ?? 0),
         ]
-    const geoms = (children ?? []).flatMap((c) => renderNode(c, colorCtx))
+    const geoms = (children ?? []).flatMap((c) =>
+      renderNode(c, colorCtx, renderCtx),
+    )
     return geoms.map(({ geom, color }) => ({
       geom: transforms.rotateZ(
         rot[2],
@@ -103,7 +114,7 @@ function renderNode(node: any, colorCtx?: Color): ColoredGeom[] {
 
   if (type === Union || type === Subtract || type === Hull) {
     const geoms = (children ?? [])
-      .flatMap((c) => renderNode(c, colorCtx))
+      .flatMap((c) => renderNode(c, colorCtx, renderCtx))
       .map((g) => g.geom)
     if (geoms.length === 0) return []
     let geom: any
@@ -122,7 +133,7 @@ function renderNode(node: any, colorCtx?: Color): ColoredGeom[] {
 
   if (type === ExtrudeLinear) {
     const geoms2 = (children ?? [])
-      .flatMap((c) => renderNode(c, colorCtx))
+      .flatMap((c) => renderNode(c, colorCtx, renderCtx))
       .map((g) => g.geom)
     if (geoms2.length === 0) return []
     const base2 =
@@ -175,14 +186,14 @@ function renderNode(node: any, colorCtx?: Color): ColoredGeom[] {
   // Component function: call it and render result
   if (typeof type === "function") {
     const out = type(props ?? {})
-    return renderNode(out, colorCtx)
+    return renderNode(out, colorCtx, renderCtx)
   }
 
   // Unknown type -> recurse
-  return (children ?? []).flatMap((c) => renderNode(c, colorCtx))
+  return (children ?? []).flatMap((c) => renderNode(c, colorCtx, renderCtx))
 }
 
-export function render(root: VNode): RenderResult {
-  const geometries = renderNode(root)
+export function render(root: VNode, jscad: typeof jscadModeling): RenderResult {
+  const geometries = renderNode(root, undefined, { jscad })
   return { geometries }
 }
