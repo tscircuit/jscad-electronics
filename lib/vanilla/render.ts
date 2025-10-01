@@ -140,6 +140,15 @@ function renderNode(
       geoms2.length > 1 ? (booleans.union as any)(geoms2) : geoms2[0]
     const height = props?.height ?? props?.h ?? 1
     let g3 = extrusions.extrudeLinear({ height }, base2)
+
+    if (g3.polygons) {
+      for (const poly of g3.polygons) {
+        if (!poly.plane || !poly.vertices || poly.vertices.length < 3) continue
+        // The `extrudeLinear` operation have an inverted winding order.
+        poly.vertices.reverse()
+      }
+    }
+
     return [{ geom: g3, color: colorCtx ?? props?.color }]
   }
 
