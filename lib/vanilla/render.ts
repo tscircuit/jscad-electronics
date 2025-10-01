@@ -141,43 +141,11 @@ function renderNode(
     const height = props?.height ?? props?.h ?? 1
     let g3 = extrusions.extrudeLinear({ height }, base2)
 
-    const subtract = (a: number[], b: number[]): number[] => [
-      a[0]! - b[0]!,
-      a[1]! - b[1]!,
-      a[2]! - b[2]!,
-    ]
-    const cross = (a: number[], b: number[]): number[] => [
-      a[1]! * b[2]! - a[2]! * b[1]!,
-      a[2]! * b[0]! - a[0]! * b[2]!,
-      a[0]! * b[1]! - a[1]! * b[0]!,
-    ]
-    const normalize = (v: number[]): number[] => {
-      const length = Math.hypot(v[0]!, v[1]!, v[2]!)
-      if (!length) return [0, 0, 1]
-      return [v[0]! / length, v[1]! / length, v[2]! / length]
-    }
-
     if (g3.polygons) {
       for (const poly of g3.polygons) {
         if (!poly.plane || !poly.vertices || poly.vertices.length < 3) continue
-
-        const v0 = poly.vertices[0]!
-        const v1 = poly.vertices[1]!
-        const v2 = poly.vertices[2]!
-        const ab = subtract(v1, v0)
-        const ac = subtract(v2, v0)
-        const calculatedNormal = normalize(cross(ab, ac))
-
-        const planeNormal = poly.plane.slice(0, 3)
-        const dotProduct =
-          calculatedNormal[0]! * planeNormal[0]! +
-          calculatedNormal[1]! * planeNormal[1]! +
-          calculatedNormal[2]! * planeNormal[2]!
-
-        // The `extrudeLinear` operation can have an inverted winding order.
-        if (dotProduct > 0) {
-          poly.vertices.reverse()
-        }
+        // The `extrudeLinear` operation have an inverted winding order.
+        poly.vertices.reverse()
       }
     }
 
