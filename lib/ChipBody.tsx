@@ -1,5 +1,4 @@
-import { Colorize, RoundedCuboid, Translate } from "jscad-fiber"
-
+import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber"
 export interface ChipBodyProps {
   width: number
   length: number
@@ -15,12 +14,37 @@ export const ChipBody = ({
   height,
   heightAboveSurface = 0.15,
 }: ChipBodyProps) => {
+  const straightHeight = height * 0.5
+  const taperHeight = height - straightHeight
+  const taperInset = Math.min(width, length) * 0.12
+  const faceWidth = Math.max(width - taperInset, width * 0.75)
+  const faceLength = Math.max(length - taperInset, length * 0.75)
   // TODO the bodies flex a bit outward IRL
   return (
     <Colorize color="#555">
       <Translate offset={center}>
-        <Translate offset={{ x: 0, y: 0, z: height / 2 + heightAboveSurface }}>
-          <RoundedCuboid roundRadius={0.2} size={[width, length, height]} />
+        <Translate offset={{ x: 0, y: 0, z: heightAboveSurface }}>
+          <Union>
+            <Hull>
+              <Translate z={0.005}>
+                <Cuboid size={[faceWidth, faceLength, 0.01]} />
+              </Translate>
+
+              <Translate z={straightHeight}>
+                <Cuboid size={[width, length, 0.01]} />
+              </Translate>
+            </Hull>
+
+            <Hull>
+              <Translate z={straightHeight}>
+                <Cuboid size={[width, length, 0.01]} />
+              </Translate>
+
+              <Translate z={straightHeight + taperHeight}>
+                <Cuboid size={[faceWidth, faceLength, 0.01]} />
+              </Translate>
+            </Hull>
+          </Union>
         </Translate>
       </Translate>
     </Colorize>
