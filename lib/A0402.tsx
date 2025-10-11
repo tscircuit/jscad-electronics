@@ -16,8 +16,8 @@ const bodyLength = fullLength - terminatorWidth * 2
 export interface A0402Props {
   /**
    * Backwards-compatible color prop. When provided as a string it controls the
-   * body color, and when provided as an object it can override individual
-   * surfaces.
+   * body color (the dark center section), and when provided as an object it can
+   * override individual surfaces.
    */
   color?: A0402ColorProp
   /**

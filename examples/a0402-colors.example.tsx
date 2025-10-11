@@ -10,13 +10,13 @@ export default () => {
       </Translate>
 
       <Translate offset={[0, 0, 0]}>
-        <A0402 color={{ body: "#283046", terminal: "#d4af37" }} />
+        <A0402 color="#283046" />
       </Translate>
 
       <Translate offset={[2, 0, 0]}>
         <A0402
           colors={{
-            body: "#2e3440",
+            center: "#2e3440",
             leftTerminal: "#bf616a",
             rightTerminal: "#88c0d0",
           }}

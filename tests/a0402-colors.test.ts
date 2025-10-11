@@ -59,3 +59,18 @@ test("Explicit colors prop wins over color object", () => {
     rightTerminalColor: "#0000ff",
   })
 })
+
+test("A0402 colors accepts center alias for body", () => {
+  const overrides: A0402ColorProp = {
+    center: "#555555",
+    terminal: "#dddddd",
+  }
+
+  const resolved = resolveA0402Colors(overrides)
+
+  expect(resolved).toEqual({
+    bodyColor: "#555555",
+    leftTerminalColor: "#dddddd",
+    rightTerminalColor: "#dddddd",
+  })
+})

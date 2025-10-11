@@ -1,5 +1,10 @@
 export type A0402ColorOverrides = {
   body?: string
+  /**
+   * Alias for the body color to match the common description of the center
+   * dark section of the package.
+   */
+  center?: string
   terminal?: string
   leftTerminal?: string
   rightTerminal?: string
@@ -21,7 +26,10 @@ export const resolveA0402Colors = (
 
   const bodyColor =
     colors?.body ??
-    (typeof color === "string" ? color : colorOverrides.body) ??
+    colors?.center ??
+    (typeof color === "string"
+      ? color
+      : (colorOverrides.body ?? colorOverrides.center)) ??
     "#333"
 
   const terminalFallback = colors?.terminal ?? colorOverrides.terminal ?? "#ccc"
