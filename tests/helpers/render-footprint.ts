@@ -79,10 +79,10 @@ export async function renderFootprint(footprint: string): Promise<Buffer> {
     drawCalls.push(drawCall)
   }
 
-  // Calculate optimal camera position
-  const { camPos, lookAt } = getBestCameraPosition(drawCalls)
+  // Calculate optimal camera position and grid options
+  const { camPos, lookAt, gridOptions } = getBestCameraPosition(drawCalls)
 
-  // Render using poppygl with infinite grid
+  // Render using poppygl with infinite grid tuned to scene size
   const { bitmap } = renderDrawCalls(
     drawCalls,
     {
@@ -96,6 +96,10 @@ export async function renderFootprint(footprint: string): Promise<Buffer> {
       lookAt,
       grid: {
         infiniteGrid: true,
+        cellSize: gridOptions.cellSize,
+        sectionSize: gridOptions.sectionSize,
+        fadeDistance: gridOptions.fadeDistance,
+        fadeStrength: gridOptions.fadeStrength,
       },
     },
     pureImageFactory,

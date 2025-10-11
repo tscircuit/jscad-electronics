@@ -6,12 +6,24 @@ import type { DrawCall } from "poppygl"
 export function getBestCameraPosition(drawCalls: DrawCall[]): {
   camPos: readonly [number, number, number]
   lookAt: readonly [number, number, number]
+  gridOptions: {
+    cellSize: number
+    sectionSize: number
+    fadeDistance: number
+    fadeStrength: number
+  }
 } {
   if (drawCalls.length === 0) {
     // Default fallback for empty scenes
     return {
       camPos: [30, 30, 25] as const,
       lookAt: [0, 0, 0] as const,
+      gridOptions: {
+        cellSize: 1,
+        sectionSize: 10,
+        fadeDistance: 100,
+        fadeStrength: 1.5,
+      },
     }
   }
 
@@ -73,5 +85,13 @@ export function getBestCameraPosition(drawCalls: DrawCall[]): {
   return {
     camPos: [camX, camY, camZ] as const,
     lookAt: [lookAtX, lookAtY, lookAtZ] as const,
+    gridOptions: {
+      // cell size scales with object; small objects get smaller cells
+      cellSize: Math.max(0.1, Math.round((maxDimension / 8) * 100) / 100),
+      // section groups several cells; keep it proportional
+      sectionSize: Math.max(4, Math.round((maxDimension / 2) * 1)),
+      fadeDistance: Math.max(20, Math.round(maxDimension * 10)),
+      fadeStrength: 1.5,
+    },
   }
 }
