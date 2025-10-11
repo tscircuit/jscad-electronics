@@ -49,6 +49,19 @@ export async function renderFootprint(footprint: string): Promise<Buffer> {
       )
     }
 
+    // Use the color from the item if available, otherwise default to gray
+    let baseColorFactor: [number, number, number, number] = [0.8, 0.8, 0.8, 1.0]
+    if ((item as any).color && typeof (item as any).color === "string") {
+      const colorStr = (item as any).color as string
+      if (colorStr.startsWith("#")) {
+        const hex = colorStr.slice(1)
+        const r = parseInt(hex.slice(0, 2), 16) / 255
+        const g = parseInt(hex.slice(2, 4), 16) / 255
+        const b = parseInt(hex.slice(4, 6), 16) / 255
+        baseColorFactor = [r, g, b, 1.0]
+      }
+    }
+
     const drawCall: DrawCall = {
       positions,
       indices,
@@ -57,7 +70,7 @@ export async function renderFootprint(footprint: string): Promise<Buffer> {
       uvs: null,
       model: mat4.create(),
       material: {
-        baseColorFactor: [0.8, 0.8, 0.8, 1.0],
+        baseColorFactor,
         baseColorTexture: null,
       },
       mode: 4, // TRIANGLES mode
@@ -69,7 +82,7 @@ export async function renderFootprint(footprint: string): Promise<Buffer> {
   // Calculate optimal camera position
   const { camPos, lookAt } = getBestCameraPosition(drawCalls)
 
-  // Render using poppygl
+  // Render using poppygl with infinite grid
   const { bitmap } = renderDrawCalls(
     drawCalls,
     {
@@ -81,6 +94,9 @@ export async function renderFootprint(footprint: string): Promise<Buffer> {
       cull: true,
       camPos,
       lookAt,
+      grid: {
+        infiniteGrid: true,
+      },
     },
     pureImageFactory,
   )
