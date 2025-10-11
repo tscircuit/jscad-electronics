@@ -36,6 +36,7 @@
     "@types/three": "^0.179.0",
     "bun-types": "^1.2.20",
     "jscad-fiber": "^0.0.85",
+    "jscad-to-gltf": "^0.0.3",
     "looks-same": "^10.0.1",
     "poppygl": "^0.0.15",
     "react-cosmos": "7.0.0",

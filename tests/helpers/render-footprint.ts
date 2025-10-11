@@ -1,109 +1,45 @@
 import { importVanilla } from "../fixtures/importVanilla.js"
 import * as jscadModeling from "@jscad/modeling"
-import { convertCSGToThreeGeom } from "../../lib/vanilla/convertCSGToThreeGeom"
-import {
-  renderDrawCalls,
-  encodePNGToBuffer,
-  pureImageFactory,
-  type DrawCall,
-} from "poppygl"
-import { mat4 } from "gl-matrix"
-import { getBestCameraPosition } from "./get-best-camera-position"
+import { convertJscadModelToGltf } from "jscad-to-gltf"
+import { renderGLTFToPNGBufferFromGLBBuffer } from "poppygl"
 
 /**
- * Render a footprint to PNG using poppygl
+ * Render a footprint to PNG using poppygl via GLTF conversion
+ * This preserves colors correctly from the JSCAD model
  */
 export async function renderFootprint(footprint: string): Promise<Buffer> {
   const { getJscadModelForFootprint } = await importVanilla()
   const result = getJscadModelForFootprint(footprint, jscadModeling)
 
-  // Convert JSCAD geometries to poppygl DrawCalls
-  const drawCalls: DrawCall[] = []
+  // Convert JSCAD model to GLB format (preserves colors)
+  const gltfResult = await convertJscadModelToGltf(result, {
+    format: "glb",
+  })
 
-  for (const item of result.geometries) {
-    // Extract the actual geometry (it might be wrapped in a geom property)
-    const geom = (item as any).geom || item
-    const threeGeometry = convertCSGToThreeGeom(geom)
-    if (!threeGeometry || !threeGeometry.attributes.position) continue
-
-    const positions = new Float32Array(
-      threeGeometry.attributes.position.array as Float32Array,
-    )
-    const indices = threeGeometry.index
-      ? new Uint32Array(threeGeometry.index.array as Uint32Array)
-      : null
-
-    // Get colors if available
-    let colors: Float32Array | null = null
-    if (threeGeometry.attributes.color) {
-      colors = new Float32Array(
-        threeGeometry.attributes.color.array as Float32Array,
-      )
-    }
-
-    // Get normals if available
-    let normals: Float32Array | null = null
-    if (threeGeometry.attributes.normal) {
-      normals = new Float32Array(
-        threeGeometry.attributes.normal.array as Float32Array,
-      )
-    }
-
-    // Use the color from the item if available, otherwise default to gray
-    let baseColorFactor: [number, number, number, number] = [0.8, 0.8, 0.8, 1.0]
-    if ((item as any).color && typeof (item as any).color === "string") {
-      const colorStr = (item as any).color as string
-      if (colorStr.startsWith("#")) {
-        const hex = colorStr.slice(1)
-        const r = parseInt(hex.slice(0, 2), 16) / 255
-        const g = parseInt(hex.slice(2, 4), 16) / 255
-        const b = parseInt(hex.slice(4, 6), 16) / 255
-        baseColorFactor = [r, g, b, 1.0]
-      }
-    }
-
-    const drawCall: DrawCall = {
-      positions,
-      indices,
-      colors,
-      normals,
-      uvs: null,
-      model: mat4.create(),
-      material: {
-        baseColorFactor,
-        baseColorTexture: null,
-      },
-      mode: 4, // TRIANGLES mode
-    }
-
-    drawCalls.push(drawCall)
-  }
-
-  // Calculate optimal camera position and grid options
-  const { camPos, lookAt, gridOptions } = getBestCameraPosition(drawCalls)
-
-  // Render using poppygl with infinite grid tuned to scene size
-  const { bitmap } = renderDrawCalls(
-    drawCalls,
+  // Render the GLB with grid settings
+  // Note: renderGLTFToPNGBufferFromGLBBuffer will auto-frame the camera
+  const pngBuffer = await renderGLTFToPNGBufferFromGLBBuffer(
+    gltfResult.data instanceof ArrayBuffer
+      ? gltfResult.data
+      : Buffer.from(gltfResult.data as string),
     {
       width: 800,
       height: 600,
-      backgroundColor: [1, 1, 1], // White background
+      backgroundColor: [1, 1, 1],
       ambient: 0.3,
       gamma: true,
       cull: true,
-      camPos,
-      lookAt,
       grid: {
         infiniteGrid: true,
-        cellSize: gridOptions.cellSize,
-        sectionSize: gridOptions.sectionSize,
-        fadeDistance: gridOptions.fadeDistance,
-        fadeStrength: gridOptions.fadeStrength,
+        cellSize: 0.5,
+        sectionSize: 5,
+        fadeDistance: 50,
+        fadeStrength: 1.5,
+        gridColor: [0.9, 0.9, 0.9],
+        sectionColor: [0.7, 0.7, 0.7],
       },
     },
-    pureImageFactory,
   )
 
-  return encodePNGToBuffer(bitmap)
+  return pngBuffer
 }
