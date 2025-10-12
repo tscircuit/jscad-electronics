@@ -144,25 +144,28 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <SOD523 />
   }
 
+  const colorMatch = footprint.match(/_color\(([^)]+)\)/)
+  const color = colorMatch ? colorMatch[1] : undefined
+
   switch (fpJson.imperial) {
     case "0402":
-      return <A0402 />
+      return <A0402 color={color} />
     case "0603":
-      return <A0603 />
+      return <A0603 color={color} />
     case "0805":
-      return <A0805 />
+      return <A0805 color={color} />
     case "0201":
-      return <A0201 />
+      return <A0201 color={color} />
     case "01005":
-      return <A01005 />
+      return <A01005 color={color} />
     case "1206":
-      return <A1206 />
+      return <A1206 color={color} />
     case "1210":
-      return <A1210 />
+      return <A1210 color={color} />
     case "2010":
-      return <A2010 />
+      return <A2010 color={color} />
     case "2512":
-      return <A2512 />
+      return <A2512 color={color} />
   }
   return null
 }
