@@ -11,7 +11,7 @@
         "@types/three": "^0.179.0",
         "bun-types": "^1.2.20",
         "jscad-fiber": "^0.0.85",
-        "jscad-to-gltf": "^0.0.3",
+        "jscad-to-gltf": "^0.0.4",
         "looks-same": "^10.0.1",
         "poppygl": "^0.0.15",
         "react-cosmos": "7.0.0",
@@ -419,7 +419,7 @@
 
     "jscad-planner": ["jscad-planner@0.0.13", "", { "peerDependencies": { "typescript": "^5.0.0" } }, "sha512-Lkx7PDT0s90o25dhENrvcYLlgKRvSmhyX7H7LMMq85Hl5ICzirU4MAPxeveKWLlKrdS+4krybVAuKsJ9uvUppg=="],
 
-    "jscad-to-gltf": ["jscad-to-gltf@0.0.3", "", { "dependencies": { "@jscad/modeling": "^2.12.6", "jscad-planner": "^0.0.13" }, "peerDependencies": { "typescript": "^5" } }, "sha512-0DFNN2BwnKk63xKyGfx0OujlIS/LEB8T4pu5oUWlSznDifju6LqjzwLN4xnPV7pqlNIom1+gcJccw71sD+uVQg=="],
+    "jscad-to-gltf": ["jscad-to-gltf@0.0.4", "", { "dependencies": { "@jscad/modeling": "^2.12.6", "jscad-planner": "^0.0.13" }, "peerDependencies": { "typescript": "^5" } }, "sha512-qQmdc1uW4raHI3a4CULoOLaRokubkqRCwhulDktUD9qiLXGnwbQGoC/fqbN+nb6m7X74D5tIN+xTcuu+OyeEJg=="],
 
     "lilconfig": ["lilconfig@3.1.3", "https://registry.npmmirror.com/lilconfig/-/lilconfig-3.1.3.tgz", {}, "sha512-/vlFKAoH5Cgt3Ie+JLhRbwOsCQePABiU3tJ1egGvyQ+33R/vcwM2Zl2QR/LzjsBeItPt3oSVXapn+m4nQDvpzw=="],
 
