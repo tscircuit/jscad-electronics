@@ -12,8 +12,10 @@ export async function renderFootprint(footprint: string): Promise<Buffer> {
   const result = getJscadModelForFootprint(footprint, jscadModeling)
 
   // Convert JSCAD model to GLB format (preserves colors)
+  // Use axisTransform to make objects lie flat (Y-up to Z-up)
   const gltfResult = await convertJscadModelToGltf(result, {
     format: "glb",
+    axisTransform: "jscad_y+ -> gltf_z+",
   })
 
   // Render the GLB with grid settings
