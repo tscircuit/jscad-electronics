@@ -31,8 +31,8 @@ export const ChipBody = ({
   const notchRadius = Math.min(width, length) * 0.12
   const notchCenterZ = height - notchRadius * 0.6
   const notchCenterY = length / 2 - notchRadius * 0.25
-  const notchLength = faceLength / 8
-  const notchWidth = height / 4
+  const notchLength = 0.5
+  const notchWidth = 0.25
   // TODO the bodies flex a bit outward IRL
   return (
     <Colorize color="#555">
