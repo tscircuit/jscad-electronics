@@ -8,7 +8,7 @@ export const SOT563 = ({ fullWidth = 1.94, fullLength = 1.6 }) => {
   const leadLength = 0.67
   const leadHeight = 0.13
   const leadSpacing = 0.5
-  const bodyZOffset = -0.3
+  const bodyZOffset = -0.4
 
   return (
     <>
@@ -27,14 +27,18 @@ export const SOT563 = ({ fullWidth = 1.94, fullLength = 1.6 }) => {
 
         <Translate
           key={`left-${index}`}
-          center={[-bodyWidth / 2 - 0.03, yOffset * leadSpacing, 0]}
+          center={[
+            -bodyWidth / 2 - 0.03,
+            yOffset * leadSpacing,
+            leadHeight / 2,
+          ]}
         >
           <Cuboid size={[leadLength, leadWidth, leadHeight]} />
         </Translate>,
         // Right lead
         <Translate
           key={`right-${index}`}
-          center={[bodyWidth / 2 + 0.03, yOffset * leadSpacing, 0]}
+          center={[bodyWidth / 2 + 0.03, yOffset * leadSpacing, leadHeight / 2]}
         >
           <Cuboid size={[leadLength, leadWidth, leadHeight]} />
         </Translate>,
