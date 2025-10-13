@@ -37,7 +37,8 @@ export const SOIC = ({
           width={leadWidth}
           thickness={leadThickness}
           padContactLength={leadLength / 2}
-          bodyDistance={leadLength + 0.3}
+          bodyDistance={leadLength + 0.2}
+          // 
           height={leadHeight}
         />
       ))}
@@ -53,7 +54,7 @@ export const SOIC = ({
           width={leadWidth}
           thickness={leadThickness}
           padContactLength={leadLength / 2}
-          bodyDistance={leadLength + 0.3}
+          bodyDistance={leadLength + 0.2}
           height={leadHeight}
         />
       ))}
