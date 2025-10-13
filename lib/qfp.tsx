@@ -28,7 +28,7 @@ export const QFP = ({
   const fullWidth = fullLength
   const leadHeight = 0.8
   const leadThickness = 0.15
-  const bodyDistance = (fullWidth - bodyWidth) / 2
+  const bodyDistance = (fullWidth - bodyWidth) / 2 + 0.2
 
   return (
     <>
