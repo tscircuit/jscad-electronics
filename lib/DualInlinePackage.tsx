@@ -44,7 +44,12 @@ export const DipPinLeg = ({ x, y, z }: { x: number; y: number; z: number }) => {
       <Translate offset={{ x: x + 0.25 / 2, y, z: z }}>
         <Rotate rotation={["-90deg", 0, "90deg"]}>
           <ExtrudeLinear height={0.25}>
-            <Polygon points={svgPathPoints.map((p) => [p.x, p.y])} />
+            <Polygon
+              points={svgPathPoints
+                .slice()
+                .reverse()
+                .map((p) => [p.x, p.y])}
+            />
           </ExtrudeLinear>
         </Rotate>
       </Translate>
