@@ -69,7 +69,7 @@ export const VSSOP = ({
           width={_leadWidth}
           thickness={leadThickness}
           padContactLength={padContactLength + 0.05}
-          bodyDistance={leadBodyDistance + 0.05}
+          bodyDistance={leadBodyDistance + 0.1}
           height={leadHeight}
         />
       ))}
@@ -86,7 +86,7 @@ export const VSSOP = ({
           width={_leadWidth}
           thickness={leadThickness}
           padContactLength={padContactLength + 0.05}
-          bodyDistance={leadBodyDistance + 0.05}
+          bodyDistance={leadBodyDistance + 0.1}
           height={leadHeight}
         />
       ))}
