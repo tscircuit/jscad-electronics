@@ -10,7 +10,7 @@ export const QFN = ({
   padWidth = 0.25,
   padLength = 0.25,
   pitch = 0.5,
-  thermalPadThickness = 0.05,
+  thermalPadThickness = 0.1,
 }: {
   num_pins: number
   bodyWidth?: number
@@ -66,22 +66,25 @@ export const QFN = ({
         />
       </Colorize>
       {pinPositions.map((p, i) => (
-        <Cuboid
-          key={i}
-          center={{ x: p.x, y: p.y, z: thermalPadThickness / 2 }}
-          size={[p.pw, p.pl, thermalPadThickness]}
-        />
+        <Colorize color="#ff0000" key={i}>
+          <Cuboid
+            center={{ x: p.x, y: p.y, z: thermalPadThickness / 2 }}
+            size={[p.pw, p.pl, thermalPadThickness]}
+          />
+        </Colorize>
       ))}
       {thermalPadSize?.length !== undefined &&
         thermalPadSize?.width !== undefined && (
-          <Cuboid
-            center={{ x: 0, y: 0, z: thermalPadThickness / 2 }}
-            size={[
-              thermalPadSize.width,
-              thermalPadSize.length,
-              thermalPadThickness,
-            ]}
-          />
+          <Colorize color="#ff0000">
+            <Cuboid
+              center={{ x: 0, y: 0, z: thermalPadThickness / 2 }}
+              size={[
+                thermalPadSize.width,
+                thermalPadSize.length,
+                thermalPadThickness,
+              ]}
+            />
+          </Colorize>
         )}
     </>
   )
