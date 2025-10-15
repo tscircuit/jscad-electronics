@@ -65,24 +65,28 @@ export const QFN = ({
           size={[bodyWidth, bodyLength, bodyThickness]}
         />
       </Colorize>
-      {pinPositions.map((p, i) => (
-        <Cuboid
-          key={i}
-          center={[p.x, p.y, thermalPadThickness / 2]}
-          size={[p.pw, p.pl, thermalPadThickness]}
-        />
-      ))}
-      {thermalPadSize?.length !== undefined &&
-        thermalPadSize?.width !== undefined && (
+      <Colorize color="#cccccc">
+        {pinPositions.map((p, i) => (
           <Cuboid
-            center={[0, 0, thermalPadThickness / 2]}
-            size={[
-              thermalPadSize.width,
-              thermalPadSize.length,
-              thermalPadThickness,
-            ]}
+            key={i}
+            center={[p.x, p.y, thermalPadThickness / 2]}
+            size={[p.pw, p.pl, thermalPadThickness]}
           />
-        )}
+        ))}
+      </Colorize>
+      <Colorize color="#cccccc">
+        {thermalPadSize?.length !== undefined &&
+          thermalPadSize?.width !== undefined && (
+            <Cuboid
+              center={[0, 0, thermalPadThickness / 2]}
+              size={[
+                thermalPadSize.width,
+                thermalPadSize.length,
+                thermalPadThickness,
+              ]}
+            />
+          )}
+      </Colorize>
     </>
   )
 }
