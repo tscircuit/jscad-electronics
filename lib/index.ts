@@ -24,6 +24,7 @@ export * from "./qfn"
 export * from "./qfp"
 export * from "./sod-123"
 export * from "./PinRow"
+export * from "./QFN32"
 
 // New components
 export * from "./SOD523"
