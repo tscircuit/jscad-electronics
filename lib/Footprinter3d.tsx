@@ -33,7 +33,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     pw: number
     num_pins: number
     fn: string
-    thermalpad: { x: number; y: number }
+    thermalpad?: { x: number; y: number }
     imperial: String
     male: boolean
     female: boolean
@@ -78,6 +78,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         />
       )
     case "qfn":
+      const hasThermalPad =
+        typeof fpJson.thermalpad?.x === "number" &&
+        typeof fpJson.thermalpad?.y === "number"
       return (
         <QFN
           num_pins={fpJson.num_pins}
@@ -86,12 +89,17 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           pitch={fpJson.p}
           padLength={fpJson.pl}
           padWidth={fpJson.pw}
-          thermalPadSize={{
-            width: fpJson.thermalpad.x,
-            length: fpJson.thermalpad.y,
-          }}
+          thermalPadSize={
+            hasThermalPad
+              ? {
+                  width: fpJson.thermalpad!.x,
+                  length: fpJson.thermalpad!.y,
+                }
+              : undefined
+          }
         />
       )
+
     case "pinrow":
       if (fpJson.male)
         return <PinRow numberOfPins={fpJson.num_pins} pitch={fpJson.p} />
