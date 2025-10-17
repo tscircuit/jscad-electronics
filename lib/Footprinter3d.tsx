@@ -19,6 +19,7 @@ import { PushButton } from "./PushButton"
 import { SOIC } from "./SOIC"
 import { VSSOP } from "./VSSOP"
 import { SOD523 } from "./SOD523"
+import { SMA } from "./SMA"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -150,6 +151,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       )
     case "sod523":
       return <SOD523 />
+    case "sma":
+      return <SMA />
   }
 
   const colorMatch = footprint.match(/_color\(([^)]+)\)/)
