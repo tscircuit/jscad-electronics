@@ -3,57 +3,45 @@ import { SmdChipLead } from "./SmdChipLead"
 import type { FC } from "react"
 import { Cuboid, Colorize } from "jscad-fiber"
 
-interface SMAProps {
-  fullWidth?: number
-  fullLength?: number
-}
-
-export const SMA: FC<SMAProps> = ({ fullWidth = 5.6, fullLength = 2.8 }) => {
-  const bodyWidth = 4.3
-  const bodyLength = 2.6
-  const bodyHeight = 2.2
-  const leadWidth = 1.5
-  const leadThickness = 0.2
-  const leadHeight = 1.0
-  const padContactLength = 0.8
-  const padThickness = leadThickness / 2
-
-  const bodyDistance = (fullWidth - bodyWidth) / 2
+export const SMA: FC = () => {
+  // Dimensions from diodes.com SMA.pdf datasheet
+  const bodyLength = 4.25 // H
+  const bodyWidth = 4.3 // B
+  const bodyHeight = 2.14 // C
+  const overallLength = 5.1 // D
+  const leadWidth = 1.45 // A
+  const leadLength = (overallLength - bodyLength) / 2
 
   return (
     <>
-      {/* Lead on the left side */}
       <SmdChipLead
         key={1}
         position={{
-          x: -fullWidth / 2 + leadWidth / 2,
+          x: -bodyLength / 2 - leadLength / 2,
           y: 0,
-          z: padThickness,
+          z: 0.1,
         }}
         width={leadWidth}
-        thickness={leadThickness}
-        padContactLength={padContactLength}
-        bodyDistance={bodyDistance}
-        height={leadHeight}
+        thickness={0.2}
+        padContactLength={leadLength}
+        bodyDistance={0}
+        height={bodyHeight / 2}
       />
-
-      {/* Lead on the right side */}
       <SmdChipLead
         key={2}
         rotation={Math.PI}
         position={{
-          x: fullWidth / 2 - leadWidth / 2,
+          x: bodyLength / 2 + leadLength / 2,
           y: 0,
-          z: padThickness,
+          z: 0.1,
         }}
         width={leadWidth}
-        thickness={leadThickness}
-        padContactLength={padContactLength}
-        bodyDistance={bodyDistance}
-        height={leadHeight}
+        thickness={0.2}
+        padContactLength={leadLength}
+        bodyDistance={0}
+        height={bodyHeight / 2}
       />
 
-      {/* Chip Body */}
       <ChipBody
         center={{ x: 0, y: 0, z: 0 }}
         width={bodyWidth}
@@ -64,8 +52,8 @@ export const SMA: FC<SMAProps> = ({ fullWidth = 5.6, fullLength = 2.8 }) => {
       {/* Polarity Marking */}
       <Colorize color="#FFFFFF">
         <Cuboid
-          size={[0.4, bodyLength, 0.1]}
-          center={{ x: bodyWidth / 2 - 0.2, y: 0, z: bodyHeight - 0.05 }}
+          size={[bodyWidth * 0.9, 0.4, 0.1]}
+          center={{ x: 0, y: bodyLength / 2 - 0.2, z: bodyHeight - 0.05 }}
         />
       </Colorize>
     </>
