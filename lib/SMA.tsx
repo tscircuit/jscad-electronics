@@ -1,6 +1,7 @@
 import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 import type { FC } from "react"
+import { Cuboid, Colorize } from "jscad-fiber"
 
 interface SMAProps {
   fullWidth?: number
@@ -59,6 +60,14 @@ export const SMA: FC<SMAProps> = ({ fullWidth = 5.6, fullLength = 2.8 }) => {
         length={bodyLength}
         height={bodyHeight}
       />
+
+      {/* Polarity Marking */}
+      <Colorize color="#FFFFFF">
+        <Cuboid
+          size={[0.4, bodyLength, 0.1]}
+          center={{ x: bodyWidth / 2 - 0.2, y: 0, z: bodyHeight + 0.05 }}
+        />
+      </Colorize>
     </>
   )
 }
