@@ -1,5 +1,5 @@
 import { Cuboid, Cylinder, Subtract, Union } from "jscad-fiber"
-import { FC } from "react"
+import type { FC } from "react"
 
 interface SMAProps {
   bodyLength?: number
