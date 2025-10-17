@@ -1,32 +1,70 @@
-import { Cube, Cuboid, Translate, Union } from "jscad-fiber"
+import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber"
 
-// TERMINATORS are the two gray metal boxes on the ends of the resistor
-// BODY is the black box middle part
+export const SMA = () => {
+  const fullWidth = 4
+  const bodyLength = 2.3
+  const bodyHeight = 2
 
-const fullLength = 3
-const bodyLength = fullLength - 0.5 * 2
-const terminatorLength = 0.5
-const width = 1.4
-const height = 1.2
+  const padWidth = 1.3
+  const padLength = 1.5
+  const padThickness = 0.12
 
-export const SMA = ({ color = "#333" }) => {
+  const bodyWidth = fullWidth - padLength
+  const leftPadCenterX = bodyLength / 2
+  const rightPadCenterX = -bodyLength / 2
+
+  // top taper happens only in last quarter
+  const taperOffset = 0.4
+  const straightHeight = bodyHeight * 0.5
+
+  const Body = (
+    <Colorize color="#222">
+      <Union>
+        <Hull>
+          <Translate z={padThickness + 0.01}>
+            <Cuboid
+              size={[bodyWidth - taperOffset, bodyLength - taperOffset, 0.03]}
+            />
+          </Translate>
+
+          <Translate z={straightHeight}>
+            <Cuboid size={[bodyWidth, bodyLength, 0.01]} />
+          </Translate>
+        </Hull>
+        {/* Tapered top quarter */}
+        <Hull>
+          {/* bottom of taper (same size as straight section top) */}
+          <Translate z={straightHeight}>
+            <Cuboid size={[bodyWidth, bodyLength, 0.01]} />
+          </Translate>
+
+          {/* top of taper (smaller) */}
+          <Translate z={bodyHeight}>
+            <Cuboid
+              size={[bodyWidth - taperOffset, bodyLength - taperOffset, 0.01]}
+            />
+          </Translate>
+        </Hull>
+      </Union>
+    </Colorize>
+  )
+
   return (
     <>
+      {/* Pads */}
       <Cuboid
-        size={[bodyLength, width, height]}
-        offset={[0, 0, height / 2]}
-        color={color}
-      />
-      <Cuboid
-        size={[terminatorLength, width, height]}
-        offset={[fullLength / 2 - terminatorLength / 2, 0, height / 2]}
         color="#ccc"
+        size={[padLength, padWidth, padThickness]}
+        center={[leftPadCenterX, 0, padThickness / 2]}
       />
       <Cuboid
-        size={[terminatorLength, width, height]}
-        offset={[-fullLength / 2 + terminatorLength / 2, 0, height / 2]}
         color="#ccc"
+        size={[padLength, padWidth, padThickness]}
+        center={[rightPadCenterX, 0, padThickness / 2]}
       />
+      {Body}
     </>
   )
 }
+
+export default SMA
