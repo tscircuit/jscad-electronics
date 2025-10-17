@@ -21,10 +21,7 @@ export const SMA = ({ fullWidth = 7.1, fullLength = 3.4, pitch = 4.05 }) => {
   const Body = (
     <Union>
       {/* Main black molded body */}
-      <Colorize
-        color="
-#1a1a1a"
-      >
+      <Colorize color="#1a1a1a">
         <Hull>
           {/* Bottom corners */}
           <Translate x={-bodyWidth / 2 + 0.2} y={-bodyLength / 2 + 0.2} z={0.2}>
@@ -73,10 +70,7 @@ export const SMA = ({ fullWidth = 7.1, fullLength = 3.4, pitch = 4.05 }) => {
       </Colorize>
 
       {/* Cathode band (white/silver marking) */}
-      <Colorize
-        color="
-#d0d0d0"
-      >
+      <Colorize color="#d0d0d0">
         <Translate x={bandPosition} z={bodyHeight / 2 + 0.5}>
           <Cuboid size={[bandWidth, bodyLength - 0.4, bodyHeight - 0.5]} />
         </Translate>
@@ -85,10 +79,7 @@ export const SMA = ({ fullWidth = 7.1, fullLength = 3.4, pitch = 4.05 }) => {
   )
 
   const Lead = ({ xPos }: { xPos: number }) => (
-    <Colorize
-      color="
-#c0c0c0"
-    >
+    <Colorize color="#c0c0c0">
       <Union>
         {/* Vertical part connecting pad to body */}
         <Translate x={xPos} z={leadHeight / 2 + padThickness}>
