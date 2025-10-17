@@ -1,5 +1,10 @@
+import { JsCadView } from "jscad-fiber"
 import { SMA } from "../lib/SMA"
 
-export const Example = () => {
-  return <SMA />
+export default () => {
+  return (
+    <JsCadView zAxisUp showGrid>
+      <SMA />
+    </JsCadView>
+  )
 }
