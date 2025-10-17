@@ -18,7 +18,7 @@ export const SMA: FC<SMAProps> = ({
   bodyDiameter = 6,
   threadLength = 5,
   threadDiameter = 5,
-  pinLength = 12,
+  pinLength = 17,
   pinDiameter = 1,
   legWidth = 1,
   legHeight = 1,
@@ -44,7 +44,7 @@ export const SMA: FC<SMAProps> = ({
     <Cylinder
       height={pinLength}
       radius={pinDiameter / 2}
-      center={{ x: 0, y: 0, z: pinLength / 2 }}
+      center={{ x: 0, y: 0, z: 7.5 }}
     />
   )
 
