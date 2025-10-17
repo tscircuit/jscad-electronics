@@ -1,12 +1,12 @@
-import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { JsCadView } from "jscad-fiber"
-import { SMA } from "../lib/SMA"
+import { QFP } from "../lib/qfp"
+import { ExtrudedPads } from "../lib/ExtrudedPads"
 
 export default () => {
   return (
     <JsCadView zAxisUp showGrid>
-      <SMA />
-      <ExtrudedPads footprint="sma" />
+      <QFP pinCount={64} />
+      <ExtrudedPads footprint="qfp64" />
     </JsCadView>
   )
 }
