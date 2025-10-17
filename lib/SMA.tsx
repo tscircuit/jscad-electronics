@@ -23,7 +23,7 @@ export const SMA: FC<SMAProps> = ({ fullWidth = 5.6, fullLength = 2.8 }) => {
   return (
     <>
       {/* Lead on the left side */}
-      {/* <SmdChipLead
+      <SmdChipLead
         key={1}
         position={{
           x: -fullWidth / 2 + leadWidth / 2,
@@ -35,10 +35,10 @@ export const SMA: FC<SMAProps> = ({ fullWidth = 5.6, fullLength = 2.8 }) => {
         padContactLength={padContactLength}
         bodyDistance={bodyDistance}
         height={leadHeight}
-      /> */}
+      />
 
       {/* Lead on the right side */}
-      {/* <SmdChipLead
+      <SmdChipLead
         key={2}
         rotation={Math.PI}
         position={{
@@ -51,21 +51,21 @@ export const SMA: FC<SMAProps> = ({ fullWidth = 5.6, fullLength = 2.8 }) => {
         padContactLength={padContactLength}
         bodyDistance={bodyDistance}
         height={leadHeight}
-      /> */}
+      />
 
       {/* Chip Body */}
-      {/* <ChipBody
+      <ChipBody
         center={{ x: 0, y: 0, z: 0 }}
         width={bodyWidth}
         length={bodyLength}
         height={bodyHeight}
-      /> */}
+      />
 
       {/* Polarity Marking */}
       <Colorize color="#FFFFFF">
         <Cuboid
           size={[0.4, bodyLength, 0.1]}
-          center={{ x: bodyWidth / 2 - 0.2, y: 0, z: bodyHeight + 0.05 }}
+          center={{ x: bodyWidth / 2 - 0.2, y: 0, z: bodyHeight - 0.05 }}
         />
       </Colorize>
     </>
