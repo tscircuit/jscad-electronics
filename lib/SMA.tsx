@@ -6,7 +6,7 @@ export const SMA = () => {
   const bodyHeight = 2
 
   const padWidth = 1.3
-  const padLength = 1.5
+  const padLength = 1.2
   const padThickness = 0.12
 
   const bodyWidth = fullWidth - padLength
@@ -60,8 +60,30 @@ export const SMA = () => {
       <Cuboid
         color="#ccc"
         size={[padLength, padWidth, padThickness]}
+        // center={[rightPadCenterX, 0, padThickness / 2]}
+        offset={[-padLength + 0.05, 0, 1]}
+      />
+      <Cuboid
+        color="#ccc"
+        size={[padThickness, padWidth, padLength - 0.3]}
+        center={[-leftPadCenterX - padWidth / 2 + 0.11, 0, padLength / 2 - 0.1]}
+      />
+      <Cuboid
+        color="#ccc"
+        size={[padLength, padWidth, padThickness]}
         center={[rightPadCenterX, 0, padThickness / 2]}
       />
+      <Cuboid
+        color="#ccc"
+        size={[padLength, padWidth, padThickness]}
+        offset={[padLength - 0.05, 0, 1]}
+      />
+      <Cuboid
+        color="#ccc"
+        size={[padThickness, padWidth, padLength - 0.3]}
+        center={[leftPadCenterX + padWidth / 2 - 0.11, 0, padLength / 2 - 0.1]}
+      />
+
       {Body}
     </>
   )
