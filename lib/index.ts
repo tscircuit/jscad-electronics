@@ -27,3 +27,4 @@ export * from "./PinRow"
 
 // New components
 export * from "./SOD523"
+export * from "./SMA"

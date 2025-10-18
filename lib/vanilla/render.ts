@@ -122,7 +122,7 @@ function renderNode(
     else if (type === Subtract)
       geom = booleans.subtract(geoms[0] as any, geoms.slice(1) as any)
     else geom = hulls.hull(geoms as any)
-    return [{ geom }]
+    return [{ geom, color: colorCtx }]
   }
 
   if (type === Polygon) {
