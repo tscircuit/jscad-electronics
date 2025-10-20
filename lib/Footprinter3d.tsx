@@ -20,6 +20,7 @@ import { SOIC } from "./SOIC"
 import { VSSOP } from "./VSSOP"
 import { SOD523 } from "./SOD523"
 import { SMA } from "./SMA"
+import { SMB } from "./SMB"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -153,6 +154,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <SOD523 />
     case "sma":
       return <SMA />
+    case "smb":
+      return <SMB />
   }
 
   const colorMatch = footprint.match(/_color\(([^)]+)\)/)
