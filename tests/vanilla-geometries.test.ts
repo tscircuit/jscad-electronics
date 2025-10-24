@@ -9,3 +9,11 @@ test("vanilla build returns geometries for soic8", async () => {
   expect(Array.isArray(res.geometries)).toBe(true)
   expect(res.geometries.length).toBeGreaterThan(0)
 })
+
+test("vanilla build returns geometries for smc", async () => {
+  const { getJscadModelForFootprint } = await importVanilla()
+  const res = getJscadModelForFootprint("smc", jscadModeling)
+  expect(res).toBeDefined()
+  expect(Array.isArray(res.geometries)).toBe(true)
+  expect(res.geometries.length).toBeGreaterThan(0)
+})
