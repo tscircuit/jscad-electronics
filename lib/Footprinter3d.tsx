@@ -157,6 +157,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <SMA />
     case "smb":
       return <SMB />
+    case "smc":
+      return <SMC />
   }
 
   const colorMatch = footprint.match(/_color\(([^)]+)\)/)
