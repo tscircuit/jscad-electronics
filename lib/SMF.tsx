@@ -1,35 +1,33 @@
-import { Cuboid, Colorize, Union, Hull, Translate } from "jscad-fiber"
+import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber"
 
 export const SMF = () => {
-  const bodyWidth = 2.9
+  const fullWidth = 2.9
   const bodyLength = 1.9
-  const bodyHeight = 2.3
+  const bodyHeight = 1.08
+
   const padWidth = 1.2
-  const padThickness = 0.2 // the cad model above of bottom
+  const padLength = 1
+  const padThickness = 0.25
 
-  const leadThickness = 0.2
-  const leadHeight = 1.14
+  const bodyWidth = fullWidth
+  const leftPadCenterX = -1.3
+  const rightPadCenterX = 1.3
 
-  const taperOffset = 0.4
+  const taperOffset = 0.2
   const straightHeight = bodyHeight * 0.5
 
   const Body = (
-    <Colorize color="#1a1a1a">
+    <Colorize color="#222">
       <Union>
-        <Hull>
-          <Translate z={padThickness + 0.01}>
-            <Cuboid
-              size={[bodyWidth - taperOffset, bodyLength - taperOffset, 0.03]}
-            />
-          </Translate>
-          <Translate z={straightHeight}>
-            <Cuboid size={[bodyWidth, bodyLength, 0.01]} />
-          </Translate>
-        </Hull>
+        <Translate z={straightHeight / 2}>
+          <Cuboid size={[bodyWidth, bodyLength, straightHeight]} />
+        </Translate>
+
         <Hull>
           <Translate z={straightHeight}>
             <Cuboid size={[bodyWidth, bodyLength, 0.01]} />
           </Translate>
+
           <Translate z={bodyHeight}>
             <Cuboid
               size={[bodyWidth - taperOffset, bodyLength - taperOffset, 0.01]}
@@ -40,41 +38,19 @@ export const SMF = () => {
     </Colorize>
   )
 
-  const Lead = ({ xDir }: { xDir: number }) => {
-    const verticalGap = 1
-    const lowerPadGap = 1.37
-    const lowerPadX =
-      xDir * (bodyLength / 2 - (bodyHeight * 0.8) / 2 + lowerPadGap)
-    const verticalLeadX =
-      xDir * (bodyLength / 2 - leadThickness / 2 + verticalGap)
-    const bodyEdgeX = xDir * (bodyLength / 2 - leadThickness / 2)
-    const bridgeLength = Math.abs(bodyEdgeX - verticalLeadX)
-    const bridgeCenterX = (verticalLeadX + bodyEdgeX) / 2
-
-    return (
-      <Colorize color="#c0c0c0">
-        <Union>
-          <Cuboid
-            size={[1.1, padWidth, leadThickness]}
-            center={[lowerPadX, 0, leadThickness / 2]}
-          />
-          <Cuboid
-            size={[leadThickness, padWidth, leadHeight]}
-            center={[verticalLeadX, 0, leadHeight / 2 + leadThickness]}
-          />
-          <Cuboid
-            size={[1.1, padWidth, leadThickness]}
-            center={[bridgeCenterX, 0, leadThickness / 2 + leadHeight]}
-          />
-        </Union>
-      </Colorize>
-    )
-  }
-
   return (
     <>
-      <Lead xDir={1} />
-      <Lead xDir={-1} />
+      <Cuboid
+        color="#ccc"
+        size={[padLength, padWidth, padThickness]}
+        center={[leftPadCenterX, 0, padThickness / 2]}
+      />
+      <Cuboid
+        color="#ccc"
+        size={[padLength, padWidth, padThickness]}
+        center={[rightPadCenterX, 0, padThickness / 2]}
+      />
+
       {Body}
     </>
   )
