@@ -5,7 +5,7 @@ export default () => {
   return (
     <JsCadView zAxisUp showGrid>
       <SOT235 />
-      <ExtrudedPads footprint="sot235" />
+      <ExtrudedPads footprint="sot23_5" />
     </JsCadView>
   )
 }
