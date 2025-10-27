@@ -23,6 +23,7 @@ import { SMA } from "./SMA"
 import { SMB } from "./SMB"
 import { SMC } from "./SMC"
 import { SMF } from "./SMF"
+import { SOD123F } from "./SOD-123F"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -152,6 +153,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           bodyWidth={fpJson.w}
         />
       )
+    case "sod123f":
+      return <SOD123F />
     case "sod523":
       return <SOD523 />
     case "sma":
