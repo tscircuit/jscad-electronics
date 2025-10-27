@@ -15,42 +15,43 @@ export const SOD123F = () => {
   const taperOffset = 0.2
   const straightHeight = bodyHeight * 0.5
 
-  const body = (
-    <Colorize color="#222">
-      <Union>
-        <Translate z={straightHeight / 2}>
-          <Cuboid size={[fullWidth, bodyLength, straightHeight]} />
-        </Translate>
-
-        <Hull>
-          <Translate z={straightHeight}>
-            <Cuboid size={[fullWidth, bodyLength, 0.01]} />
-          </Translate>
-
-          <Translate z={bodyHeight}>
-            <Cuboid
-              size={[fullWidth - taperOffset, bodyLength - taperOffset, 0.01]}
-            />
-          </Translate>
-        </Hull>
-      </Union>
-    </Colorize>
-  )
-
   return (
     <>
+      {/* Left pad */}
       <Cuboid
         color="#ccc"
         size={[padLength, padWidth, padThickness]}
         center={[leftPadCenterX, 0, padThickness / 2]}
       />
+
+      {/* Right pad */}
       <Cuboid
         color="#ccc"
         size={[padLength, padWidth, padThickness]}
         center={[rightPadCenterX, 0, padThickness / 2]}
       />
 
-      {body}
+      {/* Body */}
+      <Colorize color="#222">
+        <Union>
+          {/* Middle straight section */}
+          <Translate z={straightHeight / 2}>
+            <Cuboid size={[fullWidth, bodyLength, straightHeight]} />
+          </Translate>
+
+          {/* Top taper section */}
+          <Hull>
+            <Translate z={straightHeight}>
+              <Cuboid size={[fullWidth, bodyLength, 0.01]} />
+            </Translate>
+            <Translate z={bodyHeight}>
+              <Cuboid
+                size={[fullWidth - taperOffset, bodyLength - taperOffset, 0.01]}
+              />
+            </Translate>
+          </Hull>
+        </Union>
+      </Colorize>
     </>
   )
 }
