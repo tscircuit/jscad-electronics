@@ -55,7 +55,7 @@ export const SOD123FL = () => {
       </Colorize>
 
       {/* Grey polarity/top strip */}
-       <Cuboid
+      <Cuboid
         color="#777"
         size={[0.1, bodyLength - 0.2, 0.01]}
         center={[leftPadCenterX + 0.2, 0, bodyHeight]}
