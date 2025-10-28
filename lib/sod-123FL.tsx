@@ -4,17 +4,17 @@ export const SOD123FL = () => {
   const fullWidth = 2.75
   const bodyLength = 1.8
 
-  const bodyHeight = 1.8
+  const bodyHeight = 1
 
   const padWidth = 0.9
   const padLength = 1
-  const padThickness = 0.16
+  const padThickness = 0.2
 
   const leftPadCenterX = -(fullWidth / 2 - 0.075)
   const rightPadCenterX = fullWidth / 2 - 0.075
 
-  const taperOffset = 0.2
-  const straightHeight = bodyHeight * 0.5
+  const taperOffset = 0.4
+  const straightHeight = bodyHeight * 0.2
 
   return (
     <>
@@ -57,8 +57,8 @@ export const SOD123FL = () => {
       {/* Grey polarity/top strip */}
       <Cuboid
         color="#777"
-        size={[0.1, bodyLength - 0.2, 0.01]}
-        center={[leftPadCenterX + 0.2, 0, bodyHeight]}
+        size={[padThickness, bodyLength - taperOffset, 0.01]}
+        center={[leftPadCenterX + taperOffset, 0, bodyHeight]}
       />
     </>
   )
