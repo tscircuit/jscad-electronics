@@ -1,14 +1,14 @@
 import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber"
 
 export const SOD923 = () => {
-  const fullWidth = 0.80
-  const bodyLength = 0.60
+  const fullWidth = 0.8
+  const bodyLength = 0.6
 
   const bodyHeight = 0.37
 
-  const padWidth = 0.20
-  const padLength = 0.20
-  const padThickness = 0.120
+  const padWidth = 0.2
+  const padLength = 0.2
+  const padThickness = 0.12
 
   const leftPadCenterX = -(fullWidth / 2)
   const rightPadCenterX = fullWidth / 2
