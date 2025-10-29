@@ -24,7 +24,7 @@ import { SMB } from "./SMB"
 import { SMC } from "./SMC"
 import { SMF } from "./SMF"
 import { SOD123F } from "./sod-123F"
-import SOD923 from "./SOD-923"
+import { SOD923 } from "./SOD-923"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
