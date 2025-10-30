@@ -17,7 +17,7 @@ export const SOT323 = () => {
 
   return (
     <>
-      {/* Leads on the right side (pin 1) */}
+      {/* Lead on the right side (pin 1) */}
       <SmdChipLead
         key={4}
         rotation={Math.PI}
