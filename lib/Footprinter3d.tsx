@@ -25,6 +25,7 @@ import { SMC } from "./SMC"
 import { SMF } from "./SMF"
 import { SOD123F } from "./sod-123F"
 import { SOT223 } from "./SOT-223"
+import { SOD923 } from "./SOD-923"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -168,6 +169,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <SMF />
     case "sod123f":
       return <SOD123F />
+    case "sod923":
+      return <SOD923 />
   }
 
   const colorMatch = footprint.match(/_color\(([^)]+)\)/)
