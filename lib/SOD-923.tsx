@@ -6,9 +6,9 @@ export const SOD923 = () => {
 
   const bodyHeight = 0.37
 
-  const padWidth = 0.2
-  const padLength = 0.2
-  const padThickness = 0.12
+  const padWidth = 0.25
+  const padLength = 0.4
+  const padThickness = 0.14
 
   const leftPadCenterX = -(fullWidth / 2)
   const rightPadCenterX = fullWidth / 2
