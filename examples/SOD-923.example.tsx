@@ -1,11 +1,12 @@
 import { JsCadView } from "jscad-fiber"
-import { SOT235 } from "../lib/SOT-235"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
+import { SOD923 } from "lib/SOD-923"
+
 export default () => {
   return (
     <JsCadView zAxisUp showGrid>
-      <SOT235 />
-      <ExtrudedPads footprint="sot23_5" />
+      <SOD923 />
+      <ExtrudedPads footprint="sod923" />
     </JsCadView>
   )
 }

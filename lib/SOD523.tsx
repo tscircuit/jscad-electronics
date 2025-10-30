@@ -17,31 +17,9 @@ export const SOD523 = () => {
   const taperOffset = 0.2
   const straightHeight = bodyHeight * 0.5
 
-  const Body = (
-    <Colorize color="#222">
-      <Union>
-        {/* Straight bottom section */}
-        <Translate z={straightHeight / 2}>
-          <Cuboid size={[bodyWidth, bodyLength, straightHeight]} />
-        </Translate>
-
-        {/* Tapered top quarter */}
-        <Hull>
-          {/* bottom of taper (same size as straight section top) */}
-          <Translate z={straightHeight}>
-            <Cuboid size={[bodyWidth, bodyLength, 0.01]} />
-          </Translate>
-
-          {/* top of taper (smaller) */}
-          <Translate z={bodyHeight}>
-            <Cuboid
-              size={[bodyWidth - taperOffset, bodyLength - taperOffset, 0.01]}
-            />
-          </Translate>
-        </Hull>
-      </Union>
-    </Colorize>
-  )
+  // Body geometry
+  // - straightHeight: the lower (straight) portion of the body
+  // - taperOffset: how much smaller the top of the body becomes
 
   return (
     <>
@@ -58,7 +36,29 @@ export const SOD523 = () => {
       />
 
       {/* Body (lifted above pads) */}
-      {Body}
+      <Colorize color="#222">
+        <Union>
+          {/* Straight bottom section */}
+          <Translate z={straightHeight / 2}>
+            <Cuboid size={[bodyWidth, bodyLength, straightHeight]} />
+          </Translate>
+
+          {/* Tapered top quarter */}
+          <Hull>
+            {/* bottom of taper (same size as straight section top) */}
+            <Translate z={straightHeight}>
+              <Cuboid size={[bodyWidth, bodyLength, 0.01]} />
+            </Translate>
+
+            {/* top of taper (smaller) */}
+            <Translate z={bodyHeight}>
+              <Cuboid
+                size={[bodyWidth - taperOffset, bodyLength - taperOffset, 0.01]}
+              />
+            </Translate>
+          </Hull>
+        </Union>
+      </Colorize>
     </>
   )
 }
