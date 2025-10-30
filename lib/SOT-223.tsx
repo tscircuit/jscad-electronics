@@ -11,7 +11,7 @@ export const SOT223 = () => {
   const leadThickness = 0.25
   const leadHeight = 0.95
   const padContactLength = 0.5
-  const padPitch = 0.95
+  const padPitch = 2.3
 
   // Increase the bodyDistance to extend leads further out
   const extendedBodyDistance = fullWidth - bodyWidth
@@ -52,7 +52,7 @@ export const SOT223 = () => {
         key={1}
         position={{
           x: -fullWidth / 2 - extendedBodyDistance / 4,
-          y: -2.3,
+          y: -padPitch,
           z: leadThickness / 2,
         }}
         width={leadWidth}
@@ -65,7 +65,7 @@ export const SOT223 = () => {
         key={2}
         position={{
           x: -fullWidth / 2 - extendedBodyDistance / 4,
-          y: 2.3,
+          y: padPitch,
           z: leadThickness / 2,
         }}
         width={leadWidth}
