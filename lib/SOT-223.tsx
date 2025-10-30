@@ -9,7 +9,7 @@ export const SOT223 = () => {
   const leadWidth = 0.7
   const leftLeadWidth = 3
   const leadThickness = 0.25
-  const leadHeight = 0.95
+  const leadHeight = 0.75
   const padContactLength = 0.5
   const padPitch = 2.3
 
