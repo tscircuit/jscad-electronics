@@ -25,6 +25,7 @@ import { SMC } from "./SMC"
 import { SMF } from "./SMF"
 import { SOD123F } from "./sod-123F"
 import { SOD923 } from "./SOD-923"
+import { SOT223 } from "./SOT-223"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -136,6 +137,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     }
     case "sot235":
       return <SOT235 />
+    case "sot223":
+      return <SOT223 />
     case "pushbutton":
       return (
         <PushButton
