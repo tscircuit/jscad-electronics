@@ -80,6 +80,9 @@ export const SOT223 = () => {
         width={bodyWidth}
         length={bodyLength}
         height={bodyHeight}
+        includeNotch={false}
+        taperRatio={0.06}
+        straightHeightRatio={0.45}
       />
     </>
   )
