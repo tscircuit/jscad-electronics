@@ -23,7 +23,7 @@ export const SOT223 = () => {
         key={4}
         rotation={Math.PI}
         position={{
-          x: fullWidth / 2   + extendedBodyDistance / 4,
+          x: fullWidth / 2 + extendedBodyDistance / 4,
           y: 0,
           z: leadThickness / 2,
         }}
