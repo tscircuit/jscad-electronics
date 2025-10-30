@@ -20,7 +20,7 @@ export const SOT223 = () => {
     <>
       {/* Leads on the right side (pin 1) */}
       <SmdChipLead
-        key={4}
+        key={1}
         rotation={Math.PI}
         position={{
           x: fullWidth / 2 + extendedBodyDistance / 4,
