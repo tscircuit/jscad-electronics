@@ -1,8 +1,11 @@
+import type { ReactNode } from "react"
 import {
   Colorize,
   Cuboid,
   Cylinder,
+  ExtrudeLinear,
   Hull,
+  Polygon,
   Rotate,
   Subtract,
   Translate,
@@ -24,6 +27,7 @@ export interface ChipBodyProps {
   notchRotation?: [number, number, number]
   notchLength?: number
   notchWidth?: number
+  chamferSize?: number
 }
 
 export const ChipBody = ({
@@ -42,6 +46,7 @@ export const ChipBody = ({
   notchRotation = [0, 0, 0],
   notchLength = 0.5,
   notchWidth = 0.25,
+  chamferSize = 0,
 }: ChipBodyProps) => {
   const straightHeight = height * straightHeightRatio
   const taperHeight = height - straightHeight
@@ -56,6 +61,55 @@ export const ChipBody = ({
     z: height,
   }
   const actualNotchPosition = notchPosition ?? defaultNotchPosition
+  const effectiveChamfer = Math.max(0, Math.min(chamferSize, width / 2, length / 2))
+  const cutouts: ReactNode[] = []
+  if (includeNotch) {
+    cutouts.push(
+      <Translate key="notch" offset={actualNotchPosition}>
+        <Rotate rotation={notchRotation}>
+          <Cylinder radius={notchLength} height={notchWidth} />
+        </Rotate>
+      </Translate>,
+    )
+  }
+  if (effectiveChamfer > 0) {
+    const chamferHeight = height + 1
+    const chamferZOffset = -0.5
+    const chamferCorners: Array<[number, number]> = [
+      [1, 1],
+      [-1, 1],
+      [-1, -1],
+      [1, -1],
+    ]
+    chamferCorners.forEach(([sx, sy], index) => {
+      const points: Array<[number, number]> =
+        sx * sy > 0
+          ? [
+              [0, 0],
+              [-sx * effectiveChamfer, 0],
+              [0, -sy * effectiveChamfer],
+            ]
+          : [
+              [0, 0],
+              [0, -sy * effectiveChamfer],
+              [-sx * effectiveChamfer, 0],
+            ]
+      cutouts.push(
+        <Translate
+          key={`chamfer-${index}`}
+          offset={{
+            x: (width / 2) * sx,
+            y: (length / 2) * sy,
+            z: chamferZOffset,
+          }}
+        >
+          <ExtrudeLinear height={chamferHeight}>
+            <Polygon points={points} />
+          </ExtrudeLinear>
+        </Translate>,
+      )
+    })
+  }
   const body = (
     <Union>
       <Hull>
@@ -82,14 +136,10 @@ export const ChipBody = ({
     <Colorize color={color}>
       <Translate offset={center}>
         <Translate offset={{ x: 0, y: 0, z: heightAboveSurface }}>
-          {includeNotch ? (
+          {cutouts.length ? (
             <Subtract>
               {body}
-              <Translate offset={actualNotchPosition}>
-                <Rotate rotation={notchRotation}>
-                  <Cylinder radius={notchLength} height={notchWidth} />
-                </Rotate>
-              </Translate>
+              {cutouts}
             </Subtract>
           ) : (
             body

@@ -6,11 +6,11 @@ export const TQFP = () => {
   const pitch = 0.5
   const leadWidth = 0.2
   const padContactLength = 0.45
-  const bodyWidth = 9.6
+  const bodyWidth = 9
   const sidePinCount = pinCount / 4
   const bodyLength = bodyWidth
   const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2
-  const fullLength = bodyLength + 2 * padContactLength
+  const fullLength = bodyLength + 2 * padContactLength + 0.6
   const fullWidth = fullLength
   const leadHeight = 0.8
   const leadThickness = 0.25
@@ -94,6 +94,9 @@ export const TQFP = () => {
         width={bodyWidth}
         length={bodyLength}
         height={1.2}
+        chamferSize={0.6}
+        taperRatio={0}
+        notchPosition={{ x: 3.5, y: 3.5, z: 1.2}}
       />
     </>
   )
