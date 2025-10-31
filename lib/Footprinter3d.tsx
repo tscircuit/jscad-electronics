@@ -27,6 +27,7 @@ import { SOD123F } from "./sod-123F"
 import { SOD123FL } from "./sod-123FL"
 import { SOD923 } from "./SOD-923"
 import { SOT223 } from "./SOT-223"
+import TQFP from "./tqfp"
 import { SOT323 } from "./SOT-323"
 
 /**
@@ -86,6 +87,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           bodyWidth={fpJson.w}
         />
       )
+    case "tqfp":
+      return <TQFP />
     case "qfn":
       const hasThermalPad =
         typeof fpJson.thermalpad?.x === "number" &&

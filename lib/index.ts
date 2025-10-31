@@ -22,6 +22,7 @@ export * from "./Tssop"
 export * from "./VSSOP"
 export * from "./qfn"
 export * from "./qfp"
+export * from "./tqfp"
 export * from "./sod-123"
 export * from "./PinRow"
 

@@ -24,6 +24,7 @@ export interface ChipBodyProps {
   notchRotation?: [number, number, number]
   notchLength?: number
   notchWidth?: number
+  chamferSize?: number
 }
 
 export const ChipBody = ({
@@ -42,6 +43,7 @@ export const ChipBody = ({
   notchRotation = [0, 0, 0],
   notchLength = 0.5,
   notchWidth = 0.25,
+  chamferSize = 0,
 }: ChipBodyProps) => {
   const straightHeight = height * straightHeightRatio
   const taperHeight = height - straightHeight
@@ -78,13 +80,44 @@ export const ChipBody = ({
   )
 
   // TODO the bodies flex a bit outward IRL
+
+  const chamferCutout = (xPos: number, yPos: number) => (
+    <Translate offset={{ x: xPos, y: yPos, z: 0 }}>
+      <Rotate rotation={[0, 0, Math.PI / 4]}>
+        <Cuboid
+          size={[
+            chamferSize * Math.SQRT2,
+            chamferSize * Math.SQRT2,
+            height * 3,
+          ]}
+        />
+      </Rotate>
+    </Translate>
+  )
+
+  let finalBody = body
+
+  if (chamferSize > 0) {
+    const xOffset = width / 2
+    const yOffset = length / 2
+    finalBody = (
+      <Subtract>
+        {body}
+        {chamferCutout(xOffset, yOffset)}
+        {chamferCutout(-xOffset, yOffset)}
+        {chamferCutout(xOffset, -yOffset)}
+        {chamferCutout(-xOffset, -yOffset)}
+      </Subtract>
+    )
+  }
+
   return (
     <Colorize color={color}>
       <Translate offset={center}>
         <Translate offset={{ x: 0, y: 0, z: heightAboveSurface }}>
           {includeNotch ? (
             <Subtract>
-              {body}
+              {finalBody}
               <Translate offset={actualNotchPosition}>
                 <Rotate rotation={notchRotation}>
                   <Cylinder radius={notchLength} height={notchWidth} />
@@ -92,7 +125,7 @@ export const ChipBody = ({
               </Translate>
             </Subtract>
           ) : (
-            body
+            finalBody
           )}
         </Translate>
       </Translate>
