@@ -61,7 +61,10 @@ export const ChipBody = ({
     z: height,
   }
   const actualNotchPosition = notchPosition ?? defaultNotchPosition
-  const effectiveChamfer = Math.max(0, Math.min(chamferSize, width / 2, length / 2))
+  const effectiveChamfer = Math.max(
+    0,
+    Math.min(chamferSize, width / 2, length / 2),
+  )
   const cutouts: ReactNode[] = []
   if (includeNotch) {
     cutouts.push(
