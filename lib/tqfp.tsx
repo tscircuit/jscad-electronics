@@ -2,7 +2,6 @@ import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 
 export const TQFP = () => {
-
   const pinCount = 64
   const pitch = 0.5
   const leadWidth = 0.2

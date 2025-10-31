@@ -87,15 +87,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         />
       )
     case "tqfp":
-      return (
-        <TQFP
-          pinCount={fpJson.num_pins}
-          pitch={fpJson.p}
-          leadWidth={fpJson.pw}
-          padContactLength={fpJson.pl}
-          bodyWidth={fpJson.w}
-        />
-      )
+      return <TQFP />
     case "qfn":
       const hasThermalPad =
         typeof fpJson.thermalpad?.x === "number" &&
