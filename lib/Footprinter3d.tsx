@@ -27,6 +27,7 @@ import { SOD123F } from "./sod-123F"
 import { SOD123FL } from "./sod-123FL"
 import { SOD923 } from "./SOD-923"
 import { SOT223 } from "./SOT-223"
+import TQFP from "./tqfp"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -78,6 +79,16 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     case "qfp":
       return (
         <QFP
+          pinCount={fpJson.num_pins}
+          pitch={fpJson.p}
+          leadWidth={fpJson.pw}
+          padContactLength={fpJson.pl}
+          bodyWidth={fpJson.w}
+        />
+      )
+    case "tqfp":
+      return (
+        <TQFP
           pinCount={fpJson.num_pins}
           pitch={fpJson.p}
           leadWidth={fpJson.pw}
