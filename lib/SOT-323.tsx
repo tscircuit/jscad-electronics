@@ -2,13 +2,13 @@ import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 
 export const SOT323 = () => {
-  const fullWidth = 2.1
+  const fullWidth = 2.05
   const bodyWidth = 1.25
   const bodyLength = 2.0
   const bodyHeight = 0.9
   const leadWidth = 0.3
   const leadThickness = 0.18
-  const leadHeight = 0.5
+  const leadHeight = 0.65
   const padContactLength = 0.2
   const padPitch = 0.65
 
