@@ -1,11 +1,8 @@
-import type { ReactNode } from "react"
 import {
   Colorize,
   Cuboid,
   Cylinder,
-  ExtrudeLinear,
   Hull,
-  Polygon,
   Rotate,
   Subtract,
   Translate,
@@ -61,58 +58,6 @@ export const ChipBody = ({
     z: height,
   }
   const actualNotchPosition = notchPosition ?? defaultNotchPosition
-  const effectiveChamfer = Math.max(
-    0,
-    Math.min(chamferSize, width / 2, length / 2),
-  )
-  const cutouts: ReactNode[] = []
-  if (includeNotch) {
-    cutouts.push(
-      <Translate key="notch" offset={actualNotchPosition}>
-        <Rotate rotation={notchRotation}>
-          <Cylinder radius={notchLength} height={notchWidth} />
-        </Rotate>
-      </Translate>,
-    )
-  }
-  if (effectiveChamfer > 0) {
-    const chamferHeight = height + 1
-    const chamferZOffset = -0.5
-    const chamferCorners: Array<[number, number]> = [
-      [1, 1],
-      [-1, 1],
-      [-1, -1],
-      [1, -1],
-    ]
-    chamferCorners.forEach(([sx, sy], index) => {
-      const points: Array<[number, number]> =
-        sx * sy > 0
-          ? [
-              [0, 0],
-              [-sx * effectiveChamfer, 0],
-              [0, -sy * effectiveChamfer],
-            ]
-          : [
-              [0, 0],
-              [0, -sy * effectiveChamfer],
-              [-sx * effectiveChamfer, 0],
-            ]
-      cutouts.push(
-        <Translate
-          key={`chamfer-${index}`}
-          offset={{
-            x: (width / 2) * sx,
-            y: (length / 2) * sy,
-            z: chamferZOffset,
-          }}
-        >
-          <ExtrudeLinear height={chamferHeight}>
-            <Polygon points={points} />
-          </ExtrudeLinear>
-        </Translate>,
-      )
-    })
-  }
   const body = (
     <Union>
       <Hull>
@@ -135,17 +80,46 @@ export const ChipBody = ({
   )
 
   // TODO the bodies flex a bit outward IRL
+  
+  const chamferCutout = (xPos: number, yPos: number) => (
+    <Translate offset={{ x: xPos, y: yPos, z: 0 }}>
+      <Rotate rotation={[0, 0, Math.PI / 4]}>
+        <Cuboid size={[chamferSize * Math.SQRT2, chamferSize * Math.SQRT2, height * 3]} />
+      </Rotate>
+    </Translate>
+  )
+
+  let finalBody = body
+
+  if (chamferSize > 0) {
+    const xOffset = width / 2
+    const yOffset = length / 2
+    finalBody = (
+      <Subtract>
+        {body}
+        {chamferCutout(xOffset, yOffset)}
+        {chamferCutout(-xOffset, yOffset)}
+        {chamferCutout(xOffset, -yOffset)}
+        {chamferCutout(-xOffset, -yOffset)}
+      </Subtract>
+    )
+  }
+
   return (
     <Colorize color={color}>
       <Translate offset={center}>
         <Translate offset={{ x: 0, y: 0, z: heightAboveSurface }}>
-          {cutouts.length ? (
+          {includeNotch ? (
             <Subtract>
-              {body}
-              {cutouts}
+              {finalBody}
+              <Translate offset={actualNotchPosition}>
+                <Rotate rotation={notchRotation}>
+                  <Cylinder radius={notchLength} height={notchWidth} />
+                </Rotate>
+              </Translate>
             </Subtract>
           ) : (
-            body
+            finalBody
           )}
         </Translate>
       </Translate>
