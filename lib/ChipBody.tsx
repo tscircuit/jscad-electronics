@@ -80,11 +80,17 @@ export const ChipBody = ({
   )
 
   // TODO the bodies flex a bit outward IRL
-  
+
   const chamferCutout = (xPos: number, yPos: number) => (
     <Translate offset={{ x: xPos, y: yPos, z: 0 }}>
       <Rotate rotation={[0, 0, Math.PI / 4]}>
-        <Cuboid size={[chamferSize * Math.SQRT2, chamferSize * Math.SQRT2, height * 3]} />
+        <Cuboid
+          size={[
+            chamferSize * Math.SQRT2,
+            chamferSize * Math.SQRT2,
+            height * 3,
+          ]}
+        />
       </Rotate>
     </Translate>
   )
