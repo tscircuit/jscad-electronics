@@ -110,7 +110,11 @@ export const QFP = ({
         height={1.5}
         taperRatio={0.03}
         chamferSize={1}
-        notchPosition={{x:bodyLength/2 - 1.5, y: bodyWidth/2 - 1.5, z: 1.5}}
+        notchPosition={{
+          x: bodyLength / 2 - 1.5,
+          y: bodyWidth / 2 - 1.5,
+          z: 1.5,
+        }}
       />
     </>
   )
