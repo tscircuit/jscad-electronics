@@ -1,6 +1,5 @@
 import { Cuboid, Sphere, Translate, Colorize, Rotate } from "jscad-fiber"
 import { fp } from "@tscircuit/footprinter"
-import { useMemo } from "react"
 
 interface BGAProps {
   packageWidth?: number
@@ -31,11 +30,9 @@ export const BGA = ({
   const bodyOffset = standoffHeight + bodyHeight / 2
   const ballOffset = -standoffHeight / 2
 
-  const ballsSoup = useMemo(() => {
-    if (!footprintString) return null
-    const result = fp.string(footprintString)
-    return result.circuitJson()
-  }, [footprintString])
+  const ballsSoup = footprintString
+    ? fp.string(footprintString).circuitJson()
+    : null
 
   return (
     <>
