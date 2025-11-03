@@ -32,7 +32,7 @@ export const SOT723 = () => {
       {[1, 2, 3].map((pn) => {
         const { x, y } = getCcwSot723Coords(pn)
         return (
-          <Translate key={`lead-${pn}`} center={[x, y, 0]}>
+          <Translate key={`lead-${pn}`} center={[x, y, 0.05]}>
             <Cuboid
               size={[
                 leadLength,
