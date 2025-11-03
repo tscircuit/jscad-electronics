@@ -21,16 +21,16 @@ export const LQFP = ({
 
   // get default values if not specified
   if (!pitch) pitch = 0.5
-  if (!padContactLength) padContactLength = 1.44
-  if (!leadWidth) leadWidth = 0.3
+  if (!padContactLength) padContactLength = 0.6
+  if (!leadWidth) leadWidth = 0.22
   if (!bodyWidth) bodyWidth = pitch * (sidePinCount + 4)
 
   const bodyLength = bodyWidth
   const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2
-  const fullLength = bodyLength + 2 * padContactLength
+  const fullLength = bodyLength + 3.3 * padContactLength
   const fullWidth = fullLength
   const leadHeight = 0.8
-  const leadThickness = 0.15
+  const leadThickness = 0.20
   const bodyDistance = (fullWidth - bodyWidth) / 2 + 0.2
 
   return (
@@ -111,8 +111,9 @@ export const LQFP = ({
         width={bodyWidth}
         length={bodyLength}
         height={1.5}
+        heightAboveSurface={0.10}
         taperRatio={0.04}
-        chamferSize={0.6}
+        chamferSize={0.70}
         notchPosition={{
           x: bodyLength / 2 - 1.5,
           y: bodyLength / 2 - 1.5,
