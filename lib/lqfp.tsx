@@ -14,12 +14,10 @@ export const LQFP = ({
   padContactLength?: number
   bodyWidth?: number
 }) => {
-
   const sidePinCount = pinCount / 4
   if (sidePinCount !== Math.floor(sidePinCount)) {
     throw new Error(`LQFP pinCount must be divisible by 4, got ${pinCount}`)
   }
-
 
   // get default values if not specified
   if (!pitch) pitch = 0.5
