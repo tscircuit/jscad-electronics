@@ -30,7 +30,7 @@ export const LQFP = ({
   const fullLength = bodyLength + 3.3 * padContactLength
   const fullWidth = fullLength
   const leadHeight = 0.8
-  const leadThickness = 0.20
+  const leadThickness = 0.2
   const bodyDistance = (fullWidth - bodyWidth) / 2 + 0.2
 
   return (
@@ -111,9 +111,9 @@ export const LQFP = ({
         width={bodyWidth}
         length={bodyLength}
         height={1.5}
-        heightAboveSurface={0.10}
+        heightAboveSurface={0.1}
         taperRatio={0.04}
-        chamferSize={0.70}
+        chamferSize={0.7}
         notchPosition={{
           x: bodyLength / 2 - 1.5,
           y: bodyLength / 2 - 1.5,
