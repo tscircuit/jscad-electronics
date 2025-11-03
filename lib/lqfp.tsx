@@ -1,19 +1,33 @@
 import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 
-export const LQFP = () => {
-  const pinCount = 64
-  const pitch = 0.5
-  const leadWidth = 0.2
-  const padContactLength = 0.45
-  const bodyWidth = 9
+export const LQFP = ({
+  pinCount,
+  pitch,
+  leadWidth,
+  padContactLength,
+  bodyWidth,
+}: {
+  pinCount: number
+  pitch?: number
+  leadWidth?: number
+  padContactLength?: number
+  bodyWidth?: number
+}) => {
   const sidePinCount = pinCount / 4
+
+  // get default values if not specified
+  if (!pitch) pitch = 0.5
+  if (!padContactLength) padContactLength = 1.44
+  if (!leadWidth) leadWidth = 0.3
+  if (!bodyWidth) bodyWidth = pitch * (sidePinCount + 4)
+
   const bodyLength = bodyWidth
   const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2
-  const fullLength = bodyLength + 2 * padContactLength + 0.6
+  const fullLength = bodyLength + 2 * padContactLength
   const fullWidth = fullLength
   const leadHeight = 0.8
-  const leadThickness = 0.25
+  const leadThickness = 0.15
   const bodyDistance = (fullWidth - bodyWidth) / 2 + 0.2
 
   return (
@@ -23,7 +37,7 @@ export const LQFP = () => {
         <SmdChipLead
           key={`left-${i}`}
           position={{
-            x: -fullWidth / 2,
+            x: -fullWidth / 1.98,
             y: i * pitch - pinOffsetToCenter,
             z: leadThickness / 2,
           }}
@@ -41,7 +55,7 @@ export const LQFP = () => {
           key={`right-${i}`}
           rotation={Math.PI}
           position={{
-            x: fullWidth / 2,
+            x: fullWidth / 1.98,
             y: i * pitch - pinOffsetToCenter,
             z: leadThickness / 2,
           }}
@@ -60,7 +74,7 @@ export const LQFP = () => {
           rotation={Math.PI / 2}
           position={{
             x: i * pitch - pinOffsetToCenter,
-            y: -fullLength / 2,
+            y: -fullLength / 1.98,
             z: leadThickness / 2,
           }}
           width={leadWidth}
@@ -78,7 +92,7 @@ export const LQFP = () => {
           rotation={-Math.PI / 2}
           position={{
             x: i * pitch - pinOffsetToCenter,
-            y: fullLength / 2,
+            y: fullLength / 1.98,
             z: leadThickness / 2,
           }}
           width={leadWidth}
@@ -93,10 +107,14 @@ export const LQFP = () => {
         center={{ x: 0, y: 0, z: leadThickness / 2 }}
         width={bodyWidth}
         length={bodyLength}
-        height={1.2}
+        height={1.5}
+        taperRatio={0.04}
         chamferSize={0.6}
-        taperRatio={0.05}
-        notchPosition={{ x: 3.5, y: 3.5, z: 1.2 }}
+        notchPosition={{
+          x: bodyLength / 2 - 1.5,
+          y: bodyLength / 2 - 1.5,
+          z: 1.5,
+        }}
       />
     </>
   )

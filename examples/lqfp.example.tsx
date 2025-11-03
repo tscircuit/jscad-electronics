@@ -5,7 +5,7 @@ import { ExtrudedPads } from "../lib/ExtrudedPads"
 export default () => {
   return (
     <JsCadView zAxisUp showGrid>
-      <LQFP />
+      <LQFP pinCount={64} />
       <ExtrudedPads footprint="lqfp64" />
     </JsCadView>
   )
