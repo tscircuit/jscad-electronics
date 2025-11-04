@@ -30,6 +30,7 @@ import { SOT223 } from "./SOT-223"
 import TQFP from "./tqfp"
 import { SOT323 } from "./SOT-323"
 import { LQFP } from "./lqfp"
+import { DFN } from "./dfn"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -92,7 +93,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <TQFP />
     case "lqfp":
       return <LQFP pinCount={fpJson.num_pins} />
-    case "qfn":
+    case "qfn": {
       const hasThermalPad =
         typeof fpJson.thermalpad?.x === "number" &&
         typeof fpJson.thermalpad?.y === "number"
@@ -114,6 +115,31 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           }
         />
       )
+    }
+
+    case "dfn": {
+      const hasThermalPad =
+        typeof fpJson.thermalpad?.x === "number" &&
+        typeof fpJson.thermalpad?.y === "number"
+      return (
+        <DFN
+          num_pins={fpJson.num_pins}
+          bodyWidth={fpJson.w}
+          bodyLength={fpJson.h}
+          pitch={fpJson.p}
+          padLength={fpJson.pl}
+          padWidth={fpJson.pw}
+          thermalPadSize={
+            hasThermalPad
+              ? {
+                  width: fpJson.thermalpad!.x,
+                  length: fpJson.thermalpad!.y,
+                }
+              : undefined
+          }
+        />
+      )
+    }
 
     case "pinrow":
       if (fpJson.male)
