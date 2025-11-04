@@ -3,7 +3,6 @@ import { JsCadView } from "jscad-fiber"
 import { HC49 } from "lib/hc49"
 
 export default () => {
-
   return (
     <JsCadView zAxisUp showGrid>
       <HC49 />

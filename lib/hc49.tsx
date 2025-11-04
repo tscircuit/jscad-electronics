@@ -40,18 +40,37 @@ export const HC49 = ({
   // center X for the through-hole leads (distance between centers = leadSpacing)
   const leadCenterX = leadSpacing / 2
   const baseHeight = 0.85
-  
 
   return (
     <>
       <Colorize color={color}>
         <Hull>
-          <RoundedCylinder height={bodyHeight} roundRadius={0.5} radius={endRadius} center={[-endCenterX, 0, bodyHeight ]} />
-          <RoundedCylinder height={bodyHeight} roundRadius={0.5} radius={endRadius} center={[endCenterX, 0, bodyHeight]} />
+          <RoundedCylinder
+            height={bodyHeight}
+            roundRadius={0.5}
+            radius={endRadius}
+            center={[-endCenterX, 0, bodyHeight]}
+          />
+          <RoundedCylinder
+            height={bodyHeight}
+            roundRadius={0.5}
+            radius={endRadius}
+            center={[endCenterX, 0, bodyHeight]}
+          />
         </Hull>
         <Hull>
-          <RoundedCylinder height={baseHeight} roundRadius={0.1} radius={endRadius+0.85} center={[-endCenterX, 0, bodyHeight/2 + baseHeight/2]} />
-          <RoundedCylinder height={baseHeight} roundRadius={0.1} radius={endRadius+0.85} center={[endCenterX, 0, bodyHeight/2 +baseHeight/2]} />
+          <RoundedCylinder
+            height={baseHeight}
+            roundRadius={0.1}
+            radius={endRadius + 0.85}
+            center={[-endCenterX, 0, bodyHeight / 2 + baseHeight / 2]}
+          />
+          <RoundedCylinder
+            height={baseHeight}
+            roundRadius={0.1}
+            radius={endRadius + 0.85}
+            center={[endCenterX, 0, bodyHeight / 2 + baseHeight / 2]}
+          />
         </Hull>
       </Colorize>
 
@@ -60,12 +79,12 @@ export const HC49 = ({
         <Cylinder
           height={leadLength + bodyHeight / 2}
           radius={leadDiameter / 2}
-          center={[-leadCenterX+0.06, 0, -(leadLength / 2) + bodyHeight / 2]}
+          center={[-leadCenterX + 0.06, 0, -(leadLength / 2) + bodyHeight / 2]}
         />
         <Cylinder
           height={leadLength + bodyHeight / 2}
           radius={leadDiameter / 2}
-          center={[leadCenterX-0.06, 0, -(leadLength / 2) + bodyHeight / 2]}
+          center={[leadCenterX - 0.06, 0, -(leadLength / 2) + bodyHeight / 2]}
         />
       </Colorize>
     </>
