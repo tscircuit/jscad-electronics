@@ -22,7 +22,7 @@ export const SOT723 = () => {
   return (
     <>
       <Rotate rotation={[45 * Math.PI, 0, 0]}>
-        <Translate center={[0.475, leadHeight / 2, -0.25]}>
+        <Translate center={[0.475, 0, -0.25]}>
           <Colorize color="grey">
             <Cuboid size={[bodyWidth, bodyLength, bodyHeight]} />
           </Colorize>
