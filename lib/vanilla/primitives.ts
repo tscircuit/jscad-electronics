@@ -16,6 +16,8 @@ export const Colorize = Symbol("Colorize")
 export const Polygon = Symbol("Polygon")
 export const ExtrudeLinear = Symbol("ExtrudeLinear")
 
+export const RoundedCylinder = Symbol("RoundedCylinder")
+
 export type Color =
   | string
   | [number, number, number]
