@@ -15,6 +15,7 @@ import {
   Union,
   Polygon,
   ExtrudeLinear,
+  RoundedCylinder,
   type Color,
 } from "./primitives"
 
@@ -157,7 +158,8 @@ function renderNode(
     type === Cube ||
     type === Cylinder ||
     type === Sphere ||
-    type === RoundedCuboid
+    type === RoundedCuboid ||
+    type === RoundedCylinder
   ) {
     let g: any
     if (type === Cuboid) {
@@ -183,6 +185,12 @@ function renderNode(
       const radius = props?.radius ?? 1
       const center = props?.center ?? [0, 0, 0]
       g = primitives.sphere({ radius, center })
+    } else if (type === RoundedCylinder) {
+      const height = props?.height ?? 1
+      const radius = props?.radius ?? 1
+      const roundRadius = props?.roundRadius ?? 0.1
+      const center = props?.center ?? [0, 0, 0]
+      g = primitives.roundedCylinder({ height, radius, roundRadius, center })
     } else {
       const size = props?.size ?? [1, 1, 1]
       const roundRadius = props?.roundRadius ?? 0.1
