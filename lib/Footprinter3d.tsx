@@ -1,6 +1,7 @@
 import { fp } from "@tscircuit/footprinter"
 import { Dip } from "./DualInlinePackage"
 import { Tssop } from "./Tssop"
+import { MSOP } from "./MSOP"
 import { A0402 } from "./A0402"
 import { A0603 } from "./A0603"
 import { A0805 } from "./A0805"
@@ -65,6 +66,16 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         <Tssop
           pinCount={fpJson.num_pins}
           leadLength={fpJson.pl}
+          leadWidth={fpJson.pw}
+          pitch={fpJson.p}
+          bodyWidth={fpJson.w}
+        />
+      )
+    case "msop":
+      return (
+        <MSOP
+          pinCount={fpJson.num_pins}
+          padContactLength={fpJson.pl}
           leadWidth={fpJson.pw}
           pitch={fpJson.p}
           bodyWidth={fpJson.w}
