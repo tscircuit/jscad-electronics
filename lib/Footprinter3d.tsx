@@ -1,6 +1,7 @@
 import { fp } from "@tscircuit/footprinter"
 import { Dip } from "./DualInlinePackage"
 import { Tssop } from "./Tssop"
+import { MSOP } from "./MSOP"
 import { A0402 } from "./A0402"
 import { A0603 } from "./A0603"
 import { A0805 } from "./A0805"
@@ -33,6 +34,7 @@ import { LQFP } from "./lqfp"
 import { DFN } from "./dfn"
 import { HC49 } from "./hc49"
 import { MicroMELF } from "./MicroMELF"
+import { MELF } from "./MELF"
 import { MS012 } from "./ms012"
 
 /**
@@ -66,6 +68,16 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         <Tssop
           pinCount={fpJson.num_pins}
           leadLength={fpJson.pl}
+          leadWidth={fpJson.pw}
+          pitch={fpJson.p}
+          bodyWidth={fpJson.w}
+        />
+      )
+    case "msop":
+      return (
+        <MSOP
+          pinCount={fpJson.num_pins}
+          padContactLength={fpJson.pl}
           leadWidth={fpJson.pw}
           pitch={fpJson.p}
           bodyWidth={fpJson.w}
@@ -213,11 +225,12 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     case "sod923":
       return <SOD923 />
     case "hc49":
-      // simple 3D model for HC-49 through-hole crystal
       return <HC49 />
     case "micromelf":
     case "micro_melf":
       return <MicroMELF />
+    case "melf":
+      return <MELF />
     case "ms012":
       return (
         <MS012
