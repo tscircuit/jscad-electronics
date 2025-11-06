@@ -33,6 +33,7 @@ import { SOT323 } from "./SOT-323"
 import { LQFP } from "./lqfp"
 import { DFN } from "./dfn"
 import { HC49 } from "./hc49"
+import { MELF } from "./MELF"
 import { MS012 } from "./ms012"
 
 /**
@@ -223,8 +224,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     case "sod923":
       return <SOD923 />
     case "hc49":
-      // simple 3D model for HC-49 through-hole crystal
       return <HC49 />
+    case "melf":
+      return <MELF />
     case "ms012":
       return (
         <MS012
