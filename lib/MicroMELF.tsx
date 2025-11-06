@@ -1,6 +1,6 @@
 import {
   Colorize,
-  Cuboid,
+  Cylinder,
   RoundedCylinder,
   Rotate,
   RoundedCuboid,
@@ -28,9 +28,14 @@ export const MicroMELF = ({
       <Colorize color={color}>
         <Rotate rotation={[0, "90deg", 0]}>
           <RoundedCuboid
-            size={[bodyDiameter, bodyDiameter, bodyLength - padLength / 2]}
+            size={[bodyDiameter, bodyDiameter, bodyLength - padLength]}
             roundRadius={padLength}
-            center={[-bodyDiameter / 2, 0, 0]}
+            center={[-bodyDiameter / 2, 0, 0.05]}
+          />
+          <Cylinder
+            height={padLength / 2}
+            radius={bodyDiameter / 2 - padLength}
+            center={[-bodyDiameter / 2, 0, -bodyLength / 2 + padLength/2]}
           />
         </Rotate>
       </Colorize>
@@ -41,7 +46,7 @@ export const MicroMELF = ({
           <RoundedCuboid
             size={[bodyDiameter * 1.01, bodyDiameter * 1.01, bodyLength / 3]}
             roundRadius={padLength}
-            center={[-bodyDiameter / 2, 0, -bodyLength / 4]}
+            center={[-bodyDiameter / 2, 0, -bodyLength / 4 + 0.1]}
           />
         </Rotate>
       </Colorize>

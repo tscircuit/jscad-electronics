@@ -227,7 +227,6 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     case "hc49":
       return <HC49 />
     case "micromelf":
-    case "micro_melf":
       return <MicroMELF />
     case "melf":
       return <MELF />
