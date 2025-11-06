@@ -1,12 +1,8 @@
 import { Colorize, Cuboid, RoundedCylinder, Rotate } from "jscad-fiber"
 
 export interface MELFProps {
-  /** body length (mm) */
   bodyLength?: number
-  /** body diameter (mm) */
   bodyDiameter?: number
-  /** body height (mm) */
-  bodyHeight?: number
   color?: string
   contactColor?: string
 }
@@ -14,13 +10,10 @@ export interface MELFProps {
 export const MELF = ({
   bodyLength = 4,
   bodyDiameter = 2.5,
-  bodyHeight = 1.6,
   color = "#3a3a3aff",
   contactColor = "#c6c6c6",
 }: MELFProps) => {
-  const half = bodyLength / 2
   const padLength = 0.6
-  const padWidth = bodyDiameter + 0.4
 
   return (
     <>
@@ -30,7 +23,7 @@ export const MELF = ({
             height={bodyLength}
             radius={bodyDiameter / 2}
             roundRadius={0.3}
-            center={[-bodyDiameter/2, 0, 0]}
+            center={[-bodyDiameter / 2, 0, 0]}
           />
         </Rotate>
       </Colorize>
@@ -41,7 +34,7 @@ export const MELF = ({
             height={padLength}
             radius={bodyDiameter / 2}
             roundRadius={0.2}
-            center={[-bodyDiameter/2, 0, -bodyLength/2]}
+            center={[-bodyDiameter / 2, 0, -bodyLength / 2]}
           />
         </Rotate>
       </Colorize>
@@ -52,7 +45,7 @@ export const MELF = ({
             height={padLength}
             radius={bodyDiameter / 2}
             roundRadius={0.2}
-            center={[-bodyDiameter/2, 0, bodyLength/2]}
+            center={[-bodyDiameter / 2, 0, bodyLength / 2]}
           />
         </Rotate>
       </Colorize>
