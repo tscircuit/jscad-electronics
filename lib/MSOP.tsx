@@ -4,7 +4,7 @@ import { SmdChipLead } from "./SmdChipLead"
 // MSOP (mini small outline package) — modeled after Tssop implementation
 export const MSOP = ({
   pinCount,
-  padContactLength = 0.40,
+  padContactLength = 0.4,
   leadWidth = 0.2,
   pitch = 0.65,
   bodyWidth = 3.0,
@@ -15,7 +15,6 @@ export const MSOP = ({
   padContactLength?: number
   bodyWidth?: number
 }) => {
-
   const sidePinCount = Math.ceil(pinCount / 2)
   const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2
   const leadThickness = 0.2
@@ -58,9 +57,9 @@ export const MSOP = ({
         width={bodyWidth}
         length={bodyWidth}
         height={1.1}
-        notchPosition={{ x: bodyWidth/2- 1, y: bodyWidth/2 -1, z: 1.2 }}
+        notchPosition={{ x: bodyWidth / 2 - 1, y: bodyWidth / 2 - 1, z: 1.2 }}
         notchRadius={0.35}
-        heightAboveSurface={0.10}
+        heightAboveSurface={0.1}
         taperRatio={0.09}
       />
     </>
