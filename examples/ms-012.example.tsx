@@ -1,5 +1,5 @@
 import { JsCadView } from "jscad-fiber"
-import { MS012 } from "../lib/ms-012"
+import { MS012 } from "../lib/ms012"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 
 export default () => {
