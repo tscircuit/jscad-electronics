@@ -33,6 +33,7 @@ import { LQFP } from "./lqfp"
 import { DFN } from "./dfn"
 import { HC49 } from "./hc49"
 import { MicroMELF } from "./MicroMELF"
+import { MS012 } from "./ms012"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -217,6 +218,15 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     case "micromelf":
     case "micro_melf":
       return <MicroMELF />
+    case "ms012":
+      return (
+        <MS012
+          pinCount={fpJson.num_pins}
+          padContactLength={fpJson.pl}
+          leadWidth={fpJson.pw}
+          pitch={fpJson.p}
+        />
+      )
   }
 
   const colorMatch = footprint.match(/_color\(([^)]+)\)/)
