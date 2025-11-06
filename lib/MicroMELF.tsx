@@ -35,7 +35,7 @@ export const MicroMELF = ({
           <Cylinder
             height={padLength / 2}
             radius={bodyDiameter / 2 - padLength}
-            center={[-bodyDiameter / 2, 0, -bodyLength / 2 + padLength/2]}
+            center={[-bodyDiameter / 2, 0, -bodyLength / 2 + padLength / 2]}
           />
         </Rotate>
       </Colorize>
