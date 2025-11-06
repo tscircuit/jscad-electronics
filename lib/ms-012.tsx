@@ -16,7 +16,12 @@ export const MS012 = ({
   bodyWidth?: number
   bodyLength?: number
 }) => {
-  const sidePinCount = Math.ceil(pinCount / 2)
+
+  if (pinCount % 2 !== 0) {
+    throw new Error('MS012 pinCount must be even')
+  }
+  const sidePinCount = pinCount / 2
+
   const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2
   const leadThickness = 0.2
 
