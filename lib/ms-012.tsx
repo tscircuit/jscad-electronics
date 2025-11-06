@@ -16,9 +16,8 @@ export const MS012 = ({
   bodyWidth?: number
   bodyLength?: number
 }) => {
-
   if (pinCount % 2 !== 0) {
-    throw new Error('MS012 pinCount must be even')
+    throw new Error("MS012 pinCount must be even")
   }
   const sidePinCount = pinCount / 2
 
