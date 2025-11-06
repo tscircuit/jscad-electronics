@@ -6,21 +6,19 @@ export const MS012 = ({
   padContactLength = 0.6,
   leadWidth = 0.41,
   pitch = 1.27,
-  bodyWidth = 4.9,
-  bodyLength = 3.9,
+
 }: {
   pinCount: number
   pitch?: number
   leadWidth?: number
   padContactLength?: number
-  bodyWidth?: number
-  bodyLength?: number
 }) => {
   if (pinCount % 2 !== 0) {
     throw new Error("MS012 pinCount must be even")
   }
   const sidePinCount = pinCount / 2
-
+  const bodyWidth = 4.9
+  const bodyLength = 3.9
   const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2
   const leadThickness = 0.2
 

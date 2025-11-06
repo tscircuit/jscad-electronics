@@ -221,7 +221,6 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           padContactLength={fpJson.pl}
           leadWidth={fpJson.pw}
           pitch={fpJson.p}
-          bodyWidth={fpJson.w}
         />
       )
   }
