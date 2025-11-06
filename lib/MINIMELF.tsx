@@ -8,7 +8,7 @@ export interface MINIMELFProps {
 }
 
 export const MINIMELF = ({
-  bodyLength = 4,
+  bodyLength = 3.5,
   bodyDiameter = 1.5,
   color = "#3a3a3aff",
   contactColor = "#c6c6c6",
