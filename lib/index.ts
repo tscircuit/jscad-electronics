@@ -41,3 +41,4 @@ export * from "./SOT-223"
 export * from "./SOT-323"
 
 export * from "./hc49"
+export * from "./ms012"
