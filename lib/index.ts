@@ -39,5 +39,6 @@ export * from "./sod-123FL"
 export * from "./SOD-923"
 export * from "./SOT-223"
 export * from "./SOT-323"
+export * from "./MELF"
 
 export * from "./hc49"

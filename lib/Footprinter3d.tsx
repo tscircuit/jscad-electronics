@@ -32,6 +32,7 @@ import { SOT323 } from "./SOT-323"
 import { LQFP } from "./lqfp"
 import { DFN } from "./dfn"
 import { HC49 } from "./hc49"
+import { MELF } from "./MELF"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -211,8 +212,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     case "sod923":
       return <SOD923 />
     case "hc49":
-      // simple 3D model for HC-49 through-hole crystal
       return <HC49 />
+    case "melf":
+      return <MELF />
   }
 
   const colorMatch = footprint.match(/_color\(([^)]+)\)/)
