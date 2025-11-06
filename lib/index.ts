@@ -40,4 +40,6 @@ export * from "./SOD-923"
 export * from "./SOT-223"
 export * from "./SOT-323"
 
+export * from "./MicroMELF"
+
 export * from "./hc49"
