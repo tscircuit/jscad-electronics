@@ -13,7 +13,7 @@ export const MINIMELF = ({
   color = "#3a3a3aff",
   contactColor = "#c6c6c6",
 }: MINIMELFProps) => {
-  const padLength = 0.4
+  const padLength = 0.5
 
   return (
     <>
