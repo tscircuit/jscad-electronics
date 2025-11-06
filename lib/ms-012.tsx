@@ -44,7 +44,7 @@ export const MS012 = ({
       ))}
       {Array.from({ length: sidePinCount }).map((_, i) => (
         <SmdChipLead
-          key={i}
+          key={`right-${i}`}
           rotation={Math.PI}
           position={{
             x: bodyLength / 2 + padContactLength + 0.3,
