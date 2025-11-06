@@ -57,7 +57,6 @@ export const MSOP = ({
         width={bodyWidth}
         length={bodyWidth}
         height={1.1}
-        notchPosition={{ x: bodyWidth / 2 - 1, y: bodyWidth / 2 - 1, z: 1.2 }}
         notchRadius={0.35}
         heightAboveSurface={0.1}
         taperRatio={0.09}
