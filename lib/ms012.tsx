@@ -6,7 +6,6 @@ export const MS012 = ({
   padContactLength = 0.6,
   leadWidth = 0.41,
   pitch = 1.27,
-
 }: {
   pinCount: number
   pitch?: number
