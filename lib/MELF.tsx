@@ -8,12 +8,12 @@ export interface MELFProps {
 }
 
 export const MELF = ({
-  bodyLength = 4,
+  bodyLength = 3.9,
   bodyDiameter = 2.5,
   color = "#3a3a3aff",
   contactColor = "#c6c6c6",
 }: MELFProps) => {
-  const padLength = 0.6
+  const padLength = 0.55
 
   return (
     <>
