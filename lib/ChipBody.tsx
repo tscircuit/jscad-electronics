@@ -120,7 +120,7 @@ export const ChipBody = ({
               {finalBody}
               <Translate offset={actualNotchPosition}>
                 <Rotate rotation={notchRotation}>
-                  <Cylinder radius={notchLength} height={notchWidth} />
+                  <Cylinder radius={actualNotchRadius} height={notchWidth} />
                 </Rotate>
               </Translate>
             </Subtract>
