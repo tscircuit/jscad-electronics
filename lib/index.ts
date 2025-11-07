@@ -43,5 +43,7 @@ export * from "./SOT-323"
 export * from "./MINIMELF"
 export * from "./MELF"
 
+export * from "./MicroMELF"
+
 export * from "./hc49"
 export * from "./ms012"

@@ -33,6 +33,7 @@ import { SOT323 } from "./SOT-323"
 import { LQFP } from "./lqfp"
 import { DFN } from "./dfn"
 import { HC49 } from "./hc49"
+import { MicroMELF } from "./MicroMELF"
 import { MINIMELF } from "./MINIMELF"
 import { MELF } from "./MELF"
 import { MS012 } from "./ms012"
@@ -226,6 +227,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <SOD923 />
     case "hc49":
       return <HC49 />
+    case "micromelf":
+      return <MicroMELF />
     case "minimelf":
       return <MINIMELF />
     case "melf":
