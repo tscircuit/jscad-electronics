@@ -115,6 +115,7 @@ export const QFP = ({
           y: bodyWidth / 2 - 1.5,
           z: 1.5,
         }}
+        notchRadius={1.5 / 2}
       />
     </>
   )
