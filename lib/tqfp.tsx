@@ -97,6 +97,7 @@ export const TQFP = () => {
         chamferSize={0.6}
         taperRatio={0.05}
         notchPosition={{ x: 3.5, y: 3.5, z: 1.2 }}
+        notchRadius={1.2 / 2}
       />
     </>
   )
