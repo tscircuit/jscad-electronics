@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.3",
-    "@tscircuit/footprinter": "^0.0.248",
+    "@tscircuit/footprinter": "^0.0.252",
     "@types/react": "19",
     "@types/react-dom": "19",
     "@types/three": "^0.179.0",
@@ -58,8 +58,5 @@
     "jscad-fiber": {
       "optional": true
     }
-  },
-  "dependencies": {
-    "footprinter": "^0.0.44"
   }
 }
