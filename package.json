@@ -58,5 +58,8 @@
     "jscad-fiber": {
       "optional": true
     }
+  },
+  "dependencies": {
+    "footprinter": "^0.0.44"
   }
 }

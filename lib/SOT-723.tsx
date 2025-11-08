@@ -11,18 +11,18 @@ const getCcwSot723Coords = (pn: number) => {
 }
 
 export const SOT723 = () => {
-  const bodyWidth = 0.8
+  const bodyWidth = 0.85
   const bodyLength = 1.2
   const bodyHeight = 0.5
-  const leadWidth = 0.32
-  const leadLength = 0.3
+  const leadWidth = 0.22
+  const leadLength = 0.2
   const leadHeight = 0.1
-  const centerLeadWidth = 0.42
+  const centerLeadWidth = 0.25
 
   return (
     <>
       <Rotate rotation={[45 * Math.PI, 0, 0]}>
-        <Translate center={[0.475, leadHeight / 2, -0.25]}>
+        <Translate center={[0.5, 0, -0.25]}>
           <Colorize color="grey">
             <Cuboid size={[bodyWidth, bodyLength, bodyHeight]} />
           </Colorize>
