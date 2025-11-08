@@ -32,6 +32,7 @@ import { SOT223 } from "./SOT-223"
 import TQFP from "./tqfp"
 import { SOT323 } from "./SOT-323"
 import { LQFP } from "./lqfp"
+import { SOT723 } from "./SOT-723"
 import { DFN } from "./dfn"
 import { HC49 } from "./hc49"
 import { MicroMELF } from "./MicroMELF"
@@ -245,6 +246,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           pitch={fpJson.p}
         />
       )
+    case "sot723":
+      return <SOT723 />
   }
 
   const colorMatch = footprint.match(/_color\(([^)]+)\)/)
