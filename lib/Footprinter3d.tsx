@@ -20,6 +20,7 @@ import { PushButton } from "./PushButton"
 import { SOIC } from "./SOIC"
 import { VSSOP } from "./VSSOP"
 import { SOD523 } from "./SOD523"
+import { SOD882 } from "./SOD882"
 import { SMA } from "./SMA"
 import { SMB } from "./SMB"
 import { SMC } from "./SMC"
@@ -211,6 +212,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       )
     case "sod523":
       return <SOD523 />
+    case "sod882":
+      return <SOD882 />
     case "sma":
       return <SMA />
     case "smb":

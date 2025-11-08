@@ -31,6 +31,7 @@ export * from "./PinRow"
 
 // New components
 export * from "./SOD523"
+export * from "./SOD882"
 export * from "./SMA"
 export * from "./SMB"
 export * from "./SMC"
