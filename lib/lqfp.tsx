@@ -107,7 +107,7 @@ export const LQFP = ({
       ))}
 
       <ChipBody
-        center={{ x: 0, y: 0, z: leadThickness / 2 }}
+        center={{ x: 0, y: 0, z: 0 }}
         width={bodyWidth}
         length={bodyLength}
         height={1.5}

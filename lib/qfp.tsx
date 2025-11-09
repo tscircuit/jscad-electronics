@@ -104,7 +104,7 @@ export const QFP = ({
       ))}
 
       <ChipBody
-        center={{ x: 0, y: 0, z: leadThickness / 2 }}
+        center={{ x: 0, y: 0, z: 0 }}
         width={bodyWidth}
         length={bodyLength}
         height={1.5}
@@ -138,16 +138,16 @@ const getPitch = (pinCount: number, width?: number): number => {
 const getPadContactLength = (pinCount: number): number => {
   switch (pinCount) {
     case 32:
-      return 0.6
+      return 0.60
     case 40:
-      return 0.6
+      return 0.60
     case 52:
     case 64:
       return 0.65
     case 208:
       return 1.65
     default:
-      return 0.6
+      return 0.60
   }
 }
 
