@@ -12,7 +12,7 @@ export const TQFP = () => {
   const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2
   const fullLength = bodyLength + 2 * padContactLength + 0.6
   const fullWidth = fullLength
-  const leadHeight = 0.8
+  const leadHeight = 0.65
   const leadThickness = 0.25
   const bodyDistance = (fullWidth - bodyWidth) / 2 + 0.2
 
@@ -90,11 +90,11 @@ export const TQFP = () => {
       ))}
 
       <ChipBody
-        center={{ x: 0, y: 0, z: leadThickness / 2 }}
+        center={{ x: 0, y: 0, z: 0 }}
         width={bodyWidth}
         length={bodyLength}
         height={1.2}
-        chamferSize={0.6}
+        chamferSize={0.7}
         taperRatio={0.05}
         notchPosition={{ x: 3.5, y: 3.5, z: 1.2 }}
         notchRadius={1.2 / 2}
