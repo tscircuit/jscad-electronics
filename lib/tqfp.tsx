@@ -90,7 +90,7 @@ export const TQFP = () => {
       ))}
 
       <ChipBody
-        center={{ x: 0, y: 0, z: 0}}
+        center={{ x: 0, y: 0, z: 0 }}
         width={bodyWidth}
         length={bodyLength}
         height={1.2}
