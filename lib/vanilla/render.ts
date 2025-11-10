@@ -77,8 +77,10 @@ function renderNode(
   }
 
   if (type === Translate) {
+    // accept either `offset`, `center` (array or object), or x/y/z props
     const off = toVec3(
-      props?.offset ?? { x: props?.x, y: props?.y, z: props?.z },
+      props?.offset ??
+        props?.center ?? { x: props?.x, y: props?.y, z: props?.z },
     )
     const geoms = (children ?? []).flatMap((c) =>
       renderNode(c, colorCtx, renderCtx),

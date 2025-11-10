@@ -39,6 +39,7 @@ import { MicroMELF } from "./MicroMELF"
 import { MINIMELF } from "./MINIMELF"
 import { MELF } from "./MELF"
 import { MS012 } from "./ms012"
+import { TO220 } from "./TO220"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -248,6 +249,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       )
     case "sot723":
       return <SOT723 />
+    case "to220":
+      return <TO220 />
   }
 
   const colorMatch = footprint.match(/_color\(([^)]+)\)/)
