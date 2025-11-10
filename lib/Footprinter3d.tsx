@@ -39,6 +39,7 @@ import { MicroMELF } from "./MicroMELF"
 import { MINIMELF } from "./MINIMELF"
 import { MELF } from "./MELF"
 import { MS012 } from "./ms012"
+import { MS013 } from "./ms013"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -240,6 +241,15 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     case "ms012":
       return (
         <MS012
+          pinCount={fpJson.num_pins}
+          padContactLength={fpJson.pl}
+          leadWidth={fpJson.pw}
+          pitch={fpJson.p}
+        />
+      )
+    case "ms013":
+      return (
+        <MS013
           pinCount={fpJson.num_pins}
           padContactLength={fpJson.pl}
           leadWidth={fpJson.pw}
