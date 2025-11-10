@@ -1,10 +1,13 @@
-import { Cuboid, Translate, Colorize } from "jscad-fiber"
+import { Cuboid, Translate, Colorize, Hull, Union } from "jscad-fiber"
 
 export const SOT723 = () => {
-  // Body dimensions
+  // Body dimensions (mm)
   const bodyWidth = 0.85
   const bodyLength = 1.2
   const bodyHeight = 0.38
+
+  const straightHeight = bodyHeight * 0.55
+  const taperOffset = 0.1
 
   const padLength = 0.3
   const padThickness = 0.1
@@ -22,14 +25,30 @@ export const SOT723 = () => {
 
   return (
     <>
-      {/* Body */}
+      {/* Body with straight lower section + hulled tapered top */}
       <Colorize color="#222">
-        <Cuboid
-          size={[bodyWidth, bodyLength, bodyHeight]}
-          center={[0, 0, bodyHeight / 2]}
-        />
+        <Union>
+          {/* straight lower section */}
+          <Cuboid
+            size={[bodyWidth, bodyLength, straightHeight]}
+            center={[0, 0, straightHeight / 2]}
+          />
+
+          {/* tapered top via Hull between two thin slices */}
+          <Hull>
+            <Translate z={straightHeight}>
+              <Cuboid size={[bodyWidth, bodyLength, 0.01]} />
+            </Translate>
+            <Translate z={bodyHeight}>
+              <Cuboid
+                size={[bodyWidth - taperOffset, bodyLength - taperOffset, 0.01]}
+              />
+            </Translate>
+          </Hull>
+        </Union>
       </Colorize>
 
+      {/* Pads */}
       <Cuboid
         color="#ccc"
         size={[padLength, rightPadWidth, padThickness]}
