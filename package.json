@@ -1,7 +1,7 @@
 {
   "name": "jscad-electronics",
   "type": "module",
-  "version": "0.0.88",
+  "version": "0.0.91",
   "main": "./dist/index.js",
   "exports": {
     ".": {
@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.3",
-    "@tscircuit/footprinter": "^0.0.248",
+    "@tscircuit/footprinter": "^0.0.254",
     "@types/react": "19",
     "@types/react-dom": "19",
     "@types/three": "^0.179.0",

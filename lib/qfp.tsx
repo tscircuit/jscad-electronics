@@ -28,7 +28,7 @@ export const QFP = ({
   const fullWidth = fullLength
   const leadHeight = 0.8
   const leadThickness = 0.15
-  const bodyDistance = (fullWidth - bodyWidth) / 2 + 0.2
+  const bodyDistance = (fullWidth - bodyWidth) / 2 + 0.5
 
   return (
     <>
@@ -37,7 +37,7 @@ export const QFP = ({
         <SmdChipLead
           key={`left-${i}`}
           position={{
-            x: -fullWidth / 2,
+            x: -fullWidth / 2 - 0.4,
             y: i * pitch - pinOffsetToCenter,
             z: leadThickness / 2,
           }}
@@ -55,7 +55,7 @@ export const QFP = ({
           key={`right-${i}`}
           rotation={Math.PI}
           position={{
-            x: fullWidth / 2,
+            x: fullWidth / 2 + 0.4,
             y: i * pitch - pinOffsetToCenter,
             z: leadThickness / 2,
           }}
@@ -74,7 +74,7 @@ export const QFP = ({
           rotation={Math.PI / 2}
           position={{
             x: i * pitch - pinOffsetToCenter,
-            y: -fullLength / 2,
+            y: -fullLength / 2 - 0.4,
             z: leadThickness / 2,
           }}
           width={leadWidth}
@@ -92,7 +92,7 @@ export const QFP = ({
           rotation={-Math.PI / 2}
           position={{
             x: i * pitch - pinOffsetToCenter,
-            y: fullLength / 2,
+            y: fullLength / 2 + 0.4,
             z: leadThickness / 2,
           }}
           width={leadWidth}
@@ -104,12 +104,12 @@ export const QFP = ({
       ))}
 
       <ChipBody
-        center={{ x: 0, y: 0, z: leadThickness / 2 }}
+        center={{ x: 0, y: 0, z: 0 }}
         width={bodyWidth}
         length={bodyLength}
         height={1.5}
         taperRatio={0.03}
-        chamferSize={1}
+        chamferSize={0.7}
         notchPosition={{
           x: bodyLength / 2 - 1.5,
           y: bodyWidth / 2 - 1.5,
@@ -137,14 +137,17 @@ const getPitch = (pinCount: number, width?: number): number => {
 
 const getPadContactLength = (pinCount: number): number => {
   switch (pinCount) {
-    case 44:
+    case 32:
+      return 0.6
+    case 40:
+      return 0.6
     case 52:
     case 64:
-      return 2.25
+      return 0.65
     case 208:
       return 1.65
     default:
-      return 1
+      return 0.6
   }
 }
 

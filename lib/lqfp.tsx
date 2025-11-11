@@ -31,7 +31,7 @@ export const LQFP = ({
   const fullWidth = fullLength
   const leadHeight = 0.8
   const leadThickness = 0.2
-  const bodyDistance = (fullWidth - bodyWidth) / 2 + 0.2
+  const bodyDistance = (fullWidth - bodyWidth) / 2 + 0.4
 
   return (
     <>
@@ -40,7 +40,7 @@ export const LQFP = ({
         <SmdChipLead
           key={`left-${i}`}
           position={{
-            x: -fullWidth / 1.98,
+            x: -fullWidth / 2 - 0.36,
             y: i * pitch - pinOffsetToCenter,
             z: leadThickness / 2,
           }}
@@ -58,7 +58,7 @@ export const LQFP = ({
           key={`right-${i}`}
           rotation={Math.PI}
           position={{
-            x: fullWidth / 1.98,
+            x: fullWidth / 2 + 0.36,
             y: i * pitch - pinOffsetToCenter,
             z: leadThickness / 2,
           }}
@@ -77,7 +77,7 @@ export const LQFP = ({
           rotation={Math.PI / 2}
           position={{
             x: i * pitch - pinOffsetToCenter,
-            y: -fullLength / 1.98,
+            y: -fullLength / 2 - 0.36,
             z: leadThickness / 2,
           }}
           width={leadWidth}
@@ -95,7 +95,7 @@ export const LQFP = ({
           rotation={-Math.PI / 2}
           position={{
             x: i * pitch - pinOffsetToCenter,
-            y: fullLength / 1.98,
+            y: fullLength / 2 + 0.36,
             z: leadThickness / 2,
           }}
           width={leadWidth}
@@ -107,7 +107,7 @@ export const LQFP = ({
       ))}
 
       <ChipBody
-        center={{ x: 0, y: 0, z: leadThickness / 2 }}
+        center={{ x: 0, y: 0, z: 0 }}
         width={bodyWidth}
         length={bodyLength}
         height={1.5}
