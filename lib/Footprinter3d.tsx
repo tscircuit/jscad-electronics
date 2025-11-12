@@ -40,6 +40,7 @@ import { MINIMELF } from "./MINIMELF"
 import { MELF } from "./MELF"
 import { MS012 } from "./ms012"
 import { TO220 } from "./TO220"
+import { TO92 } from "./TO92"
 import SOT363 from "./SOT-363"
 
 /**
@@ -254,6 +255,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <SOT723 />
     case "to220":
       return <TO220 />
+    case "to92":
+      return <TO92 />
   }
 
   const colorMatch = footprint.match(/_color\(([^)]+)\)/)
