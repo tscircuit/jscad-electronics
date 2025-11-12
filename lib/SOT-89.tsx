@@ -1,5 +1,5 @@
 import { ChipBody } from "./ChipBody"
-import { Cuboid, Union, Subtract, Translate, Rotate } from "jscad-fiber"
+import { Cuboid, Subtract, Translate, Rotate } from "jscad-fiber"
 
 export const SOT89 = () => {
   // Calculated dimensions
@@ -15,7 +15,7 @@ export const SOT89 = () => {
   const pinSpacing = 1.5
 
   const fullWidth = 3.5
-  const chamferSize = 0.2
+  const chamferSize = 0.4
 
   return (
     <>
@@ -23,14 +23,14 @@ export const SOT89 = () => {
       <Subtract>
         <Cuboid
           color="#ccc"
-          size={[leadExtension + 1.5, bodyWidth, leadThickness]}
-          center={[fullWidth / 2 - 1.5 / 2, 0, leadThickness / 2]}
+          size={[leadExtension + 1.5, bodyWidth -1, leadThickness]}
+          center={[fullWidth/2 - leadExtension, 0, leadThickness / 2]}
         />
         {/* Chamfer cutouts at corners */}
         <Translate
           offset={[
-            fullWidth / 2 + leadExtension / 2,
-            bodyWidth / 2,
+            fullWidth / 2 + leadExtension / 6,
+            (bodyWidth - 1) / 2,
             leadThickness / 2,
           ]}
         >
@@ -46,8 +46,8 @@ export const SOT89 = () => {
         </Translate>
         <Translate
           offset={[
-            fullWidth / 2 + leadExtension / 2,
-            -bodyWidth / 2,
+            fullWidth / 2 + leadExtension / 6,
+            -(bodyWidth - 1) / 2,
             leadThickness / 2,
           ]}
         >
