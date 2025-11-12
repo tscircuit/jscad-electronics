@@ -41,6 +41,7 @@ import { MELF } from "./MELF"
 import { MS012 } from "./ms012"
 import { TO220 } from "./TO220"
 import { SOT89 } from "./SOT-89"
+import SOT363 from "./SOT-363"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -195,6 +196,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <SOT223 />
     case "sot323":
       return <SOT323 />
+    case "sot363":
+      return <SOT363 />
     case "pushbutton":
       return (
         <PushButton
