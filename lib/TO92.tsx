@@ -35,7 +35,7 @@ export const TO92 = () => {
   const sideLeadZ = -7.5
 
   return (
-    <Translate center={[0, 1, 13.5]}>
+    <Translate center={[0, 1, 10.5]}>
       <Colorize color={bodyColor}>
         <Subtract>
           <Translate center={[0, 0, bodyZ]}>
