@@ -109,6 +109,11 @@ export const SOT457 = () => {
         length={bodyLength}
         height={bodyHeight}
         straightHeightRatio={0.6}
+        notchPosition={{
+          x: bodyWidth / 2 - 0.4,
+          y: bodyHeight / 2 + 0.4,
+          z: bodyHeight,
+        }}
       />
     </>
   )
