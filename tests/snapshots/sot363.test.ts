@@ -2,7 +2,7 @@ import { test, expect } from "bun:test"
 import "../fixtures/png-matcher"
 import { renderFootprint } from "../helpers/render-footprint"
 
-test("SOT457 diode", async () => {
+test("SOT363 diode", async () => {
   const pngBuffer = await renderFootprint("sot363")
   await expect(pngBuffer).toMatchPngSnapshot(import.meta.path)
 })
