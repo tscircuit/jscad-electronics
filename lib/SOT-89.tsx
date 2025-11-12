@@ -23,8 +23,8 @@ export const SOT89 = () => {
       <Subtract>
         <Cuboid
           color="#ccc"
-          size={[leadExtension + 1.5, bodyWidth -1, leadThickness]}
-          center={[fullWidth/2 - leadExtension, 0, leadThickness / 2]}
+          size={[leadExtension + 1.5, bodyWidth - 1, leadThickness]}
+          center={[fullWidth / 2 - leadExtension, 0, leadThickness / 2]}
         />
         {/* Chamfer cutouts at corners */}
         <Translate
