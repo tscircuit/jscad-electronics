@@ -112,7 +112,7 @@ export const SOT457 = () => {
         notchPosition={{
           x: bodyWidth / 2 - 0.4,
           y: bodyHeight / 2 + 0.4,
-          z: bodyHeight +0.05,
+          z: bodyHeight + 0.05,
         }}
         notchRadius={0.1}
       />
