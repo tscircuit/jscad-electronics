@@ -40,6 +40,7 @@ import { MINIMELF } from "./MINIMELF"
 import { MELF } from "./MELF"
 import { MS012 } from "./ms012"
 import { TO220 } from "./TO220"
+import { SOT457 } from "./SOT-457"
 import { TO92 } from "./TO92"
 import SOT363 from "./SOT-363"
 
@@ -192,6 +193,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     }
     case "sot235":
       return <SOT235 />
+    case "sot457":
+      return <SOT457 />
     case "sot223":
       return <SOT223 />
     case "sot323":
