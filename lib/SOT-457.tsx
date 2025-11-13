@@ -23,7 +23,7 @@ export const SOT457 = () => {
         rotation={Math.PI}
         position={{
           x: fullWidth / 2 + extendedBodyDistance / 4,
-          y: -1,
+          y: -padPitch,
           z: leadThickness / 2,
         }}
         width={leadWidth}
@@ -52,7 +52,7 @@ export const SOT457 = () => {
         rotation={Math.PI}
         position={{
           x: fullWidth / 2 + extendedBodyDistance / 4,
-          y: 1,
+          y: padPitch,
           z: leadThickness / 2,
         }}
         width={leadWidth}
@@ -80,7 +80,7 @@ export const SOT457 = () => {
         key={1}
         position={{
           x: -fullWidth / 2 - extendedBodyDistance / 4,
-          y: -1,
+          y: -padPitch,
           z: leadThickness / 2,
         }}
         width={leadWidth}
@@ -93,7 +93,7 @@ export const SOT457 = () => {
         key={2}
         position={{
           x: -fullWidth / 2 - extendedBodyDistance / 4,
-          y: 1,
+          y: padPitch,
           z: leadThickness / 2,
         }}
         width={leadWidth}
@@ -112,8 +112,9 @@ export const SOT457 = () => {
         notchPosition={{
           x: bodyWidth / 2 - 0.4,
           y: bodyHeight / 2 + 0.4,
-          z: bodyHeight,
+          z: bodyHeight +0.05,
         }}
+        notchRadius={0.1}
       />
     </>
   )
