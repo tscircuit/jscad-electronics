@@ -9,6 +9,7 @@ import { QFP } from "./qfp"
 import { PinRow } from "./PinRow"
 import QFN from "./qfn"
 import SOT235 from "./SOT-235"
+import { SOT23W } from "./SOT-23W"
 import { A0201 } from "./A0201"
 import { A01005 } from "./A01005"
 import { A1206 } from "./A1206"
@@ -197,6 +198,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <SOT457 />
     case "sot223":
       return <SOT223 />
+    case "sot23w":
+      return <SOT23W />
     case "sot323":
       return <SOT323 />
     case "sot363":
