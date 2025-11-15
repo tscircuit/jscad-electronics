@@ -6,7 +6,7 @@ export const FootprintPad = ({
   isPin1,
 }: { pad: PcbSmtPad; isPin1?: boolean }) => {
   if (pad.shape === "rect") {
-    const color = isPin1 ? [0, 255, 0] : [255, 0, 0]
+    const color: [number, number, number] = isPin1 ? [0, 255, 0] : [255, 0, 0]
     return (
       <Colorize color={color}>
         <Translate offset={[pad.x, pad.y, -0.005]}>
