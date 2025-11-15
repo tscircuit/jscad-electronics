@@ -72,7 +72,7 @@ export const DFN = ({
         chamferSize={0.2}
         taperRatio={0}
         notchPosition={{
-          x: bodyWidth / 2 - padLength,
+          x: -(bodyWidth / 2 - padLength),
           y: bodyLength / 2 - padLength,
           z: bodyThickness,
         }}
