@@ -59,7 +59,11 @@ export const MS012 = ({
         width={bodyLength}
         length={bodyWidth}
         height={1.55}
-        notchPosition={{ x: bodyLength / 2 - 1, y: bodyWidth / 2 - 1, z: 1.55 }}
+        notchPosition={{
+          x: -(bodyLength / 2 - 1),
+          y: bodyWidth / 2 - 1,
+          z: 1.55,
+        }}
         heightAboveSurface={0.17}
         taperRatio={0.09}
       />

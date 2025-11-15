@@ -109,7 +109,7 @@ export const SOT363 = () => {
         height={bodyHeight}
         straightHeightRatio={0.6}
         notchPosition={{
-          x: bodyWidth / 2 - 0.25,
+          x: -(bodyWidth / 2 - 0.25),
           y: bodyHeight / 2 + 0.2,
           z: bodyHeight,
         }}

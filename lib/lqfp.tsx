@@ -115,7 +115,7 @@ export const LQFP = ({
         taperRatio={0.04}
         chamferSize={0.7}
         notchPosition={{
-          x: bodyLength / 2 - 1.5,
+          x: -(bodyLength / 2 - 1.5),
           y: bodyLength / 2 - 1.5,
           z: 1.5,
         }}
