@@ -53,5 +53,6 @@ export * from "./MicroMELF"
 
 export * from "./hc49"
 export * from "./ms012"
+export * from "./ms013"
 export * from "./TO220"
 export * from "./TO92"
