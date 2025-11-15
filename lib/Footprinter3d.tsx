@@ -48,6 +48,7 @@ import { SOT457 } from "./SOT-457"
 import { TO92 } from "./TO92"
 import SOT363 from "./SOT-363"
 import { SOD323 } from "./sod-323"
+import { SOD323F } from "./sod-323F"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -206,6 +207,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <SOT23W />
     case "sot323":
       return <SOT323 />
+    case "sod323f":
+      return <SOD323F />
     case "sot363":
       return <SOT363 />
     case "pushbutton":
