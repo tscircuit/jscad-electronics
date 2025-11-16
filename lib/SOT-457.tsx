@@ -1,15 +1,16 @@
 import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 
-export const SOT363 = () => {
-  const fullWidth = 2
-  const bodyWidth = 1.25
-  const bodyLength = 2
-  const bodyHeight = 1.1
-  const leadWidth = 0.25
+export const SOT457 = () => {
+  const fullWidth = 2.8
+  const bodyWidth = 1.6
+  const bodyLength = 2.9
+  const bodyHeight = 1.2
+  const leadWidth = 0.4
   const leadThickness = 0.15
-  const leadHeight = 0.85
-  const padContactLength = 0.3
+  const leadHeight = 0.95
+  const padContactLength = 0.5
+  const padPitch = 0.95
 
   // Increase the bodyDistance to extend leads further out
   const extendedBodyDistance = fullWidth - bodyWidth
@@ -22,7 +23,7 @@ export const SOT363 = () => {
         rotation={Math.PI}
         position={{
           x: fullWidth / 2 + extendedBodyDistance / 4,
-          y: -0.65,
+          y: -padPitch,
           z: leadThickness / 2,
         }}
         width={leadWidth}
@@ -51,7 +52,7 @@ export const SOT363 = () => {
         rotation={Math.PI}
         position={{
           x: fullWidth / 2 + extendedBodyDistance / 4,
-          y: 0.65,
+          y: padPitch,
           z: leadThickness / 2,
         }}
         width={leadWidth}
@@ -79,7 +80,7 @@ export const SOT363 = () => {
         key={1}
         position={{
           x: -fullWidth / 2 - extendedBodyDistance / 4,
-          y: -0.65,
+          y: -padPitch,
           z: leadThickness / 2,
         }}
         width={leadWidth}
@@ -92,7 +93,7 @@ export const SOT363 = () => {
         key={2}
         position={{
           x: -fullWidth / 2 - extendedBodyDistance / 4,
-          y: 0.65,
+          y: padPitch,
           z: leadThickness / 2,
         }}
         width={leadWidth}
@@ -109,14 +110,14 @@ export const SOT363 = () => {
         height={bodyHeight}
         straightHeightRatio={0.6}
         notchPosition={{
-          x: -(bodyWidth / 2 - 0.25),
-          y: bodyHeight / 2 + 0.2,
-          z: bodyHeight,
+          x: -(bodyWidth / 2 - 0.4),
+          y: bodyHeight / 2 + 0.4,
+          z: bodyHeight + 0.05,
         }}
-        heightAboveSurface={0.1}
+        notchRadius={0.1}
       />
     </>
   )
 }
 
-export default SOT363
+export default SOT457

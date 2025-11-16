@@ -18,16 +18,20 @@ export const ExtrudedPads = ({
     <>
       {circuitJson
         .filter((s) => s.type === "pcb_smtpad")
-        .map((pad, i) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey:
-          <FootprintPad key={i} pad={pad} />
-        ))}
+        .map((pad, i) => {
+          const isPin1 = pad.port_hints?.includes("1")
+          return (
+            // biome-ignore lint/suspicious/noArrayIndexKey:
+            <FootprintPad key={i} pad={pad} isPin1={isPin1} />
+          )
+        })}
       {circuitJson
         .filter((s) => s.type === "pcb_plated_hole")
         .map((hole, i) => {
+          const isPin1 = hole.port_hints?.includes("1")
           return (
             // biome-ignore lint/suspicious/noArrayIndexKey:
-            <FootprintPlatedHole key={i} hole={hole} />
+            <FootprintPlatedHole key={i} hole={hole} isPin1={isPin1} />
           )
         })}
     </>

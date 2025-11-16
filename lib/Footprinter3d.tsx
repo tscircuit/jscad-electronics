@@ -9,6 +9,7 @@ import { QFP } from "./qfp"
 import { PinRow } from "./PinRow"
 import QFN from "./qfn"
 import SOT235 from "./SOT-235"
+import { SOT23W } from "./SOT-23W"
 import { A0201 } from "./A0201"
 import { A01005 } from "./A01005"
 import { A1206 } from "./A1206"
@@ -27,6 +28,8 @@ import { SMC } from "./SMC"
 import { SMF } from "./SMF"
 import { SOD123F } from "./sod-123F"
 import { SOD123FL } from "./sod-123FL"
+import { SOD123W } from "./sod-123W"
+import { SOD128 } from "./sod-128"
 import { SOD923 } from "./SOD-923"
 import { SOT223 } from "./SOT-223"
 import TQFP from "./tqfp"
@@ -39,10 +42,14 @@ import { MicroMELF } from "./MicroMELF"
 import { MINIMELF } from "./MINIMELF"
 import { MELF } from "./MELF"
 import { MS012 } from "./ms012"
+import { MS013 } from "./ms013"
 import { TO220 } from "./TO220"
 import { SOT89 } from "./SOT-89"
+import { SOT457 } from "./SOT-457"
 import { TO92 } from "./TO92"
 import SOT363 from "./SOT-363"
+import { SOD323 } from "./sod-323"
+import { SOD323F } from "./sod-323F"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -193,10 +200,16 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     }
     case "sot235":
       return <SOT235 />
+    case "sot457":
+      return <SOT457 />
     case "sot223":
       return <SOT223 />
+    case "sot23w":
+      return <SOT23W />
     case "sot323":
       return <SOT323 />
+    case "sod323f":
+      return <SOD323F />
     case "sot363":
       return <SOT363 />
     case "pushbutton":
@@ -233,6 +246,12 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <SOD123F />
     case "sod123fl":
       return <SOD123FL />
+    case "sod123w":
+      return <SOD123W />
+    case "sod128":
+      return <SOD128 />
+    case "sod323":
+      return <SOD323 />
     case "sod923":
       return <SOD923 />
     case "hc49":
@@ -246,6 +265,15 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     case "ms012":
       return (
         <MS012
+          pinCount={fpJson.num_pins}
+          padContactLength={fpJson.pl}
+          leadWidth={fpJson.pw}
+          pitch={fpJson.p}
+        />
+      )
+    case "ms013":
+      return (
+        <MS013
           pinCount={fpJson.num_pins}
           padContactLength={fpJson.pl}
           leadWidth={fpJson.pw}

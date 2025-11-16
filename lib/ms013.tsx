@@ -1,23 +1,23 @@
 import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 
-export const MS012 = ({
-  pinCount,
+export const MS013 = ({
+  pinCount = 16,
   padContactLength = 0.6,
   leadWidth = 0.41,
   pitch = 1.27,
 }: {
-  pinCount: number
+  pinCount?: number
   pitch?: number
   leadWidth?: number
   padContactLength?: number
 }) => {
-  if (pinCount % 2 !== 0) {
-    throw new Error("MS012 pinCount must be even")
+  if (pinCount !== 16) {
+    throw new Error("MS013 only supports 16 pins")
   }
   const sidePinCount = pinCount / 2
-  const bodyWidth = 4.9
-  const bodyLength = 3.9
+  const bodyWidth = 7.5
+  const bodyLength = 10.3
   const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2
   const leadThickness = 0.2
 
@@ -27,7 +27,7 @@ export const MS012 = ({
         <SmdChipLead
           key={i}
           position={{
-            x: -bodyLength / 2 - padContactLength - 0.3,
+            x: -bodyWidth / 2 - padContactLength - 0.3,
             y: i * pitch - pinOffsetToCenter,
             z: leadThickness / 2,
           }}
@@ -43,7 +43,7 @@ export const MS012 = ({
           key={`right-${i}`}
           rotation={Math.PI}
           position={{
-            x: bodyLength / 2 + padContactLength + 0.3,
+            x: bodyWidth / 2 + padContactLength + 0.3,
             y: i * pitch - pinOffsetToCenter,
             z: leadThickness / 2,
           }}
@@ -56,16 +56,16 @@ export const MS012 = ({
       ))}
       <ChipBody
         center={{ x: 0, y: 0, z: leadThickness / 2 }}
-        width={bodyLength}
-        length={bodyWidth}
-        height={1.55}
+        width={bodyWidth}
+        length={bodyLength}
+        height={1.1}
         notchPosition={{
-          x: -(bodyLength / 2 - 1),
-          y: bodyWidth / 2 - 1,
-          z: 1.55,
+          x: -(bodyWidth / 2 - 1.5),
+          y: bodyLength / 2 - 1.5,
+          z: 1.1,
         }}
         heightAboveSurface={0.17}
-        taperRatio={0.09}
+        taperRatio={0.05}
       />
     </>
   )
