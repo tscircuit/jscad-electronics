@@ -48,6 +48,7 @@ export * from "./SOT-223"
 export * from "./SOT-457"
 export * from "./SOT-323"
 export * from "./SOT-363"
+export * from "./SOT-886"
 export * from "./MINIMELF"
 export * from "./MELF"
 
