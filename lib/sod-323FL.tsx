@@ -49,11 +49,7 @@ export const SOD323FL = () => {
       <Cuboid
         color="#777"
         size={[fullWidth / 3, bodyLength - 0.05, 0.02]}
-        center={[
-          -leftPadCenterX - fullWidth / 4.4 - taperOffset,
-          0,
-          bodyHeight,
-        ]}
+        center={[leftPadCenterX + fullWidth / 4.4 + taperOffset, 0, bodyHeight]}
       />
     </>
   )
