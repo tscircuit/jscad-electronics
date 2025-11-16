@@ -49,7 +49,7 @@ import { TO92 } from "./TO92"
 import SOT363 from "./SOT-363"
 import { SOD323 } from "./sod-323"
 import { SOD323F } from "./sod-323F"
-import {SOD323FL}from "./sod-323FL"
+import { SOD323FL } from "./sod-323FL"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
