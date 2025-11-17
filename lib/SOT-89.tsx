@@ -22,7 +22,7 @@ export const SOT89 = () => {
       {/* Exposed die pad on the right side (large heat sink pad) */}
       <Subtract>
         <Cuboid
-          color="#ccc"
+          color="#fff"
           size={[leadExtension + 1.5, bodyWidth - 1, leadThickness]}
           center={[fullWidth / 2 - leadExtension, 0, leadThickness / 2]}
         />
@@ -65,21 +65,21 @@ export const SOT89 = () => {
 
       {/* Lead on the left side (pin 1) */}
       <Cuboid
-        color="#ccc"
+        color="#fff"
         size={[leadExtension, leadWidth, leadThickness]}
         center={[-fullWidth / 2, -pinSpacing, leadThickness / 2]}
       />
 
       {/* Lead on the left side (pin 2) - center lead */}
       <Cuboid
-        color="#ccc"
+        color="#fff"
         size={[leadExtension + 1, leadWidth, leadThickness]}
         center={[-fullWidth / 2 + 0.5, 0, leadThickness / 2]}
       />
 
       {/* Lead on the left side (pin 3) */}
       <Cuboid
-        color="#ccc"
+        color="#fff"
         size={[leadExtension, leadWidth, leadThickness]}
         center={[-fullWidth / 2, pinSpacing, leadThickness / 2]}
       />
