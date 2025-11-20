@@ -2,11 +2,11 @@ import { Cuboid } from "jscad-fiber"
 import { ChipBody } from "./ChipBody"
 
 export const SOT886 = () => {
-  const bodyWidth = 1.0
+  const bodyWidth = 1.01
   const bodyLength = 1.45
   const bodyHeight = 0.5
-  const terminalWidth = 0.2
-  const terminalLength = 0.3
+  const terminalWidth = 0.27
+  const terminalLength = 0.33
   const terminalThickness = 0.05
   const pitch = 0.5
   const pinsPerSide = 3
@@ -15,7 +15,7 @@ export const SOT886 = () => {
   return (
     <>
       <ChipBody
-        center={{ x: 0, y: 0, z: 0 }}
+        center={{ x: 0, y: 0, z: terminalThickness }}
         width={bodyWidth}
         length={bodyLength}
         height={bodyHeight}
@@ -33,7 +33,7 @@ export const SOT886 = () => {
             center={[
               -bodyWidth / 2 + terminalLength / 2,
               y,
-              -terminalThickness / 2,
+              terminalThickness / 2,
             ]}
             size={[terminalLength, terminalWidth, terminalThickness]}
           />
@@ -48,7 +48,7 @@ export const SOT886 = () => {
             center={[
               bodyWidth / 2 - terminalLength / 2,
               y,
-              -terminalThickness / 2,
+              terminalThickness / 2,
             ]}
             size={[terminalLength, terminalWidth, terminalThickness]}
           />
