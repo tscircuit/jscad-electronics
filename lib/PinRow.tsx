@@ -1,25 +1,31 @@
-import { Cuboid, Cylinder, Union, HullChain, Colorize, Hull } from "jscad-fiber"
+import { Cuboid, Colorize, Hull } from "jscad-fiber"
 
 export const PinRow = ({
   numberOfPins,
   pitch = 2.54,
   longSidePinLength = 6,
+  invert = false,
 }: {
   numberOfPins: number
   pitch?: number
   longSidePinLength?: number
+  invert?: boolean
 }) => {
   const pinThickness = 0.63
   const bodyHeight = 2
   const bodyWidth = numberOfPins * pitch
   const shortSidePinLength = 3
   const xoff = -((numberOfPins - 1) / 2) * pitch
+
+  // Flip Z coordinates if invert is true
+  const flipZ = (z: number) => (invert ? -z + bodyHeight : z)
+
   return (
     <>
       <Cuboid
         color="#222"
         size={[bodyWidth, pinThickness * 3, bodyHeight]}
-        center={[0, 0, bodyHeight / 2 + 0.012]}
+        center={[0, 0, flipZ(bodyHeight / 2)]}
       />
       {Array.from({ length: numberOfPins }, (_, i) => (
         <>
@@ -32,7 +38,7 @@ export const PinRow = ({
                 center={[
                   xoff + i * pitch,
                   0,
-                  bodyHeight * 0.9 + bodyHeight / 2,
+                  flipZ(bodyHeight * 0.9 + bodyHeight / 2),
                 ]}
               />
               <Cuboid
@@ -42,7 +48,11 @@ export const PinRow = ({
                   pinThickness / 1.8,
                   shortSidePinLength,
                 ]}
-                center={[xoff + i * pitch, 0, bodyHeight + bodyHeight / 2]}
+                center={[
+                  xoff + i * pitch,
+                  0,
+                  flipZ(bodyHeight + bodyHeight / 2),
+                ]}
               />
             </Hull>
           </Colorize>
@@ -52,7 +62,11 @@ export const PinRow = ({
               <Cuboid
                 color="gold"
                 size={[pinThickness, pinThickness, longSidePinLength * 0.9]}
-                center={[xoff + i * pitch, 0, (-longSidePinLength / 2) * 0.9]}
+                center={[
+                  xoff + i * pitch,
+                  0,
+                  flipZ((-longSidePinLength / 2) * 0.9),
+                ]}
               />
               <Cuboid
                 color="gold"
@@ -61,7 +75,7 @@ export const PinRow = ({
                   pinThickness / 1.8,
                   longSidePinLength,
                 ]}
-                center={[xoff + i * pitch, 0, -longSidePinLength / 2]}
+                center={[xoff + i * pitch, 0, flipZ(-longSidePinLength / 2)]}
               />
             </Hull>
           </Colorize>
