@@ -19,7 +19,7 @@ export const PinRow = ({
       <Cuboid
         color="#222"
         size={[bodyWidth, pinThickness * 3, bodyHeight]}
-        center={[0, 0, bodyHeight / 2 + 0.012]}
+        center={[0, 0, bodyHeight / 2]}
       />
       {Array.from({ length: numberOfPins }, (_, i) => (
         <>
@@ -52,7 +52,7 @@ export const PinRow = ({
               <Cuboid
                 color="gold"
                 size={[pinThickness, pinThickness, longSidePinLength * 0.9]}
-                center={[xoff + i * pitch, 0, (-longSidePinLength / 2) * 0.9]}
+                center={[xoff + i * pitch, 0, -(longSidePinLength * 0.9) / 2]}
               />
               <Cuboid
                 color="gold"
