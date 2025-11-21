@@ -52,7 +52,7 @@ export const PinRow = ({
               <Cuboid
                 color="gold"
                 size={[pinThickness, pinThickness, longSidePinLength * 0.9]}
-                center={[xoff + i * pitch, 0, (-longSidePinLength / 2) * 0.9]}
+                center={[xoff + i * pitch, 0, -(longSidePinLength * 0.9) / 2]}
               />
               <Cuboid
                 color="gold"
