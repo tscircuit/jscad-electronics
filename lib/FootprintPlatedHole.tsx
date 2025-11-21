@@ -24,7 +24,7 @@ export const FootprintPlatedHole = ({
   if (hole.shape === "circular_hole_with_rect_pad") {
     return (
       <Colorize color={color}>
-        <Translate offset={[hole.x, hole.y, 0]}>
+        <Translate offset={[hole.x, hole.y, -0.005]}>
           {/* <Rotate axis="z" angle={90}> */}
           <Subtract>
             <Cuboid
