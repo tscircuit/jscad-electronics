@@ -45,6 +45,7 @@ import { MS012 } from "./ms012"
 import { MS013 } from "./ms013"
 import { TO220 } from "./TO220"
 import { SOT457 } from "./SOT-457"
+import { SOT963 } from "./SOT-963"
 import { TO92 } from "./TO92"
 import SOT363 from "./SOT-363"
 import { SOT886 } from "./SOT-886"
@@ -217,6 +218,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <SOT363 />
     case "sot886":
       return <SOT886 />
+    case "sot963":
+      return <SOT963 />
     case "pushbutton":
       return (
         <PushButton
