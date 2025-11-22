@@ -2,7 +2,7 @@ import { Cuboid } from "jscad-fiber"
 import { ChipBody } from "./ChipBody"
 
 export const SOT963 = () => {
-  const bodyWidth = 0.80
+  const bodyWidth = 0.8
   const bodyLength = 1.0
   const bodyHeight = 0.37
   const terminalWidth = 0.15
@@ -23,7 +23,11 @@ export const SOT963 = () => {
         color="#1a1a1a"
         taperRatio={0.15}
         straightHeightRatio={0}
-        notchPosition={{ x: -bodyWidth/4, y: pinSpan / 2.2, z: bodyHeight +0.1 }}
+        notchPosition={{
+          x: -bodyWidth / 4,
+          y: pinSpan / 2.2,
+          z: bodyHeight + 0.1,
+        }}
       />
 
       {[0, 1, 2].map((i) => {
@@ -47,7 +51,7 @@ export const SOT963 = () => {
           <Cuboid
             key={`right-${i}`}
             center={[
-              bodyWidth / 2 - terminalLength/2 + 0.1,
+              bodyWidth / 2 - terminalLength / 2 + 0.1,
               y,
               terminalThickness / 2,
             ]}
