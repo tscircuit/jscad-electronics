@@ -4,7 +4,7 @@ import { ChipBody } from "./ChipBody"
 export const SOT963 = () => {
   const bodyWidth = 0.80
   const bodyLength = 1.0
-  const bodyHeight = 0.5
+  const bodyHeight = 0.37
   const terminalWidth = 0.15
   const terminalLength = 0.19
   const terminalThickness = 0.12
