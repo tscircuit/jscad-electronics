@@ -4,7 +4,7 @@ export const PinRow = ({
   numberOfPins,
   pitch = 2.54,
   longSidePinLength = 6,
-  invert = false,
+  invert,
 }: {
   numberOfPins: number
   pitch?: number

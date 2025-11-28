@@ -70,10 +70,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     female: boolean
     id: number //innerDiameter
     od: number //outerDiameter
+    invert?: boolean
   }
-
-  // Manually check for invert parameter in footprint string
-  const invert = footprint.includes("_invert")
 
   switch (fpJson.fn) {
     case "dip":
@@ -179,7 +177,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           <PinRow
             numberOfPins={fpJson.num_pins}
             pitch={fpJson.p}
-            invert={invert}
+            invert={fpJson.invert}
           />
         )
       if (fpJson.female)
