@@ -72,6 +72,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     female: boolean
     id: number //innerDiameter
     od: number //outerDiameter
+    invert?: boolean
   }
 
   switch (fpJson.fn) {
@@ -174,7 +175,13 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
 
     case "pinrow":
       if (fpJson.male)
-        return <PinRow numberOfPins={fpJson.num_pins} pitch={fpJson.p} />
+        return (
+          <PinRow
+            numberOfPins={fpJson.num_pins}
+            pitch={fpJson.p}
+            invert={fpJson.invert}
+          />
+        )
       if (fpJson.female)
         return <FemaleHeader numberOfPins={fpJson.num_pins} pitch={fpJson.p} />
 
