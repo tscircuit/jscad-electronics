@@ -5,11 +5,13 @@ export const PinRow = ({
   pitch = 2.54,
   longSidePinLength = 6,
   invert,
+  faceup,
 }: {
   numberOfPins: number
   pitch?: number
   longSidePinLength?: number
   invert?: boolean
+  faceup?: boolean
 }) => {
   const pinThickness = 0.63
   const bodyHeight = 2
@@ -18,7 +20,7 @@ export const PinRow = ({
   const xoff = -((numberOfPins - 1) / 2) * pitch
 
   // Flip Z coordinates if invert is true
-  const flipZ = (z: number) => (invert ? -z + bodyHeight : z)
+  const flipZ = (z: number) => (invert || faceup ? -z + bodyHeight : z)
 
   return (
     <>
@@ -30,32 +32,34 @@ export const PinRow = ({
       {Array.from({ length: numberOfPins }, (_, i) => (
         <>
           {/*Short pins (top) */}
-          <Colorize color="gold">
-            <Hull>
-              <Cuboid
-                color="gold"
-                size={[pinThickness, pinThickness, shortSidePinLength * 0.9]}
-                center={[
-                  xoff + i * pitch,
-                  0,
-                  flipZ(bodyHeight * 0.9 + bodyHeight / 2),
-                ]}
-              />
-              <Cuboid
-                color="gold"
-                size={[
-                  pinThickness / 1.8,
-                  pinThickness / 1.8,
-                  shortSidePinLength,
-                ]}
-                center={[
-                  xoff + i * pitch,
-                  0,
-                  flipZ(bodyHeight + bodyHeight / 2),
-                ]}
-              />
-            </Hull>
-          </Colorize>
+          {!faceup && (
+            <Colorize color="gold">
+              <Hull>
+                <Cuboid
+                  color="gold"
+                  size={[pinThickness, pinThickness, shortSidePinLength * 0.9]}
+                  center={[
+                    xoff + i * pitch,
+                    0,
+                    flipZ(bodyHeight * 0.9 + bodyHeight / 2),
+                  ]}
+                />
+                <Cuboid
+                  color="gold"
+                  size={[
+                    pinThickness / 1.8,
+                    pinThickness / 1.8,
+                    shortSidePinLength,
+                  ]}
+                  center={[
+                    xoff + i * pitch,
+                    0,
+                    flipZ(bodyHeight + bodyHeight / 2),
+                  ]}
+                />
+              </Hull>
+            </Colorize>
+          )}
           {/*Long pins (bottom) */}
           <Colorize color="gold">
             <Hull>
