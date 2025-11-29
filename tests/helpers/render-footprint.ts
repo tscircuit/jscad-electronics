@@ -8,8 +8,23 @@ import { renderGLTFToPNGBufferFromGLBBuffer } from "poppygl"
  * This preserves colors correctly from the JSCAD model
  */
 export async function renderFootprint(footprint: string): Promise<Buffer> {
-  const { getJscadModelForFootprint } = await importVanilla()
-  const result = getJscadModelForFootprint(footprint, jscadModeling)
+  const mod = await importVanilla()
+  const { h, Fragment, Footprinter3d, ExtrudedPads, render } = mod
+
+  function getJscadModelForFootprintWithPads(
+    footprint: string,
+    jscad: typeof jscadModeling,
+  ) {
+    const vnode = h(
+      Fragment,
+      null,
+      h(Footprinter3d, { footprint }),
+      h(ExtrudedPads, { footprint }),
+    )
+    return render(vnode, jscad)
+  }
+
+  const result = getJscadModelForFootprintWithPads(footprint, jscadModeling)
 
   // Convert JSCAD model to GLB format (preserves colors)
   // Use axisTransform to make objects lie flat (Y-up to Z-up)
