@@ -83,9 +83,19 @@ export const Dip = ({
   numPins = 8,
   pitch = 2.54,
   bodyWidth = 6.4,
-}: { numPins?: number; pitch?: number; bodyWidth?: number }) => {
+  rowSpacing,
+}: {
+  numPins?: number
+  pitch?: number
+  bodyWidth?: number
+  rowSpacing?: number
+}) => {
   const numPinsOnEachSide = Math.floor(numPins / 2)
-  const crossBodyPinWidth = bodyWidth + 1
+
+  const pinRowSpacing =
+    rowSpacing ?? (bodyWidth >= 7 ? bodyWidth : bodyWidth + 1.22)
+
+  const chipBodyWidth = bodyWidth >= 7 ? pinRowSpacing - 1.22 : bodyWidth
 
   return (
     <>
@@ -96,14 +106,14 @@ export const Dip = ({
         return (
           <DipPinLeg
             key={i}
-            x={(xRow * crossBodyPinWidth) / 2}
+            x={(xRow * pinRowSpacing) / 2}
             y={yRow * pitch - ((numPinsOnEachSide - 1) / 2) * pitch}
             z={DIP_PIN_HEIGHT / 2 + heightAboveSurface}
           />
         )
       })}
       <ChipBody
-        width={bodyWidth}
+        width={chipBodyWidth}
         length={numPinsOnEachSide * pitch + 0.5}
         height={DIP_PIN_HEIGHT - heightAboveSurface}
         heightAboveSurface={heightAboveSurface}
