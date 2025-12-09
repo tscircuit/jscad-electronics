@@ -1,15 +1,18 @@
-import { importVanilla } from "../fixtures/importVanilla.js"
 import * as jscadModeling from "@jscad/modeling"
 import { convertJscadModelToGltf } from "jscad-to-gltf"
 import { renderGLTFToPNGBufferFromGLBBuffer } from "poppygl"
+import { getJscadModelForFootprintWithPads } from "../fixtures/getJscadModelForFootprintWithPads"
 
 /**
  * Render a footprint to PNG using poppygl via GLTF conversion
  * This preserves colors correctly from the JSCAD model
+ * Includes ExtrudedPads in the rendering
  */
 export async function renderFootprint(footprint: string): Promise<Buffer> {
-  const { getJscadModelForFootprint } = await importVanilla()
-  const result = getJscadModelForFootprint(footprint, jscadModeling)
+  const result = await getJscadModelForFootprintWithPads(
+    footprint,
+    jscadModeling,
+  )
 
   // Convert JSCAD model to GLB format (preserves colors)
   // Use axisTransform to make objects lie flat (Y-up to Z-up)
