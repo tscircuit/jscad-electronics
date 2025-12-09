@@ -174,7 +174,11 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       )
     }
 
-    case "pinrow":
+    case "pinrow": {
+      // Parse rows parameter from footprint string (e.g., "pinrow4_rows2")
+      const rowsMatch = footprint.match(/_rows(\d+)/)
+      const rows = rowsMatch && rowsMatch[1] ? parseInt(rowsMatch[1], 10) : 1
+
       if (fpJson.male)
         return (
           <PinRow
@@ -182,10 +186,18 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
             pitch={fpJson.p}
             invert={fpJson.invert}
             faceup={fpJson.faceup}
+            rows={rows}
           />
         )
       if (fpJson.female)
-        return <FemaleHeader numberOfPins={fpJson.num_pins} pitch={fpJson.p} />
+        return (
+          <FemaleHeader
+            numberOfPins={fpJson.num_pins}
+            pitch={fpJson.p}
+            rows={rows}
+          />
+        )
+    }
 
     case "cap": {
       switch (fpJson.imperial) {
