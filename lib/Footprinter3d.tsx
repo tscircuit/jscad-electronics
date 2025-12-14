@@ -47,6 +47,7 @@ import { TO220 } from "./TO220"
 import { SOT457 } from "./SOT-457"
 import { SOT963 } from "./SOT-963"
 import { TO92 } from "./TO92"
+import { TO92S } from "./TO92S"
 import SOT363 from "./SOT-363"
 import { SOT886 } from "./SOT-886"
 import { SOD323 } from "./sod-323"
@@ -315,6 +316,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <TO220 />
     case "to92":
       return <TO92 />
+    case "to92s":
+      return <TO92S />
   }
 
   const colorMatch = footprint.match(/_color\(([^)]+)\)/)
