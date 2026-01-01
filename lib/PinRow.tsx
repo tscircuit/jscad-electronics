@@ -37,13 +37,13 @@ export const PinRow = ({
 
   return (
     <>
-        <Translate y={rightangle ? -3: 0}>
-          <Cuboid
-            color="#222"
-            size={[bodyWidth, bodyDepth, bodyHeight]}
-            center={[0, bodyCenterY, flipZ(bodyHeight / 2)]}
-          />
-        </Translate>
+      <Translate y={rightangle ? -3 : 0}>
+        <Cuboid
+          color="#222"
+          size={[bodyWidth, bodyDepth, bodyHeight]}
+          center={[0, bodyCenterY, flipZ(bodyHeight / 2)]}
+        />
+      </Translate>
       {Array.from({ length: numberOfPins }, (_, i) => {
         const row = Math.floor(i / pinsPerRow)
         const col = i % pinsPerRow
@@ -94,15 +94,15 @@ export const PinRow = ({
                   </Hull>
                 )}
               </Colorize>
-            )}<Colorize color="gold" key={`long-${i}`}>
-               <Translate y={rightangle? -3.9: 0} z={rightangle? 1 : 0}>
-            <Rotate
-              key={`rotate-${i}`}
-              rotation={rightangle? [-Math.PI / 2, 0, 0] : [0,0,0]}
-            >
-             
-                {/*Long pins (bottom) */}
-                
+            )}
+            <Colorize color="gold" key={`long-${i}`}>
+              <Translate y={rightangle ? -3.9 : 0} z={rightangle ? 1 : 0}>
+                <Rotate
+                  key={`rotate-${i}`}
+                  rotation={rightangle ? [-Math.PI / 2, 0, 0] : [0, 0, 0]}
+                >
+                  {/*Long pins (bottom) */}
+
                   <Hull>
                     <Cuboid
                       color="gold"
@@ -123,10 +123,8 @@ export const PinRow = ({
                       center={[x, y, flipZ(-longSidePinLength / 2)]}
                     />
                   </Hull>
-                
-             
-            </Rotate>
-             </Translate>
+                </Rotate>
+              </Translate>
             </Colorize>
           </>
         )
