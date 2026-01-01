@@ -74,6 +74,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     od: number //outerDiameter
     invert?: boolean
     faceup?: boolean
+    smd?: boolean
+    surface_mount?: boolean
+    rightangle?: boolean
   }
 
   switch (fpJson.fn) {
@@ -187,6 +190,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
             invert={fpJson.invert}
             faceup={fpJson.faceup}
             rows={rows}
+            smd={fpJson.smd || fpJson.surface_mount}
+            rightangle={fpJson.rightangle}
           />
         )
       if (fpJson.female)
