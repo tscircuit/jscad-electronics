@@ -29,6 +29,7 @@ export * from "./tqfp"
 export * from "./lqfp"
 export * from "./sod-123"
 export * from "./PinRow"
+export * from "./AxialCapacitor"
 
 // New components
 export * from "./SOD523"

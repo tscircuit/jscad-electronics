@@ -52,6 +52,7 @@ import { SOT886 } from "./SOT-886"
 import { SOD323 } from "./sod-323"
 import { SOD323F } from "./sod-323F"
 import { SOD323FL } from "./sod-323FL"
+import { AxialCapacitor } from "./AxialCapacitor"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -84,6 +85,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return (
         <Dip numPins={fpJson.num_pins} pitch={fpJson.p} bodyWidth={fpJson.w} />
       )
+    case "axial":
+      return <AxialCapacitor pitch={fpJson.p} />
     case "tssop":
       return (
         <Tssop
