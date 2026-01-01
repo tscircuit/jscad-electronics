@@ -1,4 +1,5 @@
-import { Cuboid, Colorize, Hull } from "jscad-fiber"
+import { Cuboid, Colorize, Hull, Rotate, Translate } from "jscad-fiber"
+import { SmdChipLead } from "./SmdChipLead"
 
 export const PinRow = ({
   numberOfPins,
@@ -7,6 +8,8 @@ export const PinRow = ({
   invert,
   faceup,
   rows = 1,
+  smd,
+  rightangle,
 }: {
   numberOfPins: number
   pitch?: number
@@ -14,6 +17,8 @@ export const PinRow = ({
   invert?: boolean
   faceup?: boolean
   rows?: number
+  smd?: boolean
+  rightangle?: boolean
 }) => {
   const pinThickness = 0.63
   const bodyHeight = 2
@@ -32,11 +37,13 @@ export const PinRow = ({
 
   return (
     <>
-      <Cuboid
-        color="#222"
-        size={[bodyWidth, bodyDepth, bodyHeight]}
-        center={[0, bodyCenterY, flipZ(bodyHeight / 2)]}
-      />
+        <Translate y={rightangle ? -3: 0}>
+          <Cuboid
+            color="#222"
+            size={[bodyWidth, bodyDepth, bodyHeight]}
+            center={[0, bodyCenterY, flipZ(bodyHeight / 2)]}
+          />
+        </Translate>
       {Array.from({ length: numberOfPins }, (_, i) => {
         const row = Math.floor(i / pinsPerRow)
         const col = i % pinsPerRow
@@ -49,46 +56,77 @@ export const PinRow = ({
             {/*Short pins (top) */}
             {!faceup && (
               <Colorize color="gold" key={`short-${i}`}>
-                <Hull>
-                  <Cuboid
-                    color="gold"
-                    size={[
-                      pinThickness,
-                      pinThickness,
-                      shortSidePinLength * 0.9,
-                    ]}
-                    center={[x, y, flipZ(bodyHeight * 0.9 + bodyHeight / 2)]}
+                {smd ? (
+                  <SmdChipLead
+                    key={`short-smd-${i}`}
+                    rotation={-Math.PI / 2}
+                    position={{
+                      x: x,
+                      y: y + 1,
+                      z: pinThickness / 2,
+                    }}
+                    thickness={pinThickness}
+                    width={pinThickness}
+                    height={pinThickness}
+                    padContactLength={2}
+                    bodyDistance={3}
                   />
-                  <Cuboid
-                    color="gold"
-                    size={[
-                      pinThickness / 1.8,
-                      pinThickness / 1.8,
-                      shortSidePinLength,
-                    ]}
-                    center={[x, y, flipZ(bodyHeight + bodyHeight / 2)]}
-                  />
-                </Hull>
+                ) : (
+                  <Hull>
+                    <Cuboid
+                      color="gold"
+                      size={[
+                        pinThickness,
+                        pinThickness,
+                        shortSidePinLength * 0.9,
+                      ]}
+                      center={[x, y, flipZ(bodyHeight * 0.9 + bodyHeight / 2)]}
+                    />
+                    <Cuboid
+                      color="gold"
+                      size={[
+                        pinThickness / 1.8,
+                        pinThickness / 1.8,
+                        shortSidePinLength,
+                      ]}
+                      center={[x, y, flipZ(bodyHeight + bodyHeight / 2)]}
+                    />
+                  </Hull>
+                )}
               </Colorize>
-            )}
-            {/*Long pins (bottom) */}
-            <Colorize color="gold" key={`long-${i}`}>
-              <Hull>
-                <Cuboid
-                  color="gold"
-                  size={[pinThickness, pinThickness, longSidePinLength * 0.9]}
-                  center={[x, y, flipZ((-longSidePinLength / 2) * 0.9)]}
-                />
-                <Cuboid
-                  color="gold"
-                  size={[
-                    pinThickness / 1.8,
-                    pinThickness / 1.8,
-                    longSidePinLength,
-                  ]}
-                  center={[x, y, flipZ(-longSidePinLength / 2)]}
-                />
-              </Hull>
+            )}<Colorize color="gold" key={`long-${i}`}>
+               <Translate y={rightangle? -3.9: 0} z={rightangle? 1 : 0}>
+            <Rotate
+              key={`rotate-${i}`}
+              rotation={rightangle? [-Math.PI / 2, 0, 0] : [0,0,0]}
+            >
+             
+                {/*Long pins (bottom) */}
+                
+                  <Hull>
+                    <Cuboid
+                      color="gold"
+                      size={[
+                        pinThickness,
+                        pinThickness,
+                        longSidePinLength * 0.9,
+                      ]}
+                      center={[x, y, flipZ((-longSidePinLength / 2) * 0.9)]}
+                    />
+                    <Cuboid
+                      color="gold"
+                      size={[
+                        pinThickness / 1.8,
+                        pinThickness / 1.8,
+                        longSidePinLength,
+                      ]}
+                      center={[x, y, flipZ(-longSidePinLength / 2)]}
+                    />
+                  </Hull>
+                
+             
+            </Rotate>
+             </Translate>
             </Colorize>
           </>
         )
