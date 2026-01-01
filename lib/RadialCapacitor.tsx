@@ -1,4 +1,3 @@
-import { mm } from "@tscircuit/mm"
 import { Cylinder, Sphere } from "jscad-fiber"
 
 interface AxialCapacitorProps {
@@ -6,7 +5,7 @@ interface AxialCapacitorProps {
   variant?: string // Make 'variant' optional
 }
 
-export const AxialCapacitor = ({
+export const RadialCapacitor = ({
   pitch = 10,
   variant = "vertical",
 }: AxialCapacitorProps) => {
