@@ -16,6 +16,7 @@ import { A1206 } from "./A1206"
 import { A1210 } from "./A1210"
 import { A2010 } from "./A2010"
 import { A2512 } from "./A2512"
+import { Array1206x4 } from "./1206x4"
 import { FemaleHeader } from "./FemaleHeader"
 import { PushButton } from "./PushButton"
 import { SOIC } from "./SOIC"
@@ -205,6 +206,17 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
             rows={rows}
           />
         )
+    }
+    
+    case "res": {
+      const imperialString = fpJson.imperial?.toString()
+      const arrayCount = imperialString?.match(/(?:array|x)(\d+)$/i)?.[1]
+      const imperialBase = imperialString?.split("_")[0]
+
+      if (imperialBase === "1206" && arrayCount === "4") {
+        return <Array1206x4 />
+      }
+      break
     }
 
     case "cap": {
