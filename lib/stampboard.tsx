@@ -116,19 +116,19 @@ export const StampBoard = ({
 
   const boardBody = (
     <Colorize color="#008080">
-    <Subtract>
-      <Cuboid
-        center={[0, 0, boardCenterZ]}
-        size={[bodyWidth, bodyLength, boardThickness]}
-      />
-      {pads.map((pad, index) => (
+      <Subtract>
         <Cuboid
-          key={index}
-          center={[pad.x, pad.y, boardCenterZ]}
-          size={[pad.pl + 0.01, pad.pw + 0.01, boardHeight]}
+          center={[0, 0, boardCenterZ]}
+          size={[bodyWidth, bodyLength, boardThickness]}
         />
-      ))}
-    </Subtract>
+        {pads.map((pad, index) => (
+          <Cuboid
+            key={index}
+            center={[pad.x, pad.y, boardCenterZ]}
+            size={[pad.pl + 0.01, pad.pw + 0.01, boardHeight]}
+          />
+        ))}
+      </Subtract>
     </Colorize>
   )
 
