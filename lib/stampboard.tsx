@@ -115,9 +115,9 @@ export const StampBoard = ({
   }
 
   const boardBody = (
+    <Colorize color="#008080">
     <Subtract>
       <Cuboid
-        color="green"
         center={[0, 0, boardCenterZ]}
         size={[bodyWidth, bodyLength, boardThickness]}
       />
@@ -129,6 +129,7 @@ export const StampBoard = ({
         />
       ))}
     </Subtract>
+    </Colorize>
   )
 
   const holePads =
@@ -152,8 +153,8 @@ export const StampBoard = ({
   ))
   return (
     <>
-      <Colorize color={"green"}>{boardBody}</Colorize>
-      <Colorize color="gold">
+      {boardBody}
+      <Colorize color="#FFD700">
         {innerHoles ? (
           <Subtract>
             <Union>
