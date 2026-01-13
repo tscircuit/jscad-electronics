@@ -53,6 +53,7 @@ import { SOD323 } from "./sod-323"
 import { SOD323F } from "./sod-323F"
 import { SOD323FL } from "./sod-323FL"
 import { AxialCapacitor } from "./AxialCapacitor"
+import { StampBoard } from "./stampboard"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -78,6 +79,12 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     smd?: boolean
     surface_mount?: boolean
     rightangle?: boolean
+    left?: number
+    right?: number
+    top?: number
+    bottom?: number
+    innerhole?: boolean
+    innerholeedgedistance?: number
   }
 
   switch (fpJson.fn) {
@@ -323,6 +330,22 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <TO220 />
     case "to92":
       return <TO92 />
+    case "stampboard":
+    case "stampreceiver":
+      return (
+        <StampBoard
+          bodyWidth={fpJson.w}
+          leadsLeft={fpJson.left}
+          leadsRight={fpJson.right}
+          leadsTop={fpJson.top}
+          leadsBottom={fpJson.bottom}
+          leadsPitch={fpJson.p}
+          leadWidth={fpJson.pw}
+          leadLength={fpJson.pl}
+          innerHoles={fpJson.innerhole}
+          innerHoleEdgeDistance={fpJson.innerholeedgedistance}
+        />
+      )
   }
 
   const colorMatch = footprint.match(/_color\(([^)]+)\)/)
