@@ -1,59 +1,60 @@
 import { fp } from "@tscircuit/footprinter"
-import { Dip } from "./DualInlinePackage"
-import { Tssop } from "./Tssop"
-import { MSOP } from "./MSOP"
+import { A01005 } from "./A01005"
+import { A0201 } from "./A0201"
 import { A0402 } from "./A0402"
 import { A0603 } from "./A0603"
 import { A0805 } from "./A0805"
-import { QFP } from "./qfp"
-import { PinRow } from "./PinRow"
-import QFN from "./qfn"
-import SOT235 from "./SOT-235"
-import { SOT23W } from "./SOT-23W"
-import { A0201 } from "./A0201"
-import { A01005 } from "./A01005"
 import { A1206 } from "./A1206"
 import { A1210 } from "./A1210"
 import { A2010 } from "./A2010"
 import { A2512 } from "./A2512"
+import { AxialCapacitor } from "./AxialCapacitor"
+import { Dip } from "./DualInlinePackage"
 import { FemaleHeader } from "./FemaleHeader"
+import { MELF } from "./MELF"
+import { MINIMELF } from "./MINIMELF"
+import { MSOP } from "./MSOP"
+import { MicroMELF } from "./MicroMELF"
+import { PinRow } from "./PinRow"
 import { PushButton } from "./PushButton"
-import { SOIC } from "./SOIC"
-import { VSSOP } from "./VSSOP"
-import { SOD523 } from "./SOD523"
-import { SOD882 } from "./SOD882"
 import { SMA } from "./SMA"
 import { SMB } from "./SMB"
 import { SMC } from "./SMC"
 import { SMF } from "./SMF"
+import { SOD923 } from "./SOD-923"
+import { SOD523 } from "./SOD523"
+import { SOD882 } from "./SOD882"
+import { SOIC } from "./SOIC"
+import { SOT23W } from "./SOT-23W"
+import { SOT223 } from "./SOT-223"
+import SOT235 from "./SOT-235"
+import { SOT323 } from "./SOT-323"
+import SOT363 from "./SOT-363"
+import { SOT457 } from "./SOT-457"
+import { SOT723 } from "./SOT-723"
+import { SOT886 } from "./SOT-886"
+import { SOT963 } from "./SOT-963"
+import { TO92 } from "./TO92"
+import { TO220 } from "./TO220"
+import { Tssop } from "./Tssop"
+import { VSSOP } from "./VSSOP"
+import { DFN } from "./dfn"
+import { HC49 } from "./hc49"
+import { LQFP } from "./lqfp"
+import { MountedPCBModule } from "./mountedpcbmodule"
+import { MS012 } from "./ms012"
+import { MS013 } from "./ms013"
+import QFN from "./qfn"
+import { QFP } from "./qfp"
 import { SOD123F } from "./sod-123F"
 import { SOD123FL } from "./sod-123FL"
 import { SOD123W } from "./sod-123W"
 import { SOD128 } from "./sod-128"
-import { SOD923 } from "./SOD-923"
-import { SOT223 } from "./SOT-223"
-import TQFP from "./tqfp"
-import { SOT323 } from "./SOT-323"
-import { LQFP } from "./lqfp"
-import { SOT723 } from "./SOT-723"
-import { DFN } from "./dfn"
-import { HC49 } from "./hc49"
-import { MicroMELF } from "./MicroMELF"
-import { MINIMELF } from "./MINIMELF"
-import { MELF } from "./MELF"
-import { MS012 } from "./ms012"
-import { MS013 } from "./ms013"
-import { TO220 } from "./TO220"
-import { SOT457 } from "./SOT-457"
-import { SOT963 } from "./SOT-963"
-import { TO92 } from "./TO92"
-import SOT363 from "./SOT-363"
-import { SOT886 } from "./SOT-886"
 import { SOD323 } from "./sod-323"
 import { SOD323F } from "./sod-323F"
 import { SOD323FL } from "./sod-323FL"
-import { AxialCapacitor } from "./AxialCapacitor"
 import { StampBoard } from "./stampboard"
+import TQFP from "./tqfp"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -85,6 +86,10 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     bottom?: number
     innerhole?: boolean
     innerholeedgedistance?: number
+    rows?: number
+    pinrowside?: string
+    holes?: string[]
+    holeinset?: number
   }
 
   switch (fpJson.fn) {
@@ -213,7 +218,38 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           />
         )
     }
+    case "mountedpcbmodule": {
+      // Parse rows from footprint string (e.g., "mountedpcbmodule_numPins4_rows2")
+      const rowsMatch = footprint.match(/_rows(\d+)/)
+      const rows = rowsMatch && rowsMatch[1] ? parseInt(rowsMatch[1], 10) : 1
 
+      // Parse pinRowSide (e.g., "_pinRowSideleft")
+      const pinRowSideMatch = footprint.match(/_pinRowSide(\w+)/)
+      const pinRowSide = (pinRowSideMatch && pinRowSideMatch[1]) || "left"
+
+      // Parse holes (e.g., "_holes(topleft,topright)")
+      const holesMatch = footprint.match(/_holes\(([^)]+)\)/)
+      const holes =
+        holesMatch && holesMatch[1]
+          ? holesMatch[1].split(",").map((h) => h.trim())
+          : []
+
+      return (
+        <MountedPCBModule
+          numPins={fpJson.num_pins}
+          rows={rows}
+          p={fpJson.p}
+          id={fpJson.id}
+          od={fpJson.od}
+          width={fpJson.w}
+          height={fpJson.h}
+          pinRowSide={pinRowSide as "left" | "right" | "top" | "bottom"}
+          holes={holes}
+          holeInset={fpJson.holeinset || 1.0}
+          boardThickness={fpJson.h || 1.6} // Use h or default
+        />
+      )
+    }
     case "cap": {
       switch (fpJson.imperial) {
         case "0402":
