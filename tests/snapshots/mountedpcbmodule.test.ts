@@ -7,7 +7,7 @@ import { renderFootprint } from "../helpers/render-footprint"
 
 test("mountedpcbmodule with pins and holes", async () => {
   const pngBuffer = await renderFootprint(
-    "mountedpcbmodule_numPins4_rows1_p2.54mm_id1mm_od1.5mm_w10mm_h10mm_pinRowSideleft_holes(topleft,topright,bottomleft,bottomright)",
+    "mountedpcbmodule_pinrow40_rows2_pinrowbottom_width65_height30.5_holes(topleft,topright,bottomleft,bottomright)",
   )
   await expect(pngBuffer).toMatchPngSnapshot(import.meta.path)
 }, 10000)
