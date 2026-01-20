@@ -41,7 +41,7 @@ export const PinRow = ({
         <Cuboid
           color="#222"
           size={[bodyWidth, bodyDepth, bodyHeight]}
-          center={[0, bodyCenterY, flipZ(bodyHeight / 2)]}
+          center={[0, bodyCenterY, flipZ(-bodyHeight / 2)]}
         />
       </Translate>
       {Array.from({ length: numberOfPins }, (_, i) => {
@@ -80,7 +80,7 @@ export const PinRow = ({
                         pinThickness,
                         shortSidePinLength * 0.9,
                       ]}
-                      center={[x, y, flipZ(bodyHeight * 0.9 + bodyHeight / 2)]}
+                      center={[x, y, flipZ(bodyHeight * 0.9 /2)]}
                     />
                     <Cuboid
                       color="gold"
@@ -89,7 +89,7 @@ export const PinRow = ({
                         pinThickness / 1.8,
                         shortSidePinLength,
                       ]}
-                      center={[x, y, flipZ(bodyHeight + bodyHeight / 2)]}
+                      center={[x, y, flipZ(bodyHeight/2)]}
                     />
                   </Hull>
                 )}
@@ -111,7 +111,7 @@ export const PinRow = ({
                         pinThickness,
                         longSidePinLength * 0.9,
                       ]}
-                      center={[x, y, flipZ((-longSidePinLength / 2) * 0.9)]}
+                      center={[x, y, flipZ((-longSidePinLength / 2 - bodyHeight) * 0.9)]}
                     />
                     <Cuboid
                       color="gold"
@@ -120,7 +120,7 @@ export const PinRow = ({
                         pinThickness / 1.8,
                         longSidePinLength,
                       ]}
-                      center={[x, y, flipZ(-longSidePinLength / 2)]}
+                      center={[x, y, flipZ(-longSidePinLength / 2 - bodyHeight)]}
                     />
                   </Hull>
                 </Rotate>
