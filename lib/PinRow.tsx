@@ -32,7 +32,7 @@ export const PinRow = ({
   // Row 1 starts at y=0, subsequent rows are positioned below (negative y)
   const bodyCenterY = rows > 1 ? -((rows - 1) * rowSpacing) / 2 : 0
 
-  const zOffset = !smd && !rightangle ? -bodyHeight : 0
+  const zOffset = !smd && !rightangle ? -bodyHeight - 1.6 : 0
   // Flip Z coordinates if invert is true
   const flipZ = (z: number) =>
     (invert || faceup ? -z + bodyHeight : z) + zOffset
