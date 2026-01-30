@@ -1,4 +1,5 @@
-import { Colorize, Cuboid, Cylinder, Hull, Subtract } from "jscad-fiber"
+import { Colorize, Cuboid, Cylinder, Subtract } from "jscad-fiber"
+import { Pin3d } from "./Pin3d"
 
 export const MountedPcbModule = ({
   numPins = 5,
@@ -115,7 +116,6 @@ export const MountedPcbModule = ({
   }
   // Recreated pin row geometry (local copy to avoid PinRow dependency)
   const pinThickness = 0.63
-  const taperedThickness = pinThickness / 1.8
   const pinBodyHeight = 2
   const longSidePinLength = 6
   const shortSidePinLength = 3
@@ -203,28 +203,15 @@ export const MountedPcbModule = ({
     ) : null
 
   const headerPins = pins.map((pin, index) => (
-    <Colorize key={`pin-3d-${index}`} color="#FFD700">
-      <Hull>
-        <Cuboid
-          size={[pinThickness, pinThickness, longSidePinLength * 0.9]}
-          center={[pin.x, pin.y, -longSidePinLength * 0.45]}
-        />
-        <Cuboid
-          size={[taperedThickness, taperedThickness, longSidePinLength]}
-          center={[pin.x, pin.y, -longSidePinLength / 2]}
-        />
-      </Hull>
-      <Hull>
-        <Cuboid
-          size={[pinThickness, pinThickness, shortSidePinLength * 0.9]}
-          center={[pin.x, pin.y, boardThickness + shortSidePinLength * 0.45]}
-        />
-        <Cuboid
-          size={[taperedThickness, taperedThickness, shortSidePinLength]}
-          center={[pin.x, pin.y, boardThickness + shortSidePinLength / 2]}
-        />
-      </Hull>
-    </Colorize>
+    <Pin3d
+      key={`pin-3d-${index}`}
+      x={pin.x}
+      y={pin.y}
+      longLength={longSidePinLength}
+      shortLength={shortSidePinLength}
+      longCenterZ={-longSidePinLength * 0.45}
+      shortCenterZ={boardThickness + shortSidePinLength * 0.45}
+    />
   ))
 
   return (
