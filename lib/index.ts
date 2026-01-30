@@ -31,6 +31,7 @@ export * from "./lqfp"
 export * from "./sod-123"
 export * from "./PinRow"
 export * from "./AxialCapacitor"
+export * from "./PinHeader"
 
 // New components
 export * from "./SOD523"
@@ -63,3 +64,4 @@ export * from "./ms012"
 export * from "./ms013"
 export * from "./TO220"
 export * from "./TO92"
+export * from "./MountedPcbModule"
