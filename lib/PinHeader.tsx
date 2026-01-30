@@ -85,7 +85,11 @@ export const PinHeader = ({
               />
               <Cuboid
                 color="gold"
-                size={[pinThickness / 1.8, pinThickness / 1.8, longSidePinLength]}
+                size={[
+                  pinThickness / 1.8,
+                  pinThickness / 1.8,
+                  longSidePinLength,
+                ]}
                 center={[x, y, flipZ(-longSidePinLength / 2)]}
               />
             </Hull>
