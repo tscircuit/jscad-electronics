@@ -34,7 +34,8 @@ export const PinRow = ({
   const bodyCenterY = rows > 1 ? -((rows - 1) * rowSpacing) / 2 : 0
 
   const zOffset = !smd && !rightangle ? -bodyHeight - 1.6 : 0
-  const flipZ = (z: number) => (invert || faceup ? -z + bodyHeight : z) + zOffset
+  const flipZ = (z: number) =>
+    (invert || faceup ? -z + bodyHeight : z) + zOffset
 
   return (
     <>
@@ -56,8 +57,8 @@ export const PinRow = ({
 
         return (
           <>
-            {!faceup && (
-              smd ? (
+            {!faceup &&
+              (smd ? (
                 <SmdChipLead
                   key={`short-smd-${i}`}
                   rotation={-Math.PI / 2}
@@ -83,8 +84,7 @@ export const PinRow = ({
                   shortCenterZ={shortCenterZ}
                   renderLong={false}
                 />
-              )
-            )}
+              ))}
             <Translate y={rightangle ? -3.9 : 0} z={rightangle ? 1 : 0}>
               <Rotate
                 key={`rotate-${i}`}
