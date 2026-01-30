@@ -9,7 +9,7 @@ export const Pin = ({
   longSidePinLength,
   bodyHeight,
   bodyLength = 2.54,
-  bbodyWidth = 2.54,
+  bodyWidth = 2.54,
   flipZ,
   faceup,
   smd,
@@ -22,7 +22,7 @@ export const Pin = ({
   longSidePinLength: number
   bodyHeight: number
   bodyLength?: number
-  bbodyWidth?: number
+  bodyWidth?: number
   flipZ: (z: number) => number
   faceup?: boolean
   smd?: boolean
@@ -33,7 +33,7 @@ export const Pin = ({
       <Translate y={rightangle ? -3 : 0}>
         <Cuboid
           color="#222"
-          size={[bodyLength, bbodyWidth, bodyHeight]}
+          size={[bodyLength, bodyWidth, bodyHeight]}
           center={[x, y, flipZ(bodyHeight / 2)]}
         />
       </Translate>
