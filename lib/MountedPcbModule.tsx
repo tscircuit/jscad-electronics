@@ -194,7 +194,6 @@ export const MountedPcbModule = ({
       longSidePinLength={longSidePinLength}
       bodyHeight={pinBodyHeight}
       flipZ={(z: number) => z}
- 
     />
   ))
 

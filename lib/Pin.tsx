@@ -30,10 +30,10 @@ export const Pin = ({
 }) => {
   return (
     <>
-    <Translate y={rightangle ? -3 : 0}>
+      <Translate y={rightangle ? -3 : 0}>
         <Cuboid
           color="#222"
-          size={[bodyLength, bbodyWidth , bodyHeight]}
+          size={[bodyLength, bbodyWidth, bodyHeight]}
           center={[x, y, flipZ(bodyHeight / 2)]}
         />
       </Translate>
@@ -85,7 +85,11 @@ export const Pin = ({
               />
               <Cuboid
                 color="gold"
-                size={[pinThickness / 1.8, pinThickness / 1.8, longSidePinLength]}
+                size={[
+                  pinThickness / 1.8,
+                  pinThickness / 1.8,
+                  longSidePinLength,
+                ]}
                 center={[x, y, flipZ(-longSidePinLength / 2)]}
               />
             </Hull>
