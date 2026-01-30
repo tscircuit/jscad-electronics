@@ -54,6 +54,7 @@ import { SOD323F } from "./sod-323F"
 import { SOD323FL } from "./sod-323FL"
 import { AxialCapacitor } from "./AxialCapacitor"
 import { StampBoard } from "./stampboard"
+import { MountedPcbModule } from "./MountedPcbModule"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -346,6 +347,32 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           innerHoleEdgeDistance={fpJson.innerholeedgedistance}
         />
       )
+    case "mountedpcbmodule": {
+      const rows = (fpJson as any).rows ?? 1
+      const pinRowSide = (fpJson as any).pinRowSide ?? "left"
+      const holeInset = (fpJson as any).holeInset
+      const width = (fpJson as any).width
+      const height = (fpJson as any).height
+      const pinRow = (fpJson as any).pinrow
+      const pinRowHoleEdgeToEdgeDist = (fpJson as any).pinRowHoleEdgeToEdgeDist
+      const holes = Array.isArray((fpJson as any).holes) ? (fpJson as any).holes : []
+
+      return (
+        <MountedPcbModule
+          numPins={pinRow}
+          rows={rows}
+          p={fpJson.p}
+          id={fpJson.id}
+          od={fpJson.od}
+          width={width}
+          height={height}
+          pinRowSide={pinRowSide}
+          holes={holes}
+          holeInset={holeInset}
+          pinRowHoleEdgeToEdgeDist={pinRowHoleEdgeToEdgeDist}
+        />
+      )
+    }
   }
 
   const colorMatch = footprint.match(/_color\(([^)]+)\)/)
