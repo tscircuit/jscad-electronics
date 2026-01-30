@@ -355,7 +355,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       const height = (fpJson as any).height
       const pinRow = (fpJson as any).pinrow
       const pinRowHoleEdgeToEdgeDist = (fpJson as any).pinRowHoleEdgeToEdgeDist
-      const holes = Array.isArray((fpJson as any).holes) ? (fpJson as any).holes : []
+      const holes = Array.isArray((fpJson as any).holes)
+        ? (fpJson as any).holes
+        : []
 
       return (
         <MountedPcbModule

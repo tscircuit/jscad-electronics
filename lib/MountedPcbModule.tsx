@@ -20,8 +20,8 @@ export const MountedPcbModule = ({
   id?: number
   od?: number
   boardThickness?: number
-  width?: number |string
-  height?: number| string
+  width?: number | string
+  height?: number | string
   pinRowSide?: "left" | "right" | "top" | "bottom"
   holes?: string[]
   holeInset?: number
@@ -165,27 +165,24 @@ export const MountedPcbModule = ({
     </Colorize>
   ))
 
-
-
   const firstPin = pins[0]
 
-  const pinBounds =
-    !firstPin
-      ? null
-      : pins.reduce(
-          (acc, pin) => ({
-            minX: Math.min(acc.minX, pin.x),
-            maxX: Math.max(acc.maxX, pin.x),
-            minY: Math.min(acc.minY, pin.y),
-            maxY: Math.max(acc.maxY, pin.y),
-          }),
-          {
-            minX: firstPin.x,
-            maxX: firstPin.x,
-            minY: firstPin.y,
-            maxY: firstPin.y,
-          }
-        )
+  const pinBounds = !firstPin
+    ? null
+    : pins.reduce(
+        (acc, pin) => ({
+          minX: Math.min(acc.minX, pin.x),
+          maxX: Math.max(acc.maxX, pin.x),
+          minY: Math.min(acc.minY, pin.y),
+          maxY: Math.max(acc.maxY, pin.y),
+        }),
+        {
+          minX: firstPin.x,
+          maxX: firstPin.x,
+          minY: firstPin.y,
+          maxY: firstPin.y,
+        },
+      )
 
   const headerBody =
     pinBounds && numPins > 0 ? (
@@ -210,7 +207,7 @@ export const MountedPcbModule = ({
       <Hull>
         <Cuboid
           size={[pinThickness, pinThickness, longSidePinLength * 0.9]}
-          center={[pin.x, pin.y,  -longSidePinLength * 0.45]}
+          center={[pin.x, pin.y, -longSidePinLength * 0.45]}
         />
         <Cuboid
           size={[taperedThickness, taperedThickness, longSidePinLength]}
@@ -220,19 +217,11 @@ export const MountedPcbModule = ({
       <Hull>
         <Cuboid
           size={[pinThickness, pinThickness, shortSidePinLength * 0.9]}
-          center={[
-            pin.x,
-            pin.y,
-            boardThickness  + shortSidePinLength * 0.45,
-          ]}
+          center={[pin.x, pin.y, boardThickness + shortSidePinLength * 0.45]}
         />
         <Cuboid
           size={[taperedThickness, taperedThickness, shortSidePinLength]}
-          center={[
-            pin.x,
-            pin.y,
-            boardThickness + shortSidePinLength / 2,
-          ]}
+          center={[pin.x, pin.y, boardThickness + shortSidePinLength / 2]}
         />
       </Hull>
     </Colorize>
