@@ -1,5 +1,5 @@
 import { Colorize, Cuboid, Cylinder, Subtract } from "jscad-fiber"
-import { Pin } from "./Pin"
+import { PinHeader } from "./PinHeader"
 
 export const MountedPcbModule = ({
   numPins = 5,
@@ -166,7 +166,7 @@ export const MountedPcbModule = ({
   ))
 
   const headerPins = pins.map((pin, index) => (
-    <Pin
+    <PinHeader
       key={`pin-3d-${index}`}
       x={pin.x}
       y={pin.y}

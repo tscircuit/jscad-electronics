@@ -1,7 +1,7 @@
 import { Colorize, Cuboid, Hull, Rotate, Translate } from "jscad-fiber"
 import { SmdChipLead } from "./SmdChipLead"
 
-export const Pin = ({
+export const PinHeader = ({
   x,
   y,
   pinThickness,
@@ -85,11 +85,7 @@ export const Pin = ({
               />
               <Cuboid
                 color="gold"
-                size={[
-                  pinThickness / 1.8,
-                  pinThickness / 1.8,
-                  longSidePinLength,
-                ]}
+                size={[pinThickness / 1.8, pinThickness / 1.8, longSidePinLength]}
                 center={[x, y, flipZ(-longSidePinLength / 2)]}
               />
             </Hull>

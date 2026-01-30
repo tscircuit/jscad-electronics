@@ -1,4 +1,4 @@
-import { Pin } from "./Pin"
+import { PinHeader } from "./PinHeader"
 
 export const PinRow = ({
   numberOfPins,
@@ -40,7 +40,7 @@ export const PinRow = ({
         const y = -row * rowSpacing
 
         return (
-          <Pin
+          <PinHeader
             key={i}
             x={x}
             y={y}
