@@ -1,5 +1,5 @@
 import { Colorize, Cuboid, Cylinder, Subtract } from "jscad-fiber"
-import { Pin3d } from "./Pin3d"
+import { Pin } from "./Pin"
 
 export const MountedPcbModule = ({
   numPins = 5,
@@ -184,33 +184,17 @@ export const MountedPcbModule = ({
         },
       )
 
-  const headerBody =
-    pinBounds && numPins > 0 ? (
-      <Colorize color="#222">
-        <Cuboid
-          center={[
-            (pinBounds.minX + pinBounds.maxX) / 2,
-            (pinBounds.minY + pinBounds.maxY) / 2,
-            pinBodyHeight / 2,
-          ]}
-          size={[
-            pinBounds.maxX - pinBounds.minX + pinThickness * 3,
-            pinBounds.maxY - pinBounds.minY + pinThickness * 3,
-            pinBodyHeight,
-          ]}
-        />
-      </Colorize>
-    ) : null
-
   const headerPins = pins.map((pin, index) => (
-    <Pin3d
+    <Pin
       key={`pin-3d-${index}`}
       x={pin.x}
       y={pin.y}
-      longLength={longSidePinLength}
-      shortLength={shortSidePinLength}
-      longCenterZ={-longSidePinLength * 0.45}
-      shortCenterZ={boardThickness + shortSidePinLength * 0.45}
+      pinThickness={pinThickness}
+      shortSidePinLength={shortSidePinLength}
+      longSidePinLength={longSidePinLength}
+      bodyHeight={pinBodyHeight}
+      flipZ={(z: number) => z}
+ 
     />
   ))
 
@@ -218,7 +202,6 @@ export const MountedPcbModule = ({
     <>
       {boardBody}
       {platedHoles}
-      {headerBody}
       {headerPins}
     </>
   )
