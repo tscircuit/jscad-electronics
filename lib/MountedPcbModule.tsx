@@ -165,25 +165,6 @@ export const MountedPcbModule = ({
     </Colorize>
   ))
 
-  const firstPin = pins[0]
-
-  const pinBounds = !firstPin
-    ? null
-    : pins.reduce(
-        (acc, pin) => ({
-          minX: Math.min(acc.minX, pin.x),
-          maxX: Math.max(acc.maxX, pin.x),
-          minY: Math.min(acc.minY, pin.y),
-          maxY: Math.max(acc.maxY, pin.y),
-        }),
-        {
-          minX: firstPin.x,
-          maxX: firstPin.x,
-          minY: firstPin.y,
-          maxY: firstPin.y,
-        },
-      )
-
   const headerPins = pins.map((pin, index) => (
     <Pin
       key={`pin-3d-${index}`}
