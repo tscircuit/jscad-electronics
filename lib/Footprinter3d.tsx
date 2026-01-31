@@ -374,6 +374,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           holeInset={holeInset}
           pinRowHoleEdgeToEdgeDist={pinRowHoleEdgeToEdgeDist}
           nopin={fpJson.nopin}
+          female={fpJson.female}
         />
       )
     }
