@@ -32,7 +32,6 @@ export const MountedPcbModule = ({
   pinRowHoleEdgeToEdgeDist?: number
   female?: boolean
   nopin?: boolean
-
 }) => {
   const boardCenterZ = boardThickness / 2
   const numPinsPerRow = Math.ceil(numPins / rows)
@@ -185,7 +184,7 @@ export const MountedPcbModule = ({
     />
   ))
 
-  const femaleHeaderRow = pins.map((pin, index) =>(
+  const femaleHeaderRow = pins.map((pin, index) => (
     <FemaleHeader
       key={`female-pin-3d-${index}`}
       x={pin.x}

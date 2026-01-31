@@ -60,7 +60,7 @@ export const FemaleHeader = ({
           <Cuboid
             color="silver"
             size={[pinThickness / 1.8, pinThickness / 1.8, legsLength]}
-            center={[x, y, flipZ(z + (-legsLength / 2))]}
+            center={[x, y, flipZ(z + -legsLength / 2)]}
           />
         </Hull>
         <Cuboid
