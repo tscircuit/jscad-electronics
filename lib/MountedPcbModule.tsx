@@ -14,6 +14,7 @@ export const MountedPcbModule = ({
   holes = [],
   holeInset = 1.0,
   pinRowHoleEdgeToEdgeDist = 2.0,
+  nopin,
 }: {
   numPins?: number
   rows?: number
@@ -27,6 +28,7 @@ export const MountedPcbModule = ({
   holes?: string[]
   holeInset?: number
   pinRowHoleEdgeToEdgeDist?: number
+  nopin?: boolean
 }) => {
   const boardCenterZ = boardThickness / 2
   const numPinsPerRow = Math.ceil(numPins / rows)
@@ -119,18 +121,19 @@ export const MountedPcbModule = ({
   const pinBodyHeight = 2
   const longSidePinLength = 6
   const shortSidePinLength = 3
+  const boardOffsetZ = nopin ? 0 : pinBodyHeight
   // Board body with holes subtracted
   const boardBody = (
     <Colorize color="#008080">
       <Subtract>
         <Cuboid
-          center={[0, 0, boardCenterZ + pinBodyHeight]}
+          center={[0, 0, boardCenterZ + boardOffsetZ]}
           size={[finalWidth, finalHeight, boardThickness]}
         />
         {holePositions.map((hole, index) => (
           <Cylinder
             key={`hole-${index}`}
-            center={[hole.x, hole.y, boardCenterZ + pinBodyHeight]}
+            center={[hole.x, hole.y, boardCenterZ + boardOffsetZ]}
             radius={od / 2}
             height={boardThickness}
           />
@@ -138,7 +141,7 @@ export const MountedPcbModule = ({
         {pins.map((pin, index) => (
           <Cylinder
             key={`pin-hole-${index}`}
-            center={[pin.x, pin.y, boardCenterZ + pinBodyHeight]}
+            center={[pin.x, pin.y, boardCenterZ + boardOffsetZ]}
             radius={od / 2}
             height={boardThickness}
           />
@@ -152,12 +155,12 @@ export const MountedPcbModule = ({
     <Colorize key={`pin-${index}`} color="#FFD700">
       <Subtract>
         <Cylinder
-          center={[pin.x, pin.y, boardThickness / 2 + pinBodyHeight]}
+          center={[pin.x, pin.y, boardThickness / 2 + boardOffsetZ]}
           radius={od / 2}
           height={boardThickness}
         />
         <Cylinder
-          center={[pin.x, pin.y, boardThickness / 2 + pinBodyHeight]}
+          center={[pin.x, pin.y, boardThickness / 2 + boardOffsetZ]}
           radius={id / 2}
           height={boardThickness}
         />
@@ -182,7 +185,7 @@ export const MountedPcbModule = ({
     <>
       {boardBody}
       {platedHoles}
-      {headerPins}
+      {!nopin && headerPins}
     </>
   )
 }
