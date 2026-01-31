@@ -14,7 +14,7 @@ export const MountedPcbModule = ({
   holes = [],
   holeInset = 1.0,
   pinRowHoleEdgeToEdgeDist = 2.0,
-  nopin
+  nopin,
 }: {
   numPins?: number
   rows?: number
