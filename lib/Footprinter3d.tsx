@@ -16,7 +16,7 @@ import { A1206 } from "./A1206"
 import { A1210 } from "./A1210"
 import { A2010 } from "./A2010"
 import { A2512 } from "./A2512"
-import { FemaleHeader } from "./FemaleHeader"
+import { FemaleHeaderRow } from "./FemaleHeaderRow"
 import { PushButton } from "./PushButton"
 import { SOIC } from "./SOIC"
 import { VSSOP } from "./VSSOP"
@@ -208,7 +208,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         )
       if (fpJson.female)
         return (
-          <FemaleHeader
+          <FemaleHeaderRow
             numberOfPins={fpJson.num_pins}
             pitch={fpJson.p}
             rows={rows}

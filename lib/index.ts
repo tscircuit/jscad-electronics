@@ -32,6 +32,8 @@ export * from "./sod-123"
 export * from "./PinRow"
 export * from "./AxialCapacitor"
 export * from "./PinHeader"
+export * from "./FemaleHeader"
+export * from "./FemaleHeaderRow"
 
 // New components
 export * from "./SOD523"
