@@ -3,6 +3,7 @@ import { Colorize, Cuboid, Cylinder, Hull, Subtract } from "jscad-fiber"
 export const FemaleHeader = ({
   x,
   y,
+  z = 0,
   pitch = 2.54,
   legsLength = 3,
   innerDiameter = 0.945,
@@ -13,6 +14,7 @@ export const FemaleHeader = ({
 }: {
   x: number
   y: number
+  z?: number
   pitch?: number
   legsLength?: number
   innerDiameter?: number
@@ -31,19 +33,19 @@ export const FemaleHeader = ({
           <Cuboid
             color="#000"
             size={[bodyLength, bodyWidth, bodyHeight]}
-            center={[x, y, flipZ(bodyHeight / 2)]}
+            center={[x, y, flipZ(z + bodyHeight / 2)]}
           />
           {innerDiameter ? (
             <Cylinder
               height={bodyHeight + 0.1}
               radius={innerDiameter / 2}
-              center={[x, y, flipZ(bodyHeight / 2)]}
+              center={[x, y, flipZ(z + bodyHeight / 2)]}
               color="#222"
             />
           ) : (
             <Cuboid
               size={[gapWidth, gapWidth, bodyHeight]}
-              center={[x, y, flipZ(bodyHeight / 2)]}
+              center={[x, y, flipZ(z + bodyHeight / 2)]}
             />
           )}
         </Subtract>
@@ -53,18 +55,18 @@ export const FemaleHeader = ({
           <Cuboid
             color="silver"
             size={[pinThickness, pinThickness, legsLength * 0.9]}
-            center={[x, y, flipZ((-legsLength / 2) * 0.9)]}
+            center={[x, y, flipZ(z + (-legsLength / 2) * 0.9)]}
           />
           <Cuboid
             color="silver"
             size={[pinThickness / 1.8, pinThickness / 1.8, legsLength]}
-            center={[x, y, flipZ(-legsLength / 2)]}
+            center={[x, y, flipZ(z + (-legsLength / 2))]}
           />
         </Hull>
         <Cuboid
           color="silver"
           size={[gapWidth, gapWidth, gapWidth * 0.5]}
-          center={[x, y, flipZ((gapWidth / 2) * 0.5)]}
+          center={[x, y, flipZ(z + (gapWidth / 2) * 0.5)]}
         />
       </Colorize>
     </>
