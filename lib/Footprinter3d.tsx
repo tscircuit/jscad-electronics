@@ -56,38 +56,48 @@ import { AxialCapacitor } from "./AxialCapacitor"
 import { StampBoard } from "./stampboard"
 import { MountedPcbModule } from "./MountedPcbModule"
 
+type FootprinterJson = {
+  w: number
+  p: number
+  h: number
+  pl: number
+  pw: number
+  num_pins: number
+  fn: string
+  thermalpad?: { x: number; y: number }
+  imperial: string
+  male: boolean
+  female: boolean
+  id: number
+  od: number
+  invert?: boolean
+  faceup?: boolean
+  smd?: boolean
+  surface_mount?: boolean
+  rightangle?: boolean
+  left?: number
+  right?: number
+  top?: number
+  bottom?: number
+  innerhole?: boolean
+  innerholeedgedistance?: number
+  rows?: number
+  pinRowSide?: "left" | "right" | "top" | "bottom"
+  holeInset?: number
+  width?: number
+  height?: number
+  pinrow?: number
+  pinRowHoleEdgeToEdgeDist?: number
+  holes?: string[]
+  nopin?: boolean
+}
+
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
  */
 
 export const Footprinter3d = ({ footprint }: { footprint: string }) => {
-  const fpJson = fp.string(footprint).json() as unknown as {
-    w: number
-    p: number
-    h: number
-    pl: number
-    pw: number
-    num_pins: number
-    fn: string
-    thermalpad?: { x: number; y: number }
-    imperial: String
-    male: boolean
-    female: boolean
-    id: number //innerDiameter
-    od: number //outerDiameter
-    invert?: boolean
-    faceup?: boolean
-    smd?: boolean
-    surface_mount?: boolean
-    rightangle?: boolean
-    left?: number
-    right?: number
-    top?: number
-    bottom?: number
-    innerhole?: boolean
-    innerholeedgedistance?: number
-    nopin?: boolean
-  }
+  const fpJson = fp.string(footprint).json() as unknown as FootprinterJson
 
   switch (fpJson.fn) {
     case "dip":
@@ -190,10 +200,6 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     }
 
     case "pinrow": {
-      // Parse rows parameter from footprint string (e.g., "pinrow4_rows2")
-      const rowsMatch = footprint.match(/_rows(\d+)/)
-      const rows = rowsMatch && rowsMatch[1] ? parseInt(rowsMatch[1], 10) : 1
-
       if (fpJson.male)
         return (
           <PinRow
@@ -201,7 +207,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
             pitch={fpJson.p}
             invert={fpJson.invert}
             faceup={fpJson.faceup}
-            rows={rows}
+            rows={fpJson.rows}
             smd={fpJson.smd || fpJson.surface_mount}
             rightangle={fpJson.rightangle}
           />
@@ -211,7 +217,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           <FemaleHeader
             numberOfPins={fpJson.num_pins}
             pitch={fpJson.p}
-            rows={rows}
+            rows={fpJson.rows}
           />
         )
     }
@@ -349,12 +355,10 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         />
       )
     case "mountedpcbmodule": {
-      const rows = (fpJson as any).rows ?? 1
       const pinRowSide = (fpJson as any).pinRowSide ?? "left"
       const holeInset = (fpJson as any).holeInset
       const width = (fpJson as any).width
       const height = (fpJson as any).height
-      const pinRow = (fpJson as any).pinrow
       const pinRowHoleEdgeToEdgeDist = (fpJson as any).pinRowHoleEdgeToEdgeDist
       const holes = Array.isArray((fpJson as any).holes)
         ? (fpJson as any).holes
@@ -362,8 +366,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
 
       return (
         <MountedPcbModule
-          numPins={pinRow}
-          rows={rows}
+          numPins={fpJson.pinrow}
+          rows={fpJson.rows}
           p={fpJson.p}
           id={fpJson.id}
           od={fpJson.od}
