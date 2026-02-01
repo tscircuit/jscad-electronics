@@ -1,5 +1,6 @@
 import { Colorize, Cuboid, Cylinder, Subtract } from "jscad-fiber"
 import { PinHeader } from "./PinHeader"
+import { FemaleHeader } from "./FemaleHeader"
 
 export const MountedPcbModule = ({
   numPins = 5,
@@ -14,6 +15,7 @@ export const MountedPcbModule = ({
   holes = [],
   holeInset = 1.0,
   pinRowHoleEdgeToEdgeDist = 2.0,
+  female,
   nopin,
 }: {
   numPins?: number
@@ -28,6 +30,7 @@ export const MountedPcbModule = ({
   holes?: string[]
   holeInset?: number
   pinRowHoleEdgeToEdgeDist?: number
+  female?: boolean
   nopin?: boolean
 }) => {
   const boardCenterZ = boardThickness / 2
@@ -121,7 +124,7 @@ export const MountedPcbModule = ({
   const pinBodyHeight = 2
   const longSidePinLength = 6
   const shortSidePinLength = 3
-  const boardOffsetZ = nopin ? 0 : pinBodyHeight
+  const boardOffsetZ = nopin || female ? 0 : pinBodyHeight
   // Board body with holes subtracted
   const boardBody = (
     <Colorize color="#008080">
@@ -181,11 +184,21 @@ export const MountedPcbModule = ({
     />
   ))
 
+  const femaleHeaderRow = pins.map((pin, index) => (
+    <FemaleHeader
+      key={`female-pin-3d-${index}`}
+      x={pin.x}
+      y={pin.y}
+      flipZ={(z: number) => -z}
+    />
+  ))
+
   return (
     <>
       {boardBody}
       {platedHoles}
-      {!nopin && headerPins}
+      {!female && !nopin && headerPins}
+      {female && femaleHeaderRow}
     </>
   )
 }
