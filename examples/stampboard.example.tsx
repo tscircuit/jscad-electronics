@@ -8,13 +8,13 @@ export default () => {
       <StampBoard
         bodyWidth={21}
         leadsTop={3}
-        leadsBottom={3}
-        leadsLeft={20}
+        leadsBottom={6}
+        leadsLeft={10}
         leadsRight={20}
         innerHoles={true}
       />
       <ExtrudedPads
-        footprint={"stampreceiver_left20_right20_bottom3_top3_w21mm_innerhole"}
+        footprint={"stampreceiver_left10_right20_bottom6_top3_w21mm_innerhole"}
       />
     </JsCadView>
   )
