@@ -9,4 +9,4 @@ test("mountedpcbmodule with screen overlay and holes", async () => {
     "mountedpcbmodule_pinrow20_rows2_pinrowbottom_width60_height28_holes(topleft,topright,bottomleft,bottomright)_screen",
   )
   await expect(pngBuffer).toMatchPngSnapshot(import.meta.path)
-}, 10000)
+})
