@@ -87,6 +87,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     innerhole?: boolean
     innerholeedgedistance?: number
     nopin?: boolean
+    screen?: boolean
   }
 
   switch (fpJson.fn) {
@@ -375,6 +376,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           pinRowHoleEdgeToEdgeDist={pinRowHoleEdgeToEdgeDist}
           nopin={fpJson.nopin}
           female={fpJson.female}
+          screen={fpJson.screen}
         />
       )
     }
