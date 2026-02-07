@@ -9,11 +9,12 @@ export default () => {
   return (
     <JsCadView zAxisUp showGrid>
       <ExtrudedPads footprint={footprint} />
-      <MountedPcbModule numPins={10}
-      width={40}
-      height={24}
-      pinRowSide="top"
-      screen
+      <MountedPcbModule
+        numPins={10}
+        width={40}
+        height={24}
+        pinRowSide="top"
+        screen
       />
     </JsCadView>
   )
