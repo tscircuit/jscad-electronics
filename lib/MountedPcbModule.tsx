@@ -19,6 +19,10 @@ export const MountedPcbModule = ({
   female,
   nopin,
   screen,
+  screenWidth,
+  screenHeight,
+  screenCenterOffsetX,
+  screenCenterOffsetY,
 }: {
   numPins?: number
   rows?: number
@@ -35,6 +39,10 @@ export const MountedPcbModule = ({
   female?: boolean
   nopin?: boolean
   screen?: boolean
+  screenWidth?: number
+  screenHeight?: number
+  screenCenterOffsetX?: number
+  screenCenterOffsetY?: number
 }) => {
   const showScreen = screen ?? false
   const boardCenterZ = boardThickness / 2
@@ -206,9 +214,13 @@ export const MountedPcbModule = ({
       {female && femaleHeaderRow}
       {showScreen && (
         <Screen
-          width={finalWidth * 0.8}
-          height={finalHeight * 0.6}
-          offset={{ x: 0, y: 0, z: boardTopZ }}
+          width={screenWidth ?? finalWidth * 0.8}
+          height={screenHeight ?? finalHeight * 0.6}
+          offset={{
+            x: screenCenterOffsetX ?? 0,
+            y: screenCenterOffsetY ?? 0,
+            z: boardTopZ,
+          }}
         />
       )}
     </>
