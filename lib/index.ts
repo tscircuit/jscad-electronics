@@ -37,6 +37,7 @@ export * from "./FemaleHeaderRow"
 
 // New components
 export * from "./SOD523"
+export * from "./SOD723"
 export * from "./SOD882"
 export * from "./SMA"
 export * from "./SMB"
