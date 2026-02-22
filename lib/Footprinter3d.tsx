@@ -55,6 +55,7 @@ import { SOD323FL } from "./sod-323FL"
 import { AxialCapacitor } from "./AxialCapacitor"
 import { StampBoard } from "./stampboard"
 import { MountedPcbModule } from "./MountedPcbModule"
+import SOD723 from "./SOD723"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -283,6 +284,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       )
     case "sod523":
       return <SOD523 />
+    case "sod723":
+      return <SOD723 />
     case "sod882":
       return <SOD882 />
     case "sma":
