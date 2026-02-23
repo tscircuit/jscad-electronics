@@ -1,4 +1,4 @@
-import { PinHeader } from "./PinHeader"
+import { PinHeader } from "./PinHeader";
 
 export const PinRow = ({
   numberOfPins,
@@ -10,34 +10,34 @@ export const PinRow = ({
   smd,
   rightangle,
 }: {
-  numberOfPins: number
-  pitch?: number
-  longSidePinLength?: number
-  invert?: boolean
-  faceup?: boolean
-  rows?: number
-  smd?: boolean
-  rightangle?: boolean
+  numberOfPins: number;
+  pitch?: number;
+  longSidePinLength?: number;
+  invert?: boolean;
+  faceup?: boolean;
+  rows?: number;
+  smd?: boolean;
+  rightangle?: boolean;
 }) => {
-  const pinThickness = 0.63
-  const bodyHeight = 2
-  const pinsPerRow = Math.ceil(numberOfPins / rows)
-  const rowSpacing = 2.54 // Standard spacing between rows
-  const shortSidePinLength = 3
-  const xoff = -((pinsPerRow - 1) / 2) * pitch
+  const pinThickness = 0.63;
+  const bodyHeight = 2;
+  const pinsPerRow = Math.ceil(numberOfPins / rows);
+  const rowSpacing = 2.54; // Standard spacing between rows
+  const shortSidePinLength = 3;
+  const xoff = -((pinsPerRow - 1) / 2) * pitch;
 
-  const zOffset = !smd && !rightangle ? -bodyHeight - 1.6 : 0
+  const zOffset = !smd && !rightangle ? -bodyHeight - 1.6 : 0;
   // Flip Z coordinates if invert is true
   const flipZ = (z: number) =>
-    (invert || faceup ? -z + bodyHeight : z) + zOffset
+    (invert || faceup ? -z + bodyHeight : z) + zOffset;
 
   return (
     <>
       {Array.from({ length: numberOfPins }, (_, i) => {
-        const row = Math.floor(i / pinsPerRow)
-        const col = i % pinsPerRow
-        const x = xoff + col * pitch
-        const y = -row * rowSpacing
+        const row = Math.floor(i / pinsPerRow);
+        const col = i % pinsPerRow;
+        const x = xoff + col * pitch;
+        const y = -row * rowSpacing;
 
         return (
           <PinHeader
@@ -53,8 +53,8 @@ export const PinRow = ({
             smd={smd}
             rightangle={rightangle}
           />
-        )
+        );
       })}
     </>
-  )
-}
+  );
+};

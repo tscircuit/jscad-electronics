@@ -1,4 +1,4 @@
-import { Colorize, Cuboid, Cylinder, Hull, Subtract } from "jscad-fiber"
+import { Colorize, Cuboid, Cylinder, Hull, Subtract } from "jscad-fiber";
 
 export const FemaleHeader = ({
   x,
@@ -12,19 +12,19 @@ export const FemaleHeader = ({
   bodyWidth = pitch,
   flipZ,
 }: {
-  x: number
-  y: number
-  z?: number
-  pitch?: number
-  legsLength?: number
-  innerDiameter?: number
-  bodyHeight?: number
-  bodyLength?: number
-  bodyWidth?: number
-  flipZ: (z: number) => number
+  x: number;
+  y: number;
+  z?: number;
+  pitch?: number;
+  legsLength?: number;
+  innerDiameter?: number;
+  bodyHeight?: number;
+  bodyLength?: number;
+  bodyWidth?: number;
+  flipZ: (z: number) => number;
 }) => {
-  const pinThickness = innerDiameter / 1.5
-  const gapWidth = pinThickness * 1.6
+  const pinThickness = innerDiameter / 1.5;
+  const gapWidth = pinThickness * 1.6;
 
   return (
     <>
@@ -70,5 +70,5 @@ export const FemaleHeader = ({
         />
       </Colorize>
     </>
-  )
-}
+  );
+};

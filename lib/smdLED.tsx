@@ -1,54 +1,54 @@
-import { Cuboid, Cylinder, Subtract } from "jscad-fiber"
+import { Cuboid, Cylinder, Subtract } from "jscad-fiber";
 
 export const SmdLED = ({
   footprint,
   color,
 }: {
-  footprint: "0402" | "0603" | "0805"
-  color?: string
+  footprint: "0402" | "0603" | "0805";
+  color?: string;
 }) => {
-  let padWidth: number
-  let padLength: number
-  let padGap: number
-  let padThickness: number
-  let bodyLength: number
-  let bodyWidth: number
-  let curvedRadius: number
+  let padWidth: number;
+  let padLength: number;
+  let padGap: number;
+  let padThickness: number;
+  let bodyLength: number;
+  let bodyWidth: number;
+  let curvedRadius: number;
 
   switch (footprint) {
     case "0402":
       {
-        padWidth = 0.6
-        padLength = 0.7
-        padGap = 0.5
-        padThickness = 0.05
-        bodyLength = padWidth * 1.5 + padGap * 2
-        bodyWidth = padLength
-        curvedRadius = 0.35
+        padWidth = 0.6;
+        padLength = 0.7;
+        padGap = 0.5;
+        padThickness = 0.05;
+        bodyLength = padWidth * 1.5 + padGap * 2;
+        bodyWidth = padLength;
+        curvedRadius = 0.35;
       }
-      break
+      break;
     case "0603":
       {
-        padWidth = 0.8
-        padLength = 1
-        padGap = 0.8
-        padThickness = 0.05
-        bodyLength = padWidth * 1.5 + padGap * 2
-        bodyWidth = padLength
-        curvedRadius = 0.3
+        padWidth = 0.8;
+        padLength = 1;
+        padGap = 0.8;
+        padThickness = 0.05;
+        bodyLength = padWidth * 1.5 + padGap * 2;
+        bodyWidth = padLength;
+        curvedRadius = 0.3;
       }
-      break
+      break;
     case "0805":
       {
-        padWidth = 1
-        padLength = 1.3
-        padGap = 1
-        padThickness = 0.05
-        bodyLength = padWidth * 1.5 + padGap * 2
-        bodyWidth = padLength
-        curvedRadius = 0.4
+        padWidth = 1;
+        padLength = 1.3;
+        padGap = 1;
+        padThickness = 0.05;
+        bodyLength = padWidth * 1.5 + padGap * 2;
+        bodyWidth = padLength;
+        curvedRadius = 0.4;
       }
-      break
+      break;
   }
   return (
     <>
@@ -90,5 +90,5 @@ export const SmdLED = ({
         center={[0, 0, padThickness * 5]}
       />
     </>
-  )
-}
+  );
+};

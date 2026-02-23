@@ -1,20 +1,20 @@
-import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber"
+import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber";
 
 export const SMF = () => {
-  const fullWidth = 2.9
-  const bodyLength = 1.9
-  const bodyHeight = 1.08
+  const fullWidth = 2.9;
+  const bodyLength = 1.9;
+  const bodyHeight = 1.08;
 
-  const padWidth = 1.2
-  const padLength = 1
-  const padThickness = 0.25
+  const padWidth = 1.2;
+  const padLength = 1;
+  const padThickness = 0.25;
 
-  const bodyWidth = fullWidth
-  const leftPadCenterX = -1.3
-  const rightPadCenterX = 1.3
+  const bodyWidth = fullWidth;
+  const leftPadCenterX = -1.3;
+  const rightPadCenterX = 1.3;
 
-  const taperOffset = 0.2
-  const straightHeight = bodyHeight * 0.5
+  const taperOffset = 0.2;
+  const straightHeight = bodyHeight * 0.5;
 
   const Body = (
     <Colorize color="#222">
@@ -36,7 +36,7 @@ export const SMF = () => {
         </Hull>
       </Union>
     </Colorize>
-  )
+  );
 
   return (
     <>
@@ -53,7 +53,7 @@ export const SMF = () => {
 
       {Body}
     </>
-  )
-}
+  );
+};
 
-export default SMF
+export default SMF;

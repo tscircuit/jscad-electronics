@@ -1,13 +1,13 @@
-import { JsCadView } from "jscad-fiber"
-import { Footprinter3d } from "lib/Footprinter3d"
-import { ExtrudedPads } from "lib/ExtrudedPads"
+import { JsCadView } from "jscad-fiber";
+import { Footprinter3d } from "lib/Footprinter3d";
+import { ExtrudedPads } from "lib/ExtrudedPads";
 
 export default () => {
-  const footprint = "sot23_5"
+  const footprint = "sot23_5";
   return (
     <JsCadView zAxisUp>
       <Footprinter3d footprint={footprint} />
       <ExtrudedPads footprint={footprint} />
     </JsCadView>
-  )
-}
+  );
+};

@@ -1,5 +1,5 @@
-import { Cuboid, Colorize, Translate, Union } from "jscad-fiber"
-import { range } from "./utils/range"
+import { Cuboid, Colorize, Translate, Union } from "jscad-fiber";
+import { range } from "./utils/range";
 
 export const JST = ({
   numPins = 2,
@@ -8,14 +8,14 @@ export const JST = ({
   bodyDepth = 4.5,
   bodyHeight = 6.0,
 }: {
-  numPins?: number
-  pitch?: number
-  bodyWidth?: number
-  bodyDepth?: number
-  bodyHeight?: number
+  numPins?: number;
+  pitch?: number;
+  bodyWidth?: number;
+  bodyDepth?: number;
+  bodyHeight?: number;
 }) => {
-  const calculatedWidth = bodyWidth ?? (numPins - 1) * pitch + 4.0
-  const zOffset = bodyHeight / 2
+  const calculatedWidth = bodyWidth ?? (numPins - 1) * pitch + 4.0;
+  const zOffset = bodyHeight / 2;
 
   return (
     <Union>
@@ -44,7 +44,7 @@ export const JST = ({
       {/* Pins */}
       <Colorize color="gold">
         {range(numPins).map((i) => {
-          const xPos = i * pitch - ((numPins - 1) * pitch) / 2
+          const xPos = i * pitch - ((numPins - 1) * pitch) / 2;
           return (
             <Translate key={i} offset={[xPos, 0, 0]}>
               <Cuboid
@@ -52,11 +52,11 @@ export const JST = ({
                 center={[0, 0, (bodyHeight + 3) / 2 - 3.5]}
               />
             </Translate>
-          )
+          );
         })}
       </Colorize>
     </Union>
-  )
-}
+  );
+};
 
-export default JST
+export default JST;

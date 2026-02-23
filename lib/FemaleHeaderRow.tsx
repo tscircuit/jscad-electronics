@@ -1,4 +1,4 @@
-import { FemaleHeader } from "./FemaleHeader"
+import { FemaleHeader } from "./FemaleHeader";
 
 export const FemaleHeaderRow = ({
   numberOfPins,
@@ -8,29 +8,29 @@ export const FemaleHeaderRow = ({
   rows = 1,
   invert,
 }: {
-  numberOfPins: number
-  pitch?: number
-  legsLength?: number
-  outerDiameter?: number
-  innerDiameter?: number
-  rows?: number
-  invert?: boolean
+  numberOfPins: number;
+  pitch?: number;
+  legsLength?: number;
+  outerDiameter?: number;
+  innerDiameter?: number;
+  rows?: number;
+  invert?: boolean;
 }) => {
-  const bodyHeight = 5
-  const pinsPerRow = Math.ceil(numberOfPins / rows)
-  const rowSpacing = 2.54 // Standard spacing between rows
-  const xoff = -((pinsPerRow - 1) / 2) * pitch
+  const bodyHeight = 5;
+  const pinsPerRow = Math.ceil(numberOfPins / rows);
+  const rowSpacing = 2.54; // Standard spacing between rows
+  const xoff = -((pinsPerRow - 1) / 2) * pitch;
 
   // Flip Z for inversion
-  const flipZ = (z: number) => (invert ? -z + bodyHeight : z)
+  const flipZ = (z: number) => (invert ? -z + bodyHeight : z);
 
   return (
     <>
       {Array.from({ length: numberOfPins }, (_, i) => {
-        const row = Math.floor(i / pinsPerRow)
-        const col = i % pinsPerRow
-        const x = xoff + col * pitch
-        const y = -row * rowSpacing
+        const row = Math.floor(i / pinsPerRow);
+        const col = i % pinsPerRow;
+        const x = xoff + col * pitch;
+        const y = -row * rowSpacing;
 
         return (
           <FemaleHeader
@@ -42,8 +42,8 @@ export const FemaleHeaderRow = ({
             innerDiameter={innerDiameter}
             flipZ={flipZ}
           />
-        )
+        );
       })}
     </>
-  )
-}
+  );
+};

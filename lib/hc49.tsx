@@ -1,20 +1,20 @@
-import { Colorize, Cylinder, Hull, RoundedCylinder } from "jscad-fiber"
+import { Colorize, Cylinder, Hull, RoundedCylinder } from "jscad-fiber";
 
 export interface HC49Props {
   /** overall body length (mm) */
-  bodyLength?: number
+  bodyLength?: number;
   /** body width (mm) */
-  bodyWidth?: number
+  bodyWidth?: number;
   /** body height (mm) */
-  bodyHeight?: number
+  bodyHeight?: number;
   /** distance between lead centers (mm) */
-  leadSpacing?: number
+  leadSpacing?: number;
   /** lead diameter (mm) */
-  leadDiameter?: number
+  leadDiameter?: number;
   /** length of the lead below the body (mm) */
-  leadLength?: number
-  color?: string
-  leadColor?: string
+  leadLength?: number;
+  color?: string;
+  leadColor?: string;
 }
 
 /**
@@ -32,14 +32,14 @@ export const HC49 = ({
   leadColor = "#b87333",
 }: HC49Props) => {
   // positions and sizes
-  const halfLength = bodyLength / 2
+  const halfLength = bodyLength / 2;
 
   // build a capsule-like body by hullling two cylinders (circular ends) across the X axis
-  const endRadius = bodyWidth / 2
-  const endCenterX = halfLength - endRadius
+  const endRadius = bodyWidth / 2;
+  const endCenterX = halfLength - endRadius;
   // center X for the through-hole leads (distance between centers = leadSpacing)
-  const leadCenterX = leadSpacing / 2
-  const baseHeight = 0.85
+  const leadCenterX = leadSpacing / 2;
+  const baseHeight = 0.85;
 
   return (
     <>
@@ -88,7 +88,7 @@ export const HC49 = ({
         />
       </Colorize>
     </>
-  )
-}
+  );
+};
 
-export default HC49
+export default HC49;

@@ -1,10 +1,10 @@
-import { Colorize, Cuboid, RoundedCylinder, Rotate } from "jscad-fiber"
+import { Colorize, Cuboid, RoundedCylinder, Rotate } from "jscad-fiber";
 
 export interface MELFProps {
-  bodyLength?: number
-  bodyDiameter?: number
-  color?: string
-  contactColor?: string
+  bodyLength?: number;
+  bodyDiameter?: number;
+  color?: string;
+  contactColor?: string;
 }
 
 export const MELF = ({
@@ -13,7 +13,7 @@ export const MELF = ({
   color = "#3a3a3aff",
   contactColor = "#c6c6c6",
 }: MELFProps) => {
-  const padLength = 0.55
+  const padLength = 0.55;
 
   return (
     <>
@@ -50,7 +50,7 @@ export const MELF = ({
         </Rotate>
       </Colorize>
     </>
-  )
-}
+  );
+};
 
-export default MELF
+export default MELF;

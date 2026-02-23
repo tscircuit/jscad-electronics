@@ -7,22 +7,22 @@ import {
   Rotate,
   RoundedCuboid,
   Translate,
-} from "jscad-fiber"
-import { getExpandedStroke } from "./utils/getExpandedStroke"
+} from "jscad-fiber";
+import { getExpandedStroke } from "./utils/getExpandedStroke";
 
 export const PushButton = ({
   width,
   length,
   innerDiameter = 1,
 }: {
-  width: number
-  length: number
-  innerDiameter?: number
+  width: number;
+  length: number;
+  innerDiameter?: number;
 }) => {
-  const bodyWidth = width
-  const bodyLength = length
-  const bodyHeight = width * 0.7
-  const legWidth = innerDiameter / 2.5
+  const bodyWidth = width;
+  const bodyLength = length;
+  const bodyHeight = width * 0.7;
+  const legWidth = innerDiameter / 2.5;
   return (
     <>
       <RoundedCuboid
@@ -126,15 +126,15 @@ export const PushButton = ({
         }}
       />
     </>
-  )
-}
+  );
+};
 export interface PushButtonLegProps {
-  thickness: number
-  width: number
-  horizontalLength: number
-  verticalLength: number
-  rotation?: number
-  position?: { x: number; y: number; z?: number }
+  thickness: number;
+  width: number;
+  horizontalLength: number;
+  verticalLength: number;
+  rotation?: number;
+  position?: { x: number; y: number; z?: number };
 }
 
 export const PushButtonLeg = (props: PushButtonLegProps) => {
@@ -145,14 +145,14 @@ export const PushButtonLeg = (props: PushButtonLegProps) => {
     verticalLength,
     rotation = 0,
     position,
-  } = props
+  } = props;
   const points: [number, number][] = [
     [0, horizontalLength],
     [-verticalLength / 3, horizontalLength / 3],
     [-verticalLength / 5, horizontalLength / 4],
     [0, 0],
-  ]
-  const polygon = getExpandedStroke(points, thickness)
+  ];
+  const polygon = getExpandedStroke(points, thickness);
 
   return (
     <Colorize color="#f2f2f2">
@@ -170,5 +170,5 @@ export const PushButtonLeg = (props: PushButtonLegProps) => {
         </Rotate>
       </Translate>
     </Colorize>
-  )
-}
+  );
+};

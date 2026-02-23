@@ -1,19 +1,19 @@
-import { ExtrudedPads } from "../ExtrudedPads"
-import { Footprinter3d } from "../Footprinter3d"
-import { Fragment, type VNode, h } from "./h"
-import { type ColoredGeom, type RenderResult, render } from "./render"
-export * from "./convertCSGToThreeGeom"
-import type * as jscadModeling from "@jscad/modeling"
+import { ExtrudedPads } from "../ExtrudedPads";
+import { Footprinter3d } from "../Footprinter3d";
+import { Fragment, type VNode, h } from "./h";
+import { type ColoredGeom, type RenderResult, render } from "./render";
+export * from "./convertCSGToThreeGeom";
+import type * as jscadModeling from "@jscad/modeling";
 
-export { h, Fragment }
-export type { VNode, RenderResult, ColoredGeom }
+export { h, Fragment };
+export type { VNode, RenderResult, ColoredGeom };
 
 export function getJscadModelForFootprint(
   footprint: string,
   jscad: typeof jscadModeling,
 ): RenderResult {
-  const vnode = h(Footprinter3d, { footprint })
-  return render(vnode, jscad)
+  const vnode = h(Footprinter3d, { footprint });
+  return render(vnode, jscad);
 }
 
 export function getJscadModelForFootprintWithPads(
@@ -25,19 +25,19 @@ export function getJscadModelForFootprintWithPads(
     {},
     h(Footprinter3d, { footprint }),
     h(ExtrudedPads, { footprint }),
-  )
-  return render(vnode, jscad)
+  );
+  return render(vnode, jscad);
 }
 
 export function createJSCADRenderer(jscad: typeof jscadModeling) {
   function createJSCADRoot(container: ColoredGeom[]) {
     return {
       render(element: VNode) {
-        const { geometries } = render(element, jscad)
-        container.splice(0, container.length, ...geometries)
+        const { geometries } = render(element, jscad);
+        container.splice(0, container.length, ...geometries);
       },
-    }
+    };
   }
 
-  return { createJSCADRoot }
+  return { createJSCADRoot };
 }

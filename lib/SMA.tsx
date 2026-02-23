@@ -1,17 +1,17 @@
-import { Cuboid, Colorize, Union, Hull, Translate } from "jscad-fiber"
+import { Cuboid, Colorize, Union, Hull, Translate } from "jscad-fiber";
 
 export const SMA = () => {
-  const bodyWidth = 4.4
-  const bodyLength = 3.4
-  const bodyHeight = 2.3
-  const padWidth = 1.45
-  const padThickness = 0.12
+  const bodyWidth = 4.4;
+  const bodyLength = 3.4;
+  const bodyHeight = 2.3;
+  const padWidth = 1.45;
+  const padThickness = 0.12;
 
-  const leadThickness = 0.2
-  const leadHeight = 1.14
+  const leadThickness = 0.2;
+  const leadHeight = 1.14;
 
-  const taperOffset = 0.4
-  const straightHeight = bodyHeight * 0.5
+  const taperOffset = 0.4;
+  const straightHeight = bodyHeight * 0.5;
 
   const Body = (
     <Colorize color="#1a1a1a">
@@ -38,18 +38,18 @@ export const SMA = () => {
         </Hull>
       </Union>
     </Colorize>
-  )
+  );
 
   const Lead = ({ xDir }: { xDir: number }) => {
-    const verticalGap = 1
-    const lowerPadGap = 1
+    const verticalGap = 1;
+    const lowerPadGap = 1;
     const lowerPadX =
-      xDir * (bodyLength / 2 - (bodyHeight * 0.8) / 2 + lowerPadGap)
+      xDir * (bodyLength / 2 - (bodyHeight * 0.8) / 2 + lowerPadGap);
     const verticalLeadX =
-      xDir * (bodyLength / 2 - leadThickness / 2 + verticalGap)
-    const bodyEdgeX = xDir * (bodyLength / 2 - leadThickness / 2)
-    const bridgeLength = Math.abs(bodyEdgeX - verticalLeadX)
-    const bridgeCenterX = (verticalLeadX + bodyEdgeX) / 2
+      xDir * (bodyLength / 2 - leadThickness / 2 + verticalGap);
+    const bodyEdgeX = xDir * (bodyLength / 2 - leadThickness / 2);
+    const bridgeLength = Math.abs(bodyEdgeX - verticalLeadX);
+    const bridgeCenterX = (verticalLeadX + bodyEdgeX) / 2;
 
     return (
       <Colorize color="#c0c0c0">
@@ -68,8 +68,8 @@ export const SMA = () => {
           />
         </Union>
       </Colorize>
-    )
-  }
+    );
+  };
 
   return (
     <>
@@ -77,7 +77,7 @@ export const SMA = () => {
       <Lead xDir={-1} />
       {Body}
     </>
-  )
-}
+  );
+};
 
-export default SMA
+export default SMA;

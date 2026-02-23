@@ -1,5 +1,5 @@
-import { ChipBody } from "./ChipBody"
-import { SmdChipLead } from "./SmdChipLead"
+import { ChipBody } from "./ChipBody";
+import { SmdChipLead } from "./SmdChipLead";
 
 export const LQFP = ({
   pinCount,
@@ -8,30 +8,30 @@ export const LQFP = ({
   padContactLength,
   bodyWidth,
 }: {
-  pinCount: number
-  pitch?: number
-  leadWidth?: number
-  padContactLength?: number
-  bodyWidth?: number
+  pinCount: number;
+  pitch?: number;
+  leadWidth?: number;
+  padContactLength?: number;
+  bodyWidth?: number;
 }) => {
-  const sidePinCount = pinCount / 4
+  const sidePinCount = pinCount / 4;
   if (sidePinCount !== Math.floor(sidePinCount)) {
-    throw new Error(`LQFP pinCount must be divisible by 4, got ${pinCount}`)
+    throw new Error(`LQFP pinCount must be divisible by 4, got ${pinCount}`);
   }
 
   // get default values if not specified
-  if (!pitch) pitch = 0.5
-  if (!padContactLength) padContactLength = 0.6
-  if (!leadWidth) leadWidth = 0.22
-  if (!bodyWidth) bodyWidth = pitch * (sidePinCount + 4)
+  if (!pitch) pitch = 0.5;
+  if (!padContactLength) padContactLength = 0.6;
+  if (!leadWidth) leadWidth = 0.22;
+  if (!bodyWidth) bodyWidth = pitch * (sidePinCount + 4);
 
-  const bodyLength = bodyWidth
-  const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2
-  const fullLength = bodyLength + 3.3 * padContactLength
-  const fullWidth = fullLength
-  const leadHeight = 0.8
-  const leadThickness = 0.2
-  const bodyDistance = (fullWidth - bodyWidth) / 2 + 0.4
+  const bodyLength = bodyWidth;
+  const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2;
+  const fullLength = bodyLength + 3.3 * padContactLength;
+  const fullWidth = fullLength;
+  const leadHeight = 0.8;
+  const leadThickness = 0.2;
+  const bodyDistance = (fullWidth - bodyWidth) / 2 + 0.4;
 
   return (
     <>
@@ -122,7 +122,7 @@ export const LQFP = ({
         notchRadius={1.5 / 2}
       />
     </>
-  )
-}
+  );
+};
 
-export default LQFP
+export default LQFP;

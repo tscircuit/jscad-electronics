@@ -1,5 +1,5 @@
-import { Colorize, Cuboid, Hull, Rotate, Translate } from "jscad-fiber"
-import { SmdChipLead } from "./SmdChipLead"
+import { Colorize, Cuboid, Hull, Rotate, Translate } from "jscad-fiber";
+import { SmdChipLead } from "./SmdChipLead";
 
 export const PinHeader = ({
   x,
@@ -15,18 +15,18 @@ export const PinHeader = ({
   smd,
   rightangle,
 }: {
-  x: number
-  y: number
-  pinThickness: number
-  shortSidePinLength: number
-  longSidePinLength: number
-  bodyHeight: number
-  bodyLength?: number
-  bodyWidth?: number
-  flipZ: (z: number) => number
-  faceup?: boolean
-  smd?: boolean
-  rightangle?: boolean
+  x: number;
+  y: number;
+  pinThickness: number;
+  shortSidePinLength: number;
+  longSidePinLength: number;
+  bodyHeight: number;
+  bodyLength?: number;
+  bodyWidth?: number;
+  flipZ: (z: number) => number;
+  faceup?: boolean;
+  smd?: boolean;
+  rightangle?: boolean;
 }) => {
   return (
     <>
@@ -97,5 +97,5 @@ export const PinHeader = ({
         </Translate>
       </Colorize>
     </>
-  )
-}
+  );
+};

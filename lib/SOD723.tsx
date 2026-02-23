@@ -1,21 +1,21 @@
-import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber"
+import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber";
 
 export const SOD723 = () => {
-  const fullWidth = 1.4
-  const bodyLength = 0.6
-  const bodyHeight = 0.5
+  const fullWidth = 1.4;
+  const bodyLength = 0.6;
+  const bodyHeight = 0.5;
 
-  const padWidth = 0.28
-  const padLength = 0.5
-  const padThickness = 0.12
+  const padWidth = 0.28;
+  const padLength = 0.5;
+  const padThickness = 0.12;
 
-  const bodyWidth = fullWidth - padLength
-  const leftPadCenterX = -bodyWidth / 2 + padLength / 2 - 0.15 // 0.15 is the distance between the pad and the body as datasheet
-  const rightPadCenterX = bodyWidth / 2 - padLength / 2 + 0.15 // 0.15 is the distance between the pad and the body as datasheet
+  const bodyWidth = fullWidth - padLength;
+  const leftPadCenterX = -bodyWidth / 2 + padLength / 2 - 0.15; // 0.15 is the distance between the pad and the body as datasheet
+  const rightPadCenterX = bodyWidth / 2 - padLength / 2 + 0.15; // 0.15 is the distance between the pad and the body as datasheet
 
   // top taper happens only in last quarter
-  const taperOffset = 0.2
-  const straightHeight = bodyHeight * 0.24
+  const taperOffset = 0.2;
+  const straightHeight = bodyHeight * 0.24;
 
   // Body geometry
   // - straightHeight: the lower (straight) portion of the body
@@ -67,7 +67,7 @@ export const SOD723 = () => {
         center={[-bodyWidth / 4, 0, bodyHeight]}
       />
     </>
-  )
-}
+  );
+};
 
-export default SOD723
+export default SOD723;

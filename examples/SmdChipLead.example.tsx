@@ -1,6 +1,6 @@
-import { JsCadView } from "jscad-fiber"
-import { ExtrudedPads } from "../lib/ExtrudedPads"
-import { SmdChipLead } from "../lib/SmdChipLead"
+import { JsCadView } from "jscad-fiber";
+import { ExtrudedPads } from "../lib/ExtrudedPads";
+import { SmdChipLead } from "../lib/SmdChipLead";
 
 // Dimensions are for a na555 IC SOIC package
 export default () => {
@@ -14,5 +14,5 @@ export default () => {
         height={0.8}
       />
     </JsCadView>
-  )
-}
+  );
+};

@@ -1,5 +1,5 @@
-import { ChipBody } from "./ChipBody"
-import { SmdChipLead } from "./SmdChipLead"
+import { ChipBody } from "./ChipBody";
+import { SmdChipLead } from "./SmdChipLead";
 
 // TODO use mm to convert width to mm (and accept strings)
 export const Tssop = ({
@@ -9,16 +9,16 @@ export const Tssop = ({
   pitch,
   bodyWidth,
 }: {
-  pinCount: number
-  pitch: number
-  leadWidth: number
-  leadLength: number
-  bodyWidth: number
+  pinCount: number;
+  pitch: number;
+  leadWidth: number;
+  leadLength: number;
+  bodyWidth: number;
 }) => {
-  const sidePinCount = Math.ceil(pinCount / 2)
-  const fullLength = (pitch * pinCount) / 2 + leadWidth / 2
-  const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2
-  const leadThickness = 0.25
+  const sidePinCount = Math.ceil(pinCount / 2);
+  const fullLength = (pitch * pinCount) / 2 + leadWidth / 2;
+  const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2;
+  const leadThickness = 0.25;
 
   return (
     <>
@@ -60,5 +60,5 @@ export const Tssop = ({
         height={1.5}
       />
     </>
-  )
-}
+  );
+};

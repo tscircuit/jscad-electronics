@@ -1,11 +1,11 @@
-import { Cuboid } from "jscad-fiber"
+import { Cuboid } from "jscad-fiber";
 
-const fullLength = 6.3
-const width = 3.2
-const height = 1.8
-const terminatorWidth = 0.8
+const fullLength = 6.3;
+const width = 3.2;
+const height = 1.8;
+const terminatorWidth = 0.8;
 
-const bodyLength = fullLength - terminatorWidth * 2
+const bodyLength = fullLength - terminatorWidth * 2;
 
 export const A2512 = ({ color = "#333" }) => {
   return (
@@ -26,5 +26,5 @@ export const A2512 = ({ color = "#333" }) => {
         color="#ccc"
       />
     </>
-  )
-}
+  );
+};

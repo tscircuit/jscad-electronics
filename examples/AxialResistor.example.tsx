@@ -1,6 +1,6 @@
-import { JsCadView, Translate, Union } from "jscad-fiber"
-import { ExtrudedPads } from "../lib/ExtrudedPads"
-import { AxialResistor } from "../lib/AxialResistor"
+import { JsCadView, Translate, Union } from "jscad-fiber";
+import { ExtrudedPads } from "../lib/ExtrudedPads";
+import { AxialResistor } from "../lib/AxialResistor";
 
 export default () => {
   return (
@@ -8,5 +8,5 @@ export default () => {
       <AxialResistor pitch={14} />
       <ExtrudedPads footprint="axial_p14mm" />
     </JsCadView>
-  )
-}
+  );
+};

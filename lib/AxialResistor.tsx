@@ -1,12 +1,12 @@
-import { Cylinder, Rotate, Sphere } from "jscad-fiber"
-import { mm } from "@tscircuit/mm"
+import { Cylinder, Rotate, Sphere } from "jscad-fiber";
+import { mm } from "@tscircuit/mm";
 
 interface AxialResistorProps {
-  pitch: number
+  pitch: number;
 }
 
 export const AxialResistor = ({ pitch = 10 }: AxialResistorProps) => {
-  const heightToCenterOfResistor = 0.5 + 4 / 2
+  const heightToCenterOfResistor = 0.5 + 4 / 2;
 
   return (
     <>
@@ -28,5 +28,5 @@ export const AxialResistor = ({ pitch = 10 }: AxialResistorProps) => {
       <Cylinder height={4} radius={0.5} center={[pitch / 2, 0, 0.5]} />
       <Sphere radius={0.5} center={[pitch / 2, 0, heightToCenterOfResistor]} />
     </>
-  )
-}
+  );
+};

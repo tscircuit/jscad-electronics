@@ -1,5 +1,5 @@
-import { JsCadView } from "jscad-fiber"
-import { ExtrudedPads, FemaleHeaderRow } from "lib/index"
+import { JsCadView } from "jscad-fiber";
+import { ExtrudedPads, FemaleHeaderRow } from "lib/index";
 export default () => {
   return (
     <JsCadView zAxisUp showGrid>
@@ -12,5 +12,5 @@ export default () => {
         pitch={8}
       />
     </JsCadView>
-  )
-}
+  );
+};

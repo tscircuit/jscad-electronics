@@ -1,18 +1,18 @@
-import { Cuboid, Translate, Colorize } from "jscad-fiber"
-import { DipPinLeg } from "./DualInlinePackage"
+import { Cuboid, Translate, Colorize } from "jscad-fiber";
+import { DipPinLeg } from "./DualInlinePackage";
 
 interface USB_AProps {
-  outerWidth?: number
-  outerHeight?: number
-  outerDepth?: number
-  metalThickness?: number
-  innerHeight?: number
-  innerWidth?: number
-  innerDepth?: number
-  pinDiameter?: number
-  numPins?: number
-  innerColor?: string
-  outerColor?: string
+  outerWidth?: number;
+  outerHeight?: number;
+  outerDepth?: number;
+  metalThickness?: number;
+  innerHeight?: number;
+  innerWidth?: number;
+  innerDepth?: number;
+  pinDiameter?: number;
+  numPins?: number;
+  innerColor?: string;
+  outerColor?: string;
 }
 
 export const USB_A = ({
@@ -27,7 +27,7 @@ export const USB_A = ({
   outerColor = "#c4c4c4", // Color of the outer part
 }: USB_AProps) => {
   // Metal casing (plates for sides, top, bottom, etc.)
-  const thickness = metalThickness
+  const thickness = metalThickness;
   const positions = [
     // back side
     {
@@ -90,7 +90,7 @@ export const USB_A = ({
       z: thickness,
       size: [outerWidth - metalThickness * 4, thickness, thickness],
     },
-  ]
+  ];
 
   const metalCasing = positions.map((pos, index) => (
     <Colorize key={index} color={outerColor}>
@@ -99,7 +99,7 @@ export const USB_A = ({
         center={{ x: pos.x, y: pos.y, z: pos.z }}
       />
     </Colorize>
-  ))
+  ));
 
   // Plastic insert (inner part)
   const innerPlastic = (
@@ -111,7 +111,7 @@ export const USB_A = ({
         />
       </Colorize>
     </Translate>
-  )
+  );
 
   // Pins (outside and inside)
   // TODO reposition the pins to match footprint
@@ -120,13 +120,13 @@ export const USB_A = ({
     { x: -innerWidth / 9, y: innerDepth / 2, z: 0 },
     { x: innerWidth / 3, y: innerDepth / 2, z: 0 },
     { x: innerWidth / 9, y: innerDepth / 2, z: 0 },
-  ]
+  ];
   const innerPinPositions = [
     { x: -innerWidth / 3, y: -0.1, z: innerHeight + metalThickness * 2 },
     { x: -innerWidth / 9, y: -0.1, z: innerHeight + metalThickness * 2 },
     { x: innerWidth / 3, y: -0.1, z: innerHeight + metalThickness * 2 },
     { x: innerWidth / 9, y: -0.1, z: innerHeight + metalThickness * 2 },
-  ]
+  ];
 
   const pins = (
     <>
@@ -145,7 +145,7 @@ export const USB_A = ({
         </Translate>
       ))}
     </>
-  )
+  );
 
   // Side legs
   const legs = (
@@ -161,17 +161,17 @@ export const USB_A = ({
         z={outerHeight / 2 - 0.55}
       />
     </>
-  )
+  );
 
   // Outer plate
-  const outerPlateThickness = 0.2
+  const outerPlateThickness = 0.2;
   const outerPlate = (
     <Cuboid
       color={innerColor}
       center={{ x: 0, y: outerDepth / 4, z: outerPlateThickness }}
       size={[outerWidth, innerDepth / 1.6, outerPlateThickness]}
     />
-  )
+  );
 
   return (
     <>
@@ -181,5 +181,5 @@ export const USB_A = ({
       {legs}
       {outerPlate}
     </>
-  )
-}
+  );
+};

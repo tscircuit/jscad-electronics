@@ -1,5 +1,5 @@
-import { ChipBody } from "./ChipBody"
-import { SmdChipLead } from "./SmdChipLead"
+import { ChipBody } from "./ChipBody";
+import { SmdChipLead } from "./SmdChipLead";
 
 export const VSSOP = ({
   pinCount,
@@ -9,12 +9,12 @@ export const VSSOP = ({
   bodyWidth,
   bodyLength,
 }: {
-  pinCount: 8 | 10
-  pitch?: number
-  leadWidth?: number
-  leadLength?: number
-  bodyWidth?: number
-  bodyLength?: number
+  pinCount: 8 | 10;
+  pitch?: number;
+  leadWidth?: number;
+  leadLength?: number;
+  bodyWidth?: number;
+  bodyLength?: number;
 }) => {
   const defaults =
     pinCount === 8
@@ -27,33 +27,33 @@ export const VSSOP = ({
           pitch: 0.5,
           leadWidth: 0.225,
           leadLength: 1.45,
-        }
+        };
 
   const _pitch = !isNaN(parseFloat(pitch as any))
     ? parseFloat(pitch as any)
-    : defaults.pitch
+    : defaults.pitch;
   const _leadWidth = !isNaN(parseFloat(leadWidth as any))
     ? parseFloat(leadWidth as any) * 0.8
-    : defaults.leadWidth
+    : defaults.leadWidth;
   const _leadLength = !isNaN(parseFloat(leadLength as any))
     ? parseFloat(leadLength as any)
-    : defaults.leadLength
+    : defaults.leadLength;
   const _bodyWidth = !isNaN(parseFloat(bodyWidth as any))
     ? parseFloat(bodyWidth as any) * 0.8
-    : 2.6
+    : 2.6;
   const _bodyLength = !isNaN(parseFloat(bodyLength as any))
     ? parseFloat(bodyLength as any)
-    : 2.0 + Number(_pitch) * 1.4
+    : 2.0 + Number(_pitch) * 1.4;
 
-  const sidePinCount = pinCount / 2
-  const pinOffsetToCenter = ((sidePinCount - 1) * _pitch) / 2
-  const leadThickness = 0.15
-  const leadHeight = 0.8
+  const sidePinCount = pinCount / 2;
+  const pinOffsetToCenter = ((sidePinCount - 1) * _pitch) / 2;
+  const leadThickness = 0.15;
+  const leadHeight = 0.8;
 
-  const componentFullWidth = 4.5
-  const leadBodyDistance = (componentFullWidth - _bodyWidth) / 2
+  const componentFullWidth = 4.5;
+  const leadBodyDistance = (componentFullWidth - _bodyWidth) / 2;
 
-  const padContactLength = leadBodyDistance * 0.5
+  const padContactLength = leadBodyDistance * 0.5;
 
   return (
     <>
@@ -97,5 +97,5 @@ export const VSSOP = ({
         height={1.0}
       />
     </>
-  )
-}
+  );
+};

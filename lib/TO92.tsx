@@ -5,34 +5,34 @@ import {
   Translate,
   Cylinder,
   Subtract,
-} from "jscad-fiber"
+} from "jscad-fiber";
 
 export const TO92 = () => {
   // === Dimensions (mm) ===
-  const bodyRadius = 2.4
-  const bodyHeight = 4.5
-  const flatCut = 1.1
+  const bodyRadius = 2.4;
+  const bodyHeight = 4.5;
+  const flatCut = 1.1;
 
-  const legWidth = 0.4
-  const legThickness = 0.25
+  const legWidth = 0.4;
+  const legThickness = 0.25;
 
-  const bodyZ = bodyHeight / 2
+  const bodyZ = bodyHeight / 2;
 
-  const bodyColor = "#222"
-  const leadLength = 0.43
-  const leadTipSize: [number, number, number] = [leadLength, legWidth, 1.32]
+  const bodyColor = "#222";
+  const leadLength = 0.43;
+  const leadTipSize: [number, number, number] = [leadLength, legWidth, 1.32];
   const leadSmallSize: [number, number, number] = [
     leadLength,
     legWidth,
     legThickness,
-  ]
+  ];
 
-  const leadTipPos1: [number, number, number] = [0, 0, -0.66]
-  const leadMidPosA: [number, number, number] = [0, 0, -1.32]
-  const leadMidPosB: [number, number, number] = [0, 1.28, -2.72]
-  const leadTipPos2: [number, number, number] = [0, 1.28, -8.9]
+  const leadTipPos1: [number, number, number] = [0, 0, -0.66];
+  const leadMidPosA: [number, number, number] = [0, 0, -1.32];
+  const leadMidPosB: [number, number, number] = [0, 1.28, -2.72];
+  const leadTipPos2: [number, number, number] = [0, 1.28, -8.9];
 
-  const sideLeadZ = -7.5
+  const sideLeadZ = -7.5;
 
   return (
     <Translate center={[0, 1, 10.5]}>
@@ -69,5 +69,5 @@ export const TO92 = () => {
         <Cuboid size={[leadLength, legWidth, 15]} />
       </Translate>
     </Translate>
-  )
-}
+  );
+};

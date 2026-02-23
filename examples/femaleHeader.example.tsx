@@ -1,6 +1,6 @@
-import { JsCadView } from "jscad-fiber"
-import { FemaleHeader } from "lib/FemaleHeader"
-import { ExtrudedPads } from "lib/index"
+import { JsCadView } from "jscad-fiber";
+import { FemaleHeader } from "lib/FemaleHeader";
+import { ExtrudedPads } from "lib/index";
 export default () => {
   return (
     <JsCadView zAxisUp showGrid>
@@ -13,5 +13,5 @@ export default () => {
         flipZ={(z) => z}
       />
     </JsCadView>
-  )
-}
+  );
+};

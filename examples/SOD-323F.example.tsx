@@ -1,6 +1,6 @@
-import { JsCadView } from "jscad-fiber"
-import { SOD323F } from "../lib/sod-323F"
-import { ExtrudedPads } from "../lib/ExtrudedPads"
+import { JsCadView } from "jscad-fiber";
+import { SOD323F } from "../lib/sod-323F";
+import { ExtrudedPads } from "../lib/ExtrudedPads";
 
 export default () => {
   return (
@@ -8,5 +8,5 @@ export default () => {
       <SOD323F />
       <ExtrudedPads footprint="sod323f" />
     </JsCadView>
-  )
-}
+  );
+};

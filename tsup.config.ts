@@ -1,19 +1,19 @@
-import { defineConfig } from "tsup"
-import path from "path"
+import { defineConfig } from "tsup";
+import path from "path";
 
 function aliasPlugin(aliases: Record<string, string>) {
   return {
     name: "alias",
     setup(build: any) {
       for (const [key, value] of Object.entries(aliases)) {
-        const filter = new RegExp(`^${key}(?:$|/)`)
+        const filter = new RegExp(`^${key}(?:$|/)`);
         build.onResolve({ filter }, (args: any) => {
           // Only alias the bare specifier or subpath; map to value for bare specifier
-          return { path: value }
-        })
+          return { path: value };
+        });
       }
     },
-  }
+  };
 }
 
 export default defineConfig([
@@ -35,11 +35,11 @@ export default defineConfig([
     noExternal: ["jscad-fiber", "react", "react-dom", "react/jsx-runtime"],
     // Configure esbuild for classic JSX and symbol injection
     esbuildOptions(options) {
-      options.jsxFactory = "h"
-      options.jsxFragment = "Fragment"
-      ;(options as any).inject = [
+      options.jsxFactory = "h";
+      options.jsxFragment = "Fragment";
+      (options as any).inject = [
         path.resolve(__dirname, "lib/vanilla/jsx-inject.ts"),
-      ]
+      ];
     },
     esbuildPlugins: [
       aliasPlugin({
@@ -53,4 +53,4 @@ export default defineConfig([
       }),
     ],
   },
-])
+]);

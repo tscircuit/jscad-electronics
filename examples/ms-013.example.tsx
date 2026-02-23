@@ -1,6 +1,6 @@
-import { JsCadView } from "jscad-fiber"
-import { MS013 } from "../lib/ms013"
-import { ExtrudedPads } from "../lib/ExtrudedPads"
+import { JsCadView } from "jscad-fiber";
+import { MS013 } from "../lib/ms013";
+import { ExtrudedPads } from "../lib/ExtrudedPads";
 
 export default () => {
   return (
@@ -8,5 +8,5 @@ export default () => {
       <MS013 />
       <ExtrudedPads footprint="ms013" />
     </JsCadView>
-  )
-}
+  );
+};

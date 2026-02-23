@@ -1,5 +1,5 @@
-import { ChipBody } from "./ChipBody"
-import { SmdChipLead } from "./SmdChipLead"
+import { ChipBody } from "./ChipBody";
+import { SmdChipLead } from "./SmdChipLead";
 
 export const MS013 = ({
   pinCount = 16,
@@ -7,19 +7,19 @@ export const MS013 = ({
   leadWidth = 0.41,
   pitch = 1.27,
 }: {
-  pinCount?: number
-  pitch?: number
-  leadWidth?: number
-  padContactLength?: number
+  pinCount?: number;
+  pitch?: number;
+  leadWidth?: number;
+  padContactLength?: number;
 }) => {
   if (pinCount !== 16) {
-    throw new Error("MS013 only supports 16 pins")
+    throw new Error("MS013 only supports 16 pins");
   }
-  const sidePinCount = pinCount / 2
-  const bodyWidth = 7.5
-  const bodyLength = 10.3
-  const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2
-  const leadThickness = 0.2
+  const sidePinCount = pinCount / 2;
+  const bodyWidth = 7.5;
+  const bodyLength = 10.3;
+  const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2;
+  const leadThickness = 0.2;
 
   return (
     <>
@@ -68,5 +68,5 @@ export const MS013 = ({
         taperRatio={0.05}
       />
     </>
-  )
-}
+  );
+};

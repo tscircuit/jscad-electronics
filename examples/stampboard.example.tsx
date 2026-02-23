@@ -1,6 +1,6 @@
-import { JsCadView } from "jscad-fiber"
-import { ExtrudedPads } from "lib/ExtrudedPads"
-import StampBoard from "lib/stampboard"
+import { JsCadView } from "jscad-fiber";
+import { ExtrudedPads } from "lib/ExtrudedPads";
+import StampBoard from "lib/stampboard";
 
 export default () => {
   return (
@@ -17,5 +17,5 @@ export default () => {
         footprint={"stampreceiver_left10_right20_bottom6_top3_w21mm_innerhole"}
       />
     </JsCadView>
-  )
-}
+  );
+};

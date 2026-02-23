@@ -1,15 +1,15 @@
-import { Cylinder, Sphere } from "jscad-fiber"
+import { Cylinder, Sphere } from "jscad-fiber";
 
 interface AxialCapacitorProps {
-  pitch: number
-  variant?: string // Make 'variant' optional
+  pitch: number;
+  variant?: string; // Make 'variant' optional
 }
 
 export const RadialCapacitor = ({
   pitch = 10,
   variant = "vertical",
 }: AxialCapacitorProps) => {
-  const heightToCenterOfCapacitor = 0.5 + 4 / 2
+  const heightToCenterOfCapacitor = 0.5 + 4 / 2;
 
   return (
     <>
@@ -70,5 +70,5 @@ export const RadialCapacitor = ({
       <Cylinder height={4} radius={0.5} center={[pitch / 2, 0, 0.5]} />
       <Sphere radius={0.5} center={[pitch / 2, 0, heightToCenterOfCapacitor]} />
     </>
-  )
-}
+  );
+};

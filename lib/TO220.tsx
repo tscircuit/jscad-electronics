@@ -6,31 +6,31 @@ import {
   Translate,
   Cylinder,
   Subtract,
-} from "jscad-fiber"
-import { ChipBody } from "./ChipBody"
+} from "jscad-fiber";
+import { ChipBody } from "./ChipBody";
 
 export const TO220 = () => {
-  const fullLength = 20
-  const bodyLength = 9.9
-  const bodyHeight = 4.5
-  const zOffset = 1
+  const fullLength = 20;
+  const bodyLength = 9.9;
+  const bodyHeight = 4.5;
+  const zOffset = 1;
 
-  const padWidth = 9.9
-  const padLength = 6.5
-  const padThickness = 1.3
-  const padHoleDiameter = 3.0
+  const padWidth = 9.9;
+  const padLength = 6.5;
+  const padThickness = 1.3;
+  const padHoleDiameter = 3.0;
 
-  const prongWidth = 0.81
-  const prongLength = 16
-  const prongHeight = 0.5
-  const prongPitch = 2.7
+  const prongWidth = 0.81;
+  const prongLength = 16;
+  const prongHeight = 0.5;
+  const prongPitch = 2.7;
 
-  const bodyWidth = padWidth
+  const bodyWidth = padWidth;
 
-  const bodyFrontX = fullLength - bodyLength / 2 // left face of body
-  const bodyBackX = fullLength + bodyLength / 2 // right face of body
-  const prongCenterX = bodyFrontX - prongLength / 2 // prong centered so its inner face touches bodyFront
-  const padCenterX = bodyBackX + padLength / 2 // pad centered so its inner face touches bodyBack
+  const bodyFrontX = fullLength - bodyLength / 2; // left face of body
+  const bodyBackX = fullLength + bodyLength / 2; // right face of body
+  const prongCenterX = bodyFrontX - prongLength / 2; // prong centered so its inner face touches bodyFront
+  const padCenterX = bodyBackX + padLength / 2; // pad centered so its inner face touches bodyBack
 
   return (
     <Translate center={[0, 0, zOffset]}>
@@ -67,10 +67,10 @@ export const TO220 = () => {
         </Rotate>
         <Rotate rotation={[0, 55, 55]}>
           {Array.from({ length: 3 }).map((_, i) => {
-            const x = prongCenterX
-            const y = (i - 1) * prongPitch
+            const x = prongCenterX;
+            const y = (i - 1) * prongPitch;
             // prongs sit on top of pads (pad top z = padThickness)
-            const z = -prongHeight - 0.6
+            const z = -prongHeight - 0.6;
             return (
               <Colorize key={`prong-${i}`} color="gold">
                 <Hull>
@@ -88,10 +88,10 @@ export const TO220 = () => {
                   <Cuboid size={[prongLength + 0.1, prongWidth, prongHeight]} />
                 </Translate>
               </Colorize>
-            )
+            );
           })}
         </Rotate>
       </>
     </Translate>
-  )
-}
+  );
+};

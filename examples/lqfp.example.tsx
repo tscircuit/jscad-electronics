@@ -1,6 +1,6 @@
-import { JsCadView } from "jscad-fiber"
-import { LQFP } from "lib/index"
-import { ExtrudedPads } from "../lib/ExtrudedPads"
+import { JsCadView } from "jscad-fiber";
+import { LQFP } from "lib/index";
+import { ExtrudedPads } from "../lib/ExtrudedPads";
 
 export default () => {
   return (
@@ -8,5 +8,5 @@ export default () => {
       <LQFP pinCount={64} />
       <ExtrudedPads footprint="lqfp64" />
     </JsCadView>
-  )
-}
+  );
+};

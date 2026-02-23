@@ -1,10 +1,10 @@
-import { Colorize, Cuboid, RoundedCylinder, Rotate } from "jscad-fiber"
+import { Colorize, Cuboid, RoundedCylinder, Rotate } from "jscad-fiber";
 
 export interface MINIMELFProps {
-  bodyLength?: number
-  bodyDiameter?: number
-  color?: string
-  contactColor?: string
+  bodyLength?: number;
+  bodyDiameter?: number;
+  color?: string;
+  contactColor?: string;
 }
 
 export const MINIMELF = ({
@@ -13,7 +13,7 @@ export const MINIMELF = ({
   color = "#3a3a3aff",
   contactColor = "#c6c6c6",
 }: MINIMELFProps) => {
-  const padLength = 0.5
+  const padLength = 0.5;
 
   return (
     <>
@@ -50,7 +50,7 @@ export const MINIMELF = ({
         </Rotate>
       </Colorize>
     </>
-  )
-}
+  );
+};
 
-export default MINIMELF
+export default MINIMELF;

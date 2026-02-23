@@ -1,6 +1,6 @@
-import { JsCadView } from "jscad-fiber"
-import { ExtrudedPads } from "lib/index"
-import { MicroMELF } from "lib/MicroMELF"
+import { JsCadView } from "jscad-fiber";
+import { ExtrudedPads } from "lib/index";
+import { MicroMELF } from "lib/MicroMELF";
 
 export default () => {
   return (
@@ -8,5 +8,5 @@ export default () => {
       <ExtrudedPads footprint="micromelf" />
       <MicroMELF />
     </JsCadView>
-  )
-}
+  );
+};

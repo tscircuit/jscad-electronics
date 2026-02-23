@@ -1,18 +1,18 @@
-import { ChipBody } from "./ChipBody"
-import { SmdChipLead } from "./SmdChipLead"
+import { ChipBody } from "./ChipBody";
+import { SmdChipLead } from "./SmdChipLead";
 
 export const SOT233P = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
-  const bodyWidth = 1.3
-  const bodyLength = 2.9
-  const bodyHeight = 1.1
-  const leadWidth = 0.4
-  const leadThickness = 0.15
-  const leadHeight = 0.95
-  const padContactLength = 0.4
-  const padThickness = leadThickness / 2
+  const bodyWidth = 1.3;
+  const bodyLength = 2.9;
+  const bodyHeight = 1.1;
+  const leadWidth = 0.4;
+  const leadThickness = 0.15;
+  const leadHeight = 0.95;
+  const padContactLength = 0.4;
+  const padThickness = leadThickness / 2;
 
   // Increase the bodyDistance to extend leads further out
-  const extendedBodyDistance = (fullWidth - bodyWidth) / 2 + 0.3
+  const extendedBodyDistance = (fullWidth - bodyWidth) / 2 + 0.3;
 
   return (
     <>
@@ -69,7 +69,7 @@ export const SOT233P = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
         height={bodyHeight}
       />
     </>
-  )
-}
+  );
+};
 
-export default SOT233P
+export default SOT233P;

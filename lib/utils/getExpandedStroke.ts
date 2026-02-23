@@ -1,6 +1,6 @@
 interface Point {
-  x: number
-  y: number
+  x: number;
+  y: number;
 }
 
 /**
@@ -23,67 +23,67 @@ export function getExpandedStroke(
   width: number,
 ): Point[] {
   if (strokeInput.length < 2) {
-    throw new Error("Stroke must have at least two points")
+    throw new Error("Stroke must have at least two points");
   }
   const stroke: Point[] = Array.isArray(strokeInput[0])
     ? (strokeInput as any).map(([x, y]: [number, number]) => ({ x, y }))
-    : strokeInput
+    : strokeInput;
 
-  const halfWidth = width / 2
-  const leftSide: Point[] = []
-  const rightSide: Point[] = []
+  const halfWidth = width / 2;
+  const leftSide: Point[] = [];
+  const rightSide: Point[] = [];
 
   function getNormal(p1: Point, p2: Point): Point {
-    const dx = p2.x - p1.x
-    const dy = p2.y - p1.y
-    const length = Math.sqrt(dx * dx + dy * dy)
-    return { x: -dy / length, y: dx / length }
+    const dx = p2.x - p1.x;
+    const dy = p2.y - p1.y;
+    const length = Math.sqrt(dx * dx + dy * dy);
+    return { x: -dy / length, y: dx / length };
   }
 
   function addPoint(point: Point, normal: Point, factor: number) {
     const newPoint = {
       x: point.x + normal.x * halfWidth * factor,
       y: point.y + normal.y * halfWidth * factor,
-    }
+    };
     if (factor > 0) {
-      leftSide.push(newPoint)
+      leftSide.push(newPoint);
     } else {
-      rightSide.unshift(newPoint)
+      rightSide.unshift(newPoint);
     }
   }
 
   // Handle the first point
-  const firstNormal = getNormal(stroke[0]!, stroke[1]!)
-  addPoint(stroke[0]!, firstNormal, 1)
-  addPoint(stroke[0]!, firstNormal, -1)
+  const firstNormal = getNormal(stroke[0]!, stroke[1]!);
+  addPoint(stroke[0]!, firstNormal, 1);
+  addPoint(stroke[0]!, firstNormal, -1);
 
   // Handle middle points
   for (let i = 1; i < stroke.length - 1; i++) {
-    const prev = stroke[i - 1]!
-    const current = stroke[i]!
-    const next = stroke[i + 1]!
+    const prev = stroke[i - 1]!;
+    const current = stroke[i]!;
+    const next = stroke[i + 1]!;
 
-    const normalPrev = getNormal(prev, current)
-    const normalNext = getNormal(current, next)
+    const normalPrev = getNormal(prev, current);
+    const normalNext = getNormal(current, next);
 
     // Calculate miter line
-    const miterX = normalPrev.x + normalNext.x
-    const miterY = normalPrev.y + normalNext.y
-    const miterLength = Math.sqrt(miterX * miterX + miterY * miterY)
+    const miterX = normalPrev.x + normalNext.x;
+    const miterY = normalPrev.y + normalNext.y;
+    const miterLength = Math.sqrt(miterX * miterX + miterY * miterY);
 
     // Check if miter is too long (sharp corner)
-    const miterLimit = 2 // Adjust this value to control when to bevel
+    const miterLimit = 2; // Adjust this value to control when to bevel
     if (miterLength / 2 > miterLimit * halfWidth) {
       // Use bevel join
-      addPoint(current, normalPrev, 1)
-      addPoint(current, normalNext, 1)
-      addPoint(current, normalPrev, -1)
-      addPoint(current, normalNext, -1)
+      addPoint(current, normalPrev, 1);
+      addPoint(current, normalNext, 1);
+      addPoint(current, normalPrev, -1);
+      addPoint(current, normalNext, -1);
     } else {
       // Use miter join
-      const scale = 1 / miterLength
-      addPoint(current, { x: miterX * scale, y: miterY * scale }, 1)
-      addPoint(current, { x: miterX * scale, y: miterY * scale }, -1)
+      const scale = 1 / miterLength;
+      addPoint(current, { x: miterX * scale, y: miterY * scale }, 1);
+      addPoint(current, { x: miterX * scale, y: miterY * scale }, -1);
     }
   }
 
@@ -91,10 +91,10 @@ export function getExpandedStroke(
   const lastNormal = getNormal(
     stroke[stroke.length - 2]!,
     stroke[stroke.length - 1]!,
-  )
-  addPoint(stroke[stroke.length - 1]!, lastNormal, 1)
-  addPoint(stroke[stroke.length - 1]!, lastNormal, -1)
+  );
+  addPoint(stroke[stroke.length - 1]!, lastNormal, 1);
+  addPoint(stroke[stroke.length - 1]!, lastNormal, -1);
 
   // Combine left and right sides to form a closed polygon
-  return [...leftSide, ...rightSide]
+  return [...leftSide, ...rightSide];
 }

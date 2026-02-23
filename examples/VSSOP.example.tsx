@@ -1,6 +1,6 @@
-import { JsCadView } from "jscad-fiber"
-import { VSSOP } from "../lib/VSSOP"
-import { ExtrudedPads } from "../lib/ExtrudedPads"
+import { JsCadView } from "jscad-fiber";
+import { VSSOP } from "../lib/VSSOP";
+import { ExtrudedPads } from "../lib/ExtrudedPads";
 
 export default () => {
   return (
@@ -15,5 +15,5 @@ export default () => {
       />
       <ExtrudedPads footprint="vssop8" />
     </JsCadView>
-  )
-}
+  );
+};

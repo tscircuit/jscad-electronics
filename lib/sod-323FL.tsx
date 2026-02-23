@@ -1,19 +1,19 @@
-import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber"
-import { ChipBody } from "./ChipBody"
+import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber";
+import { ChipBody } from "./ChipBody";
 
 export const SOD323FL = () => {
-  const fullWidth = 1.775
-  const bodyLength = 1.25
-  const bodyHeight = 0.725
+  const fullWidth = 1.775;
+  const bodyLength = 1.25;
+  const bodyHeight = 0.725;
 
-  const padWidth = 0.325
-  const padLength = 0.4
-  const padThickness = 0.13
+  const padWidth = 0.325;
+  const padLength = 0.4;
+  const padThickness = 0.13;
 
-  const leftPadCenterX = -fullWidth / 2 - padLength / 2 + 0.04
-  const rightPadCenterX = fullWidth / 2 + padLength / 2 - 0.04
+  const leftPadCenterX = -fullWidth / 2 - padLength / 2 + 0.04;
+  const rightPadCenterX = fullWidth / 2 + padLength / 2 - 0.04;
 
-  const taperOffset = 0.2
+  const taperOffset = 0.2;
 
   return (
     <>
@@ -52,7 +52,7 @@ export const SOD323FL = () => {
         center={[leftPadCenterX + fullWidth / 4.4 + taperOffset, 0, bodyHeight]}
       />
     </>
-  )
-}
+  );
+};
 
-export default SOD323FL
+export default SOD323FL;

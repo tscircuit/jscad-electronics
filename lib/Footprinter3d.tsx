@@ -1,62 +1,62 @@
-import { fp } from "@tscircuit/footprinter"
-import { JST } from "./JST"
-import { Dip } from "./DualInlinePackage"
-import { Tssop } from "./Tssop"
-import { MSOP } from "./MSOP"
-import { A0402 } from "./A0402"
-import { A0603 } from "./A0603"
-import { A0805 } from "./A0805"
-import { QFP } from "./qfp"
-import { PinRow } from "./PinRow"
-import QFN from "./qfn"
-import SOT235 from "./SOT-235"
-import { SOT23W } from "./SOT-23W"
-import { A0201 } from "./A0201"
-import { A01005 } from "./A01005"
-import { A1206 } from "./A1206"
-import { A1210 } from "./A1210"
-import { A2010 } from "./A2010"
-import { A2512 } from "./A2512"
-import { FemaleHeaderRow } from "./FemaleHeaderRow"
-import { PushButton } from "./PushButton"
-import { SOIC } from "./SOIC"
-import { VSSOP } from "./VSSOP"
-import { SOD523 } from "./SOD523"
-import { SOD882 } from "./SOD882"
-import { SMA } from "./SMA"
-import { SMB } from "./SMB"
-import { SMC } from "./SMC"
-import { SMF } from "./SMF"
-import { SOD123F } from "./sod-123F"
-import { SOD123FL } from "./sod-123FL"
-import { SOD123W } from "./sod-123W"
-import { SOD128 } from "./sod-128"
-import { SOD923 } from "./SOD-923"
-import { SOT223 } from "./SOT-223"
-import TQFP from "./tqfp"
-import { SOT323 } from "./SOT-323"
-import { LQFP } from "./lqfp"
-import { SOT723 } from "./SOT-723"
-import { DFN } from "./dfn"
-import { HC49 } from "./hc49"
-import { MicroMELF } from "./MicroMELF"
-import { MINIMELF } from "./MINIMELF"
-import { MELF } from "./MELF"
-import { MS012 } from "./ms012"
-import { MS013 } from "./ms013"
-import { TO220 } from "./TO220"
-import { SOT457 } from "./SOT-457"
-import { SOT963 } from "./SOT-963"
-import { TO92 } from "./TO92"
-import SOT363 from "./SOT-363"
-import { SOT886 } from "./SOT-886"
-import { SOD323 } from "./sod-323"
-import { SOD323F } from "./sod-323F"
-import { SOD323FL } from "./sod-323FL"
-import { AxialCapacitor } from "./AxialCapacitor"
-import { StampBoard } from "./stampboard"
-import { MountedPcbModule } from "./MountedPcbModule"
-import SOD723 from "./SOD723"
+import { fp } from "@tscircuit/footprinter";
+import { JST } from "./JST";
+import { Dip } from "./DualInlinePackage";
+import { Tssop } from "./Tssop";
+import { MSOP } from "./MSOP";
+import { A0402 } from "./A0402";
+import { A0603 } from "./A0603";
+import { A0805 } from "./A0805";
+import { QFP } from "./qfp";
+import { PinRow } from "./PinRow";
+import QFN from "./qfn";
+import SOT235 from "./SOT-235";
+import { SOT23W } from "./SOT-23W";
+import { A0201 } from "./A0201";
+import { A01005 } from "./A01005";
+import { A1206 } from "./A1206";
+import { A1210 } from "./A1210";
+import { A2010 } from "./A2010";
+import { A2512 } from "./A2512";
+import { FemaleHeaderRow } from "./FemaleHeaderRow";
+import { PushButton } from "./PushButton";
+import { SOIC } from "./SOIC";
+import { VSSOP } from "./VSSOP";
+import { SOD523 } from "./SOD523";
+import { SOD882 } from "./SOD882";
+import { SMA } from "./SMA";
+import { SMB } from "./SMB";
+import { SMC } from "./SMC";
+import { SMF } from "./SMF";
+import { SOD123F } from "./sod-123F";
+import { SOD123FL } from "./sod-123FL";
+import { SOD123W } from "./sod-123W";
+import { SOD128 } from "./sod-128";
+import { SOD923 } from "./SOD-923";
+import { SOT223 } from "./SOT-223";
+import TQFP from "./tqfp";
+import { SOT323 } from "./SOT-323";
+import { LQFP } from "./lqfp";
+import { SOT723 } from "./SOT-723";
+import { DFN } from "./dfn";
+import { HC49 } from "./hc49";
+import { MicroMELF } from "./MicroMELF";
+import { MINIMELF } from "./MINIMELF";
+import { MELF } from "./MELF";
+import { MS012 } from "./ms012";
+import { MS013 } from "./ms013";
+import { TO220 } from "./TO220";
+import { SOT457 } from "./SOT-457";
+import { SOT963 } from "./SOT-963";
+import { TO92 } from "./TO92";
+import SOT363 from "./SOT-363";
+import { SOT886 } from "./SOT-886";
+import { SOD323 } from "./sod-323";
+import { SOD323F } from "./sod-323F";
+import { SOD323FL } from "./sod-323FL";
+import { AxialCapacitor } from "./AxialCapacitor";
+import { StampBoard } from "./stampboard";
+import { MountedPcbModule } from "./MountedPcbModule";
+import SOD723 from "./SOD723";
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -64,47 +64,47 @@ import SOD723 from "./SOD723"
 
 export const Footprinter3d = ({ footprint }: { footprint: string }) => {
   const fpJson = fp.string(footprint).json() as unknown as {
-    w: number
-    p: number
-    h: number
-    pl: number
-    pw: number
-    num_pins: number
-    fn: string
-    thermalpad?: { x: number; y: number }
-    imperial: String
-    male: boolean
-    female: boolean
-    id: number //innerDiameter
-    od: number //outerDiameter
-    invert?: boolean
-    faceup?: boolean
-    smd?: boolean
-    surface_mount?: boolean
-    rightangle?: boolean
-    left?: number
-    right?: number
-    top?: number
-    bottom?: number
-    innerhole?: boolean
-    innerholeedgedistance?: number
-    nopin?: boolean
-    screen?: boolean
-    screenwidth?: number
-    screenheight?: number
-    screencenteroffsetx?: number
-    screencenteroffsety?: number
-  }
+    w: number;
+    p: number;
+    h: number;
+    pl: number;
+    pw: number;
+    num_pins: number;
+    fn: string;
+    thermalpad?: { x: number; y: number };
+    imperial: String;
+    male: boolean;
+    female: boolean;
+    id: number; //innerDiameter
+    od: number; //outerDiameter
+    invert?: boolean;
+    faceup?: boolean;
+    smd?: boolean;
+    surface_mount?: boolean;
+    rightangle?: boolean;
+    left?: number;
+    right?: number;
+    top?: number;
+    bottom?: number;
+    innerhole?: boolean;
+    innerholeedgedistance?: number;
+    nopin?: boolean;
+    screen?: boolean;
+    screenwidth?: number;
+    screenheight?: number;
+    screencenteroffsetx?: number;
+    screencenteroffsety?: number;
+  };
 
   switch (fpJson.fn) {
     case "jst":
-      return <JST numPins={fpJson.num_pins} pitch={fpJson.p} />
+      return <JST numPins={fpJson.num_pins} pitch={fpJson.p} />;
     case "dip":
       return (
         <Dip numPins={fpJson.num_pins} pitch={fpJson.p} bodyWidth={fpJson.w} />
-      )
+      );
     case "axial":
-      return <AxialCapacitor pitch={fpJson.p} />
+      return <AxialCapacitor pitch={fpJson.p} />;
     case "tssop":
       return (
         <Tssop
@@ -114,7 +114,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           pitch={fpJson.p}
           bodyWidth={fpJson.w}
         />
-      )
+      );
     case "msop":
       return (
         <MSOP
@@ -124,7 +124,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           pitch={fpJson.p}
           bodyWidth={fpJson.w}
         />
-      )
+      );
     case "vssop":
       return (
         <VSSOP
@@ -135,7 +135,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           bodyWidth={fpJson.w}
           bodyLength={fpJson.h}
         />
-      )
+      );
     case "qfp":
       return (
         <QFP
@@ -145,15 +145,15 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           padContactLength={fpJson.pl}
           bodyWidth={fpJson.w}
         />
-      )
+      );
     case "tqfp":
-      return <TQFP />
+      return <TQFP />;
     case "lqfp":
-      return <LQFP pinCount={fpJson.num_pins} />
+      return <LQFP pinCount={fpJson.num_pins} />;
     case "qfn": {
       const hasThermalPad =
         typeof fpJson.thermalpad?.x === "number" &&
-        typeof fpJson.thermalpad?.y === "number"
+        typeof fpJson.thermalpad?.y === "number";
       return (
         <QFN
           num_pins={fpJson.num_pins}
@@ -171,13 +171,13 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
               : undefined
           }
         />
-      )
+      );
     }
 
     case "dfn": {
       const hasThermalPad =
         typeof fpJson.thermalpad?.x === "number" &&
-        typeof fpJson.thermalpad?.y === "number"
+        typeof fpJson.thermalpad?.y === "number";
       return (
         <DFN
           num_pins={fpJson.num_pins}
@@ -195,13 +195,13 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
               : undefined
           }
         />
-      )
+      );
     }
 
     case "pinrow": {
       // Parse rows parameter from footprint string (e.g., "pinrow4_rows2")
-      const rowsMatch = footprint.match(/_rows(\d+)/)
-      const rows = rowsMatch && rowsMatch[1] ? parseInt(rowsMatch[1], 10) : 1
+      const rowsMatch = footprint.match(/_rows(\d+)/);
+      const rows = rowsMatch && rowsMatch[1] ? parseInt(rowsMatch[1], 10) : 1;
 
       if (fpJson.male)
         return (
@@ -214,7 +214,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
             smd={fpJson.smd || fpJson.surface_mount}
             rightangle={fpJson.rightangle}
           />
-        )
+        );
       if (fpJson.female)
         return (
           <FemaleHeaderRow
@@ -222,51 +222,51 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
             pitch={fpJson.p}
             rows={rows}
           />
-        )
+        );
     }
 
     case "cap": {
       switch (fpJson.imperial) {
         case "0402":
-          return <A0402 color="#856c4d" />
+          return <A0402 color="#856c4d" />;
         case "0603":
-          return <A0603 color="#856c4d" />
+          return <A0603 color="#856c4d" />;
         case "0805":
-          return <A0805 color="#856c4d" />
+          return <A0805 color="#856c4d" />;
         case "0201":
-          return <A0201 color="#856c4d" />
+          return <A0201 color="#856c4d" />;
         case "01005":
-          return <A01005 color="#856c4d" />
+          return <A01005 color="#856c4d" />;
         case "1206":
-          return <A1206 color="#856c4d" />
+          return <A1206 color="#856c4d" />;
         case "1210":
-          return <A1210 color="#856c4d" />
+          return <A1210 color="#856c4d" />;
         case "2010":
-          return <A2010 color="#856c4d" />
+          return <A2010 color="#856c4d" />;
         case "2512":
-          return <A2512 color="#856c4d" />
+          return <A2512 color="#856c4d" />;
       }
     }
     case "sot235":
-      return <SOT235 />
+      return <SOT235 />;
     case "sot457":
-      return <SOT457 />
+      return <SOT457 />;
     case "sot223":
-      return <SOT223 />
+      return <SOT223 />;
     case "sot23w":
-      return <SOT23W />
+      return <SOT23W />;
     case "sot323":
-      return <SOT323 />
+      return <SOT323 />;
     case "sod323f":
-      return <SOD323F />
+      return <SOD323F />;
     case "sod323fl":
-      return <SOD323FL />
+      return <SOD323FL />;
     case "sot363":
-      return <SOT363 />
+      return <SOT363 />;
     case "sot886":
-      return <SOT886 />
+      return <SOT886 />;
     case "sot963":
-      return <SOT963 />
+      return <SOT963 />;
     case "pushbutton":
       return (
         <PushButton
@@ -274,7 +274,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           length={fpJson.h}
           innerDiameter={fpJson.id}
         />
-      )
+      );
     case "soic":
       return (
         <SOIC
@@ -284,41 +284,41 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           pitch={fpJson.p}
           bodyWidth={fpJson.w}
         />
-      )
+      );
     case "sod523":
-      return <SOD523 />
+      return <SOD523 />;
     case "sod723":
-      return <SOD723 />
+      return <SOD723 />;
     case "sod882":
-      return <SOD882 />
+      return <SOD882 />;
     case "sma":
-      return <SMA />
+      return <SMA />;
     case "smb":
-      return <SMB />
+      return <SMB />;
     case "smc":
-      return <SMC />
+      return <SMC />;
     case "smf":
-      return <SMF />
+      return <SMF />;
     case "sod123f":
-      return <SOD123F />
+      return <SOD123F />;
     case "sod123fl":
-      return <SOD123FL />
+      return <SOD123FL />;
     case "sod123w":
-      return <SOD123W />
+      return <SOD123W />;
     case "sod128":
-      return <SOD128 />
+      return <SOD128 />;
     case "sod323":
-      return <SOD323 />
+      return <SOD323 />;
     case "sod923":
-      return <SOD923 />
+      return <SOD923 />;
     case "hc49":
-      return <HC49 />
+      return <HC49 />;
     case "micromelf":
-      return <MicroMELF />
+      return <MicroMELF />;
     case "minimelf":
-      return <MINIMELF />
+      return <MINIMELF />;
     case "melf":
-      return <MELF />
+      return <MELF />;
     case "ms012":
       return (
         <MS012
@@ -327,7 +327,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           leadWidth={fpJson.pw}
           pitch={fpJson.p}
         />
-      )
+      );
     case "ms013":
       return (
         <MS013
@@ -336,13 +336,13 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           leadWidth={fpJson.pw}
           pitch={fpJson.p}
         />
-      )
+      );
     case "sot723":
-      return <SOT723 />
+      return <SOT723 />;
     case "to220":
-      return <TO220 />
+      return <TO220 />;
     case "to92":
-      return <TO92 />
+      return <TO92 />;
     case "stampboard":
     case "stampreceiver":
       return (
@@ -358,18 +358,18 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           innerHoles={fpJson.innerhole}
           innerHoleEdgeDistance={fpJson.innerholeedgedistance}
         />
-      )
+      );
     case "mountedpcbmodule": {
-      const rows = (fpJson as any).rows ?? 1
-      const pinRowSide = (fpJson as any).pinRowSide ?? "left"
-      const holeInset = (fpJson as any).holeInset
-      const width = (fpJson as any).width
-      const height = (fpJson as any).height
-      const pinRow = (fpJson as any).pinrow
-      const pinRowHoleEdgeToEdgeDist = (fpJson as any).pinRowHoleEdgeToEdgeDist
+      const rows = (fpJson as any).rows ?? 1;
+      const pinRowSide = (fpJson as any).pinRowSide ?? "left";
+      const holeInset = (fpJson as any).holeInset;
+      const width = (fpJson as any).width;
+      const height = (fpJson as any).height;
+      const pinRow = (fpJson as any).pinrow;
+      const pinRowHoleEdgeToEdgeDist = (fpJson as any).pinRowHoleEdgeToEdgeDist;
       const holes = Array.isArray((fpJson as any).holes)
         ? (fpJson as any).holes
-        : []
+        : [];
 
       return (
         <MountedPcbModule
@@ -392,32 +392,32 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           screenCenterOffsetX={fpJson.screencenteroffsetx}
           screenCenterOffsetY={fpJson.screencenteroffsety}
         />
-      )
+      );
     }
   }
 
-  const colorMatch = footprint.match(/_color\(([^)]+)\)/)
-  const color = colorMatch ? colorMatch[1] : undefined
+  const colorMatch = footprint.match(/_color\(([^)]+)\)/);
+  const color = colorMatch ? colorMatch[1] : undefined;
 
   switch (fpJson.imperial) {
     case "0402":
-      return <A0402 color={color} />
+      return <A0402 color={color} />;
     case "0603":
-      return <A0603 color={color} />
+      return <A0603 color={color} />;
     case "0805":
-      return <A0805 color={color} />
+      return <A0805 color={color} />;
     case "0201":
-      return <A0201 color={color} />
+      return <A0201 color={color} />;
     case "01005":
-      return <A01005 color={color} />
+      return <A01005 color={color} />;
     case "1206":
-      return <A1206 color={color} />
+      return <A1206 color={color} />;
     case "1210":
-      return <A1210 color={color} />
+      return <A1210 color={color} />;
     case "2010":
-      return <A2010 color={color} />
+      return <A2010 color={color} />;
     case "2512":
-      return <A2512 color={color} />
+      return <A2512 color={color} />;
   }
-  return null
-}
+  return null;
+};

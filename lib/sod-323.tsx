@@ -1,23 +1,23 @@
-import { ChipBody } from "./ChipBody"
-import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber"
-import { SmdChipLead } from "./SmdChipLead"
+import { ChipBody } from "./ChipBody";
+import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber";
+import { SmdChipLead } from "./SmdChipLead";
 
 export const SOD323 = () => {
-  const fullWidth = 2.5
-  const bodyLength = 1.25
+  const fullWidth = 2.5;
+  const bodyLength = 1.25;
 
-  const bodyWidth = 1.7
-  const bodyHeight = 0.95
+  const bodyWidth = 1.7;
+  const bodyHeight = 0.95;
 
-  const leadWidth = 0.3
-  const leadThickness = 0.175
+  const leadWidth = 0.3;
+  const leadThickness = 0.175;
 
-  const padContactLength = 0.3
+  const padContactLength = 0.3;
 
-  const padCenterX = bodyWidth / 2
+  const padCenterX = bodyWidth / 2;
 
-  const bodyDistance = 0.45
-  const leadHeight = 0.7
+  const bodyDistance = 0.45;
+  const leadHeight = 0.7;
   return (
     <>
       <SmdChipLead
@@ -70,7 +70,7 @@ export const SOD323 = () => {
         center={[(-padCenterX * 2) / 3 + 0.035, 0, bodyHeight + 0.05]}
       />
     </>
-  )
-}
+  );
+};
 
-export default SOD323
+export default SOD323;

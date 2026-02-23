@@ -1,6 +1,6 @@
-import { JsCadView } from "jscad-fiber"
-import { ExtrudedPads } from "lib/index"
-import MountedPCBModule from "lib/MountedPcbModule"
+import { JsCadView } from "jscad-fiber";
+import { ExtrudedPads } from "lib/index";
+import MountedPCBModule from "lib/MountedPcbModule";
 
 export default () => {
   return (
@@ -16,5 +16,5 @@ export default () => {
         nopin
       />
     </JsCadView>
-  )
-}
+  );
+};

@@ -1,6 +1,6 @@
-import { JsCadView } from "jscad-fiber"
-import { ExtrudedPads } from "lib/index"
-import { SmdLED } from "lib/smdLED"
+import { JsCadView } from "jscad-fiber";
+import { ExtrudedPads } from "lib/index";
+import { SmdLED } from "lib/smdLED";
 
 export default () => {
   return (
@@ -8,5 +8,5 @@ export default () => {
       <ExtrudedPads footprint="0805" />
       <SmdLED footprint="0805" color="green" />
     </JsCadView>
-  )
-}
+  );
+};

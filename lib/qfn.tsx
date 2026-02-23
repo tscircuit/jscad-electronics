@@ -1,6 +1,6 @@
-import { Cuboid, Colorize } from "jscad-fiber"
-import { getQuadCoords } from "./utils/getQuadCoords"
-import { getQuadPinMap } from "./utils/getQuadPinMap"
+import { Cuboid, Colorize } from "jscad-fiber";
+import { getQuadCoords } from "./utils/getQuadCoords";
+import { getQuadPinMap } from "./utils/getQuadPinMap";
 export const QFN = ({
   num_pins = 16,
   bodyWidth = 9,
@@ -12,26 +12,26 @@ export const QFN = ({
   pitch = 0.5,
   thermalPadThickness = 0.05,
 }: {
-  num_pins: number
-  bodyWidth?: number
-  bodyLength?: number
-  bodyThickness?: number
+  num_pins: number;
+  bodyWidth?: number;
+  bodyLength?: number;
+  bodyThickness?: number;
   thermalPadSize?: {
-    width: number
-    length: number
-  }
-  padWidth?: number
-  padLength?: number
-  pitch?: number
-  thermalPadThickness?: number
+    width: number;
+    length: number;
+  };
+  padWidth?: number;
+  padLength?: number;
+  pitch?: number;
+  thermalPadThickness?: number;
 }) => {
   const pin_map = getQuadPinMap({
     num_pins,
     cw: true,
     ccw: true,
-  })
-  const pinPositions = []
-  const spc = num_pins / 4
+  });
+  const pinPositions = [];
+  const spc = num_pins / 4;
   for (let i = 0; i < num_pins; i++) {
     const {
       x,
@@ -45,16 +45,16 @@ export const QFN = ({
       p: pitch,
       pl: padLength,
       legsoutside: false,
-    })
+    });
 
-    let pw = padWidth
-    let pl = padLength
+    let pw = padWidth;
+    let pl = padLength;
     if (orientation === "vert") {
-      ;[pw, pl] = [pl, pw]
+      [pw, pl] = [pl, pw];
     }
 
-    const pn = pin_map[i + 1]!
-    pinPositions.push({ pn, x, y, pw, pl })
+    const pn = pin_map[i + 1]!;
+    pinPositions.push({ pn, x, y, pw, pl });
   }
 
   return (
@@ -84,7 +84,7 @@ export const QFN = ({
           />
         )}
     </>
-  )
-}
+  );
+};
 
-export default QFN
+export default QFN;

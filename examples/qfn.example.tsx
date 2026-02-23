@@ -1,10 +1,10 @@
-import { JsCadView } from "jscad-fiber"
-import { QFN } from "../lib/qfn"
-import { ExtrudedPads } from "../lib/ExtrudedPads"
-import { fp } from "@tscircuit/footprinter"
+import { JsCadView } from "jscad-fiber";
+import { QFN } from "../lib/qfn";
+import { ExtrudedPads } from "../lib/ExtrudedPads";
+import { fp } from "@tscircuit/footprinter";
 
 export default () => {
-  const footprint = "qfn24_w8_h8_thermalpad3.2mmx3.2mm"
+  const footprint = "qfn24_w8_h8_thermalpad3.2mmx3.2mm";
   return (
     <JsCadView zAxisUp showGrid>
       <QFN
@@ -18,5 +18,5 @@ export default () => {
       />
       <ExtrudedPads footprint={footprint} />
     </JsCadView>
-  )
-}
+  );
+};

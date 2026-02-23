@@ -1,27 +1,27 @@
-import { Cuboid, Translate, Colorize, Hull, Union } from "jscad-fiber"
+import { Cuboid, Translate, Colorize, Hull, Union } from "jscad-fiber";
 
 export const SOT723 = () => {
   // Body dimensions (mm)
-  const bodyWidth = 0.85
-  const bodyLength = 1.2
-  const bodyHeight = 0.38
+  const bodyWidth = 0.85;
+  const bodyLength = 1.2;
+  const bodyHeight = 0.38;
 
-  const straightHeight = bodyHeight * 0.55
-  const taperOffset = 0.1
+  const straightHeight = bodyHeight * 0.55;
+  const taperOffset = 0.1;
 
-  const padLength = 0.3
-  const padThickness = 0.1
-  const leftPadWidth = 0.2
-  const rightPadWidth = 0.25
+  const padLength = 0.3;
+  const padThickness = 0.1;
+  const leftPadWidth = 0.2;
+  const rightPadWidth = 0.25;
 
-  const rightPadCenterX = 0.55
-  const rightPadCenterY = 0
+  const rightPadCenterX = 0.55;
+  const rightPadCenterY = 0;
 
-  const leftTopPadCenterX = -0.55
-  const leftTopPadCenterY = 0.4
+  const leftTopPadCenterX = -0.55;
+  const leftTopPadCenterY = 0.4;
 
-  const leftBottomPadCenterX = -0.55
-  const leftBottomPadCenterY = -0.4
+  const leftBottomPadCenterX = -0.55;
+  const leftBottomPadCenterY = -0.4;
 
   return (
     <>
@@ -67,7 +67,7 @@ export const SOT723 = () => {
         center={[leftBottomPadCenterX, leftBottomPadCenterY, padThickness / 2]}
       />
     </>
-  )
-}
+  );
+};
 
-export default SOT723
+export default SOT723;

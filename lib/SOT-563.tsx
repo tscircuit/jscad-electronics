@@ -1,14 +1,14 @@
-import { Cuboid, Translate, Rotate, Colorize } from "jscad-fiber"
+import { Cuboid, Translate, Rotate, Colorize } from "jscad-fiber";
 
 export const SOT563 = ({ fullWidth = 1.94, fullLength = 1.6 }) => {
-  const bodyWidth = 1.2
-  const bodyLength = 1.6
-  const bodyHeight = 0.55
-  const leadWidth = 0.3
-  const leadLength = 0.67
-  const leadHeight = 0.13
-  const leadSpacing = 0.5
-  const bodyZOffset = -0.4
+  const bodyWidth = 1.2;
+  const bodyLength = 1.6;
+  const bodyHeight = 0.55;
+  const leadWidth = 0.3;
+  const leadLength = 0.67;
+  const leadHeight = 0.13;
+  const leadSpacing = 0.5;
+  const bodyZOffset = -0.4;
 
   return (
     <>
@@ -44,7 +44,7 @@ export const SOT563 = ({ fullWidth = 1.94, fullLength = 1.6 }) => {
         </Translate>,
       ])}
     </>
-  )
-}
+  );
+};
 
-export default SOT563
+export default SOT563;

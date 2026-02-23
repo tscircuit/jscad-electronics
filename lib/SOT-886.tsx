@@ -1,16 +1,16 @@
-import { Cuboid } from "jscad-fiber"
-import { ChipBody } from "./ChipBody"
+import { Cuboid } from "jscad-fiber";
+import { ChipBody } from "./ChipBody";
 
 export const SOT886 = () => {
-  const bodyWidth = 1.0
-  const bodyLength = 1.45
-  const bodyHeight = 0.5
-  const terminalWidth = 0.2
-  const terminalLength = 0.3
-  const terminalThickness = 0.05
-  const pitch = 0.5
-  const pinsPerSide = 3
-  const pinSpan = pitch * (pinsPerSide - 1)
+  const bodyWidth = 1.0;
+  const bodyLength = 1.45;
+  const bodyHeight = 0.5;
+  const terminalWidth = 0.2;
+  const terminalLength = 0.3;
+  const terminalThickness = 0.05;
+  const pitch = 0.5;
+  const pinsPerSide = 3;
+  const pinSpan = pitch * (pinsPerSide - 1);
 
   return (
     <>
@@ -26,7 +26,7 @@ export const SOT886 = () => {
       />
 
       {[0, 1, 2].map((i) => {
-        const y = -pinSpan / 2 + i * pitch
+        const y = -pinSpan / 2 + i * pitch;
         return (
           <Cuboid
             key={`left-${i}`}
@@ -37,11 +37,11 @@ export const SOT886 = () => {
             ]}
             size={[terminalLength, terminalWidth, terminalThickness]}
           />
-        )
+        );
       })}
 
       {[0, 1, 2].map((i) => {
-        const y = -pinSpan / 2 + i * pitch
+        const y = -pinSpan / 2 + i * pitch;
         return (
           <Cuboid
             key={`right-${i}`}
@@ -52,10 +52,10 @@ export const SOT886 = () => {
             ]}
             size={[terminalLength, terminalWidth, terminalThickness]}
           />
-        )
+        );
       })}
     </>
-  )
-}
+  );
+};
 
-export default SOT886
+export default SOT886;

@@ -1,17 +1,17 @@
-import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber"
+import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber";
 
 export const SOD882 = () => {
-  const bodyLength = 0.98
-  const bodyHeight = 0.47
-  const pitch = 0.65
+  const bodyLength = 0.98;
+  const bodyHeight = 0.47;
+  const pitch = 0.65;
 
-  const padWidth = 0.51
-  const padLength = 0.26
-  const padThickness = 0.12
+  const padWidth = 0.51;
+  const padLength = 0.26;
+  const padThickness = 0.12;
 
-  const bodyWidth = 0.58
-  const leftPadCenterX = -pitch / 2
-  const rightPadCenterX = pitch / 2
+  const bodyWidth = 0.58;
+  const leftPadCenterX = -pitch / 2;
+  const rightPadCenterX = pitch / 2;
 
   return (
     <>
@@ -58,7 +58,7 @@ export const SOD882 = () => {
         center={[-pitch / 2, 0, bodyHeight / 4]}
       />
     </>
-  )
-}
+  );
+};
 
-export default SOD882
+export default SOD882;

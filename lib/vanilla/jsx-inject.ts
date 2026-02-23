@@ -1,1 +1,1 @@
-export { h, Fragment } from "./h"
+export { h, Fragment } from "./h";

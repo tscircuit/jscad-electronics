@@ -1,17 +1,17 @@
-import { expect, test } from "bun:test"
-import "../fixtures/png-matcher"
-import { render } from "lib/vanilla/render"
-import { h } from "lib/vanilla/h"
+import { expect, test } from "bun:test";
+import "../fixtures/png-matcher";
+import { render } from "lib/vanilla/render";
+import { h } from "lib/vanilla/h";
 import {
   Cuboid,
   Cylinder,
   Subtract,
   Translate,
   Colorize,
-} from "lib/vanilla/primitives"
-import { convertJscadModelToGltf } from "jscad-to-gltf"
-import { renderGLTFToPNGBufferFromGLBBuffer } from "poppygl"
-import * as jscadModeling from "@jscad/modeling"
+} from "lib/vanilla/primitives";
+import { convertJscadModelToGltf } from "jscad-to-gltf";
+import { renderGLTFToPNGBufferFromGLBBuffer } from "poppygl";
+import * as jscadModeling from "@jscad/modeling";
 
 test("circular_hole_with_rect_pad plated hole", async () => {
   const hole = {
@@ -20,7 +20,7 @@ test("circular_hole_with_rect_pad plated hole", async () => {
     y: -0.5,
     rect_pad_width: 1.6,
     hole_diameter: 0.6,
-  }
+  };
   const vnode = h(
     Colorize,
     { color: "#b87333" },
@@ -37,8 +37,8 @@ test("circular_hole_with_rect_pad plated hole", async () => {
         h(Cylinder, { radius: hole.hole_diameter / 2, height: 0.01 }),
       ),
     ),
-  )
-  const { geometries } = render(vnode, jscadModeling)
+  );
+  const { geometries } = render(vnode, jscadModeling);
 
   const gltfResult = await convertJscadModelToGltf(
     { geometries },
@@ -46,7 +46,7 @@ test("circular_hole_with_rect_pad plated hole", async () => {
       format: "glb",
       axisTransform: "jscad_y+ -> gltf_z+",
     },
-  )
+  );
 
   const pngBuffer = await renderGLTFToPNGBufferFromGLBBuffer(
     gltfResult.data instanceof ArrayBuffer
@@ -69,7 +69,7 @@ test("circular_hole_with_rect_pad plated hole", async () => {
         sectionColor: [0.7, 0.7, 0.7],
       },
     },
-  )
+  );
 
-  await expect(pngBuffer).toMatchPngSnapshot(import.meta.path)
-})
+  await expect(pngBuffer).toMatchPngSnapshot(import.meta.path);
+});

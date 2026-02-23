@@ -1,20 +1,20 @@
-import { ChipBody } from "./ChipBody"
-import { SmdChipLead } from "./SmdChipLead"
+import { ChipBody } from "./ChipBody";
+import { SmdChipLead } from "./SmdChipLead";
 
 export const TQFP = () => {
-  const pinCount = 64
-  const pitch = 0.5
-  const leadWidth = 0.2
-  const padContactLength = 0.45
-  const bodyWidth = 9
-  const sidePinCount = pinCount / 4
-  const bodyLength = bodyWidth
-  const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2
-  const fullLength = bodyLength + 2 * padContactLength + 0.6
-  const fullWidth = fullLength
-  const leadHeight = 0.65
-  const leadThickness = 0.25
-  const bodyDistance = (fullWidth - bodyWidth) / 2 + 0.2
+  const pinCount = 64;
+  const pitch = 0.5;
+  const leadWidth = 0.2;
+  const padContactLength = 0.45;
+  const bodyWidth = 9;
+  const sidePinCount = pinCount / 4;
+  const bodyLength = bodyWidth;
+  const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2;
+  const fullLength = bodyLength + 2 * padContactLength + 0.6;
+  const fullWidth = fullLength;
+  const leadHeight = 0.65;
+  const leadThickness = 0.25;
+  const bodyDistance = (fullWidth - bodyWidth) / 2 + 0.2;
 
   return (
     <>
@@ -100,7 +100,7 @@ export const TQFP = () => {
         notchRadius={1.2 / 2}
       />
     </>
-  )
-}
+  );
+};
 
-export default TQFP
+export default TQFP;

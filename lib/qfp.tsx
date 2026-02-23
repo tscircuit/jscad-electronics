@@ -1,5 +1,5 @@
-import { ChipBody } from "./ChipBody"
-import { SmdChipLead } from "./SmdChipLead"
+import { ChipBody } from "./ChipBody";
+import { SmdChipLead } from "./SmdChipLead";
 
 export const QFP = ({
   pinCount,
@@ -8,27 +8,27 @@ export const QFP = ({
   padContactLength,
   bodyWidth,
 }: {
-  pinCount: number
-  pitch?: number
-  leadWidth?: number
-  padContactLength?: number
-  bodyWidth?: number
+  pinCount: number;
+  pitch?: number;
+  leadWidth?: number;
+  padContactLength?: number;
+  bodyWidth?: number;
 }) => {
-  const sidePinCount = pinCount / 4
+  const sidePinCount = pinCount / 4;
 
   // get default values if not specified
-  if (!pitch) pitch = getPitch(pinCount, bodyWidth)
-  if (!padContactLength) padContactLength = getPadContactLength(pinCount)
-  if (!leadWidth) leadWidth = getLeadWidth(pinCount, bodyWidth)
-  if (!bodyWidth) bodyWidth = pitch * (sidePinCount + 4)
+  if (!pitch) pitch = getPitch(pinCount, bodyWidth);
+  if (!padContactLength) padContactLength = getPadContactLength(pinCount);
+  if (!leadWidth) leadWidth = getLeadWidth(pinCount, bodyWidth);
+  if (!bodyWidth) bodyWidth = pitch * (sidePinCount + 4);
 
-  const bodyLength = bodyWidth
-  const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2
-  const fullLength = bodyLength + 2 * padContactLength
-  const fullWidth = fullLength
-  const leadHeight = 0.8
-  const leadThickness = 0.15
-  const bodyDistance = (fullWidth - bodyWidth) / 2 + 0.5
+  const bodyLength = bodyWidth;
+  const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2;
+  const fullLength = bodyLength + 2 * padContactLength;
+  const fullWidth = fullLength;
+  const leadHeight = 0.8;
+  const leadThickness = 0.15;
+  const bodyDistance = (fullWidth - bodyWidth) / 2 + 0.5;
 
   return (
     <>
@@ -118,50 +118,50 @@ export const QFP = ({
         notchRadius={1.5 / 2}
       />
     </>
-  )
-}
+  );
+};
 // Helper functions to determine default values based on pinCount and width of QFP as footprinter repo
 const getPitch = (pinCount: number, width?: number): number => {
   switch (pinCount) {
     case 44:
     case 64:
-      return 0.8
+      return 0.8;
     case 52:
-      return width === 14 ? 1 : 0.65
+      return width === 14 ? 1 : 0.65;
     case 208:
-      return 0.5
+      return 0.5;
     default:
-      return 0.5
+      return 0.5;
   }
-}
+};
 
 const getPadContactLength = (pinCount: number): number => {
   switch (pinCount) {
     case 32:
-      return 0.6
+      return 0.6;
     case 40:
-      return 0.6
+      return 0.6;
     case 52:
     case 64:
-      return 0.65
+      return 0.65;
     case 208:
-      return 1.65
+      return 1.65;
     default:
-      return 0.6
+      return 0.6;
   }
-}
+};
 
 const getLeadWidth = (pinCount: number, width?: number): number => {
   switch (pinCount) {
     case 44:
     case 64:
-      return 0.5
+      return 0.5;
     case 52:
-      return width === 14 ? 0.45 : 0.55
+      return width === 14 ? 0.45 : 0.55;
     case 208:
-      return 0.3
+      return 0.3;
     default:
-      return 0.25
+      return 0.25;
   }
-}
-export default QFP
+};
+export default QFP;

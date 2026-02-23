@@ -6,29 +6,29 @@ import {
   Ellipsoid,
   Rotate,
   Subtract,
-} from "jscad-fiber"
+} from "jscad-fiber";
 
 interface USB_CProps {
-  outerWidth?: number
-  outerHeight?: number
-  outerDepth?: number
-  metalThickness?: number
-  innerHeight?: number
-  innerWidth?: number
-  innerDepth?: number
-  innerPinsWidth?: number
-  innerPinsHeight?: number
-  innerPinsDepth?: number
-  numOfInnerPins?: number
-  innerPinsGap?: number
-  outerPinsWidth?: number
-  outerPinsThickness?: number
-  outerPinsDepth?: number
-  pinColor?: string
-  innerColor?: string
-  outerColor?: string
-  sideLegColor?: string
-  numOfConnectors?: number
+  outerWidth?: number;
+  outerHeight?: number;
+  outerDepth?: number;
+  metalThickness?: number;
+  innerHeight?: number;
+  innerWidth?: number;
+  innerDepth?: number;
+  innerPinsWidth?: number;
+  innerPinsHeight?: number;
+  innerPinsDepth?: number;
+  numOfInnerPins?: number;
+  innerPinsGap?: number;
+  outerPinsWidth?: number;
+  outerPinsThickness?: number;
+  outerPinsDepth?: number;
+  pinColor?: string;
+  innerColor?: string;
+  outerColor?: string;
+  sideLegColor?: string;
+  numOfConnectors?: number;
 }
 
 export const USB_C = ({
@@ -53,7 +53,7 @@ export const USB_C = ({
   sideLegColor = "#808080", // Color for side legs
 }: USB_CProps) => {
   // Metal casing (main structure)
-  const flatMetalCasing = outerWidth - outerWidth / 5
+  const flatMetalCasing = outerWidth - outerWidth / 5;
   const positions = [
     // Backplate
     {
@@ -79,7 +79,7 @@ export const USB_C = ({
       z: metalThickness / 2,
       size: [flatMetalCasing, outerDepth, metalThickness],
     },
-  ]
+  ];
 
   const metalCasing = positions.map((pos, index) => (
     <Colorize
@@ -91,7 +91,7 @@ export const USB_C = ({
         center={{ x: pos.x, y: pos.y, z: pos.z }}
       />
     </Colorize>
-  ))
+  ));
   const curvedSidesPositions = [
     {
       x: outerWidth / 3 + metalThickness * 2,
@@ -103,7 +103,7 @@ export const USB_C = ({
       y: 0,
       z: outerHeight / 2,
     },
-  ]
+  ];
   const curvedSides = curvedSidesPositions.map((pos, index) => (
     <Subtract color={outerColor}>
       <Cylinder
@@ -129,7 +129,7 @@ export const USB_C = ({
         height={outerDepth}
       />
     </Subtract>
-  ))
+  ));
 
   const backOuterSidePlatePositions = [
     {
@@ -148,7 +148,7 @@ export const USB_C = ({
       },
       radius: [flatMetalCasing / 8, metalThickness, outerWidth / 8],
     },
-  ]
+  ];
   const backOuterSidePlate = backOuterSidePlatePositions.map((pos, index) => (
     <Ellipsoid
       key={index}
@@ -156,7 +156,7 @@ export const USB_C = ({
       center={pos.center}
       radius={pos.radius as [number, number, number]}
     />
-  ))
+  ));
 
   // Plastic inner body (smaller to fit the metal casing)
   const innerPlastic = (
@@ -166,7 +166,7 @@ export const USB_C = ({
         center={{ x: 0, y: -0.25, z: outerHeight / 2 }}
       />
     </Colorize>
-  )
+  );
 
   // Pins (adjusting position and ensuring proper placement)
   const innerPinsPosition = Array.from({ length: numOfInnerPins }, (_, i) => ({
@@ -183,7 +183,7 @@ export const USB_C = ({
       i < numOfInnerPins / 2
         ? outerHeight / 2 - innerPinsHeight - 0.2
         : outerHeight / 2 + innerPinsHeight + 0.2,
-  }))
+  }));
 
   const innerPins = innerPinsPosition.map((pos, index) => (
     <Translate key={`pin-${index}`} x={pos.x} y={pos.y} z={pos.z}>
@@ -191,7 +191,7 @@ export const USB_C = ({
         <Cuboid size={[innerPinsWidth, innerPinsDepth, innerPinsHeight]} />
       </Colorize>
     </Translate>
-  ))
+  ));
 
   // Side legs
   const legPositions = [
@@ -227,7 +227,7 @@ export const USB_C = ({
       height: 1.1 + outerHeight / 3,
       thickness: metalThickness,
     },
-  ]
+  ];
   const legs = legPositions.map((pos, index) => (
     <>
       <Cuboid
@@ -239,8 +239,8 @@ export const USB_C = ({
         }
       />
     </>
-  ))
-  const outerContactPositions = []
+  ));
+  const outerContactPositions = [];
   // Define the x-offsets based on the image increments
   const xOffsets = [
     0, // First contact
@@ -259,14 +259,14 @@ export const USB_C = ({
     4.01 + 2.09, // Fourteenth contact
     4.32 + 2.29, // Fifteenth contact
     4.63 + 2.29, // Sixteenth contact
-  ]
+  ];
 
   for (const xOffset of xOffsets) {
     outerContactPositions.push({
       x: innerWidth / 2 - xOffset,
       y: outerDepth / 2,
       z: 0,
-    })
+    });
   }
   const outerContacts = outerContactPositions.map((pos, index) => (
     <Cuboid
@@ -275,14 +275,14 @@ export const USB_C = ({
       center={{ x: pos.x, y: pos.y, z: pos.z }}
       color={pinColor}
     />
-  ))
+  ));
 
-  const cylinderPinsRadius = 0.25
-  const cylinderPinsHeight = 0.5
+  const cylinderPinsRadius = 0.25;
+  const cylinderPinsHeight = 0.5;
   const cylinderPinsPositions = [
     { x: 2.89, y: innerDepth / 2, z: -cylinderPinsHeight / 2 }, //1
     { x: -2.89, y: innerDepth / 2, z: -cylinderPinsHeight / 2 }, //2
-  ]
+  ];
   const cylinderPins = cylinderPinsPositions.map((pos, index) => (
     <Colorize color={"#c4c4c4"}>
       <Cylinder
@@ -291,7 +291,7 @@ export const USB_C = ({
         height={cylinderPinsHeight}
       />
     </Colorize>
-  ))
+  ));
   return (
     <>
       {metalCasing}
@@ -303,5 +303,5 @@ export const USB_C = ({
       {legs}
       {curvedSides}
     </>
-  )
-}
+  );
+};

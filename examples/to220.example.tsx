@@ -1,6 +1,6 @@
-import { TO220 } from "lib/TO220"
-import { JsCadView } from "jscad-fiber"
-import { ExtrudedPads } from "../lib/ExtrudedPads"
+import { TO220 } from "lib/TO220";
+import { JsCadView } from "jscad-fiber";
+import { ExtrudedPads } from "../lib/ExtrudedPads";
 
 export default () => {
   return (
@@ -8,5 +8,5 @@ export default () => {
       <TO220 />
       <ExtrudedPads footprint="to220" />
     </JsCadView>
-  )
-}
+  );
+};

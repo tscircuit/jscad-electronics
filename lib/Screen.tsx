@@ -1,16 +1,16 @@
-import { Colorize, Cuboid, Subtract, Translate } from "jscad-fiber"
+import { Colorize, Cuboid, Subtract, Translate } from "jscad-fiber";
 
 export interface ScreenProps {
-  width?: number
-  height?: number
-  thickness?: number
-  bezelInset?: number
-  bezelDepth?: number
-  screenColor?: string
-  bezelColor?: string
-  screenWidth?: number
-  screenHeight?: number
-  offset?: { x?: number; y?: number; z?: number }
+  width?: number;
+  height?: number;
+  thickness?: number;
+  bezelInset?: number;
+  bezelDepth?: number;
+  screenColor?: string;
+  bezelColor?: string;
+  screenWidth?: number;
+  screenHeight?: number;
+  offset?: { x?: number; y?: number; z?: number };
 }
 
 export const Screen = ({
@@ -25,21 +25,21 @@ export const Screen = ({
   screenHeight,
   offset,
 }: ScreenProps) => {
-  const w = width
-  const h = height
-  const stackHeight = Math.max(thickness, 0.4)
-  const clampedBezelDepth = Math.max(Math.min(bezelDepth, stackHeight), 0.2)
-  const backBlockHeight = Math.max(stackHeight - clampedBezelDepth, 0)
-  const inset = Math.max(bezelInset, 0)
-  const innerWidth = Math.max(screenWidth ?? w - inset * 2, 2)
-  const innerHeight = Math.max(screenHeight ?? h - inset * 2, 2)
+  const w = width;
+  const h = height;
+  const stackHeight = Math.max(thickness, 0.4);
+  const clampedBezelDepth = Math.max(Math.min(bezelDepth, stackHeight), 0.2);
+  const backBlockHeight = Math.max(stackHeight - clampedBezelDepth, 0);
+  const inset = Math.max(bezelInset, 0);
+  const innerWidth = Math.max(screenWidth ?? w - inset * 2, 2);
+  const innerHeight = Math.max(screenHeight ?? h - inset * 2, 2);
   const screenThickness = Math.min(
     Math.max(clampedBezelDepth * 0.6, 0.2),
     clampedBezelDepth,
-  )
-  const offsetX = offset?.x ?? 0
-  const offsetY = offset?.y ?? 0
-  const offsetZ = offset?.z ?? 0
+  );
+  const offsetX = offset?.x ?? 0;
+  const offsetY = offset?.y ?? 0;
+  const offsetZ = offset?.z ?? 0;
 
   return (
     <Translate offset={{ x: offsetX, y: offsetY, z: offsetZ }}>
@@ -72,10 +72,10 @@ export const Screen = ({
         />
       </Colorize>
     </Translate>
-  )
-}
+  );
+};
 
 // TODO: remove Display alias after downstreams migrate
-export const Display = Screen
+export const Display = Screen;
 
-export default Screen
+export default Screen;

@@ -1,6 +1,6 @@
-import { Dip } from "../lib/DualInlinePackage"
-import { JsCadView } from "jscad-fiber"
-import { ExtrudedPads } from "../lib/ExtrudedPads"
+import { Dip } from "../lib/DualInlinePackage";
+import { JsCadView } from "jscad-fiber";
+import { ExtrudedPads } from "../lib/ExtrudedPads";
 
 export default () => {
   return (
@@ -8,5 +8,5 @@ export default () => {
       <Dip />
       <ExtrudedPads footprint="dip8" />
     </JsCadView>
-  )
-}
+  );
+};

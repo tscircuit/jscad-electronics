@@ -1,12 +1,12 @@
-import { mm } from "@tscircuit/mm"
-import { Cuboid, Cylinder, Sphere } from "jscad-fiber"
+import { mm } from "@tscircuit/mm";
+import { Cuboid, Cylinder, Sphere } from "jscad-fiber";
 
 interface AxialLedProps {
-  pitch: number
+  pitch: number;
 }
 
 export const AxialLed = ({ pitch = 10 }: AxialLedProps) => {
-  const heightToCenterOfLed = 0.5 + 4 / 2
+  const heightToCenterOfLed = 0.5 + 4 / 2;
 
   return (
     <>
@@ -35,5 +35,5 @@ export const AxialLed = ({ pitch = 10 }: AxialLedProps) => {
       <Cylinder height={4} radius={0.5} center={[pitch / 2, 0, 0.5]} />
       <Sphere radius={0.5} center={[pitch / 2, 0, heightToCenterOfLed]} />
     </>
-  )
-}
+  );
+};

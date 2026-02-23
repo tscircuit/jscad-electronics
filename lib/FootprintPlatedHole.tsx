@@ -1,14 +1,14 @@
-import type { PcbPlatedHole } from "circuit-json"
-import { Colorize, Cuboid, Translate, Cylinder, Subtract } from "jscad-fiber"
+import type { PcbPlatedHole } from "circuit-json";
+import { Colorize, Cuboid, Translate, Cylinder, Subtract } from "jscad-fiber";
 
 export const FootprintPlatedHole = ({
   hole,
   isPin1,
 }: {
-  hole: PcbPlatedHole
-  isPin1?: boolean
+  hole: PcbPlatedHole;
+  isPin1?: boolean;
 }) => {
-  const color = isPin1 ? "#00ff00" : "#b87333"
+  const color = isPin1 ? "#00ff00" : "#b87333";
 
   if (hole.shape === "circle") {
     return (
@@ -22,7 +22,7 @@ export const FootprintPlatedHole = ({
           {/* </Rotate> */}
         </Translate>
       </Colorize>
-    )
+    );
   }
   if (hole.shape === "circular_hole_with_rect_pad") {
     return (
@@ -39,7 +39,7 @@ export const FootprintPlatedHole = ({
           {/* </Rotate> */}
         </Translate>
       </Colorize>
-    )
+    );
   }
-  throw new Error("Shape not supported: " + hole.shape)
-}
+  throw new Error("Shape not supported: " + hole.shape);
+};

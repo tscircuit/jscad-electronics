@@ -1,5 +1,5 @@
-import { JsCadView } from "jscad-fiber"
-import { ExtrudedPads, SOD523 } from "../lib"
+import { JsCadView } from "jscad-fiber";
+import { ExtrudedPads, SOD523 } from "../lib";
 
 export default function Example() {
   return (
@@ -7,5 +7,5 @@ export default function Example() {
       <SOD523 />
       <ExtrudedPads footprint="sod523" />
     </JsCadView>
-  )
+  );
 }

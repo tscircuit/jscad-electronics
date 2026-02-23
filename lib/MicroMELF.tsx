@@ -4,14 +4,14 @@ import {
   RoundedCylinder,
   Rotate,
   RoundedCuboid,
-} from "jscad-fiber"
+} from "jscad-fiber";
 
 export interface MicroMELFProps {
-  bodyLength?: number
-  bodyDiameter?: number
-  color?: string
-  contactColor?: string
-  cathodeIdentification?: string
+  bodyLength?: number;
+  bodyDiameter?: number;
+  color?: string;
+  contactColor?: string;
+  cathodeIdentification?: string;
 }
 
 export const MicroMELF = ({
@@ -21,7 +21,7 @@ export const MicroMELF = ({
   contactColor = "#c6c6c6",
   cathodeIdentification = "#111",
 }: MicroMELFProps) => {
-  const padLength = 0.2
+  const padLength = 0.2;
 
   return (
     <>
@@ -73,7 +73,7 @@ export const MicroMELF = ({
         </Rotate>
       </Colorize>
     </>
-  )
-}
+  );
+};
 
-export default MicroMELF
+export default MicroMELF;

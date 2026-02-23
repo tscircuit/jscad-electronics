@@ -4,19 +4,19 @@ import {
   Translate,
   Rotate,
   Colorize,
-} from "jscad-fiber"
-import { getExpandedStroke } from "./utils/getExpandedStroke"
+} from "jscad-fiber";
+import { getExpandedStroke } from "./utils/getExpandedStroke";
 
 export interface SmdChipLeadProps {
-  thickness: number
-  width: number
-  height: number
-  padContactLength: number
-  bodyDistance: number
-  curveLength?: number
-  rotation?: number
-  positionAnchor?: "outer-edge"
-  position?: { x: number; y: number; z?: number }
+  thickness: number;
+  width: number;
+  height: number;
+  padContactLength: number;
+  bodyDistance: number;
+  curveLength?: number;
+  rotation?: number;
+  positionAnchor?: "outer-edge";
+  position?: { x: number; y: number; z?: number };
 }
 
 function calculateSCurve(
@@ -29,25 +29,25 @@ function calculateSCurve(
     steepness = 10,
   }: SmdChipLeadProps & { steepness?: number },
 ) {
-  if (!curveLength) curveLength = bodyDistance * 0.3
-  let flatFromBodySectionLength = bodyDistance - padContactLength - curveLength
+  if (!curveLength) curveLength = bodyDistance * 0.3;
+  let flatFromBodySectionLength = bodyDistance - padContactLength - curveLength;
   if (flatFromBodySectionLength < 0) {
-    curveLength += flatFromBodySectionLength
-    flatFromBodySectionLength = 0
+    curveLength += flatFromBodySectionLength;
+    flatFromBodySectionLength = 0;
   }
-  const curveStart = padContactLength * 0.75
+  const curveStart = padContactLength * 0.75;
   const curveEnd =
     padContactLength +
     curveLength +
-    (bodyDistance - padContactLength - curveLength) * 0.25
+    (bodyDistance - padContactLength - curveLength) * 0.25;
 
-  if (x <= curveStart) return 0
-  if (x >= curveEnd) return height
+  if (x <= curveStart) return 0;
+  if (x >= curveEnd) return height;
 
-  const t = (x - curveStart) / (curveEnd - curveStart)
+  const t = (x - curveStart) / (curveEnd - curveStart);
 
   // Generalized logistic function (Richards curve)
-  return height / (1 + Math.exp(-steepness * (t - 0.5)))
+  return height / (1 + Math.exp(-steepness * (t - 0.5)));
 }
 
 /**
@@ -55,13 +55,13 @@ function calculateSCurve(
  */
 export const SmdChipLead = (props: SmdChipLeadProps) => {
   const { thickness, width, padContactLength, bodyDistance, height, rotation } =
-    props
+    props;
 
-  const N = 15
+  const N = 15;
 
   const points = Array.from({ length: N })
     .map((_, i) => (i / (N - 1)) * bodyDistance)
-    .map((x) => [x, calculateSCurve(x, props)] as [number, number])
+    .map((x) => [x, calculateSCurve(x, props)] as [number, number]);
   // const points = [
   //   [0, 0],
   //   [padContactLength / 2, 0],
@@ -75,7 +75,7 @@ export const SmdChipLead = (props: SmdChipLeadProps) => {
   //   [bodyDistance, height],
   // ]
 
-  const polygon = getExpandedStroke(points, thickness)
+  const polygon = getExpandedStroke(points, thickness);
   return (
     <Colorize color="#fff">
       <Translate offset={{ z: 0, y: 0, x: 0, ...props.position }}>
@@ -88,5 +88,5 @@ export const SmdChipLead = (props: SmdChipLeadProps) => {
         </Rotate>
       </Translate>
     </Colorize>
-  )
-}
+  );
+};

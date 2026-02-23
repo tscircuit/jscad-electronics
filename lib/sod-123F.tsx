@@ -1,19 +1,19 @@
-import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber"
+import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber";
 
 export const SOD123F = () => {
-  const fullWidth = 2.7
-  const bodyLength = 1.6
-  const bodyHeight = 1.1
+  const fullWidth = 2.7;
+  const bodyLength = 1.6;
+  const bodyHeight = 1.1;
 
-  const padWidth = 0.6
-  const padLength = 1
-  const padThickness = 0.12
+  const padWidth = 0.6;
+  const padLength = 1;
+  const padThickness = 0.12;
 
-  const leftPadCenterX = -1.3
-  const rightPadCenterX = 1.3
+  const leftPadCenterX = -1.3;
+  const rightPadCenterX = 1.3;
 
-  const taperOffset = 0.2
-  const straightHeight = bodyHeight * 0.5
+  const taperOffset = 0.2;
+  const straightHeight = bodyHeight * 0.5;
 
   return (
     <>
@@ -53,7 +53,7 @@ export const SOD123F = () => {
         </Union>
       </Colorize>
     </>
-  )
-}
+  );
+};
 
-export default SOD123F
+export default SOD123F;

@@ -1,5 +1,5 @@
-import { ChipBody } from "./ChipBody"
-import { SmdChipLead } from "./SmdChipLead"
+import { ChipBody } from "./ChipBody";
+import { SmdChipLead } from "./SmdChipLead";
 
 // MSOP (mini small outline package) — modeled after Tssop implementation
 export const MSOP = ({
@@ -9,15 +9,15 @@ export const MSOP = ({
   pitch = 0.65,
   bodyWidth = 3.0,
 }: {
-  pinCount: number
-  pitch?: number
-  leadWidth?: number
-  padContactLength?: number
-  bodyWidth?: number
+  pinCount: number;
+  pitch?: number;
+  leadWidth?: number;
+  padContactLength?: number;
+  bodyWidth?: number;
 }) => {
-  const sidePinCount = Math.ceil(pinCount / 2)
-  const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2
-  const leadThickness = 0.2
+  const sidePinCount = Math.ceil(pinCount / 2);
+  const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2;
+  const leadThickness = 0.2;
 
   return (
     <>
@@ -62,5 +62,5 @@ export const MSOP = ({
         taperRatio={0.09}
       />
     </>
-  )
-}
+  );
+};

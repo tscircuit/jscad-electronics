@@ -1,8 +1,8 @@
-import { test, expect } from "bun:test"
-import "../fixtures/png-matcher"
-import { renderFootprint } from "../helpers/render-footprint"
+import { test, expect } from "bun:test";
+import "../fixtures/png-matcher";
+import { renderFootprint } from "../helpers/render-footprint";
 
 test("MELF package", async () => {
-  const pngBuffer = await renderFootprint("melf")
-  await expect(pngBuffer).toMatchPngSnapshot(import.meta.path)
-})
+  const pngBuffer = await renderFootprint("melf");
+  await expect(pngBuffer).toMatchPngSnapshot(import.meta.path);
+});

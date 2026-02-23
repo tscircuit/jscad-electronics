@@ -1,11 +1,11 @@
-import { JsCadView } from "jscad-fiber"
-import { ExtrudedPads } from "../lib/ExtrudedPads"
-import { Footprinter3d } from "../lib/Footprinter3d"
-import MountedPcbModule from "lib/MountedPcbModule"
+import { JsCadView } from "jscad-fiber";
+import { ExtrudedPads } from "../lib/ExtrudedPads";
+import { Footprinter3d } from "../lib/Footprinter3d";
+import MountedPcbModule from "lib/MountedPcbModule";
 
 export default () => {
   const footprint =
-    "mountedpcbmodule_pinrow10_rows1_pinrowbottom_width50_height30_screen_screenwidth20_screenheight15_screencenteroffsetx0_screencenteroffsety4"
+    "mountedpcbmodule_pinrow10_rows1_pinrowbottom_width50_height30_screen_screenwidth20_screenheight15_screencenteroffsetx0_screencenteroffsety4";
   return (
     <JsCadView zAxisUp showGrid>
       <ExtrudedPads footprint={footprint} />
@@ -21,5 +21,5 @@ export default () => {
         screenCenterOffsetY={4}
       />
     </JsCadView>
-  )
-}
+  );
+};

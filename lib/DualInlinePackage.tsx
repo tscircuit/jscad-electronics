@@ -1,7 +1,7 @@
-import { Polygon, ExtrudeLinear, Rotate, Translate, Union } from "jscad-fiber"
-import { ChipBody } from "./ChipBody"
-import { range } from "./utils/range"
-import { getExpandedStroke } from "./utils/getExpandedStroke"
+import { Polygon, ExtrudeLinear, Rotate, Translate, Union } from "jscad-fiber";
+import { ChipBody } from "./ChipBody";
+import { range } from "./utils/range";
+import { getExpandedStroke } from "./utils/getExpandedStroke";
 
 // DIP components look like this:
 // https://github.com/nophead/NopSCADlib/raw/master/tests/png/dip.png
@@ -9,17 +9,17 @@ import { getExpandedStroke } from "./utils/getExpandedStroke"
 // M 20 105 L 20 109 L 20 102 L 26 102 L 26 109 L 24 111 L 24 118 L 22 118 L 22 111 L 20 109
 
 const normalizeOnY = (points: { x: number; y: number }[]) => {
-  const minX = Math.min(...points.map((p) => p.x))
-  const maxX = Math.max(...points.map((p) => p.x))
-  const minY = Math.min(...points.map((p) => p.y))
-  const maxY = Math.max(...points.map((p) => p.y))
-  const height = maxY - minY
-  const factor = 5.47 / height
+  const minX = Math.min(...points.map((p) => p.x));
+  const maxX = Math.max(...points.map((p) => p.x));
+  const minY = Math.min(...points.map((p) => p.y));
+  const maxY = Math.max(...points.map((p) => p.y));
+  const height = maxY - minY;
+  const factor = 5.47 / height;
   return points.map((p) => ({
     x: (p.x - minX - (maxX - minX) / 2) * factor,
     y: (p.y - minY) * factor,
-  }))
-}
+  }));
+};
 
 const svgPathPoints = normalizeOnY([
   { x: 20, y: 105 },
@@ -32,13 +32,13 @@ const svgPathPoints = normalizeOnY([
   { x: 22, y: 118 },
   { x: 22, y: 111 },
   { x: 20, y: 109 },
-])
+]);
 
-const DIP_PIN_HEIGHT = 5.47
-const heightAboveSurface = 0.5
+const DIP_PIN_HEIGHT = 5.47;
+const heightAboveSurface = 0.5;
 
 export const DipPinLeg = ({ x, y, z }: { x: number; y: number; z: number }) => {
-  const isRotated = x > 0
+  const isRotated = x > 0;
   return (
     <>
       <Translate offset={{ x: x + 0.25 / 2, y, z: z }}>
@@ -76,8 +76,8 @@ export const DipPinLeg = ({ x, y, z }: { x: number; y: number; z: number }) => {
         </Rotate>
       </Translate>
     </>
-  )
-}
+  );
+};
 
 export const Dip = ({
   numPins = 8,
@@ -85,23 +85,23 @@ export const Dip = ({
   bodyWidth = 6.4,
   rowSpacing,
 }: {
-  numPins?: number
-  pitch?: number
-  bodyWidth?: number
-  rowSpacing?: number
+  numPins?: number;
+  pitch?: number;
+  bodyWidth?: number;
+  rowSpacing?: number;
 }) => {
-  const numPinsOnEachSide = Math.floor(numPins / 2)
+  const numPinsOnEachSide = Math.floor(numPins / 2);
 
   const pinRowSpacing =
-    rowSpacing ?? (bodyWidth >= 7 ? bodyWidth : bodyWidth + 1.22)
+    rowSpacing ?? (bodyWidth >= 7 ? bodyWidth : bodyWidth + 1.22);
 
-  const chipBodyWidth = bodyWidth >= 7 ? pinRowSpacing - 1.22 : bodyWidth
+  const chipBodyWidth = bodyWidth >= 7 ? pinRowSpacing - 1.22 : bodyWidth;
 
   return (
     <>
       {range(numPins).map((i) => {
-        const yRow = i % numPinsOnEachSide
-        const xRow = (Math.floor(i / numPinsOnEachSide) - 0.5) * 2
+        const yRow = i % numPinsOnEachSide;
+        const xRow = (Math.floor(i / numPinsOnEachSide) - 0.5) * 2;
 
         return (
           <DipPinLeg
@@ -110,7 +110,7 @@ export const Dip = ({
             y={yRow * pitch - ((numPinsOnEachSide - 1) / 2) * pitch}
             z={DIP_PIN_HEIGHT / 2 + heightAboveSurface}
           />
-        )
+        );
       })}
       <ChipBody
         width={chipBodyWidth}
@@ -120,7 +120,7 @@ export const Dip = ({
         center={{ x: 0, y: 0, z: heightAboveSurface }}
       />
     </>
-  )
-}
+  );
+};
 
-export const DualInlinePackage = Dip
+export const DualInlinePackage = Dip;

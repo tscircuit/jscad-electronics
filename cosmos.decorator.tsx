@@ -1,3 +1,3 @@
 export default ({ children }: any) => {
-  return <div style={{ backgroundColor: "#fff" }}>{children}</div>
-}
+  return <div style={{ backgroundColor: "#fff" }}>{children}</div>;
+};

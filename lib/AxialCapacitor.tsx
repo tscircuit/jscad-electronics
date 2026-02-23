@@ -1,11 +1,11 @@
-import { Colorize, Cylinder, Rotate, Sphere, Translate } from "jscad-fiber"
+import { Colorize, Cylinder, Rotate, Sphere, Translate } from "jscad-fiber";
 
 interface AxialCapacitorProps {
-  pitch: number
+  pitch: number;
 }
 
 export const AxialCapacitor = ({ pitch = 10 }: AxialCapacitorProps) => {
-  const heightToCenterOfCapacitor = 0.5 + 4 / 2
+  const heightToCenterOfCapacitor = 0.5 + 4 / 2;
 
   return (
     <>
@@ -33,5 +33,5 @@ export const AxialCapacitor = ({ pitch = 10 }: AxialCapacitorProps) => {
       <Cylinder height={4} radius={0.5} center={[pitch / 2, 0, 0.5]} />
       <Sphere radius={0.5} center={[pitch / 2, 0, heightToCenterOfCapacitor]} />
     </>
-  )
-}
+  );
+};

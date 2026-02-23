@@ -1,5 +1,5 @@
-import { ChipBody } from "./ChipBody"
-import { SmdChipLead } from "./SmdChipLead"
+import { ChipBody } from "./ChipBody";
+import { SmdChipLead } from "./SmdChipLead";
 
 export const MS012 = ({
   pinCount,
@@ -7,19 +7,19 @@ export const MS012 = ({
   leadWidth = 0.41,
   pitch = 1.27,
 }: {
-  pinCount: number
-  pitch?: number
-  leadWidth?: number
-  padContactLength?: number
+  pinCount: number;
+  pitch?: number;
+  leadWidth?: number;
+  padContactLength?: number;
 }) => {
   if (pinCount % 2 !== 0) {
-    throw new Error("MS012 pinCount must be even")
+    throw new Error("MS012 pinCount must be even");
   }
-  const sidePinCount = pinCount / 2
-  const bodyWidth = 4.9
-  const bodyLength = 3.9
-  const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2
-  const leadThickness = 0.2
+  const sidePinCount = pinCount / 2;
+  const bodyWidth = 4.9;
+  const bodyLength = 3.9;
+  const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2;
+  const leadThickness = 0.2;
 
   return (
     <>
@@ -68,5 +68,5 @@ export const MS012 = ({
         taperRatio={0.09}
       />
     </>
-  )
-}
+  );
+};

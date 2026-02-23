@@ -7,24 +7,24 @@ import {
   Subtract,
   Translate,
   Union,
-} from "jscad-fiber"
+} from "jscad-fiber";
 export interface ChipBodyProps {
-  width: number
-  length: number
-  height: number
-  heightAboveSurface?: number
-  center: { x: number; y: number; z: number }
-  color?: string
-  taperRatio?: number
-  faceRatio?: number
-  straightHeightRatio?: number
-  includeNotch?: boolean
-  notchRadius?: number
-  notchPosition?: { x: number; y: number; z: number }
-  notchRotation?: [number, number, number]
-  notchLength?: number
-  notchWidth?: number
-  chamferSize?: number
+  width: number;
+  length: number;
+  height: number;
+  heightAboveSurface?: number;
+  center: { x: number; y: number; z: number };
+  color?: string;
+  taperRatio?: number;
+  faceRatio?: number;
+  straightHeightRatio?: number;
+  includeNotch?: boolean;
+  notchRadius?: number;
+  notchPosition?: { x: number; y: number; z: number };
+  notchRotation?: [number, number, number];
+  notchLength?: number;
+  notchWidth?: number;
+  chamferSize?: number;
 }
 
 export const ChipBody = ({
@@ -45,19 +45,19 @@ export const ChipBody = ({
   notchWidth = 0.25,
   chamferSize = 0,
 }: ChipBodyProps) => {
-  const straightHeight = height * straightHeightRatio
-  const taperHeight = height - straightHeight
-  const taperInset = Math.min(width, length) * taperRatio
-  const faceWidth = Math.max(width - taperInset, width * faceRatio)
-  const faceLength = Math.max(length - taperInset, length * faceRatio)
-  const defaultNotchRadius = Math.min(width, length) * 0.12
-  const actualNotchRadius = notchRadius ?? defaultNotchRadius
+  const straightHeight = height * straightHeightRatio;
+  const taperHeight = height - straightHeight;
+  const taperInset = Math.min(width, length) * taperRatio;
+  const faceWidth = Math.max(width - taperInset, width * faceRatio);
+  const faceLength = Math.max(length - taperInset, length * faceRatio);
+  const defaultNotchRadius = Math.min(width, length) * 0.12;
+  const actualNotchRadius = notchRadius ?? defaultNotchRadius;
   const defaultNotchPosition = {
     x: 0,
     y: length / 2 - actualNotchRadius * 0.25,
     z: height,
-  }
-  const actualNotchPosition = notchPosition ?? defaultNotchPosition
+  };
+  const actualNotchPosition = notchPosition ?? defaultNotchPosition;
   const body = (
     <Union>
       <Hull>
@@ -77,7 +77,7 @@ export const ChipBody = ({
         </Translate>
       </Hull>
     </Union>
-  )
+  );
 
   // TODO the bodies flex a bit outward IRL
 
@@ -93,13 +93,13 @@ export const ChipBody = ({
         />
       </Rotate>
     </Translate>
-  )
+  );
 
-  let finalBody = body
+  let finalBody = body;
 
   if (chamferSize > 0) {
-    const xOffset = width / 2
-    const yOffset = length / 2
+    const xOffset = width / 2;
+    const yOffset = length / 2;
     finalBody = (
       <Subtract>
         {body}
@@ -108,7 +108,7 @@ export const ChipBody = ({
         {chamferCutout(xOffset, -yOffset)}
         {chamferCutout(-xOffset, -yOffset)}
       </Subtract>
-    )
+    );
   }
 
   return (
@@ -130,5 +130,5 @@ export const ChipBody = ({
         </Translate>
       </Translate>
     </Colorize>
-  )
-}
+  );
+};
