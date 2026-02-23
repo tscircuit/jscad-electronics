@@ -4,7 +4,10 @@ import { Colorize, Cuboid, Translate, Cylinder, Subtract } from "jscad-fiber"
 export const FootprintPlatedHole = ({
   hole,
   isPin1,
-}: { hole: PcbPlatedHole; isPin1?: boolean }) => {
+}: {
+  hole: PcbPlatedHole
+  isPin1?: boolean
+}) => {
   const color = isPin1 ? "#00ff00" : "#b87333"
 
   if (hole.shape === "circle") {

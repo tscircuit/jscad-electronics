@@ -48,7 +48,7 @@ export const JST = ({
           return (
             <Translate key={i} offset={[xPos, 0, 0]}>
               <Cuboid
-                size={[0.6, 0.6, bodyHeight + 3]} 
+                size={[0.6, 0.6, bodyHeight + 3]}
                 center={[0, 0, (bodyHeight + 3) / 2 - 3.5]}
               />
             </Translate>

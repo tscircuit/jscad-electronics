@@ -6,7 +6,10 @@ import { FootprintPlatedHole } from "./FootprintPlatedHole"
 export const ExtrudedPads = ({
   circuitJson,
   footprint,
-}: { circuitJson?: AnyCircuitElement[]; footprint?: string }) => {
+}: {
+  circuitJson?: AnyCircuitElement[]
+  footprint?: string
+}) => {
   if (!circuitJson && footprint) {
     circuitJson = fp.string(footprint).circuitJson() as AnyCircuitElement[]
   }

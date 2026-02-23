@@ -14,7 +14,11 @@ export const PushButton = ({
   width,
   length,
   innerDiameter = 1,
-}: { width: number; length: number; innerDiameter?: number }) => {
+}: {
+  width: number
+  length: number
+  innerDiameter?: number
+}) => {
   const bodyWidth = width
   const bodyLength = length
   const bodyHeight = width * 0.7

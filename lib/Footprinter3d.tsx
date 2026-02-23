@@ -98,9 +98,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
 
   switch (fpJson.fn) {
     case "jst":
-      return (
-        <JST numPins={fpJson.num_pins} pitch={fpJson.p} />
-      )
+      return <JST numPins={fpJson.num_pins} pitch={fpJson.p} />
     case "dip":
       return (
         <Dip numPins={fpJson.num_pins} pitch={fpJson.p} bodyWidth={fpJson.w} />
