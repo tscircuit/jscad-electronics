@@ -51,7 +51,7 @@
     "@tscircuit/footprinter": "*",
     "circuit-json": "^0.0.232",
     "jscad-fiber": "^0.0.85",
-    "manifold-3d": ">=3.0.0",
+    "manifold-3d": "^3.3.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "three": "^0.179.1"

@@ -266,7 +266,7 @@ export function createManifoldJscadAdapter(wasm: ManifoldToplevel): any {
           ? argsOrArray[0]
           : argsOrArray
         if (geoms.length === 0)
-          return new ManifoldGeom3(Manifold.cube([0, 0, 0]))
+          return new ManifoldGeom3(Manifold.cube([0, 0, 0], true))
         if (geoms.length === 1) return geoms[0]
         let result = geoms[0]._manifold
         for (let i = 1; i < geoms.length; i++) {
@@ -398,6 +398,11 @@ function deduplicatePoints(points: [number, number][]): [number, number][] {
     if (dx * dx + dy * dy <= eps) {
       result.pop()
     }
+  }
+  if (result.length < 3) {
+    throw new Error(
+      "Polygon must have at least 3 distinct points after deduplication",
+    )
   }
   return result
 }
