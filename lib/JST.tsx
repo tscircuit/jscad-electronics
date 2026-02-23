@@ -1,4 +1,4 @@
-import { Cuboid, Colorize, Translate } from "jscad-fiber"
+import { Cuboid, Colorize, Translate, Union } from "jscad-fiber"
 import { range } from "./utils/range"
 
 export const JST = ({
@@ -18,13 +18,27 @@ export const JST = ({
   const zOffset = bodyHeight / 2
 
   return (
-    <>
-      {/* Connector Body */}
-      <Colorize color="#f0f0f0">
+    <Union>
+      {/* Main Connector Body */}
+      <Colorize color="#f5f5f5">
         <Cuboid
           size={[calculatedWidth, bodyDepth, bodyHeight]}
           center={[0, 0, zOffset]}
         />
+      </Colorize>
+
+      {/* Internal cavity where female connector slides in */}
+      <Colorize color="#e0e0e0">
+        <Translate offset={[0, -0.5, zOffset + 1]}>
+          <Cuboid size={[calculatedWidth - 1.5, bodyDepth - 1.5, bodyHeight]} />
+        </Translate>
+      </Colorize>
+
+      {/* Polarity / Locking Notch on the back */}
+      <Colorize color="#f5f5f5">
+        <Translate offset={[0, bodyDepth / 2, zOffset]}>
+          <Cuboid size={[calculatedWidth * 0.6, 1, bodyHeight * 0.8]} />
+        </Translate>
       </Colorize>
 
       {/* Pins */}
@@ -34,21 +48,14 @@ export const JST = ({
           return (
             <Translate key={i} offset={[xPos, 0, 0]}>
               <Cuboid
-                size={[0.5, 0.5, bodyHeight + 3]} // 3mm pin sticking out
-                center={[0, 0, (bodyHeight + 3) / 2 - 3]}
+                size={[0.6, 0.6, bodyHeight + 3]} 
+                center={[0, 0, (bodyHeight + 3) / 2 - 3.5]}
               />
             </Translate>
           )
         })}
       </Colorize>
-
-      {/* Small Notch for orientation (simple representation) */}
-      <Colorize color="#e0e0e0">
-        <Translate offset={[0, bodyDepth / 2 - 0.5, zOffset]}>
-          <Cuboid size={[calculatedWidth - 1, 1, bodyHeight - 1]} />
-        </Translate>
-      </Colorize>
-    </>
+    </Union>
   )
 }
 
