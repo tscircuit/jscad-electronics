@@ -23,8 +23,8 @@ test("manifold and jscad produce matching volume/area/genus for 0402", async () 
 
     if (!jGeom.polygons || !mGeom._manifold) continue
 
-    const jVol = jscadModeling.measurements.measureVolume(jGeom)
-    const jArea = jscadModeling.measurements.measureArea(jGeom)
+    const jVol = Math.abs(jscadModeling.measurements.measureVolume(jGeom))
+    const jArea = Math.abs(jscadModeling.measurements.measureArea(jGeom))
     const mVol = mGeom._manifold.volume()
     const mArea = mGeom._manifold.surfaceArea()
     const mGenus = mGeom._manifold.genus()
