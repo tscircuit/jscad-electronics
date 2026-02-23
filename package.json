@@ -29,6 +29,7 @@
     "test": "bun test"
   },
   "devDependencies": {
+    "basefold": "file:../basefold",
     "@biomejs/biome": "^1.9.3",
     "@tscircuit/footprinter": "^0.0.316",
     "@types/react": "19",
@@ -48,6 +49,7 @@
   "peerDependencies": {
     "@jscad/modeling": "^2.12.5",
     "@tscircuit/footprinter": "*",
+    "basefold": "*",
     "circuit-json": "^0.0.232",
     "jscad-fiber": "^0.0.85",
     "react": "19.1.0",
@@ -55,6 +57,9 @@
     "three": "^0.179.1"
   },
   "peerDependenciesMeta": {
+    "basefold": {
+      "optional": true
+    },
     "jscad-fiber": {
       "optional": true
     }
