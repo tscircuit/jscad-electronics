@@ -177,7 +177,11 @@ export function createManifoldJscadAdapter(wasm: ManifoldToplevel): any {
         size,
         roundRadius,
         center,
-      }: { size: [number, number, number]; roundRadius: number; center?: any }) {
+      }: {
+        size: [number, number, number]
+        roundRadius: number
+        center?: any
+      }) {
         const [sx, sy, sz] = size
         const r = Math.min(roundRadius, sx / 2, sy / 2, sz / 2)
         if (r <= 0) {
@@ -204,7 +208,12 @@ export function createManifoldJscadAdapter(wasm: ManifoldToplevel): any {
         radius,
         roundRadius,
         center,
-      }: { height: number; radius: number; roundRadius: number; center?: any }) {
+      }: {
+        height: number
+        radius: number
+        roundRadius: number
+        center?: any
+      }) {
         const r = Math.min(roundRadius, radius, height / 2)
         if (r <= 0) {
           return makeCentered(
@@ -235,7 +244,11 @@ export function createManifoldJscadAdapter(wasm: ManifoldToplevel): any {
       },
 
       polygon({ points }: { points: [number, number][] }) {
-        return new ManifoldGeom2(new CrossSection([points]))
+        // Use EvenOdd fill rule to handle self-intersecting contours
+        // (e.g. expanded stroke polygons that zigzag)
+        return new ManifoldGeom2(
+          new CrossSection([deduplicatePoints(points)], "EvenOdd"),
+        )
       },
 
       rectangle({ size }: { size: [number, number] }) {
@@ -252,7 +265,8 @@ export function createManifoldJscadAdapter(wasm: ManifoldToplevel): any {
         const geoms = Array.isArray(argsOrArray[0])
           ? argsOrArray[0]
           : argsOrArray
-        if (geoms.length === 0) return new ManifoldGeom3(Manifold.cube([0, 0, 0]))
+        if (geoms.length === 0)
+          return new ManifoldGeom3(Manifold.cube([0, 0, 0]))
         if (geoms.length === 1) return geoms[0]
         let result = geoms[0]._manifold
         for (let i = 1; i < geoms.length; i++) {
@@ -284,7 +298,10 @@ export function createManifoldJscadAdapter(wasm: ManifoldToplevel): any {
     geometries: {
       geom2: {
         fromPoints(points: [number, number][]) {
-          return new ManifoldGeom2(new CrossSection([points]))
+          // Use EvenOdd fill rule to handle self-intersecting contours
+          return new ManifoldGeom2(
+            new CrossSection([deduplicatePoints(points)], "EvenOdd"),
+          )
         },
       },
     },
@@ -356,4 +373,31 @@ export function createManifoldJscadAdapter(wasm: ManifoldToplevel): any {
       },
     },
   }
+}
+
+/** Remove consecutive duplicate points that cause zero-area CrossSections */
+function deduplicatePoints(points: [number, number][]): [number, number][] {
+  if (points.length < 2) return points
+  const eps = 1e-10
+  const result: [number, number][] = [points[0]!]
+  for (let i = 1; i < points.length; i++) {
+    const prev = result[result.length - 1]!
+    const curr = points[i]!
+    const dx = curr[0] - prev[0]
+    const dy = curr[1] - prev[1]
+    if (dx * dx + dy * dy > eps) {
+      result.push(curr)
+    }
+  }
+  // Also check last vs first
+  if (result.length > 1) {
+    const first = result[0]!
+    const last = result[result.length - 1]!
+    const dx = last[0] - first[0]
+    const dy = last[1] - first[1]
+    if (dx * dx + dy * dy <= eps) {
+      result.pop()
+    }
+  }
+  return result
 }
