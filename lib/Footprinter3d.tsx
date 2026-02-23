@@ -1,4 +1,5 @@
 import { fp } from "@tscircuit/footprinter"
+import { JST } from "./JST"
 import { Dip } from "./DualInlinePackage"
 import { Tssop } from "./Tssop"
 import { MSOP } from "./MSOP"
@@ -96,6 +97,10 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
   }
 
   switch (fpJson.fn) {
+    case "jst":
+      return (
+        <JST numPins={fpJson.num_pins} pitch={fpJson.p} />
+      )
     case "dip":
       return (
         <Dip numPins={fpJson.num_pins} pitch={fpJson.p} bodyWidth={fpJson.w} />
