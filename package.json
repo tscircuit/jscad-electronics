@@ -15,9 +15,7 @@
     "type": "git",
     "url": "https://github.com/tscircuit/jscad-electronics"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "start": "cosmos",
     "build": "tsup --config tsup.config.ts",
