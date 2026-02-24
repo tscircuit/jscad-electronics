@@ -29,6 +29,7 @@
     "test": "bun test"
   },
   "devDependencies": {
+    "@basefold/sketch": "file:../basefold-sketch",
     "@biomejs/biome": "^1.9.3",
     "@tscircuit/footprinter": "^0.0.316",
     "@types/react": "19",
@@ -46,6 +47,7 @@
     "vite-tsconfig-paths": "^5.0.1"
   },
   "peerDependencies": {
+    "@basefold/sketch": "*",
     "@jscad/modeling": "^2.12.5",
     "@tscircuit/footprinter": "*",
     "circuit-json": "^0.0.232",
@@ -55,6 +57,9 @@
     "three": "^0.179.1"
   },
   "peerDependenciesMeta": {
+    "@basefold/sketch": {
+      "optional": true
+    },
     "jscad-fiber": {
       "optional": true
     }
