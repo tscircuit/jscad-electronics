@@ -115,7 +115,7 @@ export const StampBoard = ({
   }
 
   const boardBody = (
-    <Colorize color="#008080">
+    <Colorize color="#051a0a">
       <Subtract>
         <Cuboid
           center={[0, 0, boardCenterZ]}
