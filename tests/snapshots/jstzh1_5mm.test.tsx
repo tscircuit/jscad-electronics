@@ -47,7 +47,7 @@ async function renderComponent(element: React.ReactElement): Promise<Buffer> {
 }
 
 test("JSTZH 1.5mm component", async () => {
-  const element = <JSTZH1_5mm numPins={4} />
+  const element = <JSTZH1_5mm numPins={7} />
   const pngBuffer = await renderComponent(element)
   await expect(pngBuffer).toMatchPngSnapshot(import.meta.path)
 })
