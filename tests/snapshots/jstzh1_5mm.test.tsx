@@ -9,7 +9,7 @@ import { JSTZH1_5mm } from "../../dist/index.js"
 
 async function renderComponent(element: React.ReactElement): Promise<Buffer> {
   const container: any[] = []
-  const { createJSCADRoot } = createJSCADRenderer(jscadModeling)
+  const { createJSCADRoot } = createJSCADRenderer(jscadModeling as any)
   const root = createJSCADRoot(container)
   root.render(element)
 
