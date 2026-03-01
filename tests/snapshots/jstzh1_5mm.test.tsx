@@ -5,7 +5,7 @@ import { createJSCADRenderer } from "jscad-fiber"
 import { convertJscadModelToGltf } from "jscad-to-gltf"
 import { renderGLTFToPNGBufferFromGLBBuffer } from "poppygl"
 import * as React from "react"
-import { JSTZH1_5mm } from "../../dist/index.js"
+import { JSTZH1_5mm } from "../../lib/JSTZH1_5mm"
 
 async function renderComponent(element: React.ReactElement): Promise<Buffer> {
   const container: any[] = []
