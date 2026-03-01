@@ -1,18 +1,18 @@
 import { Colorize, Cuboid, Cylinder, Subtract } from "jscad-fiber"
 
-interface JSHZH1_5mmProps {
+interface JSTZH1_5mmProps {
   numPins?: number
   showPins?: boolean
   bodyColor?: string
   pinColor?: string
 }
 
-export const JSHZH1_5mm = ({
+export const JSTZH1_5mm = ({
   numPins = 2,
   showPins = true,
   bodyColor = "#f5f5f5",
   pinColor = "#635959",
-}: JSHZH1_5mmProps) => {
+}: JSTZH1_5mmProps) => {
   const pitch = 1.5
   const bodyHeight = 6
   const bodyDepth = 3.5
@@ -91,4 +91,4 @@ export const JSHZH1_5mm = ({
   )
 }
 
-export default JSHZH1_5mm
+export default JSTZH1_5mm

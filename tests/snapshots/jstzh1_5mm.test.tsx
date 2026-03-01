@@ -5,7 +5,7 @@ import { createJSCADRenderer } from "jscad-fiber"
 import { convertJscadModelToGltf } from "jscad-to-gltf"
 import { renderGLTFToPNGBufferFromGLBBuffer } from "poppygl"
 import * as React from "react"
-import { JSHZH1_5mm } from "../../dist/index.js"
+import { JSTZH1_5mm } from "../../dist/index.js"
 
 async function renderComponent(element: React.ReactElement): Promise<Buffer> {
   const container: any[] = []
@@ -46,8 +46,8 @@ async function renderComponent(element: React.ReactElement): Promise<Buffer> {
   return pngBuffer
 }
 
-test("JSHZH 1.5mm component", async () => {
-  const element = <JSHZH1_5mm numPins={4} />
+test("JSTZH 1.5mm component", async () => {
+  const element = <JSTZH1_5mm numPins={4} />
   const pngBuffer = await renderComponent(element)
   await expect(pngBuffer).toMatchPngSnapshot(import.meta.path)
 })
