@@ -6,10 +6,13 @@ import {
   Subtract,
   Translate,
 } from "jscad-fiber"
+import type { PcbPlatedHole } from "circuit-json"
+import { FootprintPlatedHole } from "./FootprintPlatedHole"
 
 interface JSTZH1_5mmProps {
   numPins?: number
   showPins?: boolean
+  showFootprint?: boolean
   bodyColor?: string
   pinColor?: string
 }
@@ -17,6 +20,7 @@ interface JSTZH1_5mmProps {
 export const JSTZH1_5mm = ({
   numPins = 7,
   showPins = true,
+  showFootprint = true,
   bodyColor = "#f5f5f5",
   pinColor = "#635959",
 }: JSTZH1_5mmProps) => {
@@ -106,6 +110,32 @@ export const JSTZH1_5mm = ({
             />
           </Colorize>
         ))}
+
+      {showFootprint &&
+        Array.from({ length: numPins }).map((_, i) => {
+          const hole: PcbPlatedHole = {
+            type: "pcb_plated_hole",
+            pcb_plated_hole_id: `jstzh_${i}`,
+            shape: "circular_hole_with_rect_pad",
+            x: startX + i * pitch,
+            y: 0,
+            hole_diameter: 0.73,
+            hole_shape: "circle",
+            pad_shape: "rect",
+            rect_pad_width: 1.03,
+            rect_pad_height: 1.73,
+            layers: ["top", "bottom"],
+            port_hints: [`${i + 1}`],
+          }
+          const isPin1 = i === 0
+          return (
+            <FootprintPlatedHole
+              key={`footprint_${i}`}
+              hole={hole}
+              isPin1={isPin1}
+            />
+          )
+        })}
     </>
   )
 }
