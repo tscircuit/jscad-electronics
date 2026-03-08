@@ -25,6 +25,7 @@ export const PinRow = ({
   const rowSpacing = 2.54 // Standard spacing between rows
   const shortSidePinLength = 3
   const xoff = -((pinsPerRow - 1) / 2) * pitch
+  const yoff = ((rows - 1) / 2) * rowSpacing
 
   const zOffset = !smd && !rightangle ? -bodyHeight - 1.6 : 0
   // Flip Z coordinates if invert is true
@@ -37,7 +38,7 @@ export const PinRow = ({
         const row = Math.floor(i / pinsPerRow)
         const col = i % pinsPerRow
         const x = xoff + col * pitch
-        const y = -row * rowSpacing
+        const y = -row * rowSpacing + yoff
 
         return (
           <PinHeader
