@@ -27,7 +27,7 @@ export const PinRow = ({
   const xoff = -((pinsPerRow - 1) / 2) * pitch
   const yoff = ((rows - 1) / 2) * rowSpacing
 
-  const zOffset = !smd && !rightangle ? -bodyHeight - 1.6 : 0
+  const zOffset = 0
   // Flip Z coordinates if invert is true
   const flipZ = (z: number) =>
     (invert || faceup ? -z + bodyHeight : z) + zOffset
