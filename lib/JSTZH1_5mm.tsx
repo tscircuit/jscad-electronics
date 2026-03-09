@@ -113,21 +113,35 @@ export const JSTZH1_5mm = ({
 
       {showFootprint &&
         Array.from({ length: numPins }).map((_, i) => {
-          const hole: PcbPlatedHole = {
-            type: "pcb_plated_hole",
-            pcb_plated_hole_id: `jstzh_${i}`,
-            shape: "circular_hole_with_rect_pad",
-            x: startX + i * pitch,
-            y: 0,
-            hole_diameter: 0.73,
-            hole_shape: "circle",
-            pad_shape: "rect",
-            rect_pad_width: 1.03,
-            rect_pad_height: 1.73,
-            layers: ["top", "bottom"],
-            port_hints: [`${i + 1}`],
-          }
           const isPin1 = i === 0
+          const hole: PcbPlatedHole = isPin1
+            ? {
+                type: "pcb_plated_hole",
+                pcb_plated_hole_id: `jstzh_${i}`,
+                shape: "circular_hole_with_rect_pad",
+                x: startX + i * pitch,
+                y: 0,
+                hole_diameter: 0.73,
+                rect_pad_width: 1.03,
+                rect_pad_height: 1.73,
+                hole_shape: "circle",
+                pad_shape: "rect",
+                layers: ["top", "bottom"],
+                port_hints: [`${i + 1}`],
+              }
+            : {
+                type: "pcb_plated_hole",
+                pcb_plated_hole_id: `jstzh_${i}`,
+                shape: "pill",
+                x: startX + i * pitch,
+                y: 0,
+                hole_height: 0.73,
+                hole_width: 0.73,
+                outer_height: 1.73,
+                outer_width: 1.03,
+                layers: ["top", "bottom"],
+                port_hints: [`${i + 1}`],
+              }
           return (
             <FootprintPlatedHole
               key={`footprint_${i}`}
