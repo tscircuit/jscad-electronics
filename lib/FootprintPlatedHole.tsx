@@ -32,7 +32,7 @@ export const FootprintPlatedHole = ({
         <Translate offset={[hole.x, hole.y, 0]}>
           <Subtract>
             <Cuboid
-              size={[hole.rect_pad_width, hole.rect_pad_height, 0.01]}
+              size={[hole.rect_pad_width, hole.rect_pad_width, 0.01]}
               center={[0, 0, 0]}
             />
             <Cylinder radius={hole.hole_diameter / 2} height={0.01} />
