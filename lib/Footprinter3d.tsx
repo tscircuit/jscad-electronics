@@ -57,6 +57,7 @@ import { StampBoard } from "./stampboard"
 import { MountedPcbModule } from "./MountedPcbModule"
 import SOD723 from "./SOD723"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
+import { JSTPH } from "./JSTPH"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -286,7 +287,11 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       if (fpJson.zh) {
         return <JSTZH1_5mm numPins={fpJson.num_pins} />
       }
-      break
+      if ((fpJson as any).ph) {
+        return <JSTPH numPins={fpJson.num_pins} />
+      }
+      // Default to PH variant (footprinter default)
+      return <JSTPH numPins={fpJson.num_pins} />
     case "soic":
       return (
         <SOIC
