@@ -55,9 +55,7 @@ export const TO92 = () => {
               bodyCenterZ,
             ]}
           >
-            <Cuboid
-              size={[bodyRadius * 2 + 0.2, flatCut, bodyHeight + 0.2]}
-            />
+            <Cuboid size={[bodyRadius * 2 + 0.2, flatCut, bodyHeight + 0.2]} />
           </Translate>
         </Subtract>
       </Colorize>
