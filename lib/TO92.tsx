@@ -8,66 +8,90 @@ import {
 } from "jscad-fiber"
 
 export const TO92 = () => {
-  // === Dimensions (mm) ===
-  const bodyRadius = 2.4
+  // === TO-92 Dimensions (mm) ===
+  const bodyRadius = 2.25
   const bodyHeight = 4.5
-  const flatCut = 1.1
+  const flatCut = 1.2 // depth of flat side cut
 
   const legWidth = 0.4
   const legThickness = 0.25
 
-  const bodyZ = bodyHeight / 2
-
   const bodyColor = "#222"
-  const leadLength = 0.43
-  const leadTipSize: [number, number, number] = [leadLength, legWidth, 1.32]
-  const leadSmallSize: [number, number, number] = [
-    leadLength,
-    legWidth,
-    legThickness,
-  ]
+  const leadColor = "#ccc"
 
-  const leadTipPos1: [number, number, number] = [0, 0, -0.66]
-  const leadMidPosA: [number, number, number] = [0, 0, -1.32]
-  const leadMidPosB: [number, number, number] = [0, 1.28, -2.72]
-  const leadTipPos2: [number, number, number] = [0, 1.28, -8.9]
+  // Footprint pad positions (from footprinter to92.ts):
+  // Pin 1: x=-1.27, y=0.98
+  // Pin 2: x=0,     y=2.25
+  // Pin 3: x=1.27,  y=0.98
+  const pin1X = -1.27
+  const pin2X = 0
+  const pin3X = 1.27
+  const pin1Y = 0.98
+  const pin2Y = 2.25
+  const pin3Y = 0.98
 
-  const sideLeadZ = -7.5
+  // Body center in XY should be at the semicircle center of the footprint
+  const bodyCenterX = 0
+  const bodyCenterY = pin2Y // semicircle center matches pin 2 Y
+  const bodyCenterZ = bodyHeight / 2 // body sits on the board surface
+
+  // Lead dimensions
+  const leadAboveBoard = 0.5 // small stub visible above board
+  const leadBelowBoard = 3.0 // extends below board
 
   return (
-    <Translate center={[0, 1, 10.5]}>
+    <>
+      {/* Body - semicircular (cylinder with flat cut) */}
       <Colorize color={bodyColor}>
         <Subtract>
-          <Translate center={[0, 0, bodyZ]}>
+          <Translate center={[bodyCenterX, bodyCenterY, bodyCenterZ]}>
             <Cylinder radius={bodyRadius} height={bodyHeight} />
           </Translate>
-          <Translate center={[0, -(bodyRadius - flatCut / 2), bodyZ]}>
-            <Cuboid size={[bodyRadius * 2, flatCut, bodyHeight + 0.2]} />
+          {/* Cut the flat side - flat is on the side closest to pins 1 and 3 */}
+          <Translate
+            center={[
+              bodyCenterX,
+              bodyCenterY - (bodyRadius - flatCut / 2),
+              bodyCenterZ,
+            ]}
+          >
+            <Cuboid size={[bodyRadius * 2 + 0.2, flatCut, bodyHeight + 0.2]} />
           </Translate>
         </Subtract>
       </Colorize>
 
-      <Translate center={leadTipPos1}>
-        <Cuboid size={leadTipSize} />
-      </Translate>
-      <Hull>
-        <Translate center={leadMidPosA}>
-          <Cuboid size={leadSmallSize} />
+      {/* Lead for Pin 1 (left) */}
+      <Colorize color={leadColor}>
+        <Translate
+          center={[pin1X, pin1Y, -leadBelowBoard / 2 + leadAboveBoard / 2]}
+        >
+          <Cuboid
+            size={[legWidth, legThickness, leadBelowBoard + leadAboveBoard]}
+          />
         </Translate>
-        <Translate center={leadMidPosB}>
-          <Cuboid size={leadSmallSize} />
-        </Translate>
-      </Hull>
-      <Translate center={leadTipPos2}>
-        <Cuboid size={[leadLength, legWidth, 12.2]} />
-      </Translate>
+      </Colorize>
 
-      <Translate center={[1.3, 0, sideLeadZ]}>
-        <Cuboid size={[leadLength, legWidth, 15]} />
-      </Translate>
-      <Translate center={[-1.3, 0, sideLeadZ]}>
-        <Cuboid size={[leadLength, legWidth, 15]} />
-      </Translate>
-    </Translate>
+      {/* Lead for Pin 2 (center) */}
+      <Colorize color={leadColor}>
+        <Translate
+          center={[pin2X, pin2Y, -leadBelowBoard / 2 + leadAboveBoard / 2]}
+        >
+          <Cuboid
+            size={[legWidth, legThickness, leadBelowBoard + leadAboveBoard]}
+          />
+        </Translate>
+      </Colorize>
+
+      {/* Lead for Pin 3 (right) */}
+      <Colorize color={leadColor}>
+        <Translate
+          center={[pin3X, pin3Y, -leadBelowBoard / 2 + leadAboveBoard / 2]}
+        >
+          <Cuboid
+            size={[legWidth, legThickness, leadBelowBoard + leadAboveBoard]}
+          />
+        </Translate>
+      </Colorize>
+    </>
   )
 }
