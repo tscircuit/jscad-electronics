@@ -64,21 +64,20 @@ import { JSXH2_5mm } from "./JSXH2_5mm"
  */
 
 export const Footprinter3d = ({ footprint }: { footprint: string }) => {
-  // Normalize jstzh1_5mm formats to zh format
-  let normalizedFootprint = footprint
+  // Handle custom JST connectors directly
   if (footprint.startsWith("jstzh1_5mm")) {
     const pinMatch = footprint.match(/jstzh1_5mm(\d+)?/)
-    const numPins = pinMatch && pinMatch[1] ? pinMatch[1] : "7"
-    normalizedFootprint = `zh${numPins}`
-  }
-  // Normalize jsxh2_5mm formats to xh format
-  if (footprint.startsWith("jsxh2_5mm")) {
-    const pinMatch = footprint.match(/jsxh2_5mm(\d+)?/)
-    const numPins = pinMatch && pinMatch[1] ? pinMatch[1] : "4"
-    normalizedFootprint = `xh${numPins}`
+    const numPins = pinMatch && pinMatch[1] ? parseInt(pinMatch[1]) : 7
+    return <JSTZH1_5mm numPins={numPins} />
   }
 
-  const fpJson = fp.string(normalizedFootprint).json() as unknown as {
+  if (footprint.startsWith("jsxh2_5mm")) {
+    const pinMatch = footprint.match(/jsxh2_5mm(\d+)?/)
+    const numPins = pinMatch && pinMatch[1] ? parseInt(pinMatch[1]) : 4
+    return <JSXH2_5mm numPins={numPins} />
+  }
+
+  const fpJson = fp.string(footprint).json() as unknown as {
     w: number
     p: number
     h: number
@@ -87,7 +86,6 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     num_pins: number
     fn: string
     zh?: boolean
-    xh?: boolean
     thermalpad?: { x: number; y: number }
     imperial: String
     male: boolean
@@ -290,14 +288,6 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           innerDiameter={fpJson.id}
         />
       )
-    case "jst":
-      if (fpJson.zh) {
-        return <JSTZH1_5mm numPins={fpJson.num_pins} />
-      }
-      if (fpJson.xh) {
-        return <JSXH2_5mm numPins={fpJson.num_pins} />
-      }
-      break
     case "soic":
       return (
         <SOIC
