@@ -67,11 +67,7 @@ export const JSXH2_5mm = ({
                   wallThickness * 1.5,
                   hollowHeight / 1.5,
                 ]}
-                center={[
-                  0,
-                  bodyDepth / 2 - wallThickness,
-                  hollowHeight * 0.5,
-                ]}
+                center={[0, bodyDepth / 2 - wallThickness, hollowHeight * 0.5]}
               />
               <Cuboid
                 size={[
@@ -79,11 +75,7 @@ export const JSXH2_5mm = ({
                   wallThickness * 1.5,
                   hollowHeight / 1.5,
                 ]}
-                center={[
-                  0,
-                  -bodyDepth / 2 + wallThickness,
-                  hollowHeight * 0.5,
-                ]}
+                center={[0, -bodyDepth / 2 + wallThickness, hollowHeight * 0.5]}
               />
               {/* Polarization key notch on left side */}
               <Cuboid
