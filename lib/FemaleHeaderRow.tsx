@@ -20,6 +20,7 @@ export const FemaleHeaderRow = ({
   const pinsPerRow = Math.ceil(numberOfPins / rows)
   const rowSpacing = 2.54 // Standard spacing between rows
   const xoff = -((pinsPerRow - 1) / 2) * pitch
+  const yoff = ((rows - 1) / 2) * rowSpacing
 
   // Flip Z for inversion
   const flipZ = (z: number) => (invert ? -z + bodyHeight : z)
@@ -30,7 +31,7 @@ export const FemaleHeaderRow = ({
         const row = Math.floor(i / pinsPerRow)
         const col = i % pinsPerRow
         const x = xoff + col * pitch
-        const y = -row * rowSpacing
+        const y = yoff - row * rowSpacing
 
         return (
           <FemaleHeader
