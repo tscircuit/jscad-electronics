@@ -6,6 +6,7 @@ import { renderGLTFToPNGBufferFromGLBBuffer } from "poppygl"
 
 export async function renderComponentTopView(
   element: React.ReactElement,
+  camPos: [number, number, number] = [0.000001, 20, -0.000001],
 ): Promise<Buffer> {
   const container: any[] = []
   const { createJSCADRoot } = createJSCADRenderer(jscadModeling as any)
@@ -30,7 +31,7 @@ export async function renderComponentTopView(
       ambient: 0.5,
       gamma: true,
       cull: true,
-      camPos: [0.0001, 20, -0.0001],
+      camPos,
       lookAt: [0, 0, 0],
       grid: {
         infiniteGrid: true,
