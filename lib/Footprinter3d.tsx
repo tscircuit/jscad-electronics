@@ -57,21 +57,27 @@ import { StampBoard } from "./stampboard"
 import { MountedPcbModule } from "./MountedPcbModule"
 import SOD723 from "./SOD723"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
+import { JSXH2_5mm } from "./JSXH2_5mm"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
  */
 
 export const Footprinter3d = ({ footprint }: { footprint: string }) => {
-  // Normalize jstzh1_5mm formats to zh format
-  let normalizedFootprint = footprint
+  // Handle custom JST connectors directly
   if (footprint.startsWith("jstzh1_5mm")) {
     const pinMatch = footprint.match(/jstzh1_5mm(\d+)?/)
-    const numPins = pinMatch && pinMatch[1] ? pinMatch[1] : "7"
-    normalizedFootprint = `zh${numPins}`
+    const numPins = pinMatch && pinMatch[1] ? parseInt(pinMatch[1]) : 7
+    return <JSTZH1_5mm numPins={numPins} />
   }
 
-  const fpJson = fp.string(normalizedFootprint).json() as unknown as {
+  if (footprint.startsWith("jsxh2_5mm")) {
+    const pinMatch = footprint.match(/jsxh2_5mm(\d+)?/)
+    const numPins = pinMatch && pinMatch[1] ? parseInt(pinMatch[1]) : 4
+    return <JSXH2_5mm numPins={numPins} />
+  }
+
+  const fpJson = fp.string(footprint).json() as unknown as {
     w: number
     p: number
     h: number
@@ -282,11 +288,6 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           innerDiameter={fpJson.id}
         />
       )
-    case "jst":
-      if (fpJson.zh) {
-        return <JSTZH1_5mm numPins={fpJson.num_pins} />
-      }
-      break
     case "soic":
       return (
         <SOIC
