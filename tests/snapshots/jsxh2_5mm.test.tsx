@@ -16,6 +16,6 @@ test("JSXH 2.5mm component", async () => {
       <JSXH2_5mm numPins={4} />
     </>
   )
-  const pngBuffer = await renderComponentTopView(element, [0, 20, 0])
+  const pngBuffer = await renderComponentTopView(element)
   await expect(pngBuffer).toMatchPngSnapshot(import.meta.path)
 })

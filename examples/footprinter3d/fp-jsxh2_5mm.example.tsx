@@ -1,7 +1,7 @@
 import { JsCadView } from "jscad-fiber"
 import { Footprinter3d } from "lib/Footprinter3d"
 
-const footprint = "jsxh2_5mm4"
+const footprint = "jst4_xh"
 export default () => {
   return (
     <JsCadView zAxisUp showGrid>

@@ -64,19 +64,6 @@ import { JSXH2_5mm } from "./JSXH2_5mm"
  */
 
 export const Footprinter3d = ({ footprint }: { footprint: string }) => {
-  // Handle custom JST connectors directly
-  if (footprint.startsWith("jstzh1_5mm")) {
-    const pinMatch = footprint.match(/jstzh1_5mm(\d+)?/)
-    const numPins = pinMatch && pinMatch[1] ? parseInt(pinMatch[1]) : 7
-    return <JSTZH1_5mm numPins={numPins} />
-  }
-
-  if (footprint.startsWith("jsxh2_5mm")) {
-    const pinMatch = footprint.match(/jsxh2_5mm(\d+)?/)
-    const numPins = pinMatch && pinMatch[1] ? parseInt(pinMatch[1]) : 4
-    return <JSXH2_5mm numPins={numPins} />
-  }
-
   const fpJson = fp.string(footprint).json() as unknown as {
     w: number
     p: number
@@ -86,6 +73,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     num_pins: number
     fn: string
     zh?: boolean
+    ph?: boolean
     thermalpad?: { x: number; y: number }
     imperial: String
     male: boolean
@@ -112,6 +100,11 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
   }
 
   switch (fpJson.fn) {
+    case "jst":
+      if (fpJson.zh) {
+        return <JSTZH1_5mm numPins={fpJson.num_pins} />
+      }
+      return <JSXH2_5mm numPins={fpJson.num_pins} />
     case "dip":
       return (
         <Dip numPins={fpJson.num_pins} pitch={fpJson.p} bodyWidth={fpJson.w} />
