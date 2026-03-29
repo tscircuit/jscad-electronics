@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.3",
-    "@tscircuit/footprinter": "^0.0.317",
+    "@tscircuit/footprinter": "^0.0.333",
     "@types/react": "19",
     "@types/react-dom": "19",
     "@types/three": "^0.179.0",
@@ -38,7 +38,7 @@
     "jscad-fiber": "^0.0.85",
     "jscad-to-gltf": "^0.0.4",
     "looks-same": "^10.0.1",
-    "poppygl": "^0.0.15",
+    "poppygl": "^0.0.20",
     "react-cosmos": "7.0.0",
     "react-cosmos-plugin-vite": "7.0.0",
     "tsup": "^8.3.0",
@@ -48,6 +48,7 @@
   "peerDependencies": {
     "@jscad/modeling": "^2.12.5",
     "@tscircuit/footprinter": "*",
+     "@tscircuit/alphabet": "^0.0.24",
     "circuit-json": "^0.0.232",
     "jscad-fiber": "^0.0.85",
     "react": "19.1.0",
