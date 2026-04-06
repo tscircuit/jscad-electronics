@@ -1,7 +1,7 @@
 {
   "name": "jscad-electronics",
   "type": "module",
-  "version": "0.0.127",
+  "version": "0.0.128",
   "main": "./dist/index.js",
   "exports": {
     ".": {
@@ -48,7 +48,7 @@
   "peerDependencies": {
     "@jscad/modeling": "^2.12.5",
     "@tscircuit/footprinter": "*",
-     "@tscircuit/alphabet": "^0.0.24",
+    "@tscircuit/alphabet": "^0.0.24",
     "circuit-json": "^0.0.232",
     "jscad-fiber": "^0.0.85",
     "react": "19.1.0",
