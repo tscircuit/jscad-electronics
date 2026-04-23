@@ -5,3 +5,4 @@ cosmos-export
 .aider*
 dist
 .env
+*.diff.*
