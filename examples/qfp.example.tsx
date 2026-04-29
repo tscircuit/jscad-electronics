@@ -1,11 +1,11 @@
 import { JsCadView } from "jscad-fiber"
-import { QFP } from "../lib/qfp"
+import { Footprinter3d } from "../lib/Footprinter3d"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 
 export default () => {
   return (
     <JsCadView zAxisUp showGrid>
-      <QFP pinCount={64} />
+      <Footprinter3d footprint="qfp64" />
       <ExtrudedPads footprint="qfp64" />
     </JsCadView>
   )
