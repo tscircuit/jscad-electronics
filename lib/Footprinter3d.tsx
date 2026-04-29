@@ -149,7 +149,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           pinCount={fpJson.num_pins}
           pitch={fpJson.p}
           leadWidth={fpJson.pw}
-          padContactLength={fpJson.pl / 2}
+          padContactLength={fpJson.pl}
           bodyWidth={fpJson.w}
         />
       )
@@ -172,9 +172,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           thermalPadSize={
             hasThermalPad
               ? {
-                  width: fpJson.thermalpad!.x,
-                  length: fpJson.thermalpad!.y,
-                }
+                width: fpJson.thermalpad!.x,
+                length: fpJson.thermalpad!.y,
+              }
               : undefined
           }
         />
@@ -196,9 +196,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           thermalPadSize={
             hasThermalPad
               ? {
-                  width: fpJson.thermalpad!.x,
-                  length: fpJson.thermalpad!.y,
-                }
+                width: fpJson.thermalpad!.x,
+                length: fpJson.thermalpad!.y,
+              }
               : undefined
           }
         />
