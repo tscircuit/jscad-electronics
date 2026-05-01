@@ -172,9 +172,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           thermalPadSize={
             hasThermalPad
               ? {
-                width: fpJson.thermalpad!.x,
-                length: fpJson.thermalpad!.y,
-              }
+                  width: fpJson.thermalpad!.x,
+                  length: fpJson.thermalpad!.y,
+                }
               : undefined
           }
         />
@@ -196,9 +196,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           thermalPadSize={
             hasThermalPad
               ? {
-                width: fpJson.thermalpad!.x,
-                length: fpJson.thermalpad!.y,
-              }
+                  width: fpJson.thermalpad!.x,
+                  length: fpJson.thermalpad!.y,
+                }
               : undefined
           }
         />

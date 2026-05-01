@@ -22,13 +22,17 @@ export const QFP = ({
   if (!leadWidth) leadWidth = getLeadWidth(pinCount, bodyWidth)
   if (!bodyWidth) bodyWidth = pitch * (sidePinCount + 4)
 
+  const footprintPadLength = padContactLength
   const bodyLength = bodyWidth
   const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2
-  const fullLength = bodyLength + 2 * padContactLength
+  const leadReach = footprintPadLength * 0.5
+  const fullLength = bodyLength + 2 * leadReach
   const fullWidth = fullLength
   const leadHeight = 0.8
   const leadThickness = 0.15
-  const bodyDistance = (fullWidth - bodyWidth) / 2 + 0.5
+  const bodyDistance = leadReach
+  const visiblePadContactLength = leadReach * 0.5
+  const curveLength = leadReach * 0.18
 
   return (
     <>
@@ -37,14 +41,15 @@ export const QFP = ({
         <SmdChipLead
           key={`left-${i}`}
           position={{
-            x: -fullWidth / 2 - 0.4,
+            x: -fullWidth / 2,
             y: i * pitch - pinOffsetToCenter,
             z: leadThickness / 2,
           }}
           width={leadWidth}
           thickness={leadThickness}
-          padContactLength={padContactLength}
+          padContactLength={visiblePadContactLength}
           bodyDistance={bodyDistance}
+          curveLength={curveLength}
           height={leadHeight}
         />
       ))}
@@ -55,14 +60,15 @@ export const QFP = ({
           key={`right-${i}`}
           rotation={Math.PI}
           position={{
-            x: fullWidth / 2 + 0.4,
+            x: fullWidth / 2,
             y: i * pitch - pinOffsetToCenter,
             z: leadThickness / 2,
           }}
           width={leadWidth}
           thickness={leadThickness}
-          padContactLength={padContactLength}
+          padContactLength={visiblePadContactLength}
           bodyDistance={bodyDistance}
+          curveLength={curveLength}
           height={leadHeight}
         />
       ))}
@@ -74,13 +80,14 @@ export const QFP = ({
           rotation={Math.PI / 2}
           position={{
             x: i * pitch - pinOffsetToCenter,
-            y: -fullLength / 2 - 0.4,
+            y: -fullLength / 2,
             z: leadThickness / 2,
           }}
           width={leadWidth}
           thickness={leadThickness}
-          padContactLength={padContactLength}
+          padContactLength={visiblePadContactLength}
           bodyDistance={bodyDistance}
+          curveLength={curveLength}
           height={leadHeight}
         />
       ))}
@@ -92,13 +99,14 @@ export const QFP = ({
           rotation={-Math.PI / 2}
           position={{
             x: i * pitch - pinOffsetToCenter,
-            y: fullLength / 2 + 0.4,
+            y: fullLength / 2,
             z: leadThickness / 2,
           }}
           width={leadWidth}
           thickness={leadThickness}
-          padContactLength={padContactLength}
+          padContactLength={visiblePadContactLength}
           bodyDistance={bodyDistance}
+          curveLength={curveLength}
           height={leadHeight}
         />
       ))}
@@ -120,6 +128,7 @@ export const QFP = ({
     </>
   )
 }
+
 // Helper functions to determine default values based on pinCount and width of QFP as footprinter repo
 const getPitch = (pinCount: number, width?: number): number => {
   switch (pinCount) {
