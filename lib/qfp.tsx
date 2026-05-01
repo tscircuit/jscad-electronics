@@ -31,7 +31,7 @@ export const QFP = ({
   const leadHeight = 0.8
   const leadThickness = 0.15
   const bodyDistance = leadReach
-  const visiblePadContactLength = leadReach * 0.5
+  const fullPadContactLength = leadReach * 0.5
   const curveLength = leadReach * 0.18
 
   return (
@@ -47,7 +47,7 @@ export const QFP = ({
           }}
           width={leadWidth}
           thickness={leadThickness}
-          padContactLength={visiblePadContactLength}
+          padContactLength={fullPadContactLength}
           bodyDistance={bodyDistance}
           curveLength={curveLength}
           height={leadHeight}
@@ -66,7 +66,7 @@ export const QFP = ({
           }}
           width={leadWidth}
           thickness={leadThickness}
-          padContactLength={visiblePadContactLength}
+          padContactLength={fullPadContactLength}
           bodyDistance={bodyDistance}
           curveLength={curveLength}
           height={leadHeight}
@@ -85,7 +85,7 @@ export const QFP = ({
           }}
           width={leadWidth}
           thickness={leadThickness}
-          padContactLength={visiblePadContactLength}
+          padContactLength={fullPadContactLength}
           bodyDistance={bodyDistance}
           curveLength={curveLength}
           height={leadHeight}
@@ -104,7 +104,7 @@ export const QFP = ({
           }}
           width={leadWidth}
           thickness={leadThickness}
-          padContactLength={visiblePadContactLength}
+          padContactLength={fullPadContactLength}
           bodyDistance={bodyDistance}
           curveLength={curveLength}
           height={leadHeight}
