@@ -1,11 +1,12 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "jscad-electronics",
       "devDependencies": {
         "@biomejs/biome": "^1.9.3",
-        "@tscircuit/footprinter": "^0.0.351",
+        "@tscircuit/footprinter": "^0.0.354",
         "@types/react": "19",
         "@types/react-dom": "19",
         "@types/three": "^0.179.0",
@@ -178,7 +179,7 @@
 
     "@tscircuit/alphabet": ["@tscircuit/alphabet@0.0.24", "", { "peerDependencies": { "typescript": "^5.0.0" } }, "sha512-vYYLwDwpTULFDwuqB5+U4RlTiHJ3Ez4Sf5OEv7rB1oVbhmh8p3Xl7h3vsi5eD4SE+x+0e8eSXKSlwSLCN94vZA=="],
 
-    "@tscircuit/footprinter": ["@tscircuit/footprinter@0.0.351", "", { "dependencies": { "@tscircuit/mm": "^0.0.8", "zod": "^3.23.8" }, "peerDependencies": { "circuit-json": "*" } }, "sha512-AdeHTvD12tIEE/jYzsl9srSiMbJm6fGj5NLFTwOvUWCVPxqVACuwzbfLnFYKC2fE+QVdZWI7FhkzzeeqXjyokg=="],
+    "@tscircuit/footprinter": ["@tscircuit/footprinter@0.0.354", "", { "dependencies": { "@tscircuit/mm": "^0.0.8", "zod": "^3.23.8" }, "peerDependencies": { "circuit-json": "*" } }, "sha512-zXj49G6Pk13VPvZYg5482fRW6HJM5XY+Lbp4l2TDkwGX8kQ0YQOjrURw3qD8Q32/wuIAlYBPRLttsALHBz/0xw=="],
 
     "@tscircuit/mm": ["@tscircuit/mm@0.0.8", "", { "peerDependencies": { "typescript": "^5.0.0" } }, "sha512-nl7nxE7AhARbKuobflI0LUzoir7+wJyvwfPw6bzA/O0Q3YTcH3vBkU/Of+V/fp6ht+AofiCXj7YAH9E446138Q=="],
 
