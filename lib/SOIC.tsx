@@ -22,7 +22,9 @@ export const SOIC = ({
   const leadHeight = 0.8
   const leadBodyOffset = leadLength * 0
   const fullLength = pitch * (sidePinCount - 1) + leadWidth + 0.2
-  const bodyWidthAdjusted = bodyWidth * 0.55
+  // SOIC body width is typically ~60% of the total width between lead tips
+  // to leave space for the leads on each side
+  const bodyWidthAdjusted = bodyWidth * 0.6
 
   return (
     <>
@@ -62,6 +64,18 @@ export const SOIC = ({
         width={bodyWidthAdjusted}
         length={fullLength}
         height={bodyHeight}
+        // Taper the body so top face is slightly narrower than bottom
+        // giving a more realistic 3D chip appearance
+        taperRatio={0.08}
+        faceRatio={0.78}
+        straightHeightRatio={0.5}
+        // Add chamfered edges for realistic look
+        chamferSize={0.04}
+        // Include pin-1 notch at the top center of the chip
+        includeNotch={true}
+        notchRadius={0.15}
+        notchLength={0.35}
+        notchWidth={0.2}
       />
     </>
   )
