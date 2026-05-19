@@ -49,7 +49,7 @@
     "@jscad/modeling": "^2.12.5",
     "@tscircuit/footprinter": "*",
     "@tscircuit/alphabet": "^0.0.24",
-    "circuit-json": "^0.0.232",
+    "circuit-json": "^0.0.426",
     "jscad-fiber": "^0.0.85",
     "react": "19.1.0",
     "react-dom": "19.1.0",
