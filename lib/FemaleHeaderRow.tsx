@@ -30,7 +30,7 @@ export const FemaleHeaderRow = ({
         const row = Math.floor(i / pinsPerRow)
         const col = i % pinsPerRow
         const x = xoff + col * pitch
-        const y = -row * rowSpacing
+        const y = ((rows - 1) / 2 - row) * rowSpacing
 
         return (
           <FemaleHeader
