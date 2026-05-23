@@ -3,11 +3,21 @@ import { convertJscadModelToGltf } from "jscad-to-gltf"
 import { renderGLTFToPNGBufferFromGLBBuffer } from "poppygl"
 import { importVanilla } from "../fixtures/importVanilla.js"
 
+type Vec3 = [number, number, number]
+
+type RenderFootprintOptions = {
+  camPos?: Vec3
+  lookAt?: Vec3
+}
+
 /**
  * Render a footprint to PNG using poppygl via GLTF conversion
  * This preserves colors correctly from the JSCAD model
  */
-export async function renderFootprint(footprint: string): Promise<Buffer> {
+export async function renderFootprint(
+  footprint: string,
+  options: RenderFootprintOptions = {},
+): Promise<Buffer> {
   const { getJscadModelForFootprintWithPads } = await importVanilla()
   const result = getJscadModelForFootprintWithPads(footprint, jscadModeling)
 
@@ -31,6 +41,7 @@ export async function renderFootprint(footprint: string): Promise<Buffer> {
       ambient: 0.3,
       gamma: true,
       cull: true,
+      ...options,
       grid: {
         infiniteGrid: true,
         cellSize: 0.5,
