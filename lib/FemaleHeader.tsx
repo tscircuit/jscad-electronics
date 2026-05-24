@@ -1,4 +1,4 @@
-import { Colorize, Cuboid, Cylinder, Hull, Subtract } from "jscad-fiber"
+import { Colorize, Cuboid, Hull, Subtract } from "jscad-fiber"
 
 export const FemaleHeader = ({
   x,
@@ -24,6 +24,12 @@ export const FemaleHeader = ({
   flipZ: (z: number) => number
 }) => {
   const pinThickness = innerDiameter / 1.5
+  const socketWidth = innerDiameter || pinThickness * 1.6
+  const socketEntryWidth = socketWidth * 1.8
+  const socketEntryHeight = Math.min(bodyHeight * 0.18, pitch * 0.24)
+  const socketDepth = bodyHeight + 0.1
+  const socketCenterZ = flipZ(z + socketDepth / 2)
+  const socketEntryCenterZ = flipZ(z + bodyHeight - socketEntryHeight / 2)
   const gapWidth = pinThickness * 1.6
 
   return (
@@ -35,19 +41,20 @@ export const FemaleHeader = ({
             size={[bodyLength, bodyWidth, bodyHeight]}
             center={[x, y, flipZ(z + bodyHeight / 2)]}
           />
-          {innerDiameter ? (
-            <Cylinder
-              height={bodyHeight + 0.1}
-              radius={innerDiameter / 2}
-              center={[x, y, flipZ(z + bodyHeight / 2)]}
-              color="#222"
-            />
-          ) : (
+          <Cuboid
+            size={[socketWidth, socketWidth, socketDepth]}
+            center={[x, y, socketCenterZ]}
+          />
+          <Hull>
             <Cuboid
-              size={[gapWidth, gapWidth, bodyHeight]}
-              center={[x, y, flipZ(z + bodyHeight / 2)]}
+              size={[socketWidth, socketWidth, 0.01]}
+              center={[x, y, socketEntryCenterZ]}
             />
-          )}
+            <Cuboid
+              size={[socketEntryWidth, socketEntryWidth, 0.01]}
+              center={[x, y, flipZ(z + bodyHeight)]}
+            />
+          </Hull>
         </Subtract>
       </Colorize>
       <Colorize color="silver">
