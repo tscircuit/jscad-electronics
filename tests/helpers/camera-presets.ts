@@ -129,14 +129,8 @@ export function getDefaultCameraResult(
 }
 
 export function applyCameraPreset(
-  preset: string,
+  preset: CameraPreset,
   cam: CameraResult,
 ): CameraResult {
-  if (!(preset in CAMERA_PRESETS)) {
-    throw new Error(
-      `Unknown camera preset "${preset}". Valid presets: ${Object.keys(CAMERA_PRESETS).join(", ")}`,
-    )
-  }
-
-  return CAMERA_PRESETS[preset as CameraPreset](cam)
+  return CAMERA_PRESETS[preset](cam)
 }
