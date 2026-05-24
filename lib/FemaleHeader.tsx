@@ -23,13 +23,14 @@ export const FemaleHeader = ({
   bodyWidth?: number
   flipZ: (z: number) => number
 }) => {
-  const pinThickness = innerDiameter / 1.5
-  const socketWidth = innerDiameter || pinThickness * 1.6
+  const effectiveInnerDiameter = innerDiameter || 0.945
+  const pinThickness = effectiveInnerDiameter / 1.5
+  const socketWidth = effectiveInnerDiameter
   const socketEntryWidth = socketWidth * 1.8
   const socketEntryHeight = Math.min(bodyHeight * 0.18, pitch * 0.24)
   const socketDepth = bodyHeight + 0.1
   const socketCenterZ = flipZ(z + socketDepth / 2)
-  const socketEntryCenterZ = flipZ(z + bodyHeight - socketEntryHeight / 2)
+  const socketEntryBaseZ = z + bodyHeight - socketEntryHeight
   const gapWidth = pinThickness * 1.6
 
   return (
@@ -48,7 +49,7 @@ export const FemaleHeader = ({
           <Hull>
             <Cuboid
               size={[socketWidth, socketWidth, 0.01]}
-              center={[x, y, socketEntryCenterZ]}
+              center={[x, y, flipZ(socketEntryBaseZ)]}
             />
             <Cuboid
               size={[socketEntryWidth, socketEntryWidth, 0.01]}
