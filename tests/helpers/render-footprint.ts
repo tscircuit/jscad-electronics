@@ -1,7 +1,7 @@
 import * as jscadModeling from "@jscad/modeling"
 import type { Geometry } from "@jscad/modeling/src/geometries/types"
 import { convertJscadModelToGltf } from "jscad-to-gltf"
-import { renderGLTFToPNGBufferFromGLBBuffer } from "poppygl"
+import { renderGLTFToPNGFromGLB } from "poppygl"
 import { importVanilla } from "../fixtures/importVanilla.js"
 import {
   applyCameraPreset,
@@ -73,7 +73,7 @@ function getTransformedBoundingBox(geometry: RenderResult) {
 export async function renderFootprint(
   footprint: string,
   options: RenderFootprintOptions = {},
-): Promise<Buffer> {
+): Promise<Uint8Array> {
   const { getJscadModelForFootprintWithPads } = await importVanilla()
   const result = getJscadModelForFootprintWithPads(footprint, jscadModeling)
 
@@ -108,7 +108,7 @@ export async function renderFootprint(
   }
 
   if (!options.cameraPreset) {
-    return renderGLTFToPNGBufferFromGLBBuffer(glbBuffer, {
+    return renderGLTFToPNGFromGLB(glbBuffer, {
       ...baseRenderOptions,
       camPos: options.camPos,
       lookAt: options.lookAt,
@@ -121,7 +121,7 @@ export async function renderFootprint(
     getDefaultCameraResult(getTransformedBoundingBox(result), defaultFov),
   )
 
-  return renderGLTFToPNGBufferFromGLBBuffer(glbBuffer, {
+  return renderGLTFToPNGFromGLB(glbBuffer, {
     ...baseRenderOptions,
     fov: cameraOptions.fov,
     camPos: options.camPos ?? cameraOptions.camPos,

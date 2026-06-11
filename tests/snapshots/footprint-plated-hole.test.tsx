@@ -10,7 +10,7 @@ import {
   Colorize,
 } from "lib/vanilla/primitives"
 import { convertJscadModelToGltf } from "jscad-to-gltf"
-import { renderGLTFToPNGBufferFromGLBBuffer } from "poppygl"
+import { renderGLTFToPNGFromGLB } from "poppygl"
 import * as jscadModeling from "@jscad/modeling"
 
 test("circular_hole_with_rect_pad plated hole", async () => {
@@ -48,7 +48,7 @@ test("circular_hole_with_rect_pad plated hole", async () => {
     },
   )
 
-  const pngBuffer = await renderGLTFToPNGBufferFromGLBBuffer(
+  const pngBuffer = await renderGLTFToPNGFromGLB(
     gltfResult.data instanceof ArrayBuffer
       ? gltfResult.data
       : Buffer.from(gltfResult.data as string),

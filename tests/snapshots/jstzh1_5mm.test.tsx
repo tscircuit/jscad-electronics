@@ -4,13 +4,13 @@ import * as React from "react"
 import * as jscadModeling from "@jscad/modeling"
 import { createJSCADRenderer } from "jscad-fiber"
 import { convertJscadModelToGltf } from "jscad-to-gltf"
-import { renderGLTFToPNGBufferFromGLBBuffer } from "poppygl"
+import { renderGLTFToPNGFromGLB } from "poppygl"
 import { JSTZH1_5mm } from "../../lib/JSTZH1_5mm"
 import { Colorize, Cuboid, Translate } from "jscad-fiber"
 
 async function renderComponentTopView(
   element: React.ReactElement,
-): Promise<Buffer> {
+): Promise<Uint8Array> {
   const container: any[] = []
   const { createJSCADRoot } = createJSCADRenderer(jscadModeling as any)
   const root = createJSCADRoot(container)
@@ -24,7 +24,7 @@ async function renderComponentTopView(
   })
 
   // Apply top-down camera preset for better component visibility
-  const pngBuffer = await renderGLTFToPNGBufferFromGLBBuffer(
+  const pngBuffer = await renderGLTFToPNGFromGLB(
     gltfResult.data instanceof ArrayBuffer
       ? gltfResult.data
       : Buffer.from(gltfResult.data as string),
