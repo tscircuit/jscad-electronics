@@ -1,12 +1,13 @@
-import { TO92 } from "lib/index"
 import { JsCadView } from "jscad-fiber"
-import { ExtrudedPads } from "../lib/ExtrudedPads"
+import { Footprinter3d } from "lib/Footprinter3d"
+import { ExtrudedPads } from "lib/ExtrudedPads"
 
+const footprint = "to92_inline"
 export default () => {
   return (
     <JsCadView zAxisUp showGrid>
-      <TO92 inline />
-      <ExtrudedPads footprint="to92_inline" />
+      <Footprinter3d footprint={footprint} />
+      <ExtrudedPads footprint={footprint} />
     </JsCadView>
   )
 }
