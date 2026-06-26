@@ -7,7 +7,7 @@ import {
   Subtract,
 } from "jscad-fiber"
 
-export const TO92 = () => {
+export const TO92 = ({ inline = false }: { inline?: boolean }) => {
   // === Dimensions (mm) ===
   const bodyRadius = 2.4
   const bodyHeight = 4.5
@@ -29,8 +29,9 @@ export const TO92 = () => {
 
   const leadTipPos1: [number, number, number] = [0, 0, -0.66]
   const leadMidPosA: [number, number, number] = [0, 0, -1.32]
-  const leadMidPosB: [number, number, number] = [0, 1.28, -2.72]
-  const leadTipPos2: [number, number, number] = [0, 1.28, -8.9]
+  const middleLeadY = inline ? 0 : 1.28
+  const leadMidPosB: [number, number, number] = [0, middleLeadY, -2.72]
+  const leadTipPos2: [number, number, number] = [0, middleLeadY, -8.9]
 
   const sideLeadZ = -7.5
 

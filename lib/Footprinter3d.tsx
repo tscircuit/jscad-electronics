@@ -103,6 +103,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     screenheight?: number
     screencenteroffsetx?: number
     screencenteroffsety?: number
+    inline?: boolean
   }
 
   switch (fpJson.fn) {
@@ -354,7 +355,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     case "to220":
       return <TO220 />
     case "to92":
-      return <TO92 />
+      return <TO92 inline={fpJson.inline} />
     case "stampboard":
     case "stampreceiver":
       return (
