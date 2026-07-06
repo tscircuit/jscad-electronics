@@ -1,7 +1,7 @@
 {
   "name": "jscad-electronics",
   "type": "module",
-  "version": "0.0.138",
+  "version": "0.0.139",
   "main": "./dist/index.js",
   "exports": {
     ".": {
