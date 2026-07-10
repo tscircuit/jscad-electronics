@@ -52,6 +52,7 @@ export const PinRow = ({
             faceup={faceup}
             smd={smd}
             rightangle={rightangle}
+            invert={invert}
           />
         )
       })}

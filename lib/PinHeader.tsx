@@ -14,6 +14,7 @@ export const PinHeader = ({
   faceup,
   smd,
   rightangle,
+  invert,
 }: {
   x: number
   y: number
@@ -27,7 +28,37 @@ export const PinHeader = ({
   faceup?: boolean
   smd?: boolean
   rightangle?: boolean
+  invert?: boolean
 }) => {
+  if (rightangle && !smd) {
+    const bendZ = bodyHeight / 2
+    const tailEndZ = invert
+      ? bendZ - shortSidePinLength
+      : bendZ + shortSidePinLength
+    const tailLength = Math.abs(tailEndZ - bendZ)
+    const tailCenterZ = (tailEndZ + bendZ) / 2
+
+    return (
+      <>
+        <Cuboid
+          color="#222"
+          size={[bodyLength, bodyWidth, bodyHeight]}
+          center={[x, y - 3, bendZ]}
+        />
+        <Colorize color="gold">
+          <Cuboid
+            size={[pinThickness, pinThickness, tailLength]}
+            center={[x, y, tailCenterZ]}
+          />
+          <Cuboid
+            size={[pinThickness, longSidePinLength, pinThickness]}
+            center={[x, y - longSidePinLength / 2, bendZ]}
+          />
+        </Colorize>
+      </>
+    )
+  }
+
   return (
     <>
       <Translate y={rightangle ? -3 : 0}>
