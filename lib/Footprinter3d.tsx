@@ -57,6 +57,7 @@ import { StampBoard } from "./stampboard"
 import { MountedPcbModule } from "./MountedPcbModule"
 import SOD723 from "./SOD723"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
+import { WSON } from "./WSON"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -103,6 +104,10 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     screenheight?: number
     screencenteroffsetx?: number
     screencenteroffsety?: number
+    rowspan?: number
+    ep?: boolean
+    epw?: number
+    eph?: number
   }
 
   switch (fpJson.fn) {
@@ -204,6 +209,21 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         />
       )
     }
+
+    case "wson":
+      return (
+        <WSON
+          pitch={fpJson.p}
+          rowSpan={fpJson.rowspan}
+          padLength={fpJson.pl}
+          padWidth={fpJson.pw}
+          exposedPad={fpJson.ep}
+          exposedPadWidth={fpJson.epw}
+          exposedPadHeight={fpJson.eph}
+          bodyWidth={fpJson.w}
+          bodyLength={fpJson.h}
+        />
+      )
 
     case "pinrow": {
       // Parse rows parameter from footprint string (e.g., "pinrow4_rows2")
