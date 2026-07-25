@@ -57,6 +57,7 @@ import { StampBoard } from "./stampboard"
 import { MountedPcbModule } from "./MountedPcbModule"
 import SOD723 from "./SOD723"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
+import { Crystal } from "./Crystal"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -103,6 +104,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     screenheight?: number
     screencenteroffsetx?: number
     screencenteroffsety?: number
+    px?: number
+    py?: number
+    ph?: number
   }
 
   switch (fpJson.fn) {
@@ -325,6 +329,15 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <SOD923 />
     case "hc49":
       return <HC49 />
+    case "crystal":
+      return (
+        <Crystal
+          padPitchX={fpJson.px}
+          padPitchY={fpJson.py}
+          padWidth={fpJson.pw}
+          padHeight={fpJson.ph}
+        />
+      )
     case "micromelf":
       return <MicroMELF />
     case "minimelf":
