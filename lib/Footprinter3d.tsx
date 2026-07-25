@@ -57,6 +57,7 @@ import { StampBoard } from "./stampboard"
 import { MountedPcbModule } from "./MountedPcbModule"
 import SOD723 from "./SOD723"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
+import { LGA } from "./LGA"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -103,6 +104,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     screenheight?: number
     screencenteroffsetx?: number
     screencenteroffsety?: number
+    grid?: { x: number; y: number }
   }
 
   switch (fpJson.fn) {
@@ -157,6 +159,17 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <TQFP />
     case "lqfp":
       return <LQFP pinCount={fpJson.num_pins} />
+    case "lga":
+      return (
+        <LGA
+          grid={fpJson.grid}
+          pitch={fpJson.p}
+          bodyWidth={fpJson.w}
+          bodyLength={fpJson.h}
+          padWidth={fpJson.pw}
+          padLength={fpJson.pl}
+        />
+      )
     case "qfn": {
       const hasThermalPad =
         typeof fpJson.thermalpad?.x === "number" &&
