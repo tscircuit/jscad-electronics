@@ -57,6 +57,7 @@ import { StampBoard } from "./stampboard"
 import { MountedPcbModule } from "./MountedPcbModule"
 import SOD723 from "./SOD723"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
+import { UsbCMidMount } from "./UsbCMidMount"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -103,6 +104,22 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     screenheight?: number
     screencenteroffsetx?: number
     screencenteroffsety?: number
+    split?: boolean
+    reverse?: boolean
+    rowy?: number
+    ph?: number
+    powerpw?: number
+    powerx?: number
+    shellx?: number
+    topy?: number
+    bottomy?: number
+    tophw?: number
+    tophh?: number
+    topring?: number
+    bottomhw?: number
+    bottomhh?: number
+    bottomring?: number
+    bodybottom?: number
   }
 
   switch (fpJson.fn) {
@@ -287,6 +304,28 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         return <JSTZH1_5mm numPins={fpJson.num_pins} />
       }
       break
+    case "usbcmidmount":
+      return (
+        <UsbCMidMount
+          split={fpJson.split}
+          reverse={fpJson.reverse}
+          rowY={fpJson.rowy}
+          padHeight={fpJson.ph}
+          signalPadWidth={fpJson.pw}
+          powerPadWidth={fpJson.powerpw}
+          powerX={fpJson.powerx}
+          shellX={fpJson.shellx}
+          topY={fpJson.topy}
+          bottomY={fpJson.bottomy}
+          topHoleWidth={fpJson.tophw}
+          topHoleHeight={fpJson.tophh}
+          topRing={fpJson.topring}
+          bottomHoleWidth={fpJson.bottomhw}
+          bottomHoleHeight={fpJson.bottomhh}
+          bottomRing={fpJson.bottomring}
+          bodyBottom={fpJson.bodybottom}
+        />
+      )
     case "soic":
       return (
         <SOIC
