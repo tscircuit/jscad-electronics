@@ -57,6 +57,7 @@ import { StampBoard } from "./stampboard"
 import { MountedPcbModule } from "./MountedPcbModule"
 import SOD723 from "./SOD723"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
+import { FPC } from "./FPC"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -103,6 +104,16 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     screenheight?: number
     screencenteroffsetx?: number
     screencenteroffsety?: number
+    staggered?: boolean
+    reverse?: boolean
+    py?: number
+    toppl?: number
+    bottompl?: number
+    mpx?: number
+    mpy?: number
+    mounttop?: boolean
+    mpw?: number
+    mpl?: number
   }
 
   switch (fpJson.fn) {
@@ -287,6 +298,25 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         return <JSTZH1_5mm numPins={fpJson.num_pins} />
       }
       break
+    case "fpc":
+      return (
+        <FPC
+          pinCount={fpJson.num_pins}
+          pitch={fpJson.p}
+          padWidth={fpJson.pw}
+          padLength={fpJson.pl}
+          staggered={fpJson.staggered}
+          reverse={fpJson.reverse}
+          rowPitch={fpJson.py}
+          topPadLength={fpJson.toppl}
+          bottomPadLength={fpJson.bottompl}
+          mountPadPitchX={fpJson.mpx}
+          mountPadOffsetY={fpJson.mpy}
+          mountTop={fpJson.mounttop}
+          mountPadWidth={fpJson.mpw}
+          mountPadLength={fpJson.mpl}
+        />
+      )
     case "soic":
       return (
         <SOIC
