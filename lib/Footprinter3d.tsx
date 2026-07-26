@@ -58,6 +58,8 @@ import { MountedPcbModule } from "./MountedPcbModule"
 import SOD723 from "./SOD723"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
 import { Crystal } from "./Crystal"
+import { FPC } from "./FPC"
+import { SmdPinHeader } from "./SmdPinHeader"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -75,6 +77,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
   const fpJson = fp.string(normalizedFootprint).json() as unknown as {
     w: number
     p: number
+    bh?: number
     h: number
     pl: number
     pw: number
@@ -107,6 +110,16 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     screenheight?: number
     screencenteroffsetx?: number
     screencenteroffsety?: number
+    staggered?: boolean
+    reverse?: boolean
+    py?: number
+    toppl?: number
+    bottompl?: number
+    mpx?: number
+    mpy?: number
+    mounttop?: boolean
+    mpw?: number
+    mpl?: number
   }
 
   switch (fpJson.fn) {
@@ -244,6 +257,14 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           />
         )
     }
+    case "smdpinheader":
+      return (
+        <SmdPinHeader
+          numberOfPins={fpJson.num_pins}
+          pitch={fpJson.p}
+          bodyWidth={fpJson.bh}
+        />
+      )
 
     case "cap": {
       switch (fpJson.imperial) {
@@ -300,6 +321,25 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         return <JSTZH1_5mm numPins={fpJson.num_pins} />
       }
       break
+    case "fpc":
+      return (
+        <FPC
+          pinCount={fpJson.num_pins}
+          pitch={fpJson.p}
+          padWidth={fpJson.pw}
+          padLength={fpJson.pl}
+          staggered={fpJson.staggered}
+          reverse={fpJson.reverse}
+          rowPitch={fpJson.py}
+          topPadLength={fpJson.toppl}
+          bottomPadLength={fpJson.bottompl}
+          mountPadPitchX={fpJson.mpx}
+          mountPadOffsetY={fpJson.mpy}
+          mountTop={fpJson.mounttop}
+          mountPadWidth={fpJson.mpw}
+          mountPadLength={fpJson.mpl}
+        />
+      )
     case "soic":
       return (
         <SOIC
