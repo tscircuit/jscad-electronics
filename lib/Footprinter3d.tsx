@@ -59,7 +59,7 @@ import SOD723 from "./SOD723"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
 import { FPC } from "./FPC"
 import { SmdPinHeader } from "./SmdPinHeader"
-import { Led5050 } from "./LED5050"
+import { Led5050 } from "./Led5050"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
