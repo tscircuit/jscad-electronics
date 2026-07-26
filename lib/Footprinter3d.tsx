@@ -59,6 +59,7 @@ import SOD723 from "./SOD723"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
 import { FPC } from "./FPC"
 import { SmdPinHeader } from "./SmdPinHeader"
+import { Led5050 } from "./LED5050"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -117,6 +118,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     mpw?: number
     mpl?: number
   }
+
+  const colorMatch = footprint.match(/_color\(([^)]+)\)/)
+  const color = colorMatch ? colorMatch[1] : undefined
 
   switch (fpJson.fn) {
     case "dip":
@@ -252,6 +256,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           bodyWidth={fpJson.bh}
         />
       )
+    case "led5050":
+      return <Led5050 color={color} />
 
     case "cap": {
       switch (fpJson.imperial) {
@@ -447,9 +453,6 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       )
     }
   }
-
-  const colorMatch = footprint.match(/_color\(([^)]+)\)/)
-  const color = colorMatch ? colorMatch[1] : undefined
 
   switch (fpJson.imperial) {
     case "0402":
