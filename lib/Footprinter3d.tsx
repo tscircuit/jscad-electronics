@@ -112,7 +112,6 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     screencenteroffsety?: number
     staggered?: boolean
     reverse?: boolean
-    py?: number
     toppl?: number
     bottompl?: number
     mpx?: number
