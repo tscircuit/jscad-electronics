@@ -57,6 +57,7 @@ import { StampBoard } from "./stampboard"
 import { MountedPcbModule } from "./MountedPcbModule"
 import SOD723 from "./SOD723"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
+import { Crystal } from "./Crystal"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -77,6 +78,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     h: number
     pl: number
     pw: number
+    ph?: number
+    px?: number
+    py?: number
     num_pins: number
     fn: string
     zh?: boolean
@@ -106,6 +110,15 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
   }
 
   switch (fpJson.fn) {
+    case "crystal":
+      return (
+        <Crystal
+          horizontalPadPitch={fpJson.px}
+          verticalPadPitch={fpJson.py}
+          padWidth={fpJson.pw}
+          padHeight={fpJson.ph}
+        />
+      )
     case "dip":
       return (
         <Dip numPins={fpJson.num_pins} pitch={fpJson.p} bodyWidth={fpJson.w} />
