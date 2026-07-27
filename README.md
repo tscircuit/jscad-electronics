@@ -57,6 +57,7 @@ jscad-electronics includes models for various components, including:
 - ICs (DIP, SOIC, TSSOP, QFN, QFP, BGA)
 - Diodes (SOD-123)
 - Transistors (SOT-23, SOT-563, SOT-723)
+- Connectors (JST PH, SH, ZH, generic SMD, FPC, RJ45, pin headers)
 - And more!
 
 Check the `lib` directory for a full list of available components.
@@ -75,6 +76,15 @@ Refer to the individual component files for available customization options.
 
 jscad-electronics is designed to work seamlessly with tscircuit. You can use these 3D models in your tscircuit projects to create accurate 3D representations of your PCB designs just by
 using the `footprint` prop
+
+### JST footprint models
+
+`Footprinter3d` supports every JST variant exposed by footprinter:
+
+- `jst4` or `jst4_ph` for PH-style through-hole connectors
+- `jst4_sh` for SH 1 mm surface-mount connectors
+- `jst4_zh` for ZH 1.5 mm through-hole connectors
+- `jst4_smd` for generic parameterized surface-mount connectors
 
 ## Contributing
 

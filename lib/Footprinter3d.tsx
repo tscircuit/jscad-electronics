@@ -56,7 +56,10 @@ import { AxialCapacitor } from "./AxialCapacitor"
 import { StampBoard } from "./stampboard"
 import { MountedPcbModule } from "./MountedPcbModule"
 import SOD723 from "./SOD723"
+import { JSTPH2mm } from "./JSTPH2mm"
+import { JSTSH1mm } from "./JSTSH1mm"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
+import { JSTSmd } from "./JSTSmd"
 import { FPC } from "./FPC"
 import { SmdPinHeader } from "./SmdPinHeader"
 import { RJ45 } from "./RJ45"
@@ -83,6 +86,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     pw: number
     num_pins: number
     fn: string
+    ph?: boolean
+    sh?: boolean
     zh?: boolean
     thermalpad?: { x: number; y: number }
     imperial: String
@@ -319,10 +324,47 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         />
       )
     case "jst":
+      if (fpJson.smd) {
+        return (
+          <JSTSmd
+            numPins={fpJson.num_pins}
+            pitch={fpJson.p}
+            bodyWidth={fpJson.w}
+            bodyDepth={fpJson.h}
+            padWidth={fpJson.pw}
+            padLength={fpJson.pl}
+            mountPadPitchX={fpJson.mpx}
+            mountPadRowDistance={fpJson.mpy}
+            mountPadWidth={fpJson.mpw}
+            mountPadLength={fpJson.mpl}
+            mountTop={fpJson.mounttop}
+          />
+        )
+      }
+      if (fpJson.sh) {
+        return (
+          <JSTSH1mm
+            numPins={fpJson.num_pins}
+            pitch={fpJson.p}
+            padWidth={fpJson.pw}
+            padLength={fpJson.pl}
+          />
+        )
+      }
       if (fpJson.zh) {
         return <JSTZH1_5mm numPins={fpJson.num_pins} />
       }
-      break
+      return (
+        <JSTPH2mm
+          numPins={fpJson.num_pins}
+          pitch={fpJson.p}
+          bodyWidth={fpJson.w}
+          bodyDepth={fpJson.h}
+          holeDiameter={fpJson.id}
+          padWidth={fpJson.pw}
+          padLength={fpJson.pl}
+        />
+      )
     case "fpc":
       return (
         <FPC
