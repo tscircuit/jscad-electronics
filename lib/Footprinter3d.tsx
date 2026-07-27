@@ -59,6 +59,7 @@ import SOD723 from "./SOD723"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
 import { FPC } from "./FPC"
 import { SmdPinHeader } from "./SmdPinHeader"
+import { RJ45 } from "./RJ45"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -116,6 +117,20 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     mounttop?: boolean
     mpw?: number
     mpl?: number
+    ledpins?: boolean
+    firstpinleft?: boolean
+    firstpintop?: boolean
+    shieldx?: number
+    shieldy?: number
+    shieldid?: number
+    shieldod?: number
+    holex?: number
+    holey?: number
+    holed?: number
+    ledx?: number
+    ledp?: number
+    ledy?: number
+    bodyy?: number
   }
 
   switch (fpJson.fn) {
@@ -325,6 +340,29 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           mountTop={fpJson.mounttop}
           mountPadWidth={fpJson.mpw}
           mountPadLength={fpJson.mpl}
+        />
+      )
+    case "rj45":
+      return (
+        <RJ45
+          bodyWidth={fpJson.w}
+          bodyDepth={fpJson.h}
+          bodyCenterY={fpJson.bodyy}
+          ledPins={fpJson.ledpins || fpJson.num_pins === 14}
+          firstPinLeft={fpJson.firstpinleft}
+          firstPinTop={fpJson.firstpintop}
+          signalPitch={fpJson.p}
+          signalRowPitch={fpJson.py}
+          signalHoleDiameter={fpJson.id}
+          shieldPinX={fpJson.shieldx}
+          shieldPinY={fpJson.shieldy}
+          shieldHoleDiameter={fpJson.shieldid}
+          locatorHoleX={fpJson.holex}
+          locatorHoleY={fpJson.holey}
+          locatorHoleDiameter={fpJson.holed}
+          ledPinX={fpJson.ledx}
+          ledPinPitch={fpJson.ledp}
+          ledPinY={fpJson.ledy}
         />
       )
     case "soic":
