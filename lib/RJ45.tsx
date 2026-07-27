@@ -114,10 +114,9 @@ export const RJ45 = ({
     <>
       <Colorize color={shellColor}>
         <Subtract>
-          <RoundedCuboid
+          <Cuboid
             center={[0, bodyCenterY, bodyHeight / 2]}
             size={[bodyWidth, bodyDepth, bodyHeight]}
-            roundRadius={Math.min(0.45, bodyWidth * 0.03)}
           />
           <Cuboid
             center={[0, cavityCenterY, openingCenterZ]}
@@ -129,14 +128,13 @@ export const RJ45 = ({
           />
         </Subtract>
 
-        <RoundedCuboid
+        <Cuboid
           center={[0, frontLipY, 0.72]}
           size={[openingWidth + 0.5, shellThickness * 1.25, 1.05]}
-          roundRadius={0.12}
         />
 
         {[-1, 1].map((direction) => (
-          <RoundedCuboid
+          <Cuboid
             key={`shield-tab:${direction}`}
             center={[direction * shieldPinX, shieldPinY, 0.25]}
             size={[
@@ -144,12 +142,11 @@ export const RJ45 = ({
               Math.max(shieldHoleDiameter * 0.72, 1.1),
               3.4,
             ]}
-            roundRadius={0.12}
           />
         ))}
 
         {[-1, 1].map((direction) => (
-          <RoundedCuboid
+          <Cuboid
             key={`top-seam:${direction}`}
             center={[
               direction * bodyWidth * 0.24,
@@ -157,7 +154,6 @@ export const RJ45 = ({
               bodyHeight + 0.04,
             ]}
             size={[bodyWidth * 0.22, bodyDepth * 0.42, 0.1]}
-            roundRadius={0.04}
           />
         ))}
       </Colorize>
