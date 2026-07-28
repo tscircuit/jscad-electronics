@@ -2,6 +2,7 @@ export const Cuboid = Symbol("Cuboid")
 export const Cube = Symbol("Cube")
 export const Cylinder = Symbol("Cylinder")
 export const Sphere = Symbol("Sphere")
+export const Ellipsoid = Symbol("Ellipsoid")
 export const RoundedCuboid = Symbol("RoundedCuboid")
 
 export const Translate = Symbol("Translate")

@@ -7,6 +7,7 @@ import {
   Cuboid,
   Cylinder,
   Sphere,
+  Ellipsoid,
   Hull,
   Rotate,
   RoundedCuboid,
@@ -160,6 +161,7 @@ function renderNode(
     type === Cube ||
     type === Cylinder ||
     type === Sphere ||
+    type === Ellipsoid ||
     type === RoundedCuboid ||
     type === RoundedCylinder
   ) {
@@ -187,6 +189,10 @@ function renderNode(
       const radius = props?.radius ?? 1
       const center = props?.center ?? [0, 0, 0]
       g = primitives.sphere({ radius, center })
+    } else if (type === Ellipsoid) {
+      const radius = props?.radius ?? [1, 1, 1]
+      const center = props?.center ?? [0, 0, 0]
+      g = primitives.ellipsoid({ radius, center })
     } else if (type === RoundedCylinder) {
       const height = props?.height ?? 1
       const radius = props?.radius ?? 1
