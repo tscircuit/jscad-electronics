@@ -18,14 +18,8 @@ export const LED2835 = ({
     <>
       {/* Two pads underneath (asymmetric, anode wider) */}
       <Colorize color="#c0c0c0">
-        <Cuboid
-          size={[2.2, 2.2, 0.1]}
-          center={[-0.9, 0, 0.05]}
-        />
-        <Cuboid
-          size={[1.25, 2.2, 0.1]}
-          center={[1.375, 0, 0.05]}
-        />
+        <Cuboid size={[2.2, 2.2, 0.1]} center={[-0.9, 0, 0.05]} />
+        <Cuboid size={[1.25, 2.2, 0.1]} center={[1.375, 0, 0.05]} />
       </Colorize>
 
       {/* White body */}

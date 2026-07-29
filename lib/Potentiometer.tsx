@@ -27,11 +27,7 @@ export const Potentiometer = ({
     <>
       {/* Body */}
       <Colorize color="#2b2b2b">
-        <Cylinder
-          radius={radius}
-          height={height}
-          center={[0, 0, height / 2]}
-        />
+        <Cylinder radius={radius} height={height} center={[0, 0, height / 2]} />
       </Colorize>
 
       {/* Shaft with slot */}

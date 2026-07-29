@@ -59,16 +59,8 @@ export const ElectrolyticCapacitor = ({
 
       {/* Leads */}
       <Colorize color="#c0c0c0">
-        <Cylinder
-          radius={legRadius}
-          height={3}
-          center={[-pitch / 2, 0, -1]}
-        />
-        <Cylinder
-          radius={legRadius}
-          height={3}
-          center={[pitch / 2, 0, -1]}
-        />
+        <Cylinder radius={legRadius} height={3} center={[-pitch / 2, 0, -1]} />
+        <Cylinder radius={legRadius} height={3} center={[pitch / 2, 0, -1]} />
       </Colorize>
     </>
   )

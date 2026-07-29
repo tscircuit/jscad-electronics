@@ -366,9 +366,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           pitch={fpNum(fpJson.p, 0.5)}
           padLength={fpNum(fpJson.pl, 0.25)}
           padWidth={fpNum(fpJson.pw, 0.25)}
-          thermalPadSize={
-            hasThermalPad ? { width: 5, length: 5 } : undefined
-          }
+          thermalPadSize={hasThermalPad ? { width: 5, length: 5 } : undefined}
         />
       )
     }
