@@ -57,6 +57,7 @@ import { StampBoard } from "./stampboard"
 import { MountedPcbModule } from "./MountedPcbModule"
 import SOD723 from "./SOD723"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
+import { Crystal } from "./Crystal"
 import { FPC } from "./FPC"
 import { SmdPinHeader } from "./SmdPinHeader"
 import { Led5050 } from "./Led5050"
@@ -82,6 +83,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     h: number
     pl: number
     pw: number
+    ph?: number
+    px?: number
+    py?: number
     num_pins: number
     fn: string
     zh?: boolean
@@ -110,7 +114,6 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     screencenteroffsety?: number
     staggered?: boolean
     reverse?: boolean
-    py?: number
     toppl?: number
     bottompl?: number
     mpx?: number
@@ -138,6 +141,15 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
   const color = colorMatch ? colorMatch[1] : undefined
 
   switch (fpJson.fn) {
+    case "crystal":
+      return (
+        <Crystal
+          horizontalPadPitch={fpJson.px}
+          verticalPadPitch={fpJson.py}
+          padWidth={fpJson.pw}
+          padHeight={fpJson.ph}
+        />
+      )
     case "dip":
       return (
         <Dip numPins={fpJson.num_pins} pitch={fpJson.p} bodyWidth={fpJson.w} />
