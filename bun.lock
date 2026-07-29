@@ -24,7 +24,7 @@
       "peerDependencies": {
         "@jscad/modeling": "^2.12.5",
         "@tscircuit/alphabet": "^0.0.24",
-        "@tscircuit/footprinter": "*",
+        "@tscircuit/footprinter": "^0.0.393",
         "circuit-json": "^0.0.426",
         "jscad-fiber": "^0.0.85",
         "react": "19.1.0",
