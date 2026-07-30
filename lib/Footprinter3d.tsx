@@ -57,9 +57,12 @@ import { StampBoard } from "./stampboard"
 import { MountedPcbModule } from "./MountedPcbModule"
 import SOD723 from "./SOD723"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
+import { Crystal } from "./Crystal"
 import { FPC } from "./FPC"
 import { SmdPinHeader } from "./SmdPinHeader"
 import { ElectrolyticCapacitor } from "./ElectrolyticCapacitor"
+import { Led5050 } from "./Led5050"
+import { RJ45 } from "./RJ45"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -81,6 +84,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     h: number
     pl: number
     pw: number
+    ph?: number
+    px?: number
+    py?: number
     num_pins: number
     fn: string
     zh?: boolean
@@ -109,7 +115,6 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     screencenteroffsety?: number
     staggered?: boolean
     reverse?: boolean
-    py?: number
     toppl?: number
     bottompl?: number
     mpx?: number
@@ -118,9 +123,35 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     mpw?: number
     mpl?: number
     d?: number
+    ledpins?: boolean
+    firstpinleft?: boolean
+    firstpintop?: boolean
+    shieldx?: number
+    shieldy?: number
+    shieldid?: number
+    shieldod?: number
+    holex?: number
+    holey?: number
+    holed?: number
+    ledx?: number
+    ledp?: number
+    ledy?: number
+    bodyy?: number
   }
 
+  const colorMatch = footprint.match(/_color\(([^)]+)\)/)
+  const color = colorMatch ? colorMatch[1] : undefined
+
   switch (fpJson.fn) {
+    case "crystal":
+      return (
+        <Crystal
+          horizontalPadPitch={fpJson.px}
+          verticalPadPitch={fpJson.py}
+          padWidth={fpJson.pw}
+          padHeight={fpJson.ph}
+        />
+      )
     case "dip":
       return (
         <Dip numPins={fpJson.num_pins} pitch={fpJson.p} bodyWidth={fpJson.w} />
@@ -258,6 +289,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           bodyWidth={fpJson.bh}
         />
       )
+    case "led5050":
+      return <Led5050 color={color} />
 
     case "cap": {
       switch (fpJson.imperial) {
@@ -331,6 +364,29 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           mountTop={fpJson.mounttop}
           mountPadWidth={fpJson.mpw}
           mountPadLength={fpJson.mpl}
+        />
+      )
+    case "rj45":
+      return (
+        <RJ45
+          bodyWidth={fpJson.w}
+          bodyDepth={fpJson.h}
+          bodyCenterY={fpJson.bodyy}
+          ledPins={fpJson.ledpins || fpJson.num_pins === 14}
+          firstPinLeft={fpJson.firstpinleft}
+          firstPinTop={fpJson.firstpintop}
+          signalPitch={fpJson.p}
+          signalRowPitch={fpJson.py}
+          signalHoleDiameter={fpJson.id}
+          shieldPinX={fpJson.shieldx}
+          shieldPinY={fpJson.shieldy}
+          shieldHoleDiameter={fpJson.shieldid}
+          locatorHoleX={fpJson.holex}
+          locatorHoleY={fpJson.holey}
+          locatorHoleDiameter={fpJson.holed}
+          ledPinX={fpJson.ledx}
+          ledPinPitch={fpJson.ledp}
+          ledPinY={fpJson.ledy}
         />
       )
     case "soic":
@@ -453,9 +509,6 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       )
     }
   }
-
-  const colorMatch = footprint.match(/_color\(([^)]+)\)/)
-  const color = colorMatch ? colorMatch[1] : undefined
 
   switch (fpJson.imperial) {
     case "0402":
