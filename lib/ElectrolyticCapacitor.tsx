@@ -7,6 +7,7 @@ export interface ElectrolyticCapacitorProps {
   leadDiameter?: number
   standoffHeight?: number
   leadEmbedDepth?: number
+  leadInsertionDepth?: number
   bodyColor?: string
   stripeColor?: string
 }
@@ -18,6 +19,7 @@ export const ElectrolyticCapacitor = ({
   leadDiameter = 0.6,
   standoffHeight = 8,
   leadEmbedDepth = 0.75,
+  leadInsertionDepth = 4,
   bodyColor = "#202b3c",
   stripeColor = "#c7c9cc",
 }: ElectrolyticCapacitorProps) => {
@@ -25,7 +27,10 @@ export const ElectrolyticCapacitor = ({
   const bodyRadius = diameter / 2
   const bodyCenterZ = standoffHeight + bodyHeight / 2
   const bodyTopZ = standoffHeight + bodyHeight
-  const leadHeight = standoffHeight + leadEmbedDepth
+  const leadTopZ = standoffHeight + leadEmbedDepth
+  const leadBottomZ = -leadInsertionDepth
+  const leadHeight = leadTopZ - leadBottomZ
+  const leadCenterZ = (leadTopZ + leadBottomZ) / 2
   const leadRadius = leadDiameter / 2
   const bungHeight = Math.min(0.6, bodyHeight * 0.08)
   const topDiscHeight = Math.min(0.2, bodyHeight * 0.03)
@@ -42,7 +47,7 @@ export const ElectrolyticCapacitor = ({
           color="#b8b8b8"
           radius={leadRadius}
           height={leadHeight}
-          center={[x, 0, leadHeight / 2]}
+          center={[x, 0, leadCenterZ]}
         />
       ))}
 
