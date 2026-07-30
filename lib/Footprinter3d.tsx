@@ -59,6 +59,7 @@ import SOD723 from "./SOD723"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
 import { FPC } from "./FPC"
 import { SmdPinHeader } from "./SmdPinHeader"
+import { ElectrolyticCapacitor } from "./ElectrolyticCapacitor"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -116,6 +117,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     mounttop?: boolean
     mpw?: number
     mpl?: number
+    d?: number
   }
 
   switch (fpJson.fn) {
@@ -125,6 +127,10 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       )
     case "axial":
       return <AxialCapacitor pitch={fpJson.p} />
+    case "electrolytic":
+      return (
+        <ElectrolyticCapacitor pitch={fpJson.p} diameter={fpJson.d ?? 10.5} />
+      )
     case "tssop":
       return (
         <Tssop
