@@ -29,13 +29,13 @@ export const TO92 = () => {
 
   const leadTipPos1: [number, number, number] = [0, 0, -0.66]
   const leadMidPosA: [number, number, number] = [0, 0, -1.32]
-  const leadMidPosB: [number, number, number] = [0, 1.28, -2.72]
-  const leadTipPos2: [number, number, number] = [0, 1.28, -8.9]
+  const leadMidPosB: [number, number, number] = [0, 1.27, -2.72]
+  const leadTipPos2: [number, number, number] = [0, 1.27, -8.9]
 
   const sideLeadZ = -7.5
 
   return (
-    <Translate center={[0, 1, 10.5]}>
+    <Translate center={[0, -0.36, 10.5]}>
       <Colorize color={bodyColor}>
         <Subtract>
           <Translate center={[0, 0, bodyZ]}>
@@ -62,10 +62,10 @@ export const TO92 = () => {
         <Cuboid size={[leadLength, legWidth, 12.2]} />
       </Translate>
 
-      <Translate center={[1.3, 0, sideLeadZ]}>
+      <Translate center={[1.27, 0, sideLeadZ]}>
         <Cuboid size={[leadLength, legWidth, 15]} />
       </Translate>
-      <Translate center={[-1.3, 0, sideLeadZ]}>
+      <Translate center={[-1.27, 0, sideLeadZ]}>
         <Cuboid size={[leadLength, legWidth, 15]} />
       </Translate>
     </Translate>
