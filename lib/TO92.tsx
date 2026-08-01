@@ -33,9 +33,12 @@ export const TO92 = () => {
   const leadTipPos2: [number, number, number] = [0, 1.27, -8.9]
 
   const sideLeadZ = -7.5
+  // The raw to92 footprint places pins 1 and 3 at h / 2 - p:
+  // 4.5 / 2 - 1.27 = 0.98 mm. Pin 2 is another 1.27 mm above them.
+  const sidePadRowY = 0.98
 
   return (
-    <Translate center={[0, -1.27, 10.5]}>
+    <Translate center={[0, sidePadRowY, 10.5]}>
       <Colorize color={bodyColor}>
         <Subtract>
           <Translate center={[0, 0, bodyZ]}>
