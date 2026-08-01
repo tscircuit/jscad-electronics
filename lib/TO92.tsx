@@ -5,7 +5,6 @@ import {
   Translate,
   Cylinder,
   Subtract,
-  Rotate,
 } from "jscad-fiber"
 
 export const TO92 = () => {
@@ -36,41 +35,39 @@ export const TO92 = () => {
   const sideLeadZ = -7.5
 
   return (
-    <Translate center={[0, 1.27, 10.5]}>
-      <Rotate rotation={[0, 0, Math.PI]}>
-        <Colorize color={bodyColor}>
-          <Subtract>
-            <Translate center={[0, 0, bodyZ]}>
-              <Cylinder radius={bodyRadius} height={bodyHeight} />
-            </Translate>
-            <Translate center={[0, -(bodyRadius - flatCut / 2), bodyZ]}>
-              <Cuboid size={[bodyRadius * 2, flatCut, bodyHeight + 0.2]} />
-            </Translate>
-          </Subtract>
-        </Colorize>
-
-        <Translate center={leadTipPos1}>
-          <Cuboid size={leadTipSize} />
-        </Translate>
-        <Hull>
-          <Translate center={leadMidPosA}>
-            <Cuboid size={leadSmallSize} />
+    <Translate center={[0, -1.27, 10.5]}>
+      <Colorize color={bodyColor}>
+        <Subtract>
+          <Translate center={[0, 0, bodyZ]}>
+            <Cylinder radius={bodyRadius} height={bodyHeight} />
           </Translate>
-          <Translate center={leadMidPosB}>
-            <Cuboid size={leadSmallSize} />
+          <Translate center={[0, -(bodyRadius - flatCut / 2), bodyZ]}>
+            <Cuboid size={[bodyRadius * 2, flatCut, bodyHeight + 0.2]} />
           </Translate>
-        </Hull>
-        <Translate center={leadTipPos2}>
-          <Cuboid size={[leadLength, legWidth, 12.2]} />
-        </Translate>
+        </Subtract>
+      </Colorize>
 
-        <Translate center={[1.27, 0, sideLeadZ]}>
-          <Cuboid size={[leadLength, legWidth, 15]} />
+      <Translate center={leadTipPos1}>
+        <Cuboid size={leadTipSize} />
+      </Translate>
+      <Hull>
+        <Translate center={leadMidPosA}>
+          <Cuboid size={leadSmallSize} />
         </Translate>
-        <Translate center={[-1.27, 0, sideLeadZ]}>
-          <Cuboid size={[leadLength, legWidth, 15]} />
+        <Translate center={leadMidPosB}>
+          <Cuboid size={leadSmallSize} />
         </Translate>
-      </Rotate>
+      </Hull>
+      <Translate center={leadTipPos2}>
+        <Cuboid size={[leadLength, legWidth, 12.2]} />
+      </Translate>
+
+      <Translate center={[1.27, 0, sideLeadZ]}>
+        <Cuboid size={[leadLength, legWidth, 15]} />
+      </Translate>
+      <Translate center={[-1.27, 0, sideLeadZ]}>
+        <Cuboid size={[leadLength, legWidth, 15]} />
+      </Translate>
     </Translate>
   )
 }
