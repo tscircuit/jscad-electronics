@@ -60,6 +60,8 @@ import { JSTZH1_5mm } from "./JSTZH1_5mm"
 import { Crystal } from "./Crystal"
 import { FPC } from "./FPC"
 import { SmdPinHeader } from "./SmdPinHeader"
+import { mm } from "@tscircuit/mm"
+import { ParametricChip } from "./ParametricChip"
 import { Led5050 } from "./Led5050"
 import { RJ45 } from "./RJ45"
 
@@ -307,6 +309,10 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         case "2512":
           return <A2512 color="#856c4d" />
       }
+      // No EIA size to look up: the pads are the only description of the part,
+      // so fall through to the parametric chip below. Without this `break` the
+      // case ran on into `sot235` and a capacitor rendered as a transistor.
+      break
     }
     case "sot235":
       return <SOT235 />
@@ -524,5 +530,34 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     case "2512":
       return <A2512 color={color} />
   }
+
+  // A chip named by its pads rather than by an EIA size: `res_p0.8656mm_...`
+  // and `cap_p0.8402mm_...` carry no `imperial`, so neither switch above can
+  // match, and both used to end at `return null` -- an empty model, which
+  // downstream renderers drop silently, taking the component off the board.
+  //
+  // Restricted to the two-terminal chip functions on purpose. Plenty of other
+  // footprints carry a `p`, and a pin header is not a chip.
+  if (
+    (fpJson.fn === "res" || fpJson.fn === "cap") &&
+    fpJson.p !== undefined &&
+    fpJson.ph !== undefined
+  ) {
+    // `mm` is the parser footprinter itself uses on these same strings, so the
+    // body agrees with the pads by construction -- including the inch forms
+    // (`res_p0.1in_...`), which footprinter passes through unconverted.
+    const padPitch = mm(fpJson.p)
+    const padHeight = mm(fpJson.ph)
+    if (Number.isFinite(padPitch) && Number.isFinite(padHeight)) {
+      return (
+        <ParametricChip
+          padPitch={padPitch}
+          padHeight={padHeight}
+          color={color ?? (fpJson.fn === "cap" ? "#856c4d" : undefined)}
+        />
+      )
+    }
+  }
+
   return null
 }
