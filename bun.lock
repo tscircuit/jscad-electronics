@@ -4,6 +4,9 @@
   "workspaces": {
     "": {
       "name": "jscad-electronics",
+      "dependencies": {
+        "@tscircuit/mm": "^0.0.8",
+      },
       "devDependencies": {
         "@biomejs/biome": "^1.9.3",
         "@tscircuit/footprinter": "^0.0.400",
@@ -24,7 +27,7 @@
       "peerDependencies": {
         "@jscad/modeling": "^2.12.5",
         "@tscircuit/alphabet": "^0.0.24",
-        "@tscircuit/footprinter": "^0.0.393",
+        "@tscircuit/footprinter": "*",
         "circuit-json": "^0.0.426",
         "jscad-fiber": "^0.0.85",
         "react": "19.1.0",

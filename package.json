@@ -28,6 +28,9 @@
     "test:vanilla": "bun run build && node tests/vanilla-smoke.mjs",
     "test": "bun test"
   },
+  "dependencies": {
+    "@tscircuit/mm": "^0.0.8"
+  },
   "devDependencies": {
     "@biomejs/biome": "^1.9.3",
     "@tscircuit/footprinter": "^0.0.400",
