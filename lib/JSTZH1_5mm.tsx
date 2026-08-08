@@ -9,8 +9,13 @@ import {
 import type { PcbPlatedHole } from "circuit-json"
 import { FootprintPlatedHole } from "./FootprintPlatedHole"
 
-interface JSTZH1_5mmProps {
+export interface JSTZH1_5mmProps {
   numPins?: number
+  pitch?: number
+  bodyDepth?: number
+  holeDiameter?: number
+  padWidth?: number
+  padLength?: number
   showPins?: boolean
   showFootprint?: boolean
   bodyColor?: string
@@ -19,14 +24,17 @@ interface JSTZH1_5mmProps {
 
 export const JSTZH1_5mm = ({
   numPins = 7,
+  pitch = 1.5,
+  bodyDepth = 3.5,
+  holeDiameter = 0.73,
+  padWidth = 1.03,
+  padLength = 1.73,
   showPins = true,
   showFootprint = true,
   bodyColor = "#f5f5f5",
   pinColor = "#635959",
 }: JSTZH1_5mmProps) => {
-  const pitch = 1.5
   const bodyHeight = 6
-  const bodyDepth = 3.5
   const wallThickness = 0.5
   const hollowHeight = bodyHeight * 0.6
   const pinLength = 6
@@ -121,9 +129,9 @@ export const JSTZH1_5mm = ({
                 shape: "circular_hole_with_rect_pad",
                 x: startX + i * pitch,
                 y: 0,
-                hole_diameter: 0.73,
-                rect_pad_width: 1.03,
-                rect_pad_height: 1.73,
+                hole_diameter: holeDiameter,
+                rect_pad_width: padWidth,
+                rect_pad_height: padLength,
                 hole_shape: "circle",
                 pad_shape: "rect",
                 layers: ["top", "bottom"],
@@ -135,10 +143,10 @@ export const JSTZH1_5mm = ({
                 shape: "pill",
                 x: startX + i * pitch,
                 y: 0,
-                hole_height: 0.73,
-                hole_width: 0.73,
-                outer_height: 1.73,
-                outer_width: 1.03,
+                hole_height: holeDiameter,
+                hole_width: holeDiameter,
+                outer_height: padLength,
+                outer_width: padWidth,
                 layers: ["top", "bottom"],
                 port_hints: [`${i + 1}`],
               }
