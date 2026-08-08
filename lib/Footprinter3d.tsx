@@ -56,6 +56,7 @@ import { AxialCapacitor } from "./AxialCapacitor"
 import { StampBoard } from "./stampboard"
 import { MountedPcbModule } from "./MountedPcbModule"
 import SOD723 from "./SOD723"
+import { JSTPH2mm } from "./JSTPH2mm"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
 import { Crystal } from "./Crystal"
 import { FPC } from "./FPC"
@@ -85,11 +86,11 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     h: number
     pl: number
     pw: number
-    ph?: number
     px?: number
     py?: number
     num_pins: number
     fn: string
+    ph?: string | number | boolean
     zh?: boolean
     thermalpad?: { x: number; y: number }
     imperial: String
@@ -149,7 +150,11 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           horizontalPadPitch={fpJson.px}
           verticalPadPitch={fpJson.py}
           padWidth={fpJson.pw}
-          padHeight={fpJson.ph}
+          padHeight={
+            typeof fpJson.ph === "boolean"
+              ? undefined
+              : (fpJson.ph as number | undefined)
+          }
         />
       )
     case "dip":
@@ -344,9 +349,30 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       )
     case "jst":
       if (fpJson.zh) {
-        return <JSTZH1_5mm numPins={fpJson.num_pins} />
+        return (
+          <JSTZH1_5mm
+            numPins={fpJson.num_pins}
+            pitch={fpJson.p}
+            bodyDepth={fpJson.h}
+            holeDiameter={fpJson.id}
+            padWidth={fpJson.pw}
+            padLength={fpJson.pl}
+          />
+        )
       }
-      break
+      if (fpJson.ph !== true) break
+      return (
+        <JSTPH2mm
+          numPins={fpJson.num_pins}
+          pitch={fpJson.p}
+          bodyWidth={fpJson.w}
+          bodyDepth={fpJson.h}
+          holeDiameter={fpJson.id}
+          padWidth={fpJson.pw}
+          padLength={fpJson.pl}
+        />
+      )
+
     case "fpc":
       return (
         <FPC
@@ -541,7 +567,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
   if (
     (fpJson.fn === "res" || fpJson.fn === "cap") &&
     fpJson.p !== undefined &&
-    fpJson.ph !== undefined
+    fpJson.ph !== undefined &&
+    typeof fpJson.ph !== "boolean"
   ) {
     // `mm` is the parser footprinter itself uses on these same strings, so the
     // body agrees with the pads by construction -- including the inch forms
