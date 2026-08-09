@@ -10,6 +10,7 @@ import { PinRow } from "./PinRow"
 import QFN from "./qfn"
 import SOT235 from "./SOT-235"
 import { SOT23W } from "./SOT-23W"
+import { SOT233P } from "./SOT-23-3P"
 import { A0201 } from "./A0201"
 import { A01005 } from "./A01005"
 import { A1206 } from "./A1206"
@@ -77,6 +78,11 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     const numPins = pinMatch && pinMatch[1] ? pinMatch[1] : "7"
     normalizedFootprint = `zh${numPins}`
   }
+
+  // Early return for footprints that can't be parsed by fp.string() (e.g. 3-pin SOT)
+  const trimmed = normalizedFootprint.toLowerCase().trim()
+  if (trimmed === "sot23_3p") return <SOT233P />
+  if (trimmed === "sot25") return <SOT235 />
 
   const fpJson = fp.string(normalizedFootprint).json() as unknown as {
     w: number
@@ -315,7 +321,10 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       break
     }
     case "sot235":
+    case "sot25":
       return <SOT235 />
+    case "sot23_3p":
+      return <SOT233P />
     case "sot457":
       return <SOT457 />
     case "sot223":

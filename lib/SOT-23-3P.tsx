@@ -7,8 +7,8 @@ export const SOT233P = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
   const bodyHeight = 1.1
   const leadWidth = 0.4
   const leadThickness = 0.15
-  const leadHeight = 0.95
-  const padContactLength = 0.4
+  const leadHeight = 0.45
+  const padContactLength = 0.25
   const padThickness = leadThickness / 2
 
   // Increase the bodyDistance to extend leads further out
@@ -16,13 +16,12 @@ export const SOT233P = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
 
   return (
     <>
-      {/* Leads on the right side (pins 1 and 2) */}
+      {/* Leads on the left side (pins 1 and 2) */}
       <SmdChipLead
         key={1}
-        rotation={Math.PI}
         position={{
-          x: fullWidth / 2,
-          y: -1,
+          x: -fullWidth / 2,
+          y: 0.95,
           z: padThickness,
         }}
         width={leadWidth}
@@ -33,10 +32,9 @@ export const SOT233P = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
       />
       <SmdChipLead
         key={2}
-        rotation={Math.PI}
         position={{
-          x: fullWidth / 2,
-          y: 1,
+          x: -fullWidth / 2,
+          y: -0.95,
           z: padThickness,
         }}
         width={leadWidth}
@@ -46,11 +44,12 @@ export const SOT233P = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
         height={leadHeight}
       />
 
-      {/* Lead on the left side (pin 3) */}
+      {/* Lead on the right side (pin 3) */}
       <SmdChipLead
         key={3}
+        rotation={Math.PI}
         position={{
-          x: -fullWidth / 2,
+          x: fullWidth / 2,
           y: 0,
           z: padThickness,
         }}
@@ -67,6 +66,8 @@ export const SOT233P = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
         width={bodyWidth}
         length={bodyLength}
         height={bodyHeight}
+        straightHeightRatio={0.45}
+        heightAboveSurface={0.05}
       />
     </>
   )

@@ -16,10 +16,10 @@ export const SOT23W = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
 
   return (
     <>
-      {/* Leads on the right side (pins 1 and 2) */}
+      {/* Lead on the right side (pin 3) */}
 
       <SmdChipLead
-        key={1}
+        key={3}
         rotation={Math.PI}
         position={{
           x: fullWidth / 2,
@@ -33,9 +33,9 @@ export const SOT23W = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
         height={leadHeight}
       />
 
-      {/* Lead on the left side (pin 3) */}
+      {/* Leads on the left side (pins 1 and 2) */}
       <SmdChipLead
-        key={2}
+        key={1}
         position={{
           x: -fullWidth / 2,
           y: -0.95,
@@ -49,7 +49,7 @@ export const SOT23W = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
       />
 
       <SmdChipLead
-        key={3}
+        key={2}
         position={{
           x: -fullWidth / 2,
           y: 0.95,
