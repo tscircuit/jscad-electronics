@@ -8,6 +8,7 @@ export const SOT235 = () => {
   const bodyHeight = 1.2
   const leadWidth = 0.4
   const leadThickness = 0.15
+  // Vertical rise of gull-wing foot; enters package mid-body (~40% of 1.2mm height)
   const leadHeight = 0.45
   const padContactLength = 0.5
   const padPitch = 0.95
