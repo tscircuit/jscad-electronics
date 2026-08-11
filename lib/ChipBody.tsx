@@ -14,7 +14,7 @@ export interface ChipBodyProps {
   height: number
   heightAboveSurface?: number
   center: { x: number; y: number; z: number }
-  color?: string | [number, number, number]
+  color?: string
   taperRatio?: number
   faceRatio?: number
   straightHeightRatio?: number
@@ -33,7 +33,7 @@ export const ChipBody = ({
   length,
   height,
   heightAboveSurface = 0.15,
-  color = [0.33, 0.33, 0.33],
+  color = "#555",
   taperRatio = 0.12,
   faceRatio = 0.75,
   straightHeightRatio = 0.5,
