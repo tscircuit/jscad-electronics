@@ -320,11 +320,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       // case ran on into `sot235` and a capacitor rendered as a transistor.
       break
     }
-    case "sot235":
-    case "sot25":
-      return <SOT235 />
-    case "sot23_3p":
-      return <SOT233P />
+
     case "sot457":
       return <SOT457 />
     case "sot223":
