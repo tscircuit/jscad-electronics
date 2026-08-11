@@ -8,7 +8,7 @@ export const SOT233P = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
   const leadWidth = 0.4
   const leadThickness = 0.15
   const leadHeight = 0.45
-  const padContactLength = 0.25
+  const padContactLength = 0.4
   const padThickness = leadThickness / 2
 
   // Increase the bodyDistance to extend leads further out
