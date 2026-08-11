@@ -79,10 +79,10 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     normalizedFootprint = `zh${numPins}`
   }
 
-  // Early return for footprints that can't be parsed by fp.string() (e.g. 3-pin SOT)
+  // Handle SOT aliases that fp.string() cannot parse before using generic parsing.
   const trimmed = normalizedFootprint.toLowerCase().trim()
   if (trimmed === "sot23_3p") return <SOT233P />
-  if (trimmed === "sot25") return <SOT235 />
+  if (trimmed === "sot25" || trimmed === "sot235") return <SOT235 />
 
   const fpJson = fp.string(normalizedFootprint).json() as unknown as {
     w: number
@@ -316,8 +316,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           return <A2512 color="#856c4d" />
       }
       // No EIA size to look up: the pads are the only description of the part,
-      // so fall through to the parametric chip below. Without this `break` the
-      // case ran on into `sot235` and a capacitor rendered as a transistor.
+      // so fall through to the parametric chip below.
       break
     }
 
