@@ -9,6 +9,7 @@ import { QFP } from "./qfp"
 import { PinRow } from "./PinRow"
 import QFN from "./qfn"
 import SOT235 from "./SOT-235"
+import { SOT233P } from "./SOT-23-3P"
 import { SOT23W } from "./SOT-23W"
 import { A0201 } from "./A0201"
 import { A01005 } from "./A01005"
@@ -77,6 +78,10 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     const pinMatch = footprint.match(/jstzh1_5mm(\d+)?/)
     const numPins = pinMatch && pinMatch[1] ? pinMatch[1] : "7"
     normalizedFootprint = `zh${numPins}`
+  }
+
+  if (footprint.startsWith("sot23_3p")) {
+    return <SOT233P />
   }
 
   const fpJson = fp.string(normalizedFootprint).json() as unknown as {
