@@ -83,9 +83,6 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
   if (footprint.startsWith("sot23_3p")) {
     return <SOT233P />
   }
-  if (footprint.startsWith("sot235")) {
-    return <SOT235 />
-  }
 
   const fpJson = fp.string(normalizedFootprint).json() as unknown as {
     w: number
