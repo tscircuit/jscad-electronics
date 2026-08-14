@@ -10,7 +10,7 @@ import {
 import { ChipBody } from "./ChipBody"
 
 export const TO220 = () => {
-  const fullLength = 20
+  const fullLength = 10
   const bodyLength = 9.9
   const bodyHeight = 4.5
   const zOffset = 1
@@ -21,9 +21,10 @@ export const TO220 = () => {
   const padHoleDiameter = 3.0
 
   const prongWidth = 0.81
-  const prongLength = 16
+  const prongLength = 5.2
   const prongHeight = 0.5
-  const prongPitch = 2.7
+  const prongPitch = 2.6
+  const throughHoleTailLength = 8.8
 
   const bodyWidth = padWidth
 
@@ -91,6 +92,19 @@ export const TO220 = () => {
             )
           })}
         </Rotate>
+        {Array.from({ length: 3 }).map((_, i) => (
+          <Colorize key={`through-hole-tail-${i}`} color="gold">
+            <Translate
+              center={[
+                (i - 1) * prongPitch,
+                -1,
+                -zOffset - throughHoleTailLength / 2,
+              ]}
+            >
+              <Cuboid size={[prongWidth, prongWidth, throughHoleTailLength]} />
+            </Translate>
+          </Colorize>
+        ))}
       </>
     </Translate>
   )
