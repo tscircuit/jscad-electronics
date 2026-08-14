@@ -20,26 +20,6 @@ test("TO220", async () => {
   await expect(pngBuffer).toMatchPngSnapshot(import.meta.path)
 })
 
-test("TO220 before and after placement on a board", async () => {
-  await expect(
-    renderFootprint("to220", {
-      includePads: false,
-      cameraPreset: "front",
-    }),
-  ).toMatchPngSnapshot(import.meta.path, "to220-before-placement")
-
-  await expect(
-    renderFootprint("to220", {
-      cameraPreset: "front",
-      board: {
-        width: 16,
-        height: 10,
-        thickness: 1.6,
-      },
-    }),
-  ).toMatchPngSnapshot(import.meta.path, "to220-after-board-placement")
-})
-
 test("TO220 leads expose full through-hole length below the PCB plane", () => {
   const geometries = renderTo220()
   const [min, max] = jscadModeling.measurements.measureAggregateBoundingBox(

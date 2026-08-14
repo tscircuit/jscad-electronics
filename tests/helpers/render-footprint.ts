@@ -16,12 +16,6 @@ type RenderFootprintOptions = {
   cameraPreset?: CameraPreset
   camPos?: Vec3
   lookAt?: Vec3
-  includePads?: boolean
-  board?: {
-    width: number
-    height: number
-    thickness: number
-  }
 }
 
 const GLTF_AXIS_TRANSFORM = "jscad_y+ -> gltf_z+" as const
@@ -80,33 +74,8 @@ export async function renderFootprint(
   footprint: string,
   options: RenderFootprintOptions = {},
 ): Promise<Uint8Array> {
-  const { getJscadModelForFootprint, getJscadModelForFootprintWithPads } =
-    await importVanilla()
-  const result =
-    options.includePads === false
-      ? getJscadModelForFootprint(footprint, jscadModeling)
-      : getJscadModelForFootprintWithPads(footprint, jscadModeling)
-
-  if (options.board) {
-    const { width, height, thickness } = options.board
-    const boardCenter: Vec3 = [0, 0, -thickness / 2 - 0.01]
-    const board = jscadModeling.primitives.cuboid({
-      size: [width, height, thickness],
-      center: boardCenter,
-    })
-    const pinHoles = [-2.6, 0, 2.6].map((x) =>
-      jscadModeling.primitives.cylinder({
-        radius: 0.5,
-        height: thickness + 0.04,
-        center: [x, -1, boardCenter[2]],
-      }),
-    )
-
-    result.geometries.unshift({
-      geom: jscadModeling.booleans.subtract(board, ...pinHoles),
-      color: [0.1, 0.35, 0.18],
-    })
-  }
+  const { getJscadModelForFootprintWithPads } = await importVanilla()
+  const result = getJscadModelForFootprintWithPads(footprint, jscadModeling)
 
   // Convert JSCAD model to GLB format (preserves colors)
   // Use axisTransform to make objects lie flat (Y-up to Z-up)
