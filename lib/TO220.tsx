@@ -24,7 +24,8 @@ export const TO220 = () => {
   const prongLength = 5.2
   const prongHeight = 0.5
   const prongPitch = 2.6
-  const throughHoleTailLength = 8.8
+  const throughHoleTailLength = 9.8
+  const throughHoleTailTopZ = 1
 
   const bodyWidth = padWidth
 
@@ -98,7 +99,7 @@ export const TO220 = () => {
               center={[
                 (i - 1) * prongPitch,
                 -1,
-                -zOffset - throughHoleTailLength / 2,
+                throughHoleTailTopZ - zOffset - throughHoleTailLength / 2,
               ]}
             >
               <Cuboid size={[prongWidth, prongWidth, throughHoleTailLength]} />
