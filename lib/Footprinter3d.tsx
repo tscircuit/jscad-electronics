@@ -80,10 +80,6 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     normalizedFootprint = `zh${numPins}`
   }
 
-  if (footprint.startsWith("sot23_3p")) {
-    return <SOT233P />
-  }
-
   const fpJson = fp.string(normalizedFootprint).json() as unknown as {
     w: number
     p: number
@@ -320,6 +316,10 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       // case ran on into `sot235` and a capacitor rendered as a transistor.
       break
     }
+    case "sot23_3p":
+    case "sot23":
+      if (fpJson.num_pins === 3) return <SOT233P />
+      break
     case "sot235":
       return <SOT235 />
     case "sot457":
