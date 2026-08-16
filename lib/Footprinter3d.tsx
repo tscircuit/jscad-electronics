@@ -316,9 +316,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       // case ran on into `sot235` and a capacitor rendered as a transistor.
       break
     }
-    case "sot23_3p":
     case "sot23":
-      if (fpJson.num_pins === 3) return <SOT233P />
+      if (fpJson.num_pins === 3) return <SOT233P color={color} />
       break
     case "sot235":
       return <SOT235 />
