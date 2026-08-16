@@ -1,14 +1,14 @@
 import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 
-export const SOT233P = ({ 
-  fullWidth = 2.9, 
-  fullLength = 2.8, 
-  color 
-}: { 
-  fullWidth?: number, 
-  fullLength?: number, 
-  color?: string 
+export const SOT233P = ({
+  fullWidth = 2.9,
+  fullLength = 2.8,
+  color,
+}: {
+  fullWidth?: number
+  fullLength?: number
+  color?: string
 } = {}) => {
   const bodyWidth = 1.3
   const bodyLength = 2.9
