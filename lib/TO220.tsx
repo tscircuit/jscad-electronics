@@ -1,97 +1,130 @@
 import {
   Colorize,
   Cuboid,
-  Hull,
-  Rotate,
-  Translate,
   Cylinder,
+  Rotate,
   Subtract,
+  Translate,
 } from "jscad-fiber"
-import { ChipBody } from "./ChipBody"
 
-export const TO220 = () => {
-  const fullLength = 20
-  const bodyLength = 9.9
-  const bodyHeight = 4.5
-  const zOffset = 1
+export interface TO220Lead {
+  x: number
+  y: number
+}
 
-  const padWidth = 9.9
-  const padLength = 6.5
-  const padThickness = 1.3
-  const padHoleDiameter = 3.0
+export interface TO220Props {
+  /**
+   * TO-220F is the fully-moulded (isolated) variant: same outline, but the
+   * metal tab is encapsulated rather than exposed. Aliasing the two would
+   * report a bare metal face where there is plastic — which matters as soon
+   * as anything reasons about the tab, so it is a flag rather than an alias.
+   */
+  mouldedTab?: boolean
+  /** Where the leads meet the board, from the footprint's plated holes. */
+  leads?: TO220Lead[]
+  /** Width across the package (X). */
+  bodyWidth?: number
+  /** Thickness of the moulded body (Y). */
+  bodyThickness?: number
+  /** Height of the moulded body above its own base. */
+  bodyHeight?: number
+  /** How much metal tab stands above the moulded body. */
+  tabHeight?: number
+  tabThickness?: number
+  mountingHoleDiameter?: number
+  /** Gap between the board and the underside of the body. */
+  standoff?: number
+  /** How far the leads run below the board. */
+  leadLength?: number
+  bodyColor?: string
+  tabColor?: string
+  leadColor?: string
+}
 
-  const prongWidth = 0.81
-  const prongLength = 16
-  const prongHeight = 0.5
-  const prongPitch = 2.7
+const TO220_DEFAULT_LEADS: TO220Lead[] = [
+  { x: -2.54, y: -1 },
+  { x: 0, y: -1 },
+  { x: 2.54, y: -1 },
+]
 
-  const bodyWidth = padWidth
+/**
+ * TO-220, mounted upright.
+ *
+ * Authored standing up, in board coordinates, rather than lying down and
+ * rotated into place. The rotations it used to carry were bare numbers
+ * (`rotation={[0, 55, -55]}`), which both renderers read as RADIANS: 55 rad is
+ * 271.3°, so the part stood up only because 271.3° is nearly -90°, and it
+ * leaned 1.3° off vertical. With 16mm leads it also measured 32.5mm tall for a
+ * part that is 18mm over the board, and the holes met the leads at their tips
+ * instead of just under the body.
+ */
+export const TO220 = ({
+  mouldedTab = false,
+  leads = TO220_DEFAULT_LEADS,
+  bodyWidth = 10,
+  bodyThickness = 4.5,
+  bodyHeight = 9.2,
+  tabHeight = 6.4,
+  tabThickness = 1.4,
+  mountingHoleDiameter = 3.6,
+  standoff = 3,
+  leadLength = 3,
+  bodyColor = "#222",
+  tabColor = "#ccc",
+  leadColor = "#d4b106",
+}: TO220Props = {}) => {
+  const centerX = leads.reduce((sum, lead) => sum + lead.x, 0) / leads.length
+  const centerY = leads.reduce((sum, lead) => sum + lead.y, 0) / leads.length
 
-  const bodyFrontX = fullLength - bodyLength / 2 // left face of body
-  const bodyBackX = fullLength + bodyLength / 2 // right face of body
-  const prongCenterX = bodyFrontX - prongLength / 2 // prong centered so its inner face touches bodyFront
-  const padCenterX = bodyBackX + padLength / 2 // pad centered so its inner face touches bodyBack
+  const bodyBottom = standoff
+  const bodyTop = bodyBottom + bodyHeight
+  const tabTop = bodyTop + tabHeight
+  // The tab is flush with the back face of the moulding.
+  const tabY = centerY + (bodyThickness - tabThickness) / 2
+  const holeZ = tabTop - Math.max(mountingHoleDiameter * 0.8, 2.6)
+
+  const leadWidth = 0.8
+  const leadThickness = 0.5
 
   return (
-    <Translate center={[0, 0, zOffset]}>
-      <>
-        <Rotate rotation={[0, 55, -55]}>
-          {/* Pads (with centered hole for pin alignment) */}
-          <Subtract>
-            <Cuboid
-              color="#ccc"
-              size={[padLength + 0.1, padWidth, padThickness]}
-              center={[padCenterX, 0, padThickness - 2]}
-            />
-            {/* hole centered through pad */}
-            <Cylinder
-              color="black"
-              center={[padCenterX, 0, padThickness - 2]}
-              radius={padHoleDiameter / 2}
-              height={padThickness * 1.2}
-            />
-          </Subtract>
-          {/* Body (lifted above pads) */}
-          <Colorize color="#222">
-            <ChipBody
-              width={bodyWidth}
-              length={bodyLength}
-              height={bodyHeight}
-              center={{ x: fullLength, y: 0, z: -2.4 }}
-              includeNotch={false}
-              straightHeightRatio={0.3}
-              taperRatio={0.04}
-              heightAboveSurface={1}
-            />
-          </Colorize>
-        </Rotate>
-        <Rotate rotation={[0, 55, 55]}>
-          {Array.from({ length: 3 }).map((_, i) => {
-            const x = prongCenterX
-            const y = (i - 1) * prongPitch
-            // prongs sit on top of pads (pad top z = padThickness)
-            const z = -prongHeight - 0.6
-            return (
-              <Colorize key={`prong-${i}`} color="gold">
-                <Hull>
-                  {/* inner fillet pieces anchored to the body front so they stay correct when prongLength changes */}
-                  <Translate center={[bodyFrontX - bodyHeight / 2 + 0.1, y, z]}>
-                    <Cuboid size={[bodyHeight, prongWidth + 1, prongHeight]} />
-                  </Translate>
-                  <Translate
-                    center={[bodyFrontX - bodyHeight / 2 - 1 + 0.1, y, z]}
-                  >
-                    <Cuboid size={[bodyHeight, prongWidth, prongHeight]} />
-                  </Translate>
-                </Hull>
-                <Translate center={[x, y, z]}>
-                  <Cuboid size={[prongLength + 0.1, prongWidth, prongHeight]} />
-                </Translate>
-              </Colorize>
-            )
-          })}
-        </Rotate>
-      </>
-    </Translate>
+    <>
+      <Colorize color={bodyColor}>
+        <Cuboid
+          size={[bodyWidth, bodyThickness, bodyHeight]}
+          center={[centerX, centerY, bodyBottom + bodyHeight / 2]}
+        />
+      </Colorize>
+
+      {/* The tab, with its mounting hole. A moulded (TO-220F) part has the
+          same outline in plastic. */}
+      <Colorize color={mouldedTab ? bodyColor : tabColor}>
+        <Subtract>
+          <Cuboid
+            size={[bodyWidth, tabThickness, tabHeight]}
+            center={[centerX, tabY, bodyTop + tabHeight / 2]}
+          />
+          {/* Cylinder is Z-axis only in lib/vanilla, and a `rotation` prop on
+              a primitive is IGNORED there — so the hole has to be turned by a
+              <Rotate> wrapper, which both renderers honour. */}
+          <Rotate rotation={["90deg", 0, 0]}>
+            <Translate center={[centerX, holeZ, -tabY]}>
+              <Cylinder
+                radius={mountingHoleDiameter / 2}
+                height={tabThickness * 3}
+              />
+            </Translate>
+          </Rotate>
+        </Subtract>
+      </Colorize>
+
+      {leads.map((lead) => (
+        <Colorize color={leadColor} key={`lead-${lead.x}-${lead.y}`}>
+          <Cuboid
+            size={[leadWidth, leadThickness, standoff + leadLength]}
+            center={[lead.x, lead.y, (standoff - leadLength) / 2]}
+          />
+        </Colorize>
+      ))}
+    </>
   )
 }

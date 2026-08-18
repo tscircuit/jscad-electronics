@@ -63,6 +63,7 @@ import { Crystal } from "./Crystal"
 import { FPC } from "./FPC"
 import { SmdPinHeader } from "./SmdPinHeader"
 import { mm } from "@tscircuit/mm"
+import { getPlatedHoleCenters } from "./utils/getPlatedHoleCenters"
 import { ParametricChip } from "./ParametricChip"
 import { Led5050 } from "./Led5050"
 import { RJ45 } from "./RJ45"
@@ -464,9 +465,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     case "sot723":
       return <SOT723 />
     case "to220":
-      return <TO220 />
+      return <TO220 leads={getPlatedHoleCenters(normalizedFootprint)} />
     case "to92":
-      return <TO92 />
+      return <TO92 leads={getPlatedHoleCenters(normalizedFootprint)} />
     case "stampboard":
     case "stampreceiver":
       return (
