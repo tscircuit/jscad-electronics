@@ -1,7 +1,15 @@
 import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 
-export const SOT233P = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
+export const SOT233P = ({
+  fullWidth = 2.9,
+  fullLength = 2.8,
+  color,
+}: {
+  fullWidth?: number
+  fullLength?: number
+  color?: string
+} = {}) => {
   const bodyWidth = 1.3
   const bodyLength = 2.9
   const bodyHeight = 1.1
@@ -16,13 +24,12 @@ export const SOT233P = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
 
   return (
     <>
-      {/* Leads on the right side (pins 1 and 2) */}
+      {/* Leads on the left side (pins 1 and 2) */}
       <SmdChipLead
         key={1}
-        rotation={Math.PI}
         position={{
-          x: fullWidth / 2,
-          y: -1,
+          x: -fullWidth / 2,
+          y: 0.95,
           z: padThickness,
         }}
         width={leadWidth}
@@ -33,10 +40,9 @@ export const SOT233P = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
       />
       <SmdChipLead
         key={2}
-        rotation={Math.PI}
         position={{
-          x: fullWidth / 2,
-          y: 1,
+          x: -fullWidth / 2,
+          y: -0.95,
           z: padThickness,
         }}
         width={leadWidth}
@@ -46,11 +52,12 @@ export const SOT233P = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
         height={leadHeight}
       />
 
-      {/* Lead on the left side (pin 3) */}
+      {/* Lead on the right side (pin 3) */}
       <SmdChipLead
         key={3}
+        rotation={Math.PI}
         position={{
-          x: -fullWidth / 2,
+          x: fullWidth / 2,
           y: 0,
           z: padThickness,
         }}
@@ -67,6 +74,7 @@ export const SOT233P = ({ fullWidth = 2.9, fullLength = 2.8 }) => {
         width={bodyWidth}
         length={bodyLength}
         height={bodyHeight}
+        color={color}
       />
     </>
   )

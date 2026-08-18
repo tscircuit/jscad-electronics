@@ -9,6 +9,7 @@ import { QFP } from "./qfp"
 import { PinRow } from "./PinRow"
 import QFN from "./qfn"
 import SOT235 from "./SOT-235"
+import { SOT233P } from "./SOT-23-3P"
 import { SOT23W } from "./SOT-23W"
 import { A0201 } from "./A0201"
 import { A01005 } from "./A01005"
@@ -315,6 +316,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       // case ran on into `sot235` and a capacitor rendered as a transistor.
       break
     }
+    case "sot23":
+      if (fpJson.num_pins === 3) return <SOT233P color={color} />
+      break
     case "sot235":
       return <SOT235 />
     case "sot457":
