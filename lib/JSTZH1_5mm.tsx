@@ -105,7 +105,7 @@ export const JSTZH1_5mm = ({
           <Colorize key={i} color={pinColor}>
             <Cylinder
               height={pinLength}
-              radius={0.35}
+              radius={0.25}
               center={[startX + i * pitch, 0, 2.5]}
             />
           </Colorize>
