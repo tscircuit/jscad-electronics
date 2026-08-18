@@ -5,7 +5,7 @@ import { ExtrudedPads } from "lib/ExtrudedPads"
 export default () => {
   const footprint = "sot23_5"
   return (
-    <JsCadView zAxisUp>
+    <JsCadView zAxisUp showGrid>
       <Footprinter3d footprint={footprint} />
       <ExtrudedPads footprint={footprint} />
     </JsCadView>

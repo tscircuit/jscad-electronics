@@ -317,10 +317,13 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       break
     }
     case "sot23":
-      if (fpJson.num_pins === 3) return <SOT233P color={color} />
+      switch (fpJson.num_pins) {
+        case 3:
+          return <SOT233P color={color} />
+        case 5:
+          return <SOT235 />
+      }
       break
-    case "sot235":
-      return <SOT235 />
     case "sot457":
       return <SOT457 />
     case "sot223":
