@@ -1,13 +1,34 @@
 import { Colorize, Cuboid, Hull, Translate, Union } from "jscad-fiber"
 
-export const SOD123W = () => {
-  const fullWidth = 2.6
-  const bodyLength = 1.7
+export interface SOD123WProps {
+  /** Body extent along the leads (X). */
+  bodyWidth?: number
+  /** Body extent across the leads (Y). */
+  bodyLength?: number
+  bodyHeight?: number
+}
 
-  const bodyHeight = 1
+/**
+ * SOD-123W.
+ *
+ * Defaults are the package outline for that designation — 2.60 x 1.70, per
+ * KiCad's `Nexperia_CFP3_SOD-123W` F.Fab layer, which is the same reference
+ * footprinter's own kicad-parity tests compare against.
+ *
+ * The dimensions are props because the shape (a moulded body with a metal cap
+ * at each end) serves several designations at different sizes; the SIZE is
+ * what makes it one package or another, so it must never be assumed. `sod110`
+ * used these defaults for a while and rendered a body 24% too long.
+ */
+export const SOD123W = ({
+  bodyWidth = 2.6,
+  bodyLength = 1.7,
+  bodyHeight = 1,
+}: SOD123WProps = {}) => {
+  const fullWidth = bodyWidth
 
-  const padWidth = 0.9
-  const padLength = 0.9
+  const padWidth = bodyLength * 0.53
+  const padLength = bodyWidth * 0.35
   const padThickness = 0.2
 
   const leftPadCenterX = -(fullWidth / 2 - 0.075)

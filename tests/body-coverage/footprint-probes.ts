@@ -69,41 +69,11 @@ export const PROBE: Record<string, string> = {
  * quietly go stale in either direction.
  */
 export const MISSING_BODIES: Record<string, string> = {
-  bga: "BGA.tsx exists and is unreferenced by the dispatch",
-  breakoutheaders: "a breakout board with a header row per side",
-  d2pak: "TO-263: moulded body on a large exposed tab",
-  dpak: "TO-252: moulded body on a large exposed tab",
-  electrolytic: "radial can; the height dominates an enclosure cavity",
   jst: "only the ZH 1.5mm series has a body; `jst6_sh` and the rest have none",
-  led2835: "chip LED, 3.5 x 2.8, asymmetric pads",
-  lga: "land grid array: QFN body without leads",
-  m2host: "M.2 socket; tall, and usually at a board edge",
-  mlp: "no-lead quad package: a QFN by another name",
-  potentiometer: "body plus adjuster; a shaft through a lid needs an aperture",
-  quad: "generic quad package: QFN/QFP depending on `legsoutside`",
-  radial: "radial can, diameter from the name (radial_d5_p2.5)",
-  smbf: "flat variant of SMB",
-  smdpushbutton: "actuator height is what a lid has to clear",
-  sod110: "SOD-123W family",
-  sod323w: "SOD-323 family",
-  sod80: "MiniMELF glass body",
-  sod882d: "SOD-882 family",
-  son: "small outline no-lead: a DFN by another name",
-  sop8: "SOIC, parameterised",
-  sot: "footprinter's bare SOT-23 outline",
-  sot25: "SOT-23-5",
-  sot343: "SC-70-4, same body as SC-70-6",
-  sot563: "SOT-563; SOT-563.tsx exists and is unreferenced",
-  sot89: "SOT-89: a smaller SOT-223",
-  ssop: "shrink SOIC",
-  to220f: "fully-moulded TO-220 — the tab is encapsulated, not exposed",
-  to252: "TO-252, same body as dpak",
-  to263: "TO-263, same body as d2pak",
-  to92l: "TO-92 at 4.8mm across",
-  to92s: "TO-92 at 2.5mm across",
-  usbcmidmount: "mid-mount: the connector sits THROUGH the board",
-  vson: "very thin SON",
-  wson: "very very thin SON",
+  m2host:
+    "footprinter reports NO dimensions for it (`{fn:'m2host'}`), so the socket has to be modelled from the M.2 spec rather than derived from the footprint",
+  usbcmidmount:
+    "USB-C.tsx exists, but it draws with `Ellipsoid` and with `rotation` props on primitives — neither of which lib/vanilla implements, and the second is IGNORED rather than rejected, so reusing it would silently render the wrong shape. Extend the vanilla renderer first",
 }
 
 /** The probe string to feed footprinter for a registered name. */
