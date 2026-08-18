@@ -66,3 +66,24 @@ measure, from its datasheet — the camera frames a volume that tall, and once
 the bodies exist `body-envelope.test.ts` asserts against the same numbers. One
 table, so a body cannot pass the assertion while being photographed as though
 it were another size.
+
+## Is the body the right package?
+
+`body-outline.test.ts` asserts each body's X/Y against the package it is named
+after, and `body-envelope.test.ts` asserts its height. Both matter because a
+body can be entirely plausible and still be the wrong part: `sod110` rendered a
+SOD-123W — right shape, right place, on its pads — for a package 24% shorter.
+
+The outline reference is **KiCad's `F.Fab` layer**, which is drawn at the
+package outline, taken from the library shipped with KiCad. footprinter's own
+`tests/kicad-parity` suite compares land patterns against that same library, so
+the pads and the body now answer to one source. To read an outline:
+
+```bash
+KI=/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints
+grep -A6 'F.Fab' "$KI/Package_TO_SOT_SMD.pretty/SOT-343_SC-70-4.kicad_mod"
+```
+
+It is deliberately **not** derived from the pads. A land pattern is not a
+package: SOD-323 and SOD-323W share one body and differ only in copper, and
+`sod110`'s pads match KiCad's exactly while its body did not.

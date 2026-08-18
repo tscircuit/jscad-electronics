@@ -1,8 +1,10 @@
 import { Cuboid, Colorize, Union, Hull, Translate } from "jscad-fiber"
 
 export const SMB = () => {
-  const bodyWidth = 4.4
-  const bodyLength = 3.4
+  // Package outline for the designation, from KiCad's D_SMB F.Fab layer.
+  // Was 4.4 x 3.4 — 15% narrow across the leads for a DO-214AA.
+  const bodyWidth = 4.6
+  const bodyLength = 4.0
   const bodyHeight = 2.3
   const padWidth = 1.45
   const padThickness = 0.12

@@ -4,9 +4,12 @@ import { SmdChipLead } from "./SmdChipLead"
 
 export const SOD323 = () => {
   const fullWidth = 2.5
-  const bodyLength = 1.25
+  // Package outline for the designation, from KiCad's D_SOD-323 F.Fab layer
+  // (the reference footprinter's own kicad-parity tests compare against).
+  // Was 1.7 x 1.25, which is a SOD-323 about 15% too small across.
+  const bodyLength = 1.4
 
-  const bodyWidth = 1.7
+  const bodyWidth = 1.8
   const bodyHeight = 0.95
 
   const leadWidth = 0.3

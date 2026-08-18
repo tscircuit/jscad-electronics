@@ -1,4 +1,5 @@
 import { fp } from "@tscircuit/footprinter"
+import { Rotate, Translate } from "jscad-fiber"
 import { Dip } from "./DualInlinePackage"
 import { Tssop } from "./Tssop"
 import { MSOP } from "./MSOP"
@@ -64,9 +65,18 @@ import { FPC } from "./FPC"
 import { SmdPinHeader } from "./SmdPinHeader"
 import { mm } from "@tscircuit/mm"
 import { getPlatedHoleCenters } from "./utils/getPlatedHoleCenters"
+import { getSmtPadRects } from "./utils/getSmtPadRects"
+import { GullWingBody } from "./GullWingBody"
 import { ParametricChip } from "./ParametricChip"
 import { Led5050 } from "./Led5050"
+import { Led2835 } from "./Led2835"
 import { RJ45 } from "./RJ45"
+import { DPAK } from "./DPAK"
+import { ElectrolyticCapacitor } from "./ElectrolyticCapacitor"
+import { Potentiometer } from "./Potentiometer"
+import { SmdPushButton } from "./SmdPushButton"
+import { SOT563 } from "./SOT-563"
+import { BGA } from "./BGA"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -140,10 +150,44 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     ledp?: number
     ledy?: number
     bodyy?: number
+    // TO-252 / TO-263: the exposed tab pad, and the lead-pad-to-tab-pad span
+    tabw?: number
+    tabh?: number
+    span?: number
+    // radial / electrolytic can
+    d?: number
+    // potentiometer body length along Y
+    ca?: number
+    // no-lead packages: exposed thermal pad, and whether leads sit outside
+    // the body outline (QFP) or flush under it (QFN)
+    ep?: boolean | { x: number; y: number }
+    epw?: number
+    eph?: number
+    legsoutside?: boolean
+    // grid packages (bga, lga, vson): pads by row/column
+    grid?: { x: number; y: number }
+    // led2835's two differently-sized pads
+    p1w?: number
+    p2w?: number
+    p1x?: number
+    p2x?: number
   }
 
   const colorMatch = footprint.match(/_color\(([^)]+)\)/)
   const color = colorMatch ? colorMatch[1] : undefined
+
+  /**
+   * footprinter reports a dimension as either a number or a string with a
+   * unit (`"4.20mm"`), and omits it entirely when the footprint does not
+   * define one. `mm` is the parser footprinter itself uses, so a body agrees
+   * with its pads by construction; this only adds the missing case, because
+   * `mm(undefined)` throws.
+   */
+  const dim = (value: unknown, fallback: number): number => {
+    if (value === undefined || value === null) return fallback
+    const parsed = mm(value as any)
+    return Number.isFinite(parsed) ? parsed : fallback
+  }
 
   switch (fpJson.fn) {
     case "crystal":
@@ -325,6 +369,52 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           return <SOT235 />
       }
       break
+    case "sot25":
+      // SOT-23-5: the same 2.9 x 1.6 body as `sot23` with five pins.
+      return <SOT235 />
+    case "sot":
+    case "sot343": {
+      // Two packages whose LEAD COUNT does not match the body they would
+      // otherwise be aliased to: footprinter's bare `sot` is a six-pin SOT-23
+      // (SOT235 draws five) and `sot343` is SC-70-4 (SOT363 draws six). A
+      // render makes that obvious — six pads under five leads — so both build
+      // their leads from the pads instead.
+      //
+      // The BODY, though, is the designation's, not the pads': SOT-23-6 is
+      // 1.60 x 2.90 and SC-70-4 is 1.25 x 2.00, per KiCad's F.Fab outlines
+      // (`SOT-23-6`, `SOT-343_SC-70-4`) — the same reference footprinter's
+      // kicad-parity tests use. Deriving those from the pad span instead put
+      // SC-70-4 10% under size.
+      const isSc70 = fpJson.fn === "sot343"
+      return (
+        <GullWingBody
+          pads={getSmtPadRects(normalizedFootprint)}
+          bodyWidth={isSc70 ? 1.25 : 1.6}
+          bodyLength={isSc70 ? 2.0 : 2.9}
+          bodyHeight={isSc70 ? 1.1 : 1.3}
+        />
+      )
+    }
+    case "sot563":
+      return <SOT563 />
+    case "sot89": {
+      // SOT-89 is a SOT-223 at roughly a third of the volume: three leads one
+      // side, one wide tab lead the other. Aliasing it to SOT-223 outright
+      // would report a 6.5 x 3.5 body where there is a 4.5 x 2.5 one.
+      const padSpan = dim(fpJson.w, 4.2)
+      return (
+        <SOT223
+          fullWidth={padSpan}
+          bodyWidth={padSpan * 0.6}
+          bodyLength={dim(fpJson.h, 4.8) * 0.94}
+          bodyHeight={1.5}
+          leadWidth={dim(fpJson.pw, 0.48)}
+          tabLeadWidth={dim(fpJson.pw, 0.48) * 2}
+          padPitch={dim(fpJson.p, 1.5)}
+          leadHeight={0.66}
+        />
+      )
+    }
     case "sot457":
       return <SOT457 />
     case "sot223":
@@ -399,6 +489,10 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         />
       )
     case "soic":
+    case "sop8":
+    case "ssop":
+      // SOP and SSOP are SOIC with different lead spans, and SOIC is already
+      // driven entirely by the footprint's own numbers.
       return (
         <SOIC
           pinCount={fpJson.num_pins}
@@ -408,6 +502,111 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           bodyWidth={fpJson.w}
         />
       )
+    case "son":
+    case "wson":
+    case "vson": {
+      // Small-outline no-lead: terminals on two opposite edges, which is a
+      // DFN. `vson` is the odd one: it describes its body outline as `grid`
+      // (a SIZE, e.g. grid2x3mm) while `w` is the row span. `son` and `wson`
+      // give w/h directly.
+      const bodyWidth =
+        fpJson.fn === "vson" ? dim(fpJson.grid?.x, 3) : dim(fpJson.w, 3)
+      const bodyLength =
+        fpJson.fn === "vson" ? dim(fpJson.grid?.y, 3) : dim(fpJson.h, 3)
+      const thermalPadWidth = dim(fpJson.epw, 0)
+      const thermalPadLength = dim(fpJson.eph, 0)
+      const padLength = fpJson.pl !== undefined ? dim(fpJson.pl, 0) : undefined
+      const padWidth = fpJson.pw !== undefined ? dim(fpJson.pw, 0) : undefined
+
+      // WHICH edges the terminals sit on is a property of the footprint, not
+      // of the family: `son` and `vson` put their two rows left and right,
+      // `wson` puts them top and bottom. DFN always builds left and right, so
+      // a `wson` came out turned 90 degrees from its own pads, with terminals
+      // along the two edges the footprint has none on. Read the axis from the
+      // pads, ignoring the thermal pad, which is not a row member.
+      const signalPads = getSmtPadRects(normalizedFootprint).filter(
+        (pad) => Number(pad.pin ?? 0) <= fpJson.num_pins,
+      )
+      const distinct = (values: number[]) =>
+        new Set(values.map((value) => value.toFixed(3))).size
+      const rowsAlongY =
+        signalPads.length > 2 &&
+        distinct(signalPads.map((pad) => pad.y)) === 2 &&
+        distinct(signalPads.map((pad) => pad.x)) > 2
+
+      const dfn = (
+        <DFN
+          num_pins={fpJson.num_pins}
+          // Built in DFN's own frame and then turned to match the footprint,
+          // so the body's X and Y swap with it, and the thermal pad's too.
+          bodyWidth={rowsAlongY ? bodyLength : bodyWidth}
+          bodyLength={rowsAlongY ? bodyWidth : bodyLength}
+          pitch={dim(fpJson.p, 0.5)}
+          padLength={padLength}
+          padWidth={padWidth}
+          thermalPadSize={
+            fpJson.ep && thermalPadWidth > 0 && thermalPadLength > 0
+              ? {
+                  width: rowsAlongY ? thermalPadLength : thermalPadWidth,
+                  length: rowsAlongY ? thermalPadWidth : thermalPadLength,
+                }
+              : undefined
+          }
+        />
+      )
+      return rowsAlongY ? (
+        <Rotate rotation={[0, 0, "90deg"]}>{dfn}</Rotate>
+      ) : (
+        dfn
+      )
+    }
+    case "mlp":
+    case "lga":
+    case "quad": {
+      // Quad packages whose leads sit under the body are QFNs; footprinter's
+      // `legsoutside` says when they stick out, which is a QFP. `lga` has no
+      // leads at all, so its flush lands render as the smallest QFN pads.
+      if (fpJson.legsoutside) {
+        return (
+          <QFP
+            pinCount={fpJson.num_pins}
+            pitch={dim(fpJson.p, 0.5)}
+            leadWidth={dim(fpJson.pw, 0.25)}
+            padContactLength={dim(fpJson.pl, 0.25)}
+            bodyWidth={dim(fpJson.w, 6)}
+          />
+        )
+      }
+      // NOT `grid`: for these it is a pad COUNT per side (lga14 is 4x3 pads),
+      // not a size. Reading it as millimetres gave a 4 x 3 body for a part
+      // that is 2.4 x 2.9 — wrong by 60%, and invisible in a render.
+      return (
+        <QFN
+          num_pins={fpJson.num_pins}
+          bodyWidth={dim(fpJson.w, 6)}
+          bodyLength={dim(fpJson.h, 6)}
+          pitch={dim(fpJson.p, 0.5)}
+          padLength={dim(fpJson.pl, 0.25)}
+          padWidth={dim(fpJson.pw, 0.25)}
+        />
+      )
+    }
+    case "bga": {
+      // BGA.tsx has been in this repo, unreferenced, the whole time.
+      const pitch = dim(fpJson.p, 0.8)
+      const columns = fpJson.grid?.x ?? 8
+      const rows = fpJson.grid?.y ?? 8
+      return (
+        <BGA
+          ballPitch={pitch}
+          ballColumns={columns}
+          ballRows={rows}
+          ballDiameter={pitch * 0.625}
+          packageWidth={columns * pitch}
+          packageLength={rows * pitch}
+        />
+      )
+    }
     case "sod523":
       return <SOD523 />
     case "sod723":
@@ -430,10 +629,96 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <SOD123FL />
     case "sod123w":
       return <SOD123W />
+    case "sod110":
+      // SOD-110 is NOT a SOD-123W: 2.10 x 1.40 against 2.60 x 1.70 (KiCad
+      // F.Fab, D_SOD-110 and Nexperia_CFP3_SOD-123W). Same construction, so
+      // the same component — at its own size.
+      return <SOD123W bodyWidth={2.1} bodyLength={1.4} />
     case "sod128":
       return <SOD128 />
     case "sod323":
       return <SOD323 />
+    case "sod323w":
+      return <SOD323 />
+    case "sod80":
+      // SOD-80 is the MiniMELF glass body: 3.5 long, 1.5 across.
+      return <MINIMELF />
+    case "sod882d":
+      return <SOD882 />
+    case "smbf":
+      // SMBF is SMB's flat (low-profile) variant; same outline.
+      return <SMB />
+    case "led2835":
+      return (
+        <Led2835
+          color={color}
+          bodyWidth={dim(fpJson.w, 3.5)}
+          bodyLength={dim(fpJson.h, 2.8)}
+          pad1X={dim(fpJson.p1x, -0.9)}
+          pad1Width={dim(fpJson.p1w, 2.2)}
+          pad2X={dim(fpJson.p2x, 1.375)}
+          pad2Width={dim(fpJson.p2w, 1.25)}
+          padLength={dim(fpJson.ph, 2.2)}
+        />
+      )
+    case "electrolytic":
+    case "radial": {
+      // A radial can. The diameter is the one dimension that matters for an
+      // enclosure cavity and it is not always in the json: `electrolytic`
+      // reports `d`, `radial` puts it in the NAME (radial_d5_p2.5). Falling
+      // back to twice the lead pitch matches both of footprinter's own
+      // defaults, and the height is derived — see ElectrolyticCapacitor.
+      const pitch = dim(fpJson.p, 2.5)
+      const namedDiameter = footprint.match(/_d([\d.]+)/)
+      const diameter =
+        fpJson.d !== undefined
+          ? dim(fpJson.d, pitch * 2)
+          : namedDiameter
+            ? Number(namedDiameter[1])
+            : pitch * 2
+      return <ElectrolyticCapacitor diameter={diameter} leadPitch={pitch} />
+    }
+    case "potentiometer":
+      return (
+        <Potentiometer
+          bodyWidth={dim(fpJson.w, 5.35)}
+          bodyLength={dim(fpJson.ca, 14)}
+          bodyHeight={dim(fpJson.h, 4)}
+          leads={getPlatedHoleCenters(normalizedFootprint)}
+        />
+      )
+    case "smdpushbutton":
+      return (
+        <SmdPushButton
+          padSpanX={dim(fpJson.px, 4.2)}
+          padSpanY={dim(fpJson.py, 2.15)}
+          padWidth={dim(fpJson.pw, 1.05)}
+          padLength={dim(fpJson.ph, 0.7)}
+        />
+      )
+    case "breakoutheaders": {
+      // A breakout board carries a through-hole header down each side; the
+      // headers are the tall part, and PinRow already models one.
+      const pitch = dim(fpJson.p, 2.54)
+      const halfWidth = dim(fpJson.w, 10) / 2
+      const sides: Array<{ x: number; pins: number; key: string }> = [
+        { x: -halfWidth, pins: fpJson.left ?? 0, key: "left" },
+        { x: halfWidth, pins: fpJson.right ?? 0, key: "right" },
+      ]
+      return (
+        <>
+          {sides
+            .filter(({ pins }) => pins > 0)
+            .map(({ x, pins, key }) => (
+              <Translate center={[x, 0, 0]} key={key}>
+                <Rotate rotation={[0, 0, "90deg"]}>
+                  <PinRow numberOfPins={pins} pitch={pitch} />
+                </Rotate>
+              </Translate>
+            ))}
+        </>
+      )
+    }
     case "sod923":
       return <SOD923 />
     case "hc49":
@@ -466,8 +751,66 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <SOT723 />
     case "to220":
       return <TO220 leads={getPlatedHoleCenters(normalizedFootprint)} />
+    case "to220f":
+      // TO-220F is the fully-moulded (isolated) variant: same outline, tab
+      // encapsulated rather than exposed.
+      return (
+        <TO220 mouldedTab leads={getPlatedHoleCenters(normalizedFootprint)} />
+      )
     case "to92":
       return <TO92 leads={getPlatedHoleCenters(normalizedFootprint)} />
+    case "to92l":
+    case "to92s": {
+      // Both are TO-92 at a different size, and the size is the whole reason
+      // they are separate footprints: `to92l` is 4.8mm across, `to92s` 2.5mm.
+      // The footprint's two extents are the cylinder and the flat-cut face.
+      //
+      // The lead PATTERN differs too, and is not in the json: `to92s` is
+      // inline where `to92` is staggered, and `to92l` puts pin 1 at the
+      // origin rather than centring the group. Taking the holes themselves is
+      // the only way all three line up.
+      const across = dim(fpJson.w, 4.8)
+      const along = dim(fpJson.h, 4.0)
+      const diameter = Math.max(across, along)
+      return (
+        <TO92
+          bodyDiameter={diameter}
+          flatCut={Math.max(diameter - Math.min(across, along), 0.4)}
+          leads={getPlatedHoleCenters(normalizedFootprint)}
+        />
+      )
+    }
+    case "to252":
+    case "dpak":
+    case "to263":
+    case "d2pak": {
+      // TO-252/DPAK and TO-263/D2PAK are one construction at two sizes: a
+      // moulded body on a large exposed tab, leads leaving the far face. The
+      // footprint is asymmetric (leads at -span/2, tab at +span/2), so the
+      // body sits over the TAB, not over the origin.
+      const isD2Pak = fpJson.fn === "to263" || fpJson.fn === "d2pak"
+      const tabWidth = dim(fpJson.tabw, isD2Pak ? 8.38 : 6.2)
+      // The tab's own size, not the tab PAD's: footprinter draws a 10.7mm pad
+      // for a TO-263 whose package is 10.0 across (KiCad TO-263-2 F.Fab), and
+      // a body may not inherit a land's solder allowance.
+      const tabLength = Math.min(
+        dim(fpJson.tabh, isD2Pak ? 10 : 5.8),
+        isD2Pak ? 10 : 6.5,
+      )
+      return (
+        <DPAK
+          bodyWidth={tabWidth}
+          bodyLength={dim(fpJson.w, isD2Pak ? 10.1 : 6.6)}
+          bodyHeight={isD2Pak ? 4.4 : 2.3}
+          tabWidth={tabWidth}
+          tabLength={tabLength}
+          span={dim(fpJson.span, isD2Pak ? 10.21 : 6.85)}
+          pitch={dim(fpJson.p, isD2Pak ? 2.54 : 2.29)}
+          leadWidth={dim(fpJson.pw, 1.5)}
+          leadContactLength={dim(fpJson.pl, 3)}
+        />
+      )
+    }
     case "stampboard":
     case "stampreceiver":
       return (

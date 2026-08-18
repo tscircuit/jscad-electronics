@@ -28,7 +28,12 @@ export const BGA = ({
 }: BGAProps) => {
   const bodyHeight = packageHeight - standoffHeight
   const bodyOffset = standoffHeight + bodyHeight / 2
-  const ballOffset = -standoffHeight / 2
+  // The balls sit IN the standoff gap, between the board and the package.
+  // This used to be -standoffHeight / 2, which centres them BELOW z = 0: every
+  // ball hung through the board, which an underside view shows immediately.
+  // Clamped to the ball radius so a ball larger than the gap still rests on
+  // the board rather than sinking into it.
+  const ballOffset = Math.max(standoffHeight / 2, ballDiameter / 2)
 
   const ballsSoup = footprintString
     ? fp.string(footprintString).circuitJson()

@@ -1,17 +1,42 @@
 import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 
-export const SOT223 = () => {
-  const fullWidth = 6.6
-  const bodyWidth = 3.5
-  const bodyLength = 6.5
-  const bodyHeight = 1.7
-  const leadWidth = 0.7
-  const leftLeadWidth = 3
+export interface SOT223Props {
+  /** Pad-to-pad span across the leads (X). */
+  fullWidth?: number
+  /** X extent of the moulded body. */
+  bodyWidth?: number
+  /** Y extent of the moulded body. */
+  bodyLength?: number
+  bodyHeight?: number
+  /** Y width of the three signal leads. */
+  leadWidth?: number
+  /** Y width of the single wide tab lead on the opposite side. */
+  tabLeadWidth?: number
+  /** Y pitch of the signal leads. */
+  padPitch?: number
+  /** How high the lead rises from the pad to the body face. */
+  leadHeight?: number
+}
+
+/**
+ * SOT-223 and its smaller relative SOT-89: three leads one side, one wide tab
+ * lead the other. Same construction, different dimensions, so the dimensions
+ * are props — SOT-89's body is 4.5 x 2.5 x 1.5, barely a third of the volume.
+ */
+export const SOT223 = ({
+  fullWidth = 6.6,
+  bodyWidth = 3.5,
+  bodyLength = 6.5,
+  bodyHeight = 1.7,
+  leadWidth = 0.7,
+  tabLeadWidth = 3,
+  padPitch = 2.3,
+  leadHeight = 0.75,
+}: SOT223Props = {}) => {
+  const leftLeadWidth = tabLeadWidth
   const leadThickness = 0.25
-  const leadHeight = 0.75
   const padContactLength = 0.5
-  const padPitch = 2.3
 
   // Increase the bodyDistance to extend leads further out
   const extendedBodyDistance = fullWidth - bodyWidth
