@@ -118,3 +118,12 @@ test("a pin header is not treated as a chip", () => {
   expect(bounds.length).toBeCloseTo(10.16)
   expect(renderFootprint("pinrow4").length).toBeGreaterThan(3)
 })
+
+test("a five-pin SOT-23 footprint renders its body", () => {
+  const bounds = boundsOf("sot23_5")!
+
+  expect(renderFootprint("sot23_5").length).toBeGreaterThan(0)
+  expect(bounds.length).toBeGreaterThan(2.8)
+  expect(bounds.width).toBeGreaterThan(2.5)
+  expect(bounds.height).toBeGreaterThan(1)
+})
