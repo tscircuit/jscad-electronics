@@ -74,13 +74,13 @@ import { RJ45 } from "./RJ45"
 export const Footprinter3d = ({ footprint }: { footprint: string }) => {
   // Normalize jstzh1_5mm formats to zh format
   let normalizedFootprint = footprint
-  const jstPhMatch = footprint.match(/^jst_?ph(?:2_0mm)?(\d+)?$/)
   if (footprint.startsWith("jstzh1_5mm")) {
     const pinMatch = footprint.match(/jstzh1_5mm(\d+)?/)
     const numPins = pinMatch && pinMatch[1] ? pinMatch[1] : "7"
     normalizedFootprint = `zh${numPins}`
-  } else if (jstPhMatch) {
-    const numPins = jstPhMatch[1] ?? "2"
+  } else if (footprint.startsWith("jstph2_0mm")) {
+    const pinMatch = footprint.match(/jstph2_0mm(\d+)?/)
+    const numPins = pinMatch && pinMatch[1] ? pinMatch[1] : "2"
     normalizedFootprint = `jst${numPins}_ph`
   }
 
