@@ -23,19 +23,8 @@ import { NOMINAL_HEIGHT_MM, probeFor } from "./footprint-probes"
 const TOLERANCE = 0.25
 
 /**
- * Bodies whose height is known to be wrong, recorded with the value they
- * actually measure so the number is written down rather than rediscovered —
- * and so that FIXING one fails this test and prompts its removal.
- *
- * `breakoutheaders` puts its headers BELOW the board, because that is what
- * `PinRow` does for a through-hole header. Consistent with `pinrow`, and wrong
- * for both: nothing above the board means nothing for a lid to clear.
+ * Footprints with no body yet — covered by the ledger, not by this test.
  */
-const KNOWN_BAD_PLACEMENT: Record<string, number> = {
-  breakoutheaders: 0.9,
-}
-
-/** Footprints with no body yet — covered by the ledger, not by this test. */
 const NO_BODY_YET = ["jst", "m2host", "usbcmidmount"]
 
 const measureHeight = (geometries: Array<{ geom: unknown }>): number => {
@@ -50,7 +39,7 @@ test("a body's height above the board matches the package", async () => {
 
   const wrong: Record<string, string> = {}
   for (const [name, nominal] of Object.entries(NOMINAL_HEIGHT_MM)) {
-    if (NO_BODY_YET.includes(name) || name in KNOWN_BAD_PLACEMENT) continue
+    if (NO_BODY_YET.includes(name)) continue
     const { geometries } = getJscadModelForFootprint(
       probeFor(name),
       jscadModeling,
@@ -68,20 +57,4 @@ test("a body's height above the board matches the package", async () => {
     }
   }
   expect(wrong).toEqual({})
-
-  // The recorded-wrong ones, still wrong. A fix trips this and gets its entry
-  // deleted, which is the only way the note above stays true.
-  const changed: Record<string, string> = {}
-  for (const [name, recorded] of Object.entries(KNOWN_BAD_PLACEMENT)) {
-    const { geometries } = getJscadModelForFootprint(
-      probeFor(name),
-      jscadModeling,
-    )
-    const height = geometries.length ? measureHeight(geometries) : 0
-    if (Math.abs(height - recorded) > 0.5) {
-      changed[name] =
-        `now ${height.toFixed(2)}mm (was ${recorded}mm) — if this is a fix, delete the KNOWN_BAD_PLACEMENT entry`
-    }
-  }
-  expect(changed).toEqual({})
 })

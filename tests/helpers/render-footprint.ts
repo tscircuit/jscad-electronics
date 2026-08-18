@@ -126,6 +126,29 @@ export async function renderFootprint(
       ? gltfResult.data
       : Buffer.from(gltfResult.data as string)
 
+  const cameraDistance =
+    options.camPos && options.lookAt
+      ? Math.hypot(
+          options.camPos[0] - options.lookAt[0],
+          options.camPos[1] - options.lookAt[1],
+          options.camPos[2] - options.lookAt[2],
+        )
+      : 0
+
+  // The grid fades from `fadeDistance` out to `fadeDistance * fadeStrength`,
+  // so at a fixed 50mm it is entirely gone once everything is past 75mm: a
+  // 53mm part like `breakoutheaders` is framed from 99mm away and renders
+  // against blank white, with no datum at all.
+  //
+  // Raised ONLY in that case. Scaling it with every camera would move the
+  // grid in renders that are perfectly readable already (`rj45-led-bottom`
+  // and `to220f` are both framed from 40mm), and a snapshot that changes for
+  // no reason is a snapshot nobody looks at.
+  const GRID_FADE_DISTANCE = 50
+  const GRID_FADE_STRENGTH = 1.5
+  const gridWouldVanish =
+    cameraDistance > GRID_FADE_DISTANCE * GRID_FADE_STRENGTH
+
   const baseRenderOptions = {
     width: 800,
     height: 600,
@@ -137,8 +160,8 @@ export async function renderFootprint(
       infiniteGrid: true,
       cellSize: 0.5,
       sectionSize: 5,
-      fadeDistance: 50,
-      fadeStrength: 1.5,
+      fadeDistance: gridWouldVanish ? cameraDistance * 1.6 : GRID_FADE_DISTANCE,
+      fadeStrength: GRID_FADE_STRENGTH,
       gridColor: [0.9, 0.9, 0.9] as const,
       sectionColor: [0.7, 0.7, 0.7] as const,
       ...(options.gridZ === undefined ? {} : { offset: { y: options.gridZ } }),
