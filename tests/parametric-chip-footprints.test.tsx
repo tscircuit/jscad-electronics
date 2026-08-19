@@ -127,3 +127,11 @@ test("a five-pin SOT-23 footprint renders its body", () => {
   expect(bounds.width).toBeGreaterThan(2.5)
   expect(bounds.height).toBeGreaterThan(1)
 })
+
+test("jstph2_0mm preserves the pin count when normalized", () => {
+  const bounds = boundsOf("jstph2_0mm7")!
+
+  // Seven pins span 12mm; the PH header adds 1.95mm at each end.
+  expect(bounds.length).toBeCloseTo(15.9)
+  expect(bounds.width).toBeCloseTo(4.5)
+})

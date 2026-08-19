@@ -60,6 +60,7 @@ import { StampBoard } from "./stampboard"
 import { MountedPcbModule } from "./MountedPcbModule"
 import SOD723 from "./SOD723"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
+import { JSTPH2_0mm } from "./JSTPH2_0mm"
 import { Crystal } from "./Crystal"
 import { FPC } from "./FPC"
 import { SmdPinHeader } from "./SmdPinHeader"
@@ -89,6 +90,10 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     const pinMatch = footprint.match(/jstzh1_5mm(\d+)?/)
     const numPins = pinMatch && pinMatch[1] ? pinMatch[1] : "7"
     normalizedFootprint = `zh${numPins}`
+  } else if (footprint.startsWith("jstph2_0mm")) {
+    const pinMatch = footprint.match(/jstph2_0mm(\d+)?/)
+    const numPins = pinMatch && pinMatch[1] ? pinMatch[1] : "2"
+    normalizedFootprint = `jst${numPins}_ph`
   }
 
   const fpJson = fp.string(normalizedFootprint).json() as unknown as {
@@ -444,6 +449,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     case "jst":
       if (fpJson.zh) {
         return <JSTZH1_5mm numPins={fpJson.num_pins} />
+      }
+      if (fpJson.ph) {
+        return <JSTPH2_0mm numPins={fpJson.num_pins} />
       }
       break
     case "fpc":
