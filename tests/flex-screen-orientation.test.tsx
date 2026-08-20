@@ -23,6 +23,20 @@ test("distanceAboveBoard sets the backplane of a 180-degree upward fold", () => 
   expect(maximum[2]).toBeCloseTo(13.2)
 })
 
+test("foldsAboveBoard honors 20 mm clearance with a custom fold outset", () => {
+  const [, maximum] = boundsFor(
+    <FlexScreen
+      foldsAboveBoard
+      flexCableLength={64}
+      distanceAboveBoard={20}
+      foldDistanceFromConnector={12}
+      foldOutset={10}
+      screenThickness={1.2}
+    />,
+  )
+  expect(maximum[2]).toBeCloseTo(21.2)
+})
+
 test("distanceBelowBoard sets the backplane of a board-edge downward fold", () => {
   const [minimum] = boundsFor(
     <FlexScreen

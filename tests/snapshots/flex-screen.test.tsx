@@ -39,6 +39,8 @@ const Assembly = ({
 interface SnapshotView {
   cameraPreset: CameraPreset
   annotation: string
+  propsOverride?: Partial<FlexScreenProps>
+  boardEdgeY?: number
 }
 
 interface SnapshotConfiguration {
@@ -132,6 +134,45 @@ const configurations: SnapshotConfiguration[] = [
     boardEdgeY: 10,
     boardDepth: 58,
     views: foldedViews("foldedAboveHigh"),
+  },
+  {
+    name: "folds-above-20mm-fold-outset",
+    title:
+      "foldsAboveBoard compares fold outset and connector distance at 20 mm clearance",
+    props: {
+      foldsAboveBoard: true,
+      flexCableLength: 64,
+      distanceAboveBoard: 20,
+      foldDistanceFromConnector: 6,
+      foldOutset: 3,
+      foldSegments: 28,
+    },
+    boardEdgeY: 6,
+    boardDepth: 62,
+    views: [
+      {
+        cameraPreset: "left-sideview",
+        annotation: "distanceAboveBoard=20mm\nfoldOutset=3mm / start=6mm",
+      },
+      {
+        cameraPreset: "left-sideview",
+        annotation: "distanceAboveBoard=20mm\nfoldOutset=6mm / start=9mm",
+        propsOverride: {
+          foldOutset: 6,
+          foldDistanceFromConnector: 9,
+        },
+        boardEdgeY: 9,
+      },
+      {
+        cameraPreset: "left-sideview",
+        annotation: "distanceAboveBoard=20mm\nfoldOutset=10mm / start=12mm",
+        propsOverride: {
+          foldOutset: 10,
+          foldDistanceFromConnector: 12,
+        },
+        boardEdgeY: 12,
+      },
+    ],
   },
   {
     name: "folded-below-board-edge",
@@ -261,17 +302,25 @@ const configurations: SnapshotConfiguration[] = [
 
 for (const configuration of configurations) {
   test(configuration.title, async () => {
-    const element = Assembly(configuration)
     const renderedViews = await Promise.all(
-      configuration.views.map(async (view) => ({
-        png: await renderComponent(element, {
-          width: 480,
-          height: 360,
-          cameraPreset: view.cameraPreset,
-          gridZ: 0,
-        }),
-        annotation: view.annotation,
-      })),
+      configuration.views.map(async (view) => {
+        const element = (
+          <Assembly
+            props={{ ...configuration.props, ...view.propsOverride }}
+            boardEdgeY={view.boardEdgeY ?? configuration.boardEdgeY}
+            boardDepth={configuration.boardDepth}
+          />
+        )
+        return {
+          png: await renderComponent(element, {
+            width: 640,
+            height: 480,
+            cameraPreset: view.cameraPreset,
+            gridZ: 0,
+          }),
+          annotation: view.annotation,
+        }
+      }),
     )
     const sheet = createAnnotatedViewSheet(renderedViews)
     await expect(sheet).toMatchPngSnapshot(import.meta.path, configuration.name)

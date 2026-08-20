@@ -1,3 +1,11 @@
+import {
+  glyphAdvanceRatio,
+  glyphLineAlphabet,
+  kerningRatio,
+  lineHeightRatio,
+  spaceWidthRatio,
+  strokeWidthRatio,
+} from "@tscircuit/alphabet"
 import { PNG } from "pngjs"
 
 export interface AnnotatedPngView {
@@ -13,51 +21,7 @@ export interface AnnotatedViewSheetOptions {
   backgroundColor?: string
   annotationColor?: string
   textColor?: string
-  textScale?: number
-}
-
-const FONT: Record<string, string> = {
-  " ": "000,000,000,000,000",
-  A: "010,101,111,101,101",
-  B: "110,101,110,101,110",
-  C: "011,100,100,100,011",
-  D: "110,101,101,101,110",
-  E: "111,100,110,100,111",
-  F: "111,100,110,100,100",
-  G: "011,100,101,101,011",
-  H: "101,101,111,101,101",
-  I: "111,010,010,010,111",
-  J: "001,001,001,101,010",
-  K: "101,101,110,101,101",
-  L: "100,100,100,100,111",
-  M: "101,111,111,101,101",
-  N: "101,111,111,111,101",
-  O: "010,101,101,101,010",
-  P: "110,101,110,100,100",
-  Q: "010,101,101,111,011",
-  R: "110,101,110,101,101",
-  S: "011,100,010,001,110",
-  T: "111,010,010,010,010",
-  U: "101,101,101,101,111",
-  V: "101,101,101,101,010",
-  W: "101,101,111,111,101",
-  X: "101,101,010,101,101",
-  Y: "101,101,010,010,010",
-  Z: "111,001,010,100,111",
-  0: "111,101,101,101,111",
-  1: "010,110,010,010,111",
-  2: "110,001,010,100,111",
-  3: "110,001,010,001,110",
-  4: "101,101,111,001,001",
-  5: "111,100,110,001,110",
-  6: "011,100,110,101,010",
-  7: "111,001,010,010,010",
-  8: "010,101,010,101,010",
-  9: "010,101,011,001,110",
-  "-": "000,000,111,000,000",
-  "/": "001,001,010,100,100",
-  ":": "000,010,000,010,000",
-  ".": "000,000,000,000,010",
+  fontSize?: number
 }
 
 const parseColor = (hex: string): [number, number, number, number] => {
@@ -110,48 +74,144 @@ const copyPng = (
   }
 }
 
-const textWidth = (text: string, scale: number) =>
-  Math.max(0, text.length * 4 - 1) * scale
+const glyphAdvance = (character: string) =>
+  glyphAdvanceRatio[character] ??
+  (character === " " ? spaceWidthRatio : glyphAdvanceRatio["?"]) ??
+  spaceWidthRatio
+
+const textWidth = (text: string, fontSize: number) => {
+  let width = 0
+  let previousCharacter: string | undefined
+  for (const character of text) {
+    if (previousCharacter) {
+      width += (kerningRatio[previousCharacter]?.[character] ?? 0) * fontSize
+    }
+    width += glyphAdvance(character) * fontSize
+    previousCharacter = character
+  }
+  return width
+}
+
+const blendPixel = (
+  png: PNG,
+  x: number,
+  y: number,
+  color: readonly [number, number, number, number],
+  coverage: number,
+) => {
+  if (x < 0 || y < 0 || x >= png.width || y >= png.height) return
+  const offset = (y * png.width + x) * 4
+  const sourceAlpha = (color[3] / 255) * coverage
+  const targetAlpha = png.data[offset + 3]! / 255
+  const outputAlpha = sourceAlpha + targetAlpha * (1 - sourceAlpha)
+  if (outputAlpha === 0) return
+  for (let channel = 0; channel < 3; channel += 1) {
+    png.data[offset + channel] = Math.round(
+      (color[channel]! * sourceAlpha +
+        png.data[offset + channel]! * targetAlpha * (1 - sourceAlpha)) /
+        outputAlpha,
+    )
+  }
+  png.data[offset + 3] = Math.round(outputAlpha * 255)
+}
+
+const distanceToSegment = (
+  x: number,
+  y: number,
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+) => {
+  const deltaX = x2 - x1
+  const deltaY = y2 - y1
+  const squaredLength = deltaX * deltaX + deltaY * deltaY
+  const projection =
+    squaredLength === 0
+      ? 0
+      : Math.max(
+          0,
+          Math.min(1, ((x - x1) * deltaX + (y - y1) * deltaY) / squaredLength),
+        )
+  return Math.hypot(
+    x - (x1 + projection * deltaX),
+    y - (y1 + projection * deltaY),
+  )
+}
+
+const drawStroke = ({
+  png,
+  x1,
+  y1,
+  x2,
+  y2,
+  width,
+  color,
+}: {
+  png: PNG
+  x1: number
+  y1: number
+  x2: number
+  y2: number
+  width: number
+  color: readonly [number, number, number, number]
+}) => {
+  const radius = width / 2
+  const minimumX = Math.floor(Math.min(x1, x2) - radius - 1)
+  const maximumX = Math.ceil(Math.max(x1, x2) + radius + 1)
+  const minimumY = Math.floor(Math.min(y1, y2) - radius - 1)
+  const maximumY = Math.ceil(Math.max(y1, y2) + radius + 1)
+  for (let y = minimumY; y <= maximumY; y += 1) {
+    for (let x = minimumX; x <= maximumX; x += 1) {
+      const distance = distanceToSegment(x + 0.5, y + 0.5, x1, y1, x2, y2)
+      const coverage = Math.max(0, Math.min(1, radius + 0.5 - distance))
+      if (coverage > 0) blendPixel(png, x, y, color, coverage)
+    }
+  }
+}
 
 const drawText = ({
   png,
   text,
   centerX,
   top,
-  scale,
+  fontSize,
   color,
 }: {
   png: PNG
   text: string
   centerX: number
   top: number
-  scale: number
+  fontSize: number
   color: readonly [number, number, number, number]
 }) => {
-  const normalized = text.toUpperCase()
-  const left = Math.round(centerX - textWidth(normalized, scale) / 2)
-  for (const [characterIndex, character] of [...normalized].entries()) {
-    const rows = (FONT[character] ?? FONT[" "]!).split(",")
-    for (const [rowIndex, row] of rows.entries()) {
-      for (const [columnIndex, pixel] of [...row].entries()) {
-        if (pixel !== "1") continue
-        fillRect(
-          png,
-          left + (characterIndex * 4 + columnIndex) * scale,
-          top + rowIndex * scale,
-          scale,
-          scale,
-          color,
-        )
-      }
+  let cursorX = centerX - textWidth(text, fontSize) / 2
+  let previousCharacter: string | undefined
+  for (const character of text) {
+    if (previousCharacter) {
+      cursorX += (kerningRatio[previousCharacter]?.[character] ?? 0) * fontSize
     }
+    for (const segment of glyphLineAlphabet[character] ?? []) {
+      drawStroke({
+        png,
+        x1: cursorX + segment.x1 * fontSize,
+        y1: top + (1 - segment.y1) * fontSize,
+        x2: cursorX + segment.x2 * fontSize,
+        y2: top + (1 - segment.y2) * fontSize,
+        width: fontSize * strokeWidthRatio,
+        color,
+      })
+    }
+    cursorX += glyphAdvance(character) * fontSize
+    previousCharacter = character
   }
 }
 
 /**
  * Combines rendered PNGs into a reviewable contact sheet and places a
- * multi-line annotation below each view. The tiny embedded bitmap font keeps
- * this fixture deterministic and independent of fonts installed on the host.
+ * multi-line annotation below each view. @tscircuit/alphabet provides
+ * deterministic vector strokes without depending on fonts installed on the
+ * host.
  */
 export const createAnnotatedViewSheet = (
   views: readonly AnnotatedPngView[],
@@ -168,7 +228,7 @@ export const createAnnotatedViewSheet = (
   )
   const rows = Math.ceil(views.length / columns)
   const gap = options.gap ?? 8
-  const annotationHeight = options.annotationHeight ?? 64
+  const annotationHeight = options.annotationHeight ?? 96
   const cellHeight = panelHeight + annotationHeight
   const output = new PNG({
     width: columns * panelWidth + (columns + 1) * gap,
@@ -177,7 +237,7 @@ export const createAnnotatedViewSheet = (
   const backgroundColor = parseColor(options.backgroundColor ?? "#d9dde2")
   const annotationColor = parseColor(options.annotationColor ?? "#202833")
   const textColor = parseColor(options.textColor ?? "#ffffff")
-  const scale = options.textScale ?? 3
+  const fontSize = options.fontSize ?? 30
 
   fillRect(output, 0, 0, output.width, output.height, backgroundColor)
 
@@ -200,9 +260,8 @@ export const createAnnotatedViewSheet = (
     )
 
     const lines = view.annotation.split("\n").slice(0, 2)
-    const lineHeight = 5 * scale
-    const lineGap = scale * 2
-    const blockHeight = lines.length * lineHeight + (lines.length - 1) * lineGap
+    const lineAdvance = fontSize * lineHeightRatio
+    const blockHeight = fontSize + (lines.length - 1) * lineAdvance
     const textTop =
       cellY + panelHeight + Math.floor((annotationHeight - blockHeight) / 2)
     for (const [lineIndex, line] of lines.entries()) {
@@ -210,8 +269,8 @@ export const createAnnotatedViewSheet = (
         png: output,
         text: line,
         centerX: cellX + panelWidth / 2,
-        top: textTop + lineIndex * (lineHeight + lineGap),
-        scale,
+        top: textTop + lineIndex * lineAdvance,
+        fontSize,
         color: textColor,
       })
     }
