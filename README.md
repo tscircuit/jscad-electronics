@@ -71,6 +71,41 @@ Most components accept parameters for customization. For example:
 
 Refer to the individual component files for available customization options.
 
+### Flexible screens
+
+`FlexScreen` combines a parameterized display with an FPC cable. Screen size
+can be supplied directly or derived from a diagonal and aspect ratio, and the
+built-in mounting presets place the display above, below, or at a right angle
+to the board plane.
+
+```tsx
+import { FlexScreen } from "jscad-electronics"
+
+<FlexScreen
+  diagonal={50}
+  aspectRatio="16:9"
+  orientation="foldedToFaceBelowBoard"
+  flexCableLength={38}
+  flexCableWidth={10}
+  conductorCount={10}
+  distanceBelowBoard={9}
+  foldDistanceFromConnector={8}
+  foldOutset={5}
+/>
+```
+
+Use `sitsFlat` when the display and cable continue in the same direction.
+`foldedToFaceAboveBoard` and `foldedToFaceBelowBoard` create true 180-degree
+folds, while `foldedToRightAngleAboveBoard` and
+`foldedToRightAngleBelowBoard` create 90-degree bends. The downward 180-degree
+fold starts on top of the board and turns over its edge.
+
+For 180-degree folds, `distanceAboveBoard` or `distanceBelowBoard` sets the
+final screen backplane independently of `foldDistanceFromConnector` and
+`foldOutset`, which control where the loop begins and how far it projects past
+the board edge. Every orientation is also available as a boolean shortcut, for
+example `<FlexScreen sitsFlat />` or `<FlexScreen foldsBelowBoard />`.
+
 ## Integration with tscircuit
 
 jscad-electronics is designed to work seamlessly with tscircuit. You can use these 3D models in your tscircuit projects to create accurate 3D representations of your PCB designs just by

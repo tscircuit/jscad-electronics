@@ -33,7 +33,9 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.3",
+    "@tscircuit/alphabet": "^0.0.24",
     "@tscircuit/footprinter": "^0.0.400",
+    "@types/pngjs": "^6.0.5",
     "@types/react": "19",
     "@types/react-dom": "19",
     "@types/three": "^0.179.0",
@@ -41,6 +43,7 @@
     "jscad-fiber": "^0.0.85",
     "jscad-to-gltf": "^0.0.7",
     "looks-same": "^10.0.1",
+    "pngjs": "^7.0.0",
     "poppygl": "^0.0.24",
     "react-cosmos": "7.0.0",
     "react-cosmos-plugin-vite": "7.0.0",
