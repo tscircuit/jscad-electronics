@@ -13,7 +13,6 @@ export const PinHeader = ({
   bodyLength = 2.54,
   bodyWidth = 2.54,
   flipZ,
-  faceup,
   smd,
   rightangle,
 }: {
@@ -26,7 +25,6 @@ export const PinHeader = ({
   bodyLength?: number
   bodyWidth?: number
   flipZ: (z: number) => number
-  faceup?: boolean
   smd?: boolean
   rightangle?: boolean
 }) => {
@@ -39,42 +37,40 @@ export const PinHeader = ({
           center={[x, y, flipZ(bodyHeight / 2)]}
         />
       </Translate>
-      {!faceup && (
-        <Colorize color={PIN_METAL_COLOR}>
-          {smd ? (
-            <SmdChipLead
-              rotation={-Math.PI / 2}
-              position={{
-                x: x,
-                y: y + 1,
-                z: pinThickness / 2,
-              }}
-              thickness={pinThickness}
-              width={pinThickness}
-              height={pinThickness}
-              padContactLength={2}
-              bodyDistance={3}
+      <Colorize color={PIN_METAL_COLOR}>
+        {smd ? (
+          <SmdChipLead
+            rotation={-Math.PI / 2}
+            position={{
+              x: x,
+              y: y + 1,
+              z: pinThickness / 2,
+            }}
+            thickness={pinThickness}
+            width={pinThickness}
+            height={pinThickness}
+            padContactLength={2}
+            bodyDistance={3}
+          />
+        ) : (
+          <Hull>
+            <Cuboid
+              color={PIN_METAL_COLOR}
+              size={[pinThickness, pinThickness, shortSidePinLength * 0.9]}
+              center={[x, y, flipZ(bodyHeight * 0.9 + bodyHeight / 2)]}
             />
-          ) : (
-            <Hull>
-              <Cuboid
-                color={PIN_METAL_COLOR}
-                size={[pinThickness, pinThickness, shortSidePinLength * 0.9]}
-                center={[x, y, flipZ(bodyHeight * 0.9 + bodyHeight / 2)]}
-              />
-              <Cuboid
-                color={PIN_METAL_COLOR}
-                size={[
-                  pinThickness / 1.8,
-                  pinThickness / 1.8,
-                  shortSidePinLength,
-                ]}
-                center={[x, y, flipZ(bodyHeight + bodyHeight / 2)]}
-              />
-            </Hull>
-          )}
-        </Colorize>
-      )}
+            <Cuboid
+              color={PIN_METAL_COLOR}
+              size={[
+                pinThickness / 1.8,
+                pinThickness / 1.8,
+                shortSidePinLength,
+              ]}
+              center={[x, y, flipZ(bodyHeight + bodyHeight / 2)]}
+            />
+          </Hull>
+        )}
+      </Colorize>
 
       <Colorize color={PIN_METAL_COLOR}>
         <Translate y={rightangle ? -3.9 : 0} z={rightangle ? 1 : 0}>

@@ -116,7 +116,6 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     id: number //innerDiameter
     od: number //outerDiameter
     invert?: boolean
-    faceup?: boolean
     smd?: boolean
     surface_mount?: boolean
     rightangle?: boolean
@@ -314,7 +313,6 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
             numberOfPins={fpJson.num_pins}
             pitch={fpJson.p}
             invert={fpJson.invert}
-            faceup={fpJson.faceup}
             rows={rows}
             smd={fpJson.smd || fpJson.surface_mount}
             rightangle={fpJson.rightangle}
