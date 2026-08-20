@@ -38,7 +38,7 @@ export const PinHeader = ({
         />
       </Translate>
       {!faceup && (
-        <Colorize color="gold">
+        <Colorize color="#c0c0c0">
           {smd ? (
             <SmdChipLead
               rotation={-Math.PI / 2}
@@ -56,12 +56,12 @@ export const PinHeader = ({
           ) : (
             <Hull>
               <Cuboid
-                color="gold"
+                color="#c0c0c0"
                 size={[pinThickness, pinThickness, shortSidePinLength * 0.9]}
                 center={[x, y, flipZ(bodyHeight * 0.9 + bodyHeight / 2)]}
               />
               <Cuboid
-                color="gold"
+                color="#c0c0c0"
                 size={[
                   pinThickness / 1.8,
                   pinThickness / 1.8,
@@ -74,17 +74,17 @@ export const PinHeader = ({
         </Colorize>
       )}
 
-      <Colorize color="gold">
+      <Colorize color="#c0c0c0">
         <Translate y={rightangle ? -3.9 : 0} z={rightangle ? 1 : 0}>
           <Rotate rotation={rightangle ? [-Math.PI / 2, 0, 0] : [0, 0, 0]}>
             <Hull>
               <Cuboid
-                color="gold"
+                color="#c0c0c0"
                 size={[pinThickness, pinThickness, longSidePinLength * 0.9]}
                 center={[x, y, flipZ((-longSidePinLength / 2) * 0.9)]}
               />
               <Cuboid
-                color="gold"
+                color="#c0c0c0"
                 size={[
                   pinThickness / 1.8,
                   pinThickness / 1.8,
