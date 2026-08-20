@@ -78,12 +78,21 @@ import { Potentiometer } from "./Potentiometer"
 import { SmdPushButton } from "./SmdPushButton"
 import { SOT563 } from "./SOT-563"
 import { BGA } from "./BGA"
+import { FlexScreen } from "./FlexScreen"
+import {
+  isFlexScreenFootprinterString,
+  parseFlexScreenFootprinterString,
+} from "./parseFlexScreenFootprinterString"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
  */
 
 export const Footprinter3d = ({ footprint }: { footprint: string }) => {
+  if (isFlexScreenFootprinterString(footprint)) {
+    return <FlexScreen {...parseFlexScreenFootprinterString(footprint)} />
+  }
+
   // Normalize jstzh1_5mm formats to zh format
   let normalizedFootprint = footprint
   if (footprint.startsWith("jstzh1_5mm")) {
