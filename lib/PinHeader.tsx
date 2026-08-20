@@ -1,6 +1,8 @@
 import { Colorize, Cuboid, Hull, Rotate, Translate } from "jscad-fiber"
 import { SmdChipLead } from "./SmdChipLead"
 
+const PIN_METAL_COLOR = "#c0c0c0"
+
 export const PinHeader = ({
   x,
   y,
@@ -38,7 +40,7 @@ export const PinHeader = ({
         />
       </Translate>
       {!faceup && (
-        <Colorize color="#c0c0c0">
+        <Colorize color={PIN_METAL_COLOR}>
           {smd ? (
             <SmdChipLead
               rotation={-Math.PI / 2}
@@ -56,12 +58,12 @@ export const PinHeader = ({
           ) : (
             <Hull>
               <Cuboid
-                color="#c0c0c0"
+                color={PIN_METAL_COLOR}
                 size={[pinThickness, pinThickness, shortSidePinLength * 0.9]}
                 center={[x, y, flipZ(bodyHeight * 0.9 + bodyHeight / 2)]}
               />
               <Cuboid
-                color="#c0c0c0"
+                color={PIN_METAL_COLOR}
                 size={[
                   pinThickness / 1.8,
                   pinThickness / 1.8,
@@ -74,17 +76,17 @@ export const PinHeader = ({
         </Colorize>
       )}
 
-      <Colorize color="#c0c0c0">
+      <Colorize color={PIN_METAL_COLOR}>
         <Translate y={rightangle ? -3.9 : 0} z={rightangle ? 1 : 0}>
           <Rotate rotation={rightangle ? [-Math.PI / 2, 0, 0] : [0, 0, 0]}>
             <Hull>
               <Cuboid
-                color="#c0c0c0"
+                color={PIN_METAL_COLOR}
                 size={[pinThickness, pinThickness, longSidePinLength * 0.9]}
                 center={[x, y, flipZ((-longSidePinLength / 2) * 0.9)]}
               />
               <Cuboid
-                color="#c0c0c0"
+                color={PIN_METAL_COLOR}
                 size={[
                   pinThickness / 1.8,
                   pinThickness / 1.8,
