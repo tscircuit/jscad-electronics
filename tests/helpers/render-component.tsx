@@ -13,6 +13,8 @@ import {
 type Vec3 = [number, number, number]
 
 export interface RenderComponentOptions {
+  width?: number
+  height?: number
   cameraPreset?: CameraPreset
   camPos?: Vec3
   lookAt?: Vec3
@@ -77,8 +79,8 @@ export async function renderComponent(
     : defaultCamera
 
   return renderGLTFToPNGFromGLB(glb, {
-    width: 800,
-    height: 600,
+    width: options.width ?? 800,
+    height: options.height ?? 600,
     backgroundColor: [1, 1, 1],
     ambient: 0.38,
     gamma: true,

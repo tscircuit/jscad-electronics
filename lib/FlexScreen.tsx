@@ -6,6 +6,8 @@ type Point3 = [number, number, number]
 type Rotation3 = [number | string, number | string, number | string]
 
 export type FlexScreenOrientation =
+  | "sitsFlat"
+  | "sitsFlatBelowBoard"
   | "foldedToFaceAboveBoard"
   | "foldedToFaceBelowBoard"
   | "foldedToRightAngleAboveBoard"
@@ -32,8 +34,13 @@ export interface FlexScreenProps {
 
   orientation?: FlexScreenOrientation
   /** Boolean orientation shortcuts for footprint/configuration builders. */
+  sitsFlat?: boolean
+  sitsFlatBelowBoard?: boolean
   foldedToFaceAboveBoard?: boolean
   foldedToFaceBelowBoard?: boolean
+  /** Concise aliases for the 180-degree face-above/face-below folds. */
+  foldsAboveBoard?: boolean
+  foldsBelowBoard?: boolean
   foldedToRightAngleAboveBoard?: boolean
   foldedToRightAngleBelowBoard?: boolean
 
@@ -72,6 +79,16 @@ export interface FlexScreenProps {
   bendSegments?: number
   /** Straight cable length after the bend before the screen attachment. */
   rightAngleVerticalLead?: number
+  /** Screen backplane distance above the board for a 180-degree upward fold. */
+  distanceAboveBoard?: number
+  /** Screen backplane distance below the board for a 180-degree downward fold. */
+  distanceBelowBoard?: number
+  /** Straight distance from the connector to the start of a 180-degree fold. */
+  foldDistanceFromConnector?: number
+  /** Maximum distance the 180-degree loop extends beyond the fold start. */
+  foldOutset?: number
+  /** Number of straight segments used to approximate a 180-degree fold. */
+  foldSegments?: number
   screenGap?: number
 
   /** Board reference used to place above/below presets. The board is not rendered. */
@@ -194,8 +211,12 @@ export const resolveFlexScreenSize = ({
 
 const resolveOrientation = (props: FlexScreenProps): FlexScreenOrientation => {
   const shortcuts = [
+    ["sitsFlat", props.sitsFlat],
+    ["sitsFlatBelowBoard", props.sitsFlatBelowBoard],
     ["foldedToFaceAboveBoard", props.foldedToFaceAboveBoard],
     ["foldedToFaceBelowBoard", props.foldedToFaceBelowBoard],
+    ["foldedToFaceAboveBoard", props.foldsAboveBoard],
+    ["foldedToFaceBelowBoard", props.foldsBelowBoard],
     ["foldedToRightAngleAboveBoard", props.foldedToRightAngleAboveBoard],
     ["foldedToRightAngleBelowBoard", props.foldedToRightAngleBelowBoard],
   ].filter((entry) => entry[1]) as Array<[FlexScreenOrientation, boolean]>
@@ -205,7 +226,7 @@ const resolveOrientation = (props: FlexScreenProps): FlexScreenOrientation => {
       "Only one FlexScreen boolean orientation shortcut can be true",
     )
   }
-  return shortcuts[0]?.[0] ?? props.orientation ?? "foldedToFaceAboveBoard"
+  return shortcuts[0]?.[0] ?? props.orientation ?? "sitsFlat"
 }
 
 const distance = (a: Point3, b: Point3) =>
@@ -274,6 +295,53 @@ const createFlatPath = (start: Point3, flexCableLength: number): Point3[] => [
   start,
   [start[0], start[1] + flexCableLength, start[2]],
 ]
+
+const createFoldedPath = ({
+  start,
+  endZ,
+  flexCableLength,
+  foldDistanceFromConnector,
+  foldOutset,
+  foldSegments,
+}: {
+  start: Point3
+  endZ: number
+  flexCableLength: number
+  foldDistanceFromConnector: number
+  foldOutset: number
+  foldSegments: number
+}): Point3[] => {
+  const points: Point3[] = [start]
+  const foldStart: Point3 = [
+    start[0],
+    start[1] + foldDistanceFromConnector,
+    start[2],
+  ]
+  if (foldDistanceFromConnector > EPSILON) points.push(foldStart)
+
+  for (let index = 1; index <= foldSegments; index += 1) {
+    const angle = (Math.PI * index) / foldSegments
+    points.push([
+      start[0],
+      foldStart[1] + foldOutset * Math.sin(angle),
+      start[2] + ((endZ - start[2]) * (1 - Math.cos(angle))) / 2,
+    ])
+  }
+
+  const minimumLength = getPathDistances(points).at(-1)!
+  if (minimumLength > flexCableLength + EPSILON) {
+    throw new Error(
+      `flexCableLength must be at least ${minimumLength.toFixed(2)} for this 180-degree fold`,
+    )
+  }
+
+  const tailLength = Math.max(0, flexCableLength - minimumLength)
+  if (tailLength > EPSILON) {
+    const foldEnd = points.at(-1)!
+    points.push([foldEnd[0], foldEnd[1] - tailLength, foldEnd[2]])
+  }
+  return points
+}
 
 const createRightAnglePath = ({
   start,
@@ -414,6 +482,11 @@ export const FlexScreen = (props: FlexScreenProps) => {
     bendRadius = 3,
     bendSegments = 10,
     rightAngleVerticalLead = 3,
+    distanceAboveBoard = 7,
+    distanceBelowBoard = 7,
+    foldDistanceFromConnector = 7,
+    foldOutset = 4,
+    foldSegments = 18,
     screenGap = 0.08,
     boardTopZ = 0,
     boardThickness = 1.6,
@@ -438,8 +511,12 @@ export const FlexScreen = (props: FlexScreenProps) => {
   })
   const orientation = resolveOrientation(props)
   const belowBoard =
+    orientation === "sitsFlatBelowBoard" ||
     orientation === "foldedToFaceBelowBoard" ||
     orientation === "foldedToRightAngleBelowBoard"
+  const foldedFace =
+    orientation === "foldedToFaceAboveBoard" ||
+    orientation === "foldedToFaceBelowBoard"
   const rightAngle =
     orientation === "foldedToRightAngleAboveBoard" ||
     orientation === "foldedToRightAngleBelowBoard"
@@ -449,6 +526,7 @@ export const FlexScreen = (props: FlexScreenProps) => {
   assertPositive("flexCableThickness", flexCableThickness)
   assertPositive("conductorThickness", conductorThickness)
   assertPositive("bendRadius", bendRadius)
+  assertPositive("foldOutset", foldOutset)
   assertPositive("boardThickness", boardThickness)
   if (showStiffeners) assertPositive("stiffenerThickness", stiffenerThickness)
   if (!Number.isInteger(conductorCount) || conductorCount < 1) {
@@ -457,13 +535,19 @@ export const FlexScreen = (props: FlexScreenProps) => {
   if (!Number.isInteger(bendSegments) || bendSegments < 2) {
     throw new Error("bendSegments must be an integer of at least 2")
   }
+  if (!Number.isInteger(foldSegments) || foldSegments < 4) {
+    throw new Error("foldSegments must be an integer of at least 4")
+  }
   if (
     boardClearance < 0 ||
     screenGap < 0 ||
     cableEdgeMargin < 0 ||
     exposedContactLength < 0 ||
     stiffenerLength < 0 ||
-    rightAngleVerticalLead < 0
+    rightAngleVerticalLead < 0 ||
+    distanceAboveBoard < 0 ||
+    distanceBelowBoard < 0 ||
+    foldDistanceFromConnector < 0
   ) {
     throw new Error(
       "clearances, margins, contact lengths, and lead lengths cannot be negative",
@@ -501,7 +585,8 @@ export const FlexScreen = (props: FlexScreenProps) => {
     )
   }
 
-  const defaultCableZ = belowBoard
+  const cableStartsBelowBoard = belowBoard && !foldedFace
+  const defaultCableZ = cableStartsBelowBoard
     ? boardTopZ - boardThickness - boardClearance - flexCableThickness / 2
     : boardTopZ + boardClearance + flexCableThickness / 2
   const start: Point3 = [
@@ -510,16 +595,33 @@ export const FlexScreen = (props: FlexScreenProps) => {
     cableStartZ ?? defaultCableZ,
   ]
   const direction = belowBoard ? -1 : 1
-  const path = rightAngle
-    ? createRightAnglePath({
+  const foldedScreenBackZ =
+    orientation === "foldedToFaceAboveBoard"
+      ? boardTopZ + distanceAboveBoard
+      : boardTopZ - boardThickness - distanceBelowBoard
+  const foldedCableEndZ =
+    orientation === "foldedToFaceAboveBoard"
+      ? foldedScreenBackZ - screenGap - flexCableThickness / 2
+      : foldedScreenBackZ + screenGap + flexCableThickness / 2
+  const path = foldedFace
+    ? createFoldedPath({
         start,
+        endZ: foldedCableEndZ,
         flexCableLength,
-        bendRadius,
-        bendSegments,
-        verticalLead: rightAngleVerticalLead,
-        direction,
+        foldDistanceFromConnector,
+        foldOutset,
+        foldSegments,
       })
-    : createFlatPath(start, flexCableLength)
+    : rightAngle
+      ? createRightAnglePath({
+          start,
+          flexCableLength,
+          bendRadius,
+          bendSegments,
+          verticalLead: rightAngleVerticalLead,
+          direction,
+        })
+      : createFlatPath(start, flexCableLength)
   const totalCableLength = getPathDistances(path).at(-1)!
   const contactLength = Math.min(
     Math.max(0, exposedContactLength),
@@ -545,20 +647,26 @@ export const FlexScreen = (props: FlexScreenProps) => {
   const pathEnd = path.at(-1)!
   let presetScreenRotation: Rotation3
   let screenCenter: Point3
-  if (orientation === "foldedToFaceAboveBoard") {
+  if (orientation === "sitsFlat") {
     presetScreenRotation = [0, 0, 0]
     screenCenter = [
       pathEnd[0],
       pathEnd[1] + size.height / 2,
       pathEnd[2] + flexCableThickness / 2 + screenGap,
     ]
-  } else if (orientation === "foldedToFaceBelowBoard") {
+  } else if (orientation === "sitsFlatBelowBoard") {
     presetScreenRotation = [0, Math.PI, 0]
     screenCenter = [
       pathEnd[0],
       pathEnd[1] + size.height / 2,
       pathEnd[2] - flexCableThickness / 2 - screenGap,
     ]
+  } else if (orientation === "foldedToFaceAboveBoard") {
+    presetScreenRotation = [0, 0, 0]
+    screenCenter = [pathEnd[0], pathEnd[1] - size.height / 2, foldedScreenBackZ]
+  } else if (orientation === "foldedToFaceBelowBoard") {
+    presetScreenRotation = [0, Math.PI, 0]
+    screenCenter = [pathEnd[0], pathEnd[1] - size.height / 2, foldedScreenBackZ]
   } else if (orientation === "foldedToRightAngleAboveBoard") {
     presetScreenRotation = [Math.PI / 2, 0, 0]
     screenCenter = [

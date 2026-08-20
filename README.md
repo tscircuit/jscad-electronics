@@ -84,18 +84,27 @@ import { FlexScreen } from "jscad-electronics"
 <FlexScreen
   diagonal={50}
   aspectRatio="16:9"
-  orientation="foldedToRightAngleAboveBoard"
-  flexCableLength={34}
+  orientation="foldedToFaceBelowBoard"
+  flexCableLength={38}
   flexCableWidth={10}
   conductorCount={10}
-  bendRadius={4}
+  distanceBelowBoard={9}
+  foldDistanceFromConnector={8}
+  foldOutset={5}
 />
 ```
 
-The available orientations are `foldedToFaceAboveBoard`,
-`foldedToFaceBelowBoard`, `foldedToRightAngleAboveBoard`, and
-`foldedToRightAngleBelowBoard`. Each is also available as a boolean shortcut,
-for example `<FlexScreen foldedToFaceBelowBoard />`.
+Use `sitsFlat` when the display and cable continue in the same direction.
+`foldedToFaceAboveBoard` and `foldedToFaceBelowBoard` create true 180-degree
+folds, while `foldedToRightAngleAboveBoard` and
+`foldedToRightAngleBelowBoard` create 90-degree bends. The downward 180-degree
+fold starts on top of the board and turns over its edge.
+
+For 180-degree folds, `distanceAboveBoard` or `distanceBelowBoard` sets the
+final screen backplane independently of `foldDistanceFromConnector` and
+`foldOutset`, which control where the loop begins and how far it projects past
+the board edge. Every orientation is also available as a boolean shortcut, for
+example `<FlexScreen sitsFlat />` or `<FlexScreen foldsBelowBoard />`.
 
 ## Integration with tscircuit
 

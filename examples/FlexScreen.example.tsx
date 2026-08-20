@@ -6,10 +6,13 @@ export default () => (
     <FlexScreen
       diagonal={50}
       aspectRatio="16:9"
-      orientation="foldedToRightAngleAboveBoard"
-      flexCableLength={34}
+      orientation="foldedToFaceBelowBoard"
+      flexCableLength={38}
       flexCableWidth={10}
       conductorCount={10}
+      distanceBelowBoard={9}
+      foldDistanceFromConnector={8}
+      foldOutset={5}
     />
   </JsCadView>
 )
