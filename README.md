@@ -120,7 +120,9 @@ property:
 tokens include `diagonal`, `ratio16x9`, `flexwidth`, `foldsegments`,
 `rightangleabove`, `rightanglebelow`, `sitsflat`, `conductors`, and
 `hideconductors`. Unknown tokens throw an error so a typo cannot silently
-produce the wrong model.
+produce the wrong model. Parsing and validation are provided by
+[`@tscircuit/modelprinter`](https://github.com/tscircuit/modelprinter), keeping
+the string grammar independent of this JSCAD renderer.
 
 ## Integration with tscircuit
 
