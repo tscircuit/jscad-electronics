@@ -29,7 +29,8 @@
     "test": "bun test"
   },
   "dependencies": {
-    "@tscircuit/mm": "^0.0.8"
+    "@tscircuit/mm": "^0.0.8",
+    "@tscircuit/modelprinter": "github:tscircuit/modelprinter#a14b0f63028a28e82aa968d3231d59d310462236"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.3",

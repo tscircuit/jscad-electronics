@@ -106,6 +106,24 @@ final screen backplane independently of `foldDistanceFromConnector` and
 the board edge. Every orientation is also available as a boolean shortcut, for
 example `<FlexScreen sitsFlat />` or `<FlexScreen foldsBelowBoard />`.
 
+Until tscircuit has a dedicated CAD-model DSL, the same model can be selected
+through a footprinter string. Each underscore-separated token sets one model
+property:
+
+```tsx
+<component cadModel="flexscreen_w40mm_h22.5mm_flex60mm_foldsabove_distance20mm_foldstart9mm_outset6mm" />
+```
+
+`distance` is orientation-aware: it becomes `distanceAboveBoard` with
+`foldsabove` and `distanceBelowBoard` with `foldsbelow`. Explicit
+`distanceabove` and `distancebelow` tokens are also supported. Other useful
+tokens include `diagonal`, `ratio16x9`, `flexwidth`, `foldsegments`,
+`rightangleabove`, `rightanglebelow`, `sitsflat`, `conductors`, and
+`hideconductors`. Unknown tokens throw an error so a typo cannot silently
+produce the wrong model. Parsing and validation are provided by
+[`@tscircuit/modelprinter`](https://github.com/tscircuit/modelprinter), keeping
+the string grammar independent of this JSCAD renderer.
+
 ## Integration with tscircuit
 
 jscad-electronics is designed to work seamlessly with tscircuit. You can use these 3D models in your tscircuit projects to create accurate 3D representations of your PCB designs just by

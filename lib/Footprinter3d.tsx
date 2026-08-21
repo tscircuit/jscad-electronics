@@ -1,4 +1,5 @@
 import { fp } from "@tscircuit/footprinter"
+import { mp } from "@tscircuit/modelprinter"
 import { Rotate, Translate } from "jscad-fiber"
 import { Dip } from "./DualInlinePackage"
 import { Tssop } from "./Tssop"
@@ -78,12 +79,24 @@ import { Potentiometer } from "./Potentiometer"
 import { SmdPushButton } from "./SmdPushButton"
 import { SOT563 } from "./SOT-563"
 import { BGA } from "./BGA"
+import { FlexScreen } from "./FlexScreen"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
  */
 
 export const Footprinter3d = ({ footprint }: { footprint: string }) => {
+  const modelFn = mp.string(footprint.split("_", 1)[0]!).params().fn
+  if (mp.getModelNames().includes(modelFn)) {
+    const model = mp.string(footprint).json()
+    switch (model.fn) {
+      case "flexscreen": {
+        const { fn: _, ...flexScreenProps } = model
+        return <FlexScreen {...flexScreenProps} />
+      }
+    }
+  }
+
   // Normalize jstzh1_5mm formats to zh format
   let normalizedFootprint = footprint
   if (footprint.startsWith("jstzh1_5mm")) {
