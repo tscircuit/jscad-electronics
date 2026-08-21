@@ -147,7 +147,7 @@ export const JSTPH2_0mm = ({
       {showFootprint &&
         Array.from({ length: numPins }).map((_, i) => {
           const isPin1 = i === 0
-          const hole: PcbPlatedHole = isPin1
+          const hole: any = isPin1
             ? {
                 type: "pcb_plated_hole",
                 pcb_plated_hole_id: `jstph_${i}`,
@@ -172,6 +172,7 @@ export const JSTPH2_0mm = ({
                 hole_width: 0.73,
                 outer_height: 1.2,
                 outer_width: 1.2,
+                ccw_rotation: 0,
                 layers: ["top", "bottom"],
                 port_hints: [`${i + 1}`],
               }

@@ -17,7 +17,13 @@
  * RIGHT answer here — without this list a coverage test drives someone to model
  * a solder pad.
  */
-export const NO_BODY = ["pad", "platedhole", "smtpad", "solderjumper"] as const
+export const NO_BODY = [
+  "pad",
+  "platedhole",
+  "smtpad",
+  "smdpads",
+  "solderjumper",
+] as const
 
 /**
  * Names that carry no dimensions on their own: footprinter needs a pin count or
@@ -31,7 +37,9 @@ export const PROBE: Record<string, string> = {
   diode: "diode0402",
   dip: "dip8",
   fpc: "fpc6",
+  headermodule: "headermodule",
   jst: "jst6_sh",
+  lcc: "lcc20",
   led: "led0603",
   lga: "lga14",
   lqfp: "lqfp64",
@@ -46,11 +54,14 @@ export const PROBE: Record<string, string> = {
   qfp: "qfp32",
   quad: "quad32",
   res: "res0402",
+  smdpads: "smdpads",
   smdpinheader: "smdpinheader4",
+  smdslideswitch: "smdslideswitch",
   smtpad: "smtpad_1mm",
   soic: "soic8",
   solderjumper: "solderjumper2",
   son: "son8",
+  sot143: "sot143",
   ssop: "ssop20",
   tqfp: "tqfp32",
   tssop: "tssop8",
@@ -69,9 +80,13 @@ export const PROBE: Record<string, string> = {
  * quietly go stale in either direction.
  */
 export const MISSING_BODIES: Record<string, string> = {
-  jst: "only the ZH 1.5mm series has a body; `jst6_sh` and the rest have none",
+  headermodule: "no 3D model yet",
+  jst: "only the ZH 1.5mm and XH 2.5mm series have bodies; `jst6_sh` and the rest have none",
+  lcc: "no 3D model yet",
   m2host:
     "footprinter reports NO dimensions for it (`{fn:'m2host'}`), so the socket has to be modelled from the M.2 spec rather than derived from the footprint",
+  smdslideswitch: "no 3D model yet",
+  sot143: "no 3D model yet",
   usbcmidmount:
     "USB-C.tsx exists, but it draws with `Ellipsoid` and with `rotation` props on primitives — neither of which lib/vanilla implements, and the second is IGNORED rather than rejected, so reusing it would silently render the wrong shape. Extend the vanilla renderer first",
 }
