@@ -2,6 +2,7 @@ import type { PcbSmtPad } from "circuit-json"
 import {
   Colorize,
   Cuboid,
+  Cylinder,
   ExtrudeLinear,
   Polygon,
   Translate,
@@ -20,6 +21,17 @@ export const FootprintPad = ({
       <Colorize color={color}>
         <Translate offset={[pad.x, pad.y, -0.005]}>
           <Cuboid size={[pad.width, pad.height, PAD_THICKNESS]} />
+        </Translate>
+      </Colorize>
+    )
+  }
+
+  if (pad.shape === "circle") {
+    const radius = (pad as any).radius ?? (pad as any).r ?? 0.25
+    return (
+      <Colorize color={color}>
+        <Translate offset={[pad.x, pad.y, -0.005]}>
+          <Cylinder radius={radius} height={PAD_THICKNESS} />
         </Translate>
       </Colorize>
     )

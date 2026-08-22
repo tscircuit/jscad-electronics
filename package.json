@@ -35,7 +35,7 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.3",
     "@tscircuit/alphabet": "^0.0.24",
-    "@tscircuit/footprinter": "^0.0.400",
+    "@tscircuit/footprinter": "^0.0.424",
     "@types/pngjs": "^6.0.5",
     "@types/react": "19",
     "@types/react-dom": "19",
