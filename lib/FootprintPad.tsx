@@ -5,10 +5,17 @@ import {
   Cylinder,
   ExtrudeLinear,
   Polygon,
+  Rotate,
   Translate,
 } from "jscad-fiber"
+import { PillHull, rotateZDeg } from "./utils/pill-hull"
 
 const PAD_THICKNESS = 0.01
+
+const wrapZRotation = (degrees: number, children: any) => {
+  if (!degrees) return children
+  return <Rotate rotation={[0, 0, `${degrees}deg`]}>{children}</Rotate>
+}
 
 export const FootprintPad = ({
   pad,
@@ -56,5 +63,48 @@ export const FootprintPad = ({
     )
   }
 
-  throw new Error("Shape not supported: " + pad.shape)
+  const extra = pad as PcbSmtPad & {
+    shape: string
+    width?: number
+    height?: number
+    ccw_rotation?: number
+    x: number
+    y: number
+  }
+
+  if (extra.shape === "rotated_rect") {
+    return (
+      <Colorize color={color}>
+        <Translate offset={[extra.x, extra.y, -0.005]}>
+          {wrapZRotation(
+            rotateZDeg(extra.ccw_rotation),
+            <Cuboid
+              size={[extra.width ?? 0, extra.height ?? 0, PAD_THICKNESS]}
+            />,
+          )}
+        </Translate>
+      </Colorize>
+    )
+  }
+
+  if (extra.shape === "pill" || extra.shape === "rotated_pill") {
+    const rotation =
+      extra.shape === "rotated_pill" ? rotateZDeg(extra.ccw_rotation) : 0
+    return (
+      <Colorize color={color}>
+        <Translate offset={[extra.x, extra.y, -0.005]}>
+          {wrapZRotation(
+            rotation,
+            <PillHull
+              width={extra.width ?? 0}
+              height={extra.height ?? 0}
+              thickness={PAD_THICKNESS}
+            />,
+          )}
+        </Translate>
+      </Colorize>
+    )
+  }
+
+  throw new Error("Shape not supported: " + extra.shape)
 }
