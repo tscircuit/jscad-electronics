@@ -86,7 +86,6 @@ export const MISSING_BODIES: Record<string, string> = {
   m2host:
     "footprinter reports NO dimensions for it (`{fn:'m2host'}`), so the socket has to be modelled from the M.2 spec rather than derived from the footprint",
   smdslideswitch: "no 3D model yet",
-  sot143: "no 3D model yet",
   usbcmidmount:
     "USB-C.tsx exists, but it draws with `Ellipsoid` and with `rotation` props on primitives — neither of which lib/vanilla implements, and the second is IGNORED rather than rejected, so reusing it would silently render the wrong shape. Extend the vanilla renderer first",
 }

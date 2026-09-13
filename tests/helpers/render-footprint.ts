@@ -192,12 +192,20 @@ export async function renderFootprint(
     getDefaultCameraResult(getTransformedBoundingBox(result), defaultFov),
   )
 
-  return renderGLTFToPNGFromGLB(glbBuffer, {
+  const presetOptions = {
     ...baseRenderOptions,
     fov: cameraOptions.fov,
     camPos: options.camPos ?? cameraOptions.camPos,
     lookAt: options.lookAt ?? cameraOptions.lookAt,
-  })
+  }
+  return options.padOpacity === undefined
+    ? renderGLTFToPNGFromGLB(glbBuffer, presetOptions)
+    : renderWithTransparentPads(
+        result,
+        bodyGeometryCount,
+        options.padOpacity,
+        presetOptions,
+      )
 }
 
 /**

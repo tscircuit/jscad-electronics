@@ -84,3 +84,5 @@ export * from "./Led2835"
 export * from "./Potentiometer"
 export * from "./SmdPushButton"
 export * from "./GullWingBody"
+
+export * from "./SOT143"
