@@ -5,6 +5,7 @@ import type { CameraPreset } from "./camera-presets"
 /** One comprehensive image per footprint: iso, top, bottom / front, side, rear. */
 export async function renderContactSheet(
   footprint: string,
+  finalView: CameraPreset = "top-right-corner",
 ): Promise<Uint8Array> {
   const presets: CameraPreset[] = [
     "top-left-corner",
@@ -12,7 +13,7 @@ export async function renderContactSheet(
     "bottom-up",
     "front",
     "left-sideview",
-    "top-right-corner",
+    finalView,
   ]
   const images: PNG[] = []
   for (const cameraPreset of presets)
