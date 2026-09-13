@@ -80,6 +80,7 @@ import { Potentiometer } from "./Potentiometer"
 import { SmdPushButton } from "./SmdPushButton"
 import { SOT563 } from "./SOT-563"
 import { BGA } from "./BGA"
+import { SmdSlideSwitch } from "./SmdSlideSwitch"
 import { UsbCMidmount } from "./UsbCMidmount"
 import { SOT143 } from "./SOT143"
 import { FlexScreen } from "./FlexScreen"
@@ -441,6 +442,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     }
     case "sot457":
       return <SOT457 />
+    case "smdslideswitch":
+      return <SmdSlideSwitch footprint={normalizedFootprint} />
     case "usbcmidmount":
       return <UsbCMidmount footprint={normalizedFootprint} />
     case "sot143":
