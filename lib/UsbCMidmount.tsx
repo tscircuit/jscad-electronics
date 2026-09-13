@@ -61,6 +61,9 @@ export const UsbCMidmount = ({
     throw new Error(
       "UsbCMidmount requires four mounting slots and a positive body depth",
     )
+  // Reach the sidewall at its widest point while preserving slot insertion depth.
+  const tabBottom = -0.9,
+    tabTop = centerZ + 0.1
   return (
     <Rotate rotation={[0, 0, angle]}>
       <Colorize color="#b8bdc4">
@@ -121,9 +124,9 @@ export const UsbCMidmount = ({
             size={[
               0.4,
               "hole_height" in slot ? Math.max(0.3, slot.hole_height - 0.2) : 1,
-              1.65,
+              tabTop - tabBottom,
             ]}
-            center={[slot.x, slot.y, -0.075]}
+            center={[slot.x, slot.y, (tabTop + tabBottom) / 2]}
           />
         ))}
       </Colorize>
