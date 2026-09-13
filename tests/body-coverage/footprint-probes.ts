@@ -81,7 +81,6 @@ export const PROBE: Record<string, string> = {
  */
 export const MISSING_BODIES: Record<string, string> = {
   headermodule: "no 3D model yet",
-  jst: "only the ZH 1.5mm and XH 2.5mm series have bodies; `jst6_sh` and the rest have none",
   lcc: "no 3D model yet",
   m2host:
     "footprinter reports NO dimensions for it (`{fn:'m2host'}`), so the socket has to be modelled from the M.2 spec rather than derived from the footprint",
