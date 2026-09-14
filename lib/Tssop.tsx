@@ -1,8 +1,12 @@
+import {
+  createDualRowGullWing,
+  type DualRowGullWingDimensions,
+} from "./utils/DualRowGullWing"
 import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 
 // TODO use mm to convert width to mm (and accept strings)
-export const Tssop = ({
+const LegacyTssop = ({
   pinCount,
   leadLength,
   leadWidth,
@@ -86,3 +90,13 @@ export const Tssop = ({
     </>
   )
 }
+
+/** TSSOP physical outline. leadSpan selects explicit package dimensions;
+ * existing land-derived callers retain their current geometry.
+ * See examples/fixtures/tssop-variants.ts for standard outline evidence.
+ */
+export type TssopProps =
+  | Parameters<typeof LegacyTssop>[0]
+  | DualRowGullWingDimensions
+export const Tssop = (props: TssopProps) =>
+  "leadSpan" in props ? createDualRowGullWing(props) : LegacyTssop(props)
