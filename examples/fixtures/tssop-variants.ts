@@ -11,6 +11,7 @@
  */
 export const tssopVariants = {
   "20 leads, 6.5 x 4.4 mm": {
+    rotationZ: Math.PI / 2,
     footprint:
       "dfn20_pillpads_p0.65mm_w7.48mm_pw0.36mm_pl1.74mm_pin1location(leftside,bottom)",
     props: {
@@ -28,6 +29,7 @@ export const tssopVariants = {
     },
   },
   "28 leads, 9.7 x 4.4 mm": {
+    rotationZ: Math.PI / 2,
     footprint:
       "dfn28_pillpads_p0.65mm_w7.46mm_pw0.34mm_pl1.73mm_pin1location(leftside,bottom)",
     props: {
