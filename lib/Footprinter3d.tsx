@@ -67,6 +67,7 @@ import SOD723 from "./SOD723"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
 import { JSTPH2_0mm } from "./JSTPH2_0mm"
 import { JSTXH2_5mm } from "./JSTXH2_5mm"
+import { JstSh, isJstShFootprint } from "./JstSh"
 import { Crystal } from "./Crystal"
 import { FPC } from "./FPC"
 import { SmdPinHeader } from "./SmdPinHeader"
@@ -82,6 +83,7 @@ import { DPAK } from "./DPAK"
 import { ElectrolyticCapacitor } from "./ElectrolyticCapacitor"
 import { Potentiometer } from "./Potentiometer"
 import { SmdPushButton } from "./SmdPushButton"
+import { SmdSlideSwitch } from "./SmdSlideSwitch"
 import { SOT563 } from "./SOT-563"
 import { BGA } from "./BGA"
 import { UsbCMidmount } from "./UsbCMidmount"
@@ -475,6 +477,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     }
     case "sot457":
       return <SOT457 />
+    case "smdslideswitch":
+      return <SmdSlideSwitch footprint={normalizedFootprint} />
     case "usbcmidmount":
       return <UsbCMidmount footprint={normalizedFootprint} />
     case "sot143":
@@ -504,6 +508,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         />
       )
     case "jst":
+      if (isJstShFootprint(normalizedFootprint)) {
+        return <JstSh footprint={normalizedFootprint} />
+      }
       if (fpJson.zh) {
         return <JSTZH1_5mm numPins={fpJson.num_pins} />
       }
