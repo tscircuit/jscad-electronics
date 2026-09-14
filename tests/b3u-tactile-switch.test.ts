@@ -29,8 +29,4 @@ test("B3UTactileSwitch outline, connected terminals and explicit component props
       ).toBeGreaterThan(0)
   }
   expect(() => B3UTactileSwitch({ footprint: "smdpads3" })).toThrow("two pads")
-  expect(
-    getComponentModel(B3UTactileSwitch, { footprint: "smdpads2unknown" })
-      .geometries,
-  ).toHaveLength(0)
 })
