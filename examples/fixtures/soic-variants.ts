@@ -6,6 +6,7 @@
  * 16: JLC C7512 (ULN2003ADR); https://www.ti.com/lit/ds/symlink/uln2003a.pdf
  * D (R-PDSO-G16), 4040047-6/M (MS-012 AC): nominal D=9.9, E1=3.9, E=6, e=1.27.
  * Placement strings below already exist in Footprinter and only draw PCB pads.
+ * Previews use supported rectangular-pad strings; pill-pad display is unsupported.
  */
 export const soicVariants = {
   "8 leads, exposed pad": {
@@ -29,7 +30,7 @@ export const soicVariants = {
   },
   "16 leads, narrow body": {
     rotationZ: Math.PI / 2,
-    footprint: "soic16_pillpads_w7.44mm_pl1.97mm_pin1location(leftside,bottom)",
+    footprint: "soic16_w7.44mm_pl1.97mm_pin1location(leftside,bottom)",
     props: {
       pinCount: 16,
       pitch: 1.27,
