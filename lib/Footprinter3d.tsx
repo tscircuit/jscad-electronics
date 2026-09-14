@@ -32,7 +32,6 @@ import { SOD882 } from "./SOD882"
 import { SMA } from "./SMA"
 import { SMB } from "./SMB"
 import { SMC } from "./SMC"
-import { MF2410Fuse } from "./MF2410Fuse"
 import { SMF } from "./SMF"
 import { SOD123F } from "./sod-123F"
 import { SOD123FL } from "./sod-123FL"
@@ -124,9 +123,6 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         packageName={crystal2[1] as TwoPadCrystalPackage}
       />
     )
-  if (/(?:^|_)fuseMF2410(?:_|$)/.test(footprint))
-    return <MF2410Fuse footprint={footprint} />
-
   const modelFn = mp.string(footprint.split("_", 1)[0]!).params().fn
   if (mp.getModelNames().includes(modelFn)) {
     const model = mp.string(footprint).json()

@@ -34,35 +34,39 @@ export const MF2410Fuse = ({
           center={[0, 0, 1.08]}
           color="#834731"
         />
-        {[-1, 1].map((side) => (
-          <Colorize key={side} color="#bdc0c2">
-            <Subtract>
-              <Cuboid
-                size={[1.35, 2.49, 2.16]}
-                center={[side * 2.375, 0, 1.08]}
-              />
-              <Cylinder
-                radius={0.3}
-                height={2.2}
-                center={[side * 3.05, 0, 1.08]}
-              />
-            </Subtract>
-          </Colorize>
-        ))}
+        <Colorize color="#bdc0c2">
+          {[-1, 1].map((side) => (
+            <Colorize key={side} color="#bdc0c2">
+              <Subtract>
+                <Cuboid
+                  size={[1.35, 2.49, 2.16]}
+                  center={[side * 2.375, 0, 1.08]}
+                />
+                <Cylinder
+                  radius={0.3}
+                  height={2.2}
+                  center={[side * 3.05, 0, 1.08]}
+                />
+              </Subtract>
+            </Colorize>
+          ))}
+        </Colorize>
         {/* The datasheet identifies the 1 A rating with the letter E. */}
         <Cuboid
           size={[0.15, 0.9, 0.02]}
           center={[-0.3, 0, 2.15]}
           color="#202020"
         />
-        {[-1, 0, 1].map((row) => (
-          <Cuboid
-            key={row}
-            size={[0.65, 0.13, 0.02]}
-            center={[0, row * 0.4, 2.15]}
-            color="#202020"
-          />
-        ))}
+        <Colorize color="#202020">
+          {[-1, 0, 1].map((row) => (
+            <Cuboid
+              key={row}
+              size={[0.65, 0.13, 0.02]}
+              center={[0, row * 0.4, 2.15]}
+              color="#202020"
+            />
+          ))}
+        </Colorize>
       </Rotate>
     </Translate>
   )
