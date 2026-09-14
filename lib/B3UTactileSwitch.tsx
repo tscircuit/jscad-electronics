@@ -48,22 +48,26 @@ export const B3UTactileSwitch = ({
           center={[0, 0, 1.35]}
           color="#202020"
         />
-        {[-1, 1].map((side) => (
-          <Cuboid
-            key={side}
-            size={[0.7, 1.4, 0.16]}
-            center={[side * 1.65, 0, 0.08]}
-            color="#bcc0c4"
-          />
-        ))}
-        {[-1, 1].map((side) => (
-          <Cuboid
-            key={side}
-            size={[1.8, 0.12, 0.6]}
-            center={[0, side * 1.19, 0.8]}
-            color="#bdc1c5"
-          />
-        ))}
+        <Colorize color="#bcc0c4">
+          {[-1, 1].map((side) => (
+            <Cuboid
+              key={side}
+              size={[0.7, 1.4, 0.16]}
+              center={[side * 1.65, 0, 0.08]}
+              color="#bcc0c4"
+            />
+          ))}
+        </Colorize>
+        <Colorize color="#bdc1c5">
+          {[-1, 1].map((side) => (
+            <Cuboid
+              key={side}
+              size={[1.8, 0.12, 0.6]}
+              center={[0, side * 1.19, 0.8]}
+              color="#bdc1c5"
+            />
+          ))}
+        </Colorize>
       </Rotate>
     </Translate>
   )

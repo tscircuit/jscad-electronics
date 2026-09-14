@@ -1,14 +1,16 @@
 import { expect, test } from "bun:test"
 import * as jscad from "@jscad/modeling"
-import { importVanilla } from "./fixtures/importVanilla.js"
-test("B3UTactileSwitch outline, connected terminals and explicit routing", async () => {
-  const { getJscadModelForFootprint: get } = await importVanilla()
+import { getComponentModel } from "./helpers/component-model"
+import { B3UTactileSwitch } from "../lib/B3UTactileSwitch"
+test("B3UTactileSwitch outline, connected terminals and explicit component props", async () => {
   for (const footprint of [
-    "smdpads2_p3.4mm_pw0.8mm_ph1.7mm_switchB3U1000P",
-    "smdpads2_p9mm_switchB3U1000P",
-    "smdpads2_p3.4mm_pw0.8mm_ph1.7mm_switchB3U1000P_pin1location(rightside,top)",
+    "smdpads2_p3.4mm_pw0.8mm_ph1.7mm",
+    "smdpads2_p9mm",
+    "smdpads2_p3.4mm_pw0.8mm_ph1.7mm_pin1location(rightside,top)",
   ]) {
-    const { geometries } = get(footprint, jscad)
+    const { geometries } = getComponentModel(B3UTactileSwitch, {
+      footprint: footprint,
+    })
     expect(geometries).toHaveLength(7)
     const bounds = jscad.measurements.measureAggregateBoundingBox(
       ...geometries.map((g: { geom: jscad.geometries.geom3.Geom3 }) => g.geom),
@@ -26,8 +28,9 @@ test("B3UTactileSwitch outline, connected terminals and explicit routing", async
         ),
       ).toBeGreaterThan(0)
   }
-  expect(() => get("smdpads3_switchB3U1000P", jscad)).toThrow("two pads")
-  expect(get("smdpads2_switchB3U1000Punknown", jscad).geometries).toHaveLength(
-    0,
-  )
+  expect(() => B3UTactileSwitch({ footprint: "smdpads3" })).toThrow("two pads")
+  expect(
+    getComponentModel(B3UTactileSwitch, { footprint: "smdpads2unknown" })
+      .geometries,
+  ).toHaveLength(0)
 })
