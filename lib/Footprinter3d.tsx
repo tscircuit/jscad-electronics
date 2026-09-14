@@ -1,4 +1,5 @@
 import { CeramicChipAntenna } from "./CeramicChipAntenna"
+import { TwoPadCrystal, type TwoPadCrystalPackage } from "./TwoPadCrystal"
 import { TantalumCapacitor, type TantalumCase } from "./TantalumCapacitor"
 import { fp } from "@tscircuit/footprinter"
 import { mp } from "@tscircuit/modelprinter"
@@ -91,6 +92,8 @@ import { FlexScreen } from "./FlexScreen"
  */
 
 export const Footprinter3d = ({ footprint }: { footprint: string }) => {
+  if (/(?:^|_)antennaRFANT5220110A0T(?:_|$)/.test(footprint))
+    return <CeramicChipAntenna footprint={footprint} />
   const tantalum = footprint.match(/(?:^|_)tantalum([ABCD])(?:_|$)/)
   if (tantalum)
     return (
@@ -99,8 +102,16 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         caseSize={tantalum[1] as TantalumCase}
       />
     )
-  if (/(?:^|_)antennaRFANT5220110A0T(?:_|$)/.test(footprint))
-    return <CeramicChipAntenna footprint={footprint} />
+  const crystal2 = footprint.match(
+    /(?:^|_)crystal2(FC135|FC12M|FC1610AN|NX3225GD)(?:_|$)/,
+  )
+  if (crystal2)
+    return (
+      <TwoPadCrystal
+        footprint={footprint}
+        packageName={crystal2[1] as TwoPadCrystalPackage}
+      />
+    )
   const modelFn = mp.string(footprint.split("_", 1)[0]!).params().fn
   if (mp.getModelNames().includes(modelFn)) {
     const model = mp.string(footprint).json()
