@@ -23,6 +23,21 @@ test("QFN physical dimensions, terminal placement and exposed-pad isolation", ()
     ].entries())
       expect(box[1][i]! - box[0][i]!).toBeCloseTo(v, 5)
     expect(box[0][2]).toBeCloseTo(0, 5)
+    // The mold reaches its full outline at both ends: no tapered top face.
+    const vertices = jscad.geometries.geom3
+      .toPolygons(solids[0]!)
+      .flatMap((face) => face.vertices)
+    for (const z of [p.standoff, p.bodyHeight])
+      for (const x of [-p.bodyWidth / 2, p.bodyWidth / 2])
+        for (const y of [-p.bodyLength / 2, p.bodyLength / 2])
+          expect(
+            vertices.some(
+              (v) =>
+                Math.abs(v[0] - x) < 1e-6 &&
+                Math.abs(v[1] - y) < 1e-6 &&
+                Math.abs(v[2] - z) < 1e-6,
+            ),
+          ).toBe(true)
     const exposed = solids.at(-1)!
     for (let i = 1; i <= p.num_pins; i++) {
       const lead = solids[i]!
@@ -62,7 +77,6 @@ test("QFN physical dimensions, terminal placement and exposed-pad isolation", ()
     { exposedPadWidth: 4 },
     { padLength: 1.5 },
     { padWidth: 1 },
-    { topInset: 3 },
     { standoff: -1 },
   ])
     expect(() => createPhysicalQfn({ ...p, ...bad })).toThrow()

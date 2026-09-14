@@ -2,8 +2,9 @@
  * C17146 / LAN8720AI-CP-TR: https://ww1.microchip.com/downloads/en/DeviceDoc/00002165B.pdf
  * 24-QFN table, p66: nominal D/E=4, D1/E1=3.75, A=.85, A1=.02,
  * exposed pad 2.5 square, terminal .25 x .4, pitch .5.
- * The inset top face approximates the mold-cap profile; the base step, optional
- * corner chamfers and rounded terminal ends are omitted. Metal thickness .2 is
+ * Use a straight-sided standard QFN mold. The drawing's stepped cap (D1/E1)
+ * is not a continuous taper; that step, optional corner chamfers and rounded
+ * terminal ends are omitted. Metal thickness .2 is
  * an approximation (not separately dimensioned in this drawing).
  * C9120 / CC2530F256RHAR: https://www.ti.com/lit/ds/symlink/cc2530.pdf
  * RHA0040H: nominal body 6 square, exposed pad 4.5 square, pitch .5,
@@ -29,7 +30,6 @@ export const qfnPhysicalVariants = {
       pitch: 0.5,
       exposedPadWidth: 2.5,
       exposedPadLength: 2.5,
-      topInset: 0.125,
     },
   },
   "40 terminals, 6 x 6 mm": {
@@ -48,7 +48,6 @@ export const qfnPhysicalVariants = {
       pitch: 0.5,
       exposedPadWidth: 4.5,
       exposedPadLength: 4.5,
-      topInset: 0,
     },
   },
 }

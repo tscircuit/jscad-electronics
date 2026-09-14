@@ -1,11 +1,4 @@
-import {
-  Colorize,
-  Cuboid,
-  Cylinder,
-  Hull,
-  Subtract,
-  Translate,
-} from "jscad-fiber"
+import { Colorize, Cuboid, Cylinder, Subtract, Translate } from "jscad-fiber"
 
 /** Physical QFN outline, in mm. Unlike the legacy land-derived API, bodyWidth
  * and bodyLength measure the mold itself. Terminal spans measure outer edges,
@@ -27,8 +20,6 @@ export interface PhysicalQfnDimensions {
   pitch: number
   exposedPadWidth: number
   exposedPadLength: number
-  /** Per-side top-face inset; zero gives a straight sawn mold. */
-  topInset: number
 }
 
 export function createPhysicalQfn(p: PhysicalQfnDimensions) {
@@ -46,7 +37,6 @@ export function createPhysicalQfn(p: PhysicalQfnDimensions) {
     pitch,
     exposedPadWidth,
     exposedPadLength,
-    topInset,
   } = p
   for (const key of [
     "bodyWidth",
@@ -65,18 +55,12 @@ export function createPhysicalQfn(p: PhysicalQfnDimensions) {
       throw new Error(`${key} must be finite and positive`)
   if (!Number.isInteger(num_pins) || num_pins < 8 || num_pins % 4)
     throw new Error("num_pins must be divisible by four and at least eight")
-  if (
-    !Number.isFinite(standoff) ||
-    standoff < 0 ||
-    !Number.isFinite(topInset) ||
-    topInset < 0
-  )
-    throw new Error("standoff and topInset must be finite and nonnegative")
+  if (!Number.isFinite(standoff) || standoff < 0)
+    throw new Error("standoff must be finite and nonnegative")
   const rowLength = (num_pins / 4 - 1) * pitch + padWidth
   if (
     terminalThickness <= standoff ||
     terminalThickness >= bodyHeight ||
-    2 * topInset >= Math.min(bodyWidth, bodyLength) ||
     padWidth >= pitch ||
     rowLength >= Math.min(bodyWidth, bodyLength)
   )
@@ -94,18 +78,10 @@ export function createPhysicalQfn(p: PhysicalQfnDimensions) {
     throw new Error(
       "Terminals must enter the mold and clear the exposed pad and corners",
     )
-  const slice = Math.min(0.002, (bodyHeight - standoff) / 100)
   const body = (
-    <Hull>
-      <Translate z={standoff + slice / 2}>
-        <Cuboid size={[bodyWidth, bodyLength, slice]} />
-      </Translate>
-      <Translate z={bodyHeight - slice / 2}>
-        <Cuboid
-          size={[bodyWidth - 2 * topInset, bodyLength - 2 * topInset, slice]}
-        />
-      </Translate>
-    </Hull>
+    <Translate z={(bodyHeight + standoff) / 2}>
+      <Cuboid size={[bodyWidth, bodyLength, bodyHeight - standoff]} />
+    </Translate>
   )
   const radius = Math.min(bodyWidth, bodyLength) * 0.035
   return (
@@ -115,8 +91,8 @@ export function createPhysicalQfn(p: PhysicalQfnDimensions) {
           {body}
           <Translate
             offset={{
-              x: -bodyWidth / 2 + topInset + radius * 2,
-              y: bodyLength / 2 - topInset - radius * 2,
+              x: -bodyWidth / 2 + radius * 2,
+              y: bodyLength / 2 - radius * 2,
               z: bodyHeight,
             }}
           >
