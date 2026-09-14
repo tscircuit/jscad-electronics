@@ -55,6 +55,7 @@ import { TO220 } from "./TO220"
 import { SOT457 } from "./SOT-457"
 import { SOT963 } from "./SOT-963"
 import { TO92 } from "./TO92"
+import { SWPA4030Inductor } from "./SWPA4030Inductor"
 import SOT363 from "./SOT-363"
 import { SOT886 } from "./SOT-886"
 import { SOD323 } from "./sod-323"
@@ -247,6 +248,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     const parsed = mm(value as any)
     return Number.isFinite(parsed) ? parsed : fallback
   }
+
+  if (/(?:^|_)inductorSWPA4030(?:_|$)/.test(footprint))
+    return <SWPA4030Inductor footprint={footprint} />
 
   switch (fpJson.fn) {
     case "crystal":
