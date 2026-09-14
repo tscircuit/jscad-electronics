@@ -13,6 +13,10 @@ import {
  * Cover/base thicknesses and retaining tabs approximate the un-dimensioned enclosure.
  * https://omronfs.omron.com/en_US/ecb/products/pdf/en-b3u.pdf
  */
+/** Standalone model candidate for JLCPCB C231329 (B3U-1000P).
+ * Placement example: smdpads2_p3.4mm_pw0.8mm_ph1.7mm
+ * This standard footprint controls placement only; instantiate the component explicitly.
+ */
 export const B3UTactileSwitch = ({
   footprint = "smdpads2_p3.4mm_pw0.8mm_ph1.7mm",
 }: { footprint?: string }) => {
