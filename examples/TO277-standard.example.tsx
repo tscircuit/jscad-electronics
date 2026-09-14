@@ -1,3 +1,4 @@
+import { Translate } from "jscad-fiber"
 import { TO277 } from "../lib/TO277"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { ComponentPreview } from "./utils/ComponentPreview"
@@ -8,7 +9,9 @@ export default Object.fromEntries(
     <ComponentPreview>
       <>
         <TO277 {...variant.props} />
-        <ExtrudedPads footprint={variant.footprint} />
+        <Translate x={-0.8625}>
+          <ExtrudedPads footprint={variant.footprint} />
+        </Translate>
       </>
     </ComponentPreview>,
   ]),
