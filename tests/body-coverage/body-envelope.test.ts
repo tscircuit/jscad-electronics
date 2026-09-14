@@ -25,7 +25,7 @@ const TOLERANCE = 0.25
 /**
  * Footprints with no body yet — covered by the ledger, not by this test.
  */
-const NO_BODY_YET = ["jst", "m2host", "usbcmidmount"]
+const NO_BODY_YET = ["m2host", "usbcmidmount"]
 
 const measureHeight = (geometries: Array<{ geom: unknown }>): number => {
   const [, maxCorner] = jscadModeling.measurements.measureAggregateBoundingBox(
