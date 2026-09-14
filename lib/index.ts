@@ -92,3 +92,5 @@ export * from "./UsbCMidmount"
 export * from "./TantalumCapacitor"
 
 export * from "./TwoPadCrystal"
+
+export * from "./MelfResistor"
