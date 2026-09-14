@@ -103,3 +103,21 @@ export function SOT89(p: SOT89Props) {
     </>
   )
 }
+
+/** Nominal three-terminal TO-243/SC-62 dimensions. Copper land adjustments
+ * do not resize the physical package. See the standard fixture for sources. */
+export const sot89NominalDimensions = {
+  bodyWidth: 2.5,
+  bodyLength: 4.5,
+  bodyHeight: 1.5,
+  standoff: 0.02,
+  pitch: 1.5,
+  leadWidth: 0.415,
+  centerLeadWidth: 0.465,
+  leadLength: 1,
+  terminalThickness: 0.335,
+  tabWidth: 1.6,
+  tabLength: 2.4,
+  rearExtension: 0.5,
+  taperInset: 0.15,
+} satisfies SOT89Props

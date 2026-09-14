@@ -1,3 +1,8 @@
+import {
+  renderFootprinter3dModel,
+  type Footprinter3dModel,
+} from "./utils/Footprinter3dModel"
+import { SOT89, sot89NominalDimensions } from "./SOT89"
 import { fp } from "@tscircuit/footprinter"
 import { mp } from "@tscircuit/modelprinter"
 import { Rotate, Translate } from "jscad-fiber"
@@ -90,7 +95,19 @@ import { FlexScreen } from "./FlexScreen"
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
  */
 
-export const Footprinter3d = ({ footprint }: { footprint: string }) => {
+export type { Footprinter3dModel } from "./utils/Footprinter3dModel"
+export interface Footprinter3dProps {
+  footprint: string
+  /** Explicit package identity/dimensions; never inferred from ignored suffixes. */
+  model?: Footprinter3dModel
+}
+export const Footprinter3d = ({ footprint, model }: Footprinter3dProps) => {
+  if (model) {
+    // Validate the actual footprint through Footprinter even when package props
+    // are explicit. A new model does not make an unknown footprint name legal.
+    fp.string(footprint).circuitJson()
+    return renderFootprinter3dModel(model)
+  }
   const modelFn = mp.string(footprint.split("_", 1)[0]!).params().fn
   if (mp.getModelNames().includes(modelFn)) {
     const model = mp.string(footprint).json()
@@ -424,9 +441,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     case "sot563":
       return <SOT563 />
     case "sot89": {
-      // SOT-89 is a SOT-223 at roughly a third of the volume: three leads one
-      // side, one wide tab lead the other. Aliasing it to SOT-223 outright
-      // would report a 6.5 x 3.5 body where there is a 4.5 x 2.5 one.
+      if (fpJson.num_pins === 3) return <SOT89 {...sot89NominalDimensions} />
+      // Preserve the legacy approximation for the unsupported five-lead topology.
       const padSpan = dim(fpJson.w, 4.2)
       return (
         <SOT223
