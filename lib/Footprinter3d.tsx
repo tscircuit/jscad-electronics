@@ -1,3 +1,4 @@
+import { TantalumCapacitor, type TantalumCase } from "./TantalumCapacitor"
 import { fp } from "@tscircuit/footprinter"
 import { mp } from "@tscircuit/modelprinter"
 import { Rotate, Translate } from "jscad-fiber"
@@ -89,6 +90,14 @@ import { FlexScreen } from "./FlexScreen"
  */
 
 export const Footprinter3d = ({ footprint }: { footprint: string }) => {
+  const tantalum = footprint.match(/(?:^|_)tantalum([ABCD])(?:_|$)/)
+  if (tantalum)
+    return (
+      <TantalumCapacitor
+        footprint={footprint}
+        caseSize={tantalum[1] as TantalumCase}
+      />
+    )
   const modelFn = mp.string(footprint.split("_", 1)[0]!).params().fn
   if (mp.getModelNames().includes(modelFn)) {
     const model = mp.string(footprint).json()
