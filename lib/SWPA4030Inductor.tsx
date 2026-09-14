@@ -32,14 +32,16 @@ export const SWPA4030Inductor = ({
             </Hull>
           </Union>
         </Colorize>
-        {[-1, 1].map((side) => (
-          <Cuboid
-            key={side}
-            size={[0.95, 3.3, 0.08]}
-            center={[side * 1.525, 0, 0.04]}
-            color="#c2b998"
-          />
-        ))}
+        <Colorize color="#c2b998">
+          {[-1, 1].map((side) => (
+            <Cuboid
+              key={side}
+              size={[0.95, 3.3, 0.08]}
+              center={[side * 1.525, 0, 0.04]}
+              color="#c2b998"
+            />
+          ))}
+        </Colorize>
       </Rotate>
     </Translate>
   )
