@@ -24,7 +24,23 @@ export interface FlatLeadDiodeDimensions {
  * Cathode is at negative X. All dimensions remain physical; no footprint inference.
  */
 export function createFlatLeadDiode(p: FlatLeadDiodeDimensions) {
-  for (const [name, value] of Object.entries(p)) {
+  // React/Cosmos can supply auxiliary props such as children. Validate only dimensions.
+  const dimensions = [
+    "bodyLength",
+    "bodyWidth",
+    "bodyHeight",
+    "leadSpan",
+    "cathodeLength",
+    "cathodeWidth",
+    "anodeLength",
+    "anodeWidth",
+    "terminalThickness",
+    "standoff",
+    "taperInset",
+    "markingWidth",
+  ] as const
+  for (const name of dimensions) {
+    const value = p[name]
     const allowZero = ["standoff", "taperInset", "markingWidth"].includes(name)
     if (!Number.isFinite(value) || (allowZero ? value < 0 : value <= 0))
       throw new Error(`Invalid diode dimension: ${name}`)
