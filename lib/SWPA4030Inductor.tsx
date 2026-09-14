@@ -6,6 +6,10 @@ import { Colorize, Cuboid, Hull, Union, Rotate, Translate } from "jscad-fiber"
  * thickness are simplified; winding is enclosed by the magnetic resin shield.
  * https://www.sunlordinc.com/uploads/files/20221122/SWPA%20series%20of%20SMD%20Power%20Inductor.pdf
  */
+/** Standalone model candidate for JLCPCB C83472 (SWPA4030S220MT).
+ * Placement example: smdpads2_p3.6002mm_pw1.9mm_ph3.7mm
+ * This standard footprint controls placement only; instantiate the component explicitly.
+ */
 export const SWPA4030Inductor = ({
   footprint = "smdpads2_p3.6002mm_pw1.9mm_ph3.7mm",
 }: { footprint?: string }) => {
