@@ -12,6 +12,10 @@ import {
  * End recess radius (0.3 mm), ink and plating thickness are visual approximations.
  * https://aemcomponents.media.zestyio.com/AEM-MF2410.pdf
  */
+/** Standalone model candidate for JLCPCB C83798 (MF2410F1.000TM).
+ * Placement example: smdpads2_p4.9997mm_pw2mm_ph3.2mm
+ * This standard footprint controls placement only; instantiate the component explicitly.
+ */
 export const MF2410Fuse = ({
   footprint = "smdpads2_p4.9997mm_pw2mm_ph3.2mm",
 }: { footprint?: string }) => {
