@@ -16,6 +16,8 @@ test("flat-lead outlines reject invalid dimensions and disconnected terminals", 
     taperInset: 0.05,
     markingWidth: 0.23,
   }
+  const reactProps = { ...base, children: undefined }
+  expect(() => createFlatLeadDiode(reactProps)).not.toThrow()
   for (const override of [
     { bodyLength: NaN },
     { bodyHeight: 0 },
