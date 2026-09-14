@@ -9,13 +9,11 @@
  * Pad corner notches and lead-frame tie bars are not represented.
  * Rectangular-pad DFN placement strings below are placement context ONLY: they do not
  * identify an MSOP package and are never routed to this component automatically.
- * Previews use supported rectangular-pad strings; pill-pad display is unsupported.
+ * Preview strings use default pin-1 orientation and rectangular copper pads.
  */
 export const msopVariants = {
   "10 leads, 3 x 3 mm": {
-    rotationZ: Math.PI / 2,
-    footprint:
-      "dfn10_p0.5mm_w5.84mm_pw0.28mm_pl1.62mm_pin1location(leftside,bottom)",
+    footprint: "dfn10_p0.5mm_w5.84mm_pw0.28mm_pl1.62mm",
     props: {
       pinCount: 10,
       pitch: 0.5,
@@ -31,9 +29,7 @@ export const msopVariants = {
     },
   },
   "10 leads, exposed pad": {
-    rotationZ: Math.PI / 2,
-    footprint:
-      "dfn10_thermalpad1.83mmx2.1mm_p0.5mm_w5.84mm_pw0.28mm_pl1.62mm_pin1location(leftside,bottom)",
+    footprint: "dfn10_thermalpad1.83mmx2.1mm_p0.5mm_w5.84mm_pw0.28mm_pl1.62mm",
     props: {
       pinCount: 10,
       pitch: 0.5,
