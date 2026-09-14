@@ -13,7 +13,9 @@ test("TO277: dimensions, connected terminals and isolation", () => {
     .filter((p) => p.type === "pcb_smtpad")
   expect(pads.length).toBe(3)
   for (const pad of pads) expect(pad.shape).toBe("rect")
-  const contacts = pads.filter((p) => p.port_hints?.[0] !== "2")
+  const contacts = pads
+    .filter((p) => p.shape === "rect")
+    .filter((p) => p.port_hints?.[0] !== "2")
   expect(Math.abs(contacts[0]!.y - contacts[1]!.y)).toBeCloseTo(p.pitch, 6)
   for (const pad of contacts) expect(pad.x - 0.8625).toBeCloseTo(-2.765, 6)
   const solids = getComponentModel(TO277, p).geometries.map((g) => g.geom)
