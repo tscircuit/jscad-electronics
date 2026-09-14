@@ -36,6 +36,7 @@ export * from "./AxialCapacitor"
 export * from "./PinHeader"
 export * from "./FemaleHeader"
 export * from "./FemaleHeaderRow"
+export * from "./B3UTactileSwitch"
 
 // New components
 export * from "./SOD523"

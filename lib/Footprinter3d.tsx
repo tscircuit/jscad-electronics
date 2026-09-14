@@ -25,6 +25,7 @@ import { A2010 } from "./A2010"
 import { A2512 } from "./A2512"
 import { FemaleHeaderRow } from "./FemaleHeaderRow"
 import { PushButton } from "./PushButton"
+import { B3UTactileSwitch } from "./B3UTactileSwitch"
 import { SOIC } from "./SOIC"
 import { VSSOP } from "./VSSOP"
 import { SOD523 } from "./SOD523"
@@ -133,6 +134,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       }
     }
   }
+
+  if (/(?:^|_)switchB3U1000P(?:_|$)/.test(footprint))
+    return <B3UTactileSwitch footprint={footprint} />
 
   // Normalize jst formats
   let normalizedFootprint = footprint
