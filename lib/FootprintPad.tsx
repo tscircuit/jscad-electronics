@@ -5,6 +5,7 @@ import {
   Cylinder,
   ExtrudeLinear,
   Polygon,
+  Rotate,
   Translate,
 } from "jscad-fiber"
 
@@ -16,11 +17,21 @@ export const FootprintPad = ({
 }: { pad: PcbSmtPad; isPin1?: boolean }) => {
   const color: [number, number, number] = isPin1 ? [0, 255, 0] : [255, 0, 0]
 
-  if (pad.shape === "rect") {
+  if (pad.shape === "rect" || pad.shape === "rotated_rect") {
     return (
       <Colorize color={color}>
         <Translate offset={[pad.x, pad.y, -0.005]}>
-          <Cuboid size={[pad.width, pad.height, PAD_THICKNESS]} />
+          <Rotate
+            angles={[
+              0,
+              0,
+              pad.shape === "rotated_rect"
+                ? (pad.ccw_rotation * Math.PI) / 180
+                : 0,
+            ]}
+          >
+            <Cuboid size={[pad.width, pad.height, PAD_THICKNESS]} />
+          </Rotate>
         </Translate>
       </Colorize>
     )
