@@ -1,3 +1,4 @@
+import { CeramicChipAntenna } from "./CeramicChipAntenna"
 import { TantalumCapacitor, type TantalumCase } from "./TantalumCapacitor"
 import { fp } from "@tscircuit/footprinter"
 import { mp } from "@tscircuit/modelprinter"
@@ -98,6 +99,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         caseSize={tantalum[1] as TantalumCase}
       />
     )
+  if (/(?:^|_)antennaRFANT5220110A0T(?:_|$)/.test(footprint))
+    return <CeramicChipAntenna footprint={footprint} />
   const modelFn = mp.string(footprint.split("_", 1)[0]!).params().fn
   if (mp.getModelNames().includes(modelFn)) {
     const model = mp.string(footprint).json()
