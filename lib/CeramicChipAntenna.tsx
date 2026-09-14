@@ -22,7 +22,11 @@ export const CeramicChipAntenna = ({
   return (
     <Translate offset={[(a!.x + b!.x) / 2, (a!.y + b!.y) / 2, 0]}>
       <Rotate rotation={[0, 0, angle]}>
-        <Cuboid size={[4.44, 1.99, 1.14]} center={[0, 0, 0.575]} color="#4053a3" />
+        <Cuboid
+          size={[4.44, 1.99, 1.14]}
+          center={[0, 0, 0.575]}
+          color="#4053a3"
+        />
         {[-1, 1].map((side) => (
           <Cuboid
             key={side}
