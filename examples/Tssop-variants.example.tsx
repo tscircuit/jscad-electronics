@@ -1,4 +1,3 @@
-import { Rotate } from "jscad-fiber"
 import { Tssop } from "../lib/Tssop"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { ComponentPreview } from "./utils/ComponentPreview"
@@ -8,9 +7,7 @@ export default Object.fromEntries(
     name,
     <ComponentPreview>
       <>
-        <Rotate rotation={[0, 0, variant.rotationZ]}>
-          <Tssop {...variant.props} />
-        </Rotate>
+        <Tssop {...variant.props} />
         <ExtrudedPads footprint={variant.footprint} />
       </>
     </ComponentPreview>,

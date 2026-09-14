@@ -8,13 +8,11 @@
  * Total height 1.1 is representative below 1.2 max. Taper is approximate.
  * The rectangular-pad DFN strings below only render pads; they do not identify TSSOP.
  * Footprinter and Footprinter3d selection remain unchanged.
- * Previews use supported rectangular-pad strings; pill-pad display is unsupported.
+ * Preview strings use default pin-1 orientation and rectangular copper pads.
  */
 export const tssopVariants = {
   "20 leads, 6.5 x 4.4 mm": {
-    rotationZ: Math.PI / 2,
-    footprint:
-      "dfn20_p0.65mm_w7.48mm_pw0.36mm_pl1.74mm_pin1location(leftside,bottom)",
+    footprint: "dfn20_p0.65mm_w7.48mm_pw0.36mm_pl1.74mm",
     props: {
       pinCount: 20,
       pitch: 0.65,
@@ -30,9 +28,7 @@ export const tssopVariants = {
     },
   },
   "28 leads, 9.7 x 4.4 mm": {
-    rotationZ: Math.PI / 2,
-    footprint:
-      "dfn28_p0.65mm_w7.46mm_pw0.34mm_pl1.73mm_pin1location(leftside,bottom)",
+    footprint: "dfn28_p0.65mm_w7.46mm_pw0.34mm_pl1.73mm",
     props: {
       pinCount: 28,
       pitch: 0.65,
