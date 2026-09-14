@@ -81,11 +81,9 @@ export const PROBE: Record<string, string> = {
  */
 export const MISSING_BODIES: Record<string, string> = {
   headermodule: "no 3D model yet",
-  jst: "only the ZH 1.5mm and XH 2.5mm series have bodies; `jst6_sh` and the rest have none",
   lcc: "no 3D model yet",
   m2host:
     "footprinter reports NO dimensions for it (`{fn:'m2host'}`), so the socket has to be modelled from the M.2 spec rather than derived from the footprint",
-  smdslideswitch: "no 3D model yet",
 }
 
 /** The probe string to feed footprinter for a registered name. */
@@ -117,7 +115,7 @@ export const NOMINAL_HEIGHT_MM: Record<string, number> = {
   d2pak: 4.9,
   dpak: 2.8,
   electrolytic: 15,
-  jst: 6,
+  jst: 4.2,
   led2835: 1,
   lga: 0.8,
   m2host: 5,
@@ -127,6 +125,7 @@ export const NOMINAL_HEIGHT_MM: Record<string, number> = {
   radial: 14,
   smbf: 2.3,
   smdpushbutton: 2,
+  smdslideswitch: 1.4,
   sod110: 1.1,
   sod323w: 1.1,
   sod80: 1.6,

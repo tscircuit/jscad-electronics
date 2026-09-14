@@ -1,8 +1,15 @@
 import { expect, test } from "bun:test"
 import "../fixtures/png-matcher"
-import { renderContactSheet } from "../helpers/render-contact-sheet"
+import { renderComponentContactSheet } from "../helpers/component-model"
+import { createElement } from "react"
+import { TantalumCapacitor } from "../../lib/TantalumCapacitor"
 test("tantalum D", async () => {
   await expect(
-    await renderContactSheet("smdpads2_p6mm_pw2.7991mm_ph3.0099mm_tantalumD"),
+    await renderComponentContactSheet(
+      createElement(TantalumCapacitor, {
+        footprint: "smdpads2_p6mm_pw2.7991mm_ph3.0099mm",
+        caseSize: "D",
+      }),
+    ),
   ).toMatchPngSnapshot(import.meta.path, "tantalum-D")
 }, 30000)
