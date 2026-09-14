@@ -1,14 +1,16 @@
 import { expect, test } from "bun:test"
 import * as jscad from "@jscad/modeling"
-import { importVanilla } from "./fixtures/importVanilla.js"
-test("BLM41FerriteBead outline, connected terminals and explicit routing", async () => {
-  const { getJscadModelForFootprint: get } = await importVanilla()
+import { getComponentModel } from "./helpers/component-model"
+import { BLM41FerriteBead } from "../lib/BLM41FerriteBead"
+test("BLM41FerriteBead outline, connected terminals and explicit component props", async () => {
   for (const footprint of [
-    "smdpads2_p3.8999mm_pw2mm_ph2mm_ferriteBLM41PG600SN1",
-    "smdpads2_p9mm_ferriteBLM41PG600SN1",
-    "smdpads2_p3.8999mm_pw2mm_ph2mm_ferriteBLM41PG600SN1_pin1location(rightside,top)",
+    "smdpads2_p3.8999mm_pw2mm_ph2mm",
+    "smdpads2_p9mm",
+    "smdpads2_p3.8999mm_pw2mm_ph2mm_pin1location(rightside,top)",
   ]) {
-    const { geometries } = get(footprint, jscad)
+    const { geometries } = getComponentModel(BLM41FerriteBead, {
+      footprint: footprint,
+    })
     expect(geometries).toHaveLength(3)
     const bounds = jscad.measurements.measureAggregateBoundingBox(
       ...geometries.map((g: { geom: jscad.geometries.geom3.Geom3 }) => g.geom),
@@ -26,8 +28,5 @@ test("BLM41FerriteBead outline, connected terminals and explicit routing", async
         ),
       ).toBeGreaterThan(0)
   }
-  expect(() => get("smdpads3_ferriteBLM41PG600SN1", jscad)).toThrow("two pads")
-  expect(
-    get("smdpads2_ferriteBLM41PG600SN1unknown", jscad).geometries,
-  ).toHaveLength(0)
+  expect(() => BLM41FerriteBead({ footprint: "smdpads3" })).toThrow("two pads")
 })

@@ -22,7 +22,6 @@ import { A01005 } from "./A01005"
 import { A1206 } from "./A1206"
 import { A1210 } from "./A1210"
 import { A2010 } from "./A2010"
-import { BLM41FerriteBead } from "./BLM41FerriteBead"
 import { A2512 } from "./A2512"
 import { FemaleHeaderRow } from "./FemaleHeaderRow"
 import { PushButton } from "./PushButton"
@@ -953,9 +952,6 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     case "2512":
       return <A2512 color={color} />
   }
-
-  if (/(?:^|_)ferriteBLM41PG600SN1(?:_|$)/.test(footprint))
-    return <BLM41FerriteBead footprint={footprint} />
 
   // A chip named by its pads rather than by an EIA size: `res_p0.8656mm_...`
   // and `cap_p0.8402mm_...` carry no `imperial`, so neither switch above can
