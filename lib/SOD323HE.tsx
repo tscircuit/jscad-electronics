@@ -1,5 +1,5 @@
 import {
-  FlatLeadDiode,
+  createFlatLeadDiode,
   type FlatLeadDiodeDimensions,
 } from "./utils/FlatLeadDiode"
 /** SOD-323HE flat-lead outline with symmetric contacts by default.
@@ -11,22 +11,20 @@ import {
  * geometry parameters, not new Footprinter tokens or manufacturer selectors.
  */
 export type SOD323HEProps = Partial<FlatLeadDiodeDimensions>
-export const SOD323HE = (props: SOD323HEProps) => (
-  <FlatLeadDiode
-    {...{
-      bodyLength: 2,
-      bodyWidth: 1.4,
-      bodyHeight: 0.6,
-      leadSpan: 2.5,
-      cathodeLength: 0.55,
-      cathodeWidth: 0.8,
-      anodeLength: 0.55,
-      anodeWidth: 0.8,
-      terminalThickness: 0.17,
-      standoff: 0.05,
-      taperInset: 0.15,
-      markingWidth: 0.2,
-    }}
-    {...props}
-  />
-)
+export const SOD323HE = (props: SOD323HEProps) =>
+  createFlatLeadDiode({
+    bodyLength: 2,
+    bodyWidth: 1.4,
+    bodyHeight: 0.6,
+    leadSpan: 2.5,
+    cathodeLength: 0.55,
+    cathodeWidth: 0.8,
+    anodeLength: 0.55,
+    anodeWidth: 0.8,
+    terminalThickness: 0.17,
+    standoff: 0.05,
+    taperInset: 0.15,
+    markingWidth: 0.2,
+
+    ...props,
+  })

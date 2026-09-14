@@ -23,7 +23,7 @@ export interface FlatLeadDiodeDimensions {
 /** Shared geometry for flat-lead diode outlines; standard wrappers supply defaults.
  * Cathode is at negative X. All dimensions remain physical; no footprint inference.
  */
-export function FlatLeadDiode(p: FlatLeadDiodeDimensions) {
+export function createFlatLeadDiode(p: FlatLeadDiodeDimensions) {
   for (const [name, value] of Object.entries(p)) {
     const allowZero = ["standoff", "taperInset", "markingWidth"].includes(name)
     if (!Number.isFinite(value) || (allowZero ? value < 0 : value <= 0))
