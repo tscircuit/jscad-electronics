@@ -1,3 +1,4 @@
+import { SOT89, sot89NominalDimensions } from "./SOT89"
 import { fp } from "@tscircuit/footprinter"
 import { mp } from "@tscircuit/modelprinter"
 import { Rotate, Translate } from "jscad-fiber"
@@ -424,9 +425,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     case "sot563":
       return <SOT563 />
     case "sot89": {
-      // SOT-89 is a SOT-223 at roughly a third of the volume: three leads one
-      // side, one wide tab lead the other. Aliasing it to SOT-223 outright
-      // would report a 6.5 x 3.5 body where there is a 4.5 x 2.5 one.
+      if (fpJson.num_pins === 3) return <SOT89 {...sot89NominalDimensions} />
+      // Preserve the legacy approximation for the unsupported five-lead topology.
       const padSpan = dim(fpJson.w, 4.2)
       return (
         <SOT223
