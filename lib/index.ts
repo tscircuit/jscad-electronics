@@ -88,3 +88,5 @@ export * from "./GullWingBody"
 export * from "./SOT143"
 
 export * from "./UsbCMidmount"
+
+export * from "./MelfResistor"

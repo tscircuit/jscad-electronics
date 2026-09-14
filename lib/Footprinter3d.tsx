@@ -1,3 +1,4 @@
+import { MelfResistor, type MelfResistorSize } from "./MelfResistor"
 import { fp } from "@tscircuit/footprinter"
 import { mp } from "@tscircuit/modelprinter"
 import { Rotate, Translate } from "jscad-fiber"
@@ -89,6 +90,16 @@ import { FlexScreen } from "./FlexScreen"
  */
 
 export const Footprinter3d = ({ footprint }: { footprint: string }) => {
+  const melfResistor = footprint.match(
+    /(?:^|_)melfresistor(0102|0204|0207)(?:_|$)/,
+  )
+  if (melfResistor)
+    return (
+      <MelfResistor
+        footprint={footprint}
+        size={melfResistor[1] as MelfResistorSize}
+      />
+    )
   const modelFn = mp.string(footprint.split("_", 1)[0]!).params().fn
   if (mp.getModelNames().includes(modelFn)) {
     const model = mp.string(footprint).json()
