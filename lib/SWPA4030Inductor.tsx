@@ -1,12 +1,5 @@
 import { fp } from "@tscircuit/footprinter"
-import {
-  Colorize,
-  Cuboid,
-  ExtrudeLinear,
-  Polygon,
-  Rotate,
-  Translate,
-} from "jscad-fiber"
+import { Colorize, Cuboid, Hull, Union, Rotate, Translate } from "jscad-fiber"
 
 /** Sunlord SWPA4030S, Fig. 2 on page 2: A/B/C(max)/D/E/F = 4/4/3/3.3/0.95/2.1 mm.
  * Uses maximum specified height. Core corner transitions, resin profile and metal
@@ -31,26 +24,13 @@ export const SWPA4030Inductor = ({
     <Translate offset={[(a!.x + b!.x) / 2, (a!.y + b!.y) / 2, 0]}>
       <Rotate rotation={[0, 0, angle]}>
         <Colorize color="#45474a">
-          <Translate offset={[0, 0, 0.05]}>
-            <ExtrudeLinear height={2.95}>
-              <Polygon
-                points={[
-                  [-2, -1.65],
-                  [-1.4, -1.65],
-                  [-1.05, -2],
-                  [1.05, -2],
-                  [1.4, -1.65],
-                  [2, -1.65],
-                  [2, 1.65],
-                  [1.4, 1.65],
-                  [1.05, 2],
-                  [-1.05, 2],
-                  [-1.4, 1.65],
-                  [-2, 1.65],
-                ]}
-              />
-            </ExtrudeLinear>
-          </Translate>
+          <Union>
+            <Cuboid size={[4, 3.3, 2.95]} center={[0, 0, 1.525]} />
+            <Hull>
+              <Cuboid size={[2.1, 4, 2.95]} center={[0, 0, 1.525]} />
+              <Cuboid size={[2.8, 3.3, 2.95]} center={[0, 0, 1.525]} />
+            </Hull>
+          </Union>
         </Colorize>
         {[-1, 1].map((side) => (
           <Cuboid
