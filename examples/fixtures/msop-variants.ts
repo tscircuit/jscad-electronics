@@ -12,6 +12,7 @@
  */
 export const msopVariants = {
   "10 leads, 3 x 3 mm": {
+    rotationZ: Math.PI / 2,
     footprint:
       "dfn10_pillpads_p0.5mm_w5.84mm_pw0.28mm_pl1.62mm_pin1location(leftside,bottom)",
     props: {
@@ -29,6 +30,7 @@ export const msopVariants = {
     },
   },
   "10 leads, exposed pad": {
+    rotationZ: Math.PI / 2,
     footprint:
       "dfn10_thermalpad1.83mmx2.1mm_pillpads_p0.5mm_w5.84mm_pw0.28mm_pl1.62mm_pin1location(leftside,bottom)",
     props: {
