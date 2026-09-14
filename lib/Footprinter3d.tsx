@@ -1,7 +1,3 @@
-import { CeramicChipAntenna } from "./CeramicChipAntenna"
-import { MelfResistor, type MelfResistorSize } from "./MelfResistor"
-import { TwoPadCrystal, type TwoPadCrystalPackage } from "./TwoPadCrystal"
-import { TantalumCapacitor, type TantalumCase } from "./TantalumCapacitor"
 import { fp } from "@tscircuit/footprinter"
 import { mp } from "@tscircuit/modelprinter"
 import { Rotate, Translate } from "jscad-fiber"
@@ -67,6 +63,7 @@ import SOD723 from "./SOD723"
 import { JSTZH1_5mm } from "./JSTZH1_5mm"
 import { JSTPH2_0mm } from "./JSTPH2_0mm"
 import { JSTXH2_5mm } from "./JSTXH2_5mm"
+import { JstSh, isJstShFootprint } from "./JstSh"
 import { Crystal } from "./Crystal"
 import { FPC } from "./FPC"
 import { SmdPinHeader } from "./SmdPinHeader"
@@ -82,6 +79,7 @@ import { DPAK } from "./DPAK"
 import { ElectrolyticCapacitor } from "./ElectrolyticCapacitor"
 import { Potentiometer } from "./Potentiometer"
 import { SmdPushButton } from "./SmdPushButton"
+import { SmdSlideSwitch } from "./SmdSlideSwitch"
 import { SOT563 } from "./SOT-563"
 import { BGA } from "./BGA"
 import { UsbCMidmount } from "./UsbCMidmount"
@@ -93,36 +91,6 @@ import { FlexScreen } from "./FlexScreen"
  */
 
 export const Footprinter3d = ({ footprint }: { footprint: string }) => {
-  if (/(?:^|_)antennaRFANT5220110A0T(?:_|$)/.test(footprint))
-    return <CeramicChipAntenna footprint={footprint} />
-  const melfResistor = footprint.match(
-    /(?:^|_)melfresistor(0102|0204|0207)(?:_|$)/,
-  )
-  if (melfResistor)
-    return (
-      <MelfResistor
-        footprint={footprint}
-        size={melfResistor[1] as MelfResistorSize}
-      />
-    )
-  const tantalum = footprint.match(/(?:^|_)tantalum([ABCD])(?:_|$)/)
-  if (tantalum)
-    return (
-      <TantalumCapacitor
-        footprint={footprint}
-        caseSize={tantalum[1] as TantalumCase}
-      />
-    )
-  const crystal2 = footprint.match(
-    /(?:^|_)crystal2(FC135|FC12M|FC1610AN|NX3225GD)(?:_|$)/,
-  )
-  if (crystal2)
-    return (
-      <TwoPadCrystal
-        footprint={footprint}
-        packageName={crystal2[1] as TwoPadCrystalPackage}
-      />
-    )
   const modelFn = mp.string(footprint.split("_", 1)[0]!).params().fn
   if (mp.getModelNames().includes(modelFn)) {
     const model = mp.string(footprint).json()
@@ -475,6 +443,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     }
     case "sot457":
       return <SOT457 />
+    case "smdslideswitch":
+      return <SmdSlideSwitch footprint={normalizedFootprint} />
     case "usbcmidmount":
       return <UsbCMidmount footprint={normalizedFootprint} />
     case "sot143":
@@ -504,6 +474,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         />
       )
     case "jst":
+      if (isJstShFootprint(normalizedFootprint)) {
+        return <JstSh footprint={normalizedFootprint} />
+      }
       if (fpJson.zh) {
         return <JSTZH1_5mm numPins={fpJson.num_pins} />
       }
