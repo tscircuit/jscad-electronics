@@ -80,6 +80,7 @@ import { Potentiometer } from "./Potentiometer"
 import { SmdPushButton } from "./SmdPushButton"
 import { SOT563 } from "./SOT-563"
 import { BGA } from "./BGA"
+import { JstSh, isJstShFootprint } from "./JstSh"
 import { SmdSlideSwitch } from "./SmdSlideSwitch"
 import { UsbCMidmount } from "./UsbCMidmount"
 import { SOT143 } from "./SOT143"
@@ -473,6 +474,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         />
       )
     case "jst":
+      if (isJstShFootprint(normalizedFootprint))
+        return <JstSh footprint={normalizedFootprint} />
       if (fpJson.zh) {
         return <JSTZH1_5mm numPins={fpJson.num_pins} />
       }

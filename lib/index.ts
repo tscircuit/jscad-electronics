@@ -90,3 +90,5 @@ export * from "./SOT143"
 export * from "./UsbCMidmount"
 
 export * from "./SmdSlideSwitch"
+
+export * from "./JstSh"
