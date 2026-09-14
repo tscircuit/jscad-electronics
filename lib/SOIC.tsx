@@ -1,8 +1,12 @@
+import {
+  createDualRowGullWing,
+  type DualRowGullWingDimensions,
+} from "./utils/DualRowGullWing"
 import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 
 // SOIC typical body and lead dimensions
-export const SOIC = ({
+const LegacySOIC = ({
   pinCount,
   leadLength,
   leadWidth,
@@ -66,3 +70,13 @@ export const SOIC = ({
     </>
   )
 }
+
+/** Standard SOIC physical outline. Supplying leadSpan selects explicit package
+ * dimensions; the legacy land-derived API is retained for existing callers.
+ * See examples/fixtures/soic-variants.ts for MS-012 dimensional evidence.
+ */
+export type SOICProps =
+  | Parameters<typeof LegacySOIC>[0]
+  | DualRowGullWingDimensions
+export const SOIC = (props: SOICProps) =>
+  "leadSpan" in props ? createDualRowGullWing(props) : LegacySOIC(props)
