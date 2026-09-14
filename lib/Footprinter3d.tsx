@@ -1,4 +1,5 @@
 import { CeramicChipAntenna } from "./CeramicChipAntenna"
+import { MelfResistor, type MelfResistorSize } from "./MelfResistor"
 import { TwoPadCrystal, type TwoPadCrystalPackage } from "./TwoPadCrystal"
 import { TantalumCapacitor, type TantalumCase } from "./TantalumCapacitor"
 import { fp } from "@tscircuit/footprinter"
@@ -94,6 +95,16 @@ import { FlexScreen } from "./FlexScreen"
 export const Footprinter3d = ({ footprint }: { footprint: string }) => {
   if (/(?:^|_)antennaRFANT5220110A0T(?:_|$)/.test(footprint))
     return <CeramicChipAntenna footprint={footprint} />
+  const melfResistor = footprint.match(
+    /(?:^|_)melfresistor(0102|0204|0207)(?:_|$)/,
+  )
+  if (melfResistor)
+    return (
+      <MelfResistor
+        footprint={footprint}
+        size={melfResistor[1] as MelfResistorSize}
+      />
+    )
   const tantalum = footprint.match(/(?:^|_)tantalum([ABCD])(?:_|$)/)
   if (tantalum)
     return (
