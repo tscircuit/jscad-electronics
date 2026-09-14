@@ -12,6 +12,13 @@ test("Tssop: physical outline, pitch, seating plane and embedded leads", () => {
         .circuitJson()
         .filter((p) => p.type === "pcb_smtpad").length,
     ).toBeGreaterThanOrEqual(p.pinCount)
+    // The fixture pad renderer supports rectangular pads; reject silently missing
+    // pill-pad previews as well as unknown footprint syntax.
+    for (const pad of fp
+      .string(footprint)
+      .circuitJson()
+      .filter((p) => p.type === "pcb_smtpad"))
+      expect(["rect", "rotated_rect"].includes(pad.shape)).toBe(true)
     const solids = getComponentModel(Tssop, p).geometries.map((g) => g.geom)
     const box = jscad.measurements.measureAggregateBoundingBox(...solids)
     for (const [axis, value] of [
