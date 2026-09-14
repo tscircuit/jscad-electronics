@@ -5,6 +5,10 @@ import { Colorize, Cuboid, Rotate, Translate } from "jscad-fiber"
  * End-cap plating thickness is visually approximated at 0.01 mm.
  * https://www.murata.com/en-global/products/productdetail?partno=BLM41PG600SN1L
  */
+/** Standalone model candidate for JLCPCB C85844 (BLM41PG600SN1L).
+ * Placement example: smdpads2_p3.8999mm_pw2mm_ph2mm
+ * This standard footprint controls placement only; instantiate the component explicitly.
+ */
 export const BLM41FerriteBead = ({
   footprint = "smdpads2_p3.8999mm_pw2mm_ph2mm",
 }: { footprint?: string }) => {
