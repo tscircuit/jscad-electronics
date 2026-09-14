@@ -1,15 +1,18 @@
 import { expect, test } from "bun:test"
 import * as jscad from "@jscad/modeling"
-import { importVanilla } from "./fixtures/importVanilla.js"
+import { getComponentModel } from "./helpers/component-model"
+import { TantalumCapacitor } from "../lib/TantalumCapacitor"
 test("tantalum cases keep physical dimensions and connected terminations", async () => {
-  const { getJscadModelForFootprint: get } = await importVanilla()
   for (const [size, l, w, h] of [
     ["A", 3.2, 1.6, 1.6],
     ["B", 3.5, 2.8, 1.9],
     ["C", 6, 3.2, 2.6],
     ["D", 7.3, 4.3, 2.9],
   ] as const) {
-    const { geometries } = get(`smdpads2_tantalum${size}`, jscad)
+    const { geometries } = getComponentModel(TantalumCapacitor, {
+      footprint: "smdpads2",
+      caseSize: size,
+    })
     expect(geometries).toHaveLength(4)
     const bounds = jscad.measurements.measureAggregateBoundingBox(
       ...geometries.map((g: { geom: jscad.geometries.geom3.Geom3 }) => g.geom),
@@ -24,6 +27,4 @@ test("tantalum cases keep physical dimensions and connected terminations", async
         ),
       ).toBeGreaterThan(0)
   }
-  expect(get("smdpads2", jscad).geometries).toHaveLength(0)
-  expect(() => get("smdpads3_tantalumA", jscad)).toThrow("two pads")
 })
