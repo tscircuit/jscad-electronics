@@ -3,8 +3,8 @@ import {
   type FlatLeadDiodeDimensions,
 } from "./utils/FlatLeadDiode"
 /** DO-219AD flat-lead outline, with independently sized cathode/anode contacts.
- * Nominal defaults are midpoints of the outline ranges on page 3.
- * Mold taper and marking dimensions are visual approximations, exposed as props.
+ * Body and terminal dimensions use midpoints of the outline ranges on page 3.
+ * Mold standoff, taper and marking dimensions are visual approximations, exposed as props.
  * https://www.vishay.com/doc/?89019=
  * Dimension overrides represent variants of this standard outline. They are
  * geometry parameters, not new Footprinter tokens or manufacturer selectors.
