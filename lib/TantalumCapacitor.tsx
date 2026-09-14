@@ -22,7 +22,11 @@ export const TantalumCapacitor = ({
   const pads = fp
     .string(footprint)
     .circuitJson()
-    .filter((e) => e.type === "pcb_smtpad")
+    .filter(
+      (e) =>
+        e.type === "pcb_smtpad" &&
+        (e.shape === "rect" || e.shape === "rotated_rect"),
+    )
   if (pads.length !== 2) throw new Error("TantalumCapacitor requires two pads")
   const [a, b] = pads
   const angle = Math.atan2(b!.y - a!.y, b!.x - a!.x)

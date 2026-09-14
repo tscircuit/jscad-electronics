@@ -12,7 +12,7 @@ test("tantalum cases keep physical dimensions and connected terminations", async
     const { geometries } = get(`smdpads2_tantalum${size}`, jscad)
     expect(geometries).toHaveLength(4)
     const bounds = jscad.measurements.measureAggregateBoundingBox(
-      ...geometries.map((g) => g.geom),
+      ...geometries.map((g: { geom: jscad.geometries.geom3.Geom3 }) => g.geom),
     )
     expect(bounds[1][0] - bounds[0][0]).toBeCloseTo(l, 3)
     expect(bounds[1][1] - bounds[0][1]).toBeCloseTo(w, 3)
