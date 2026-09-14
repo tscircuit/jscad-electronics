@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test"
-import { FlatLeadDiode } from "../lib/utils/FlatLeadDiode"
+import { createFlatLeadDiode } from "../lib/utils/FlatLeadDiode"
 
 test("flat-lead outlines reject invalid dimensions and disconnected terminals", () => {
   const base = {
@@ -27,5 +27,5 @@ test("flat-lead outlines reject invalid dimensions and disconnected terminals", 
     { taperInset: 0.7 },
     { markingWidth: 2 },
   ])
-    expect(() => FlatLeadDiode({ ...base, ...override })).toThrow()
+    expect(() => createFlatLeadDiode({ ...base, ...override })).toThrow()
 })
