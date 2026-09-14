@@ -9,6 +9,7 @@
  */
 export const soicVariants = {
   "8 leads, exposed pad": {
+    rotationZ: 0,
     footprint: "soic8_thermalpad2.5mmx3.5mm_w6.7mm_pl1.3mm",
     props: {
       pinCount: 8,
@@ -27,6 +28,7 @@ export const soicVariants = {
     },
   },
   "16 leads, narrow body": {
+    rotationZ: Math.PI / 2,
     footprint: "soic16_pillpads_w7.44mm_pl1.97mm_pin1location(leftside,bottom)",
     props: {
       pinCount: 16,

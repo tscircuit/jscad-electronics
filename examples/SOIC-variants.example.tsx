@@ -1,3 +1,4 @@
+import { Rotate } from "jscad-fiber"
 import { SOIC } from "../lib/SOIC"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { ComponentPreview } from "./utils/ComponentPreview"
@@ -7,7 +8,9 @@ export default Object.fromEntries(
     name,
     <ComponentPreview>
       <>
-        <SOIC {...variant.props} />
+        <Rotate rotation={[0, 0, variant.rotationZ]}>
+          <SOIC {...variant.props} />
+        </Rotate>
         <ExtrudedPads footprint={variant.footprint} />
       </>
     </ComponentPreview>,
