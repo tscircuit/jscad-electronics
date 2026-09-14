@@ -85,7 +85,6 @@ export const MISSING_BODIES: Record<string, string> = {
   lcc: "no 3D model yet",
   m2host:
     "footprinter reports NO dimensions for it (`{fn:'m2host'}`), so the socket has to be modelled from the M.2 spec rather than derived from the footprint",
-  smdslideswitch: "no 3D model yet",
 }
 
 /** The probe string to feed footprinter for a registered name. */
