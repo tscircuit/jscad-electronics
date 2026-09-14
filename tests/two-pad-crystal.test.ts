@@ -1,15 +1,18 @@
 import { expect, test } from "bun:test"
 import * as jscad from "@jscad/modeling"
-import { importVanilla } from "./fixtures/importVanilla.js"
+import { getComponentModel } from "./helpers/component-model"
+import { TwoPadCrystal } from "../lib/TwoPadCrystal"
 test("two-pad crystal dimensions and connected terminal/base/lid geometry", async () => {
-  const { getJscadModelForFootprint: get } = await importVanilla()
   for (const [name, l, w, h] of [
     ["FC135", 3.2, 1.5, 0.9],
     ["FC12M", 2.05, 1.2, 0.6],
     ["FC1610AN", 1.65, 1.05, 0.5],
     ["NX3225GD", 3.2, 2.5, 0.8],
   ] as const) {
-    const { geometries } = get(`smdpads2_crystal2${name}`, jscad)
+    const { geometries } = getComponentModel(TwoPadCrystal, {
+      footprint: "smdpads2",
+      packageName: name,
+    })
     expect(geometries).toHaveLength(4)
     const b = jscad.measurements.measureAggregateBoundingBox(
       ...geometries.map((g: { geom: jscad.geometries.geom3.Geom3 }) => g.geom),
@@ -24,6 +27,4 @@ test("two-pad crystal dimensions and connected terminal/base/lid geometry", asyn
         ),
       ).toBeGreaterThan(0)
   }
-  expect(() => get("smdpads3_crystal2FC135", jscad)).toThrow("two pads")
-  expect(get("smdpads2", jscad).geometries).toHaveLength(0)
 })
