@@ -7,14 +7,15 @@
  * DGQ0010D, page 33: same MO-187 outline with exposed pad 1.73 x 1.79
  * (midpoints), A1=.1, c=.18, contact .55; A=1 is representative below 1.1 max.
  * Pad corner notches and lead-frame tie bars are not represented.
- * Existing derived DFN strings below are placement context ONLY: they do not
+ * Rectangular-pad DFN placement strings below are placement context ONLY: they do not
  * identify an MSOP package and are never routed to this component automatically.
+ * Previews use supported rectangular-pad strings; pill-pad display is unsupported.
  */
 export const msopVariants = {
   "10 leads, 3 x 3 mm": {
     rotationZ: Math.PI / 2,
     footprint:
-      "dfn10_pillpads_p0.5mm_w5.84mm_pw0.28mm_pl1.62mm_pin1location(leftside,bottom)",
+      "dfn10_p0.5mm_w5.84mm_pw0.28mm_pl1.62mm_pin1location(leftside,bottom)",
     props: {
       pinCount: 10,
       pitch: 0.5,
@@ -32,7 +33,7 @@ export const msopVariants = {
   "10 leads, exposed pad": {
     rotationZ: Math.PI / 2,
     footprint:
-      "dfn10_thermalpad1.83mmx2.1mm_pillpads_p0.5mm_w5.84mm_pw0.28mm_pl1.62mm_pin1location(leftside,bottom)",
+      "dfn10_thermalpad1.83mmx2.1mm_p0.5mm_w5.84mm_pw0.28mm_pl1.62mm_pin1location(leftside,bottom)",
     props: {
       pinCount: 10,
       pitch: 0.5,
