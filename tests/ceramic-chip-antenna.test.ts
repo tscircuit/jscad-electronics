@@ -1,9 +1,11 @@
 import { expect, test } from "bun:test"
 import * as jscad from "@jscad/modeling"
-import { importVanilla } from "./fixtures/importVanilla.js"
+import { getComponentModel } from "./helpers/component-model"
+import { CeramicChipAntenna } from "../lib/CeramicChipAntenna"
 test("RFANT body dimensions and connected terminations", async () => {
-  const { getJscadModelForFootprint: get } = await importVanilla()
-  const { geometries } = get("smdpads2_antennaRFANT5220110A0T", jscad)
+  const { geometries } = getComponentModel(CeramicChipAntenna, {
+    footprint: "smdpads2",
+  })
   expect(geometries).toHaveLength(4)
   const b = jscad.measurements.measureAggregateBoundingBox(
     ...geometries.map((g: { geom: jscad.geometries.geom3.Geom3 }) => g.geom),
@@ -17,7 +19,7 @@ test("RFANT body dimensions and connected terminations", async () => {
         jscad.booleans.intersect(geometries[0]!.geom, g.geom),
       ),
     ).toBeGreaterThan(0)
-  expect(() => get("smdpads3_antennaRFANT5220110A0T", jscad)).toThrow(
+  expect(() => CeramicChipAntenna({ footprint: "smdpads3" })).toThrow(
     "two pads",
   )
 })

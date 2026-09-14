@@ -1,5 +1,5 @@
 import { fp } from "@tscircuit/footprinter"
-import { Cuboid, Rotate, Translate } from "jscad-fiber"
+import { Colorize, Cuboid, Rotate, Translate } from "jscad-fiber"
 
 /** Walsin RFANT5220110A0T outer geometry, L/W/T/A = 5.2/2/1.15/0.4 mm.
  * Source: ASC_RFANT5220110A0T_V15, page 2. Pad 1 is the feed end.
@@ -27,14 +27,16 @@ export const CeramicChipAntenna = ({
           center={[0, 0, 0.575]}
           color="#4053a3"
         />
-        {[-1, 1].map((side) => (
-          <Cuboid
-            key={side}
-            size={[0.4, 2, 1.15]}
-            center={[side * 2.4, 0, 0.575]}
-            color="#c2c4c7"
-          />
-        ))}
+        <Colorize color="#c2c4c7">
+          {[-1, 1].map((side) => (
+            <Cuboid
+              key={side}
+              size={[0.4, 2, 1.15]}
+              center={[side * 2.4, 0, 0.575]}
+              color="#c2c4c7"
+            />
+          ))}
+        </Colorize>
         {/* Identification patch on the top by the feed end; it is not a third pad. */}
         <Cuboid
           size={[0.9, 2, 0.01]}
