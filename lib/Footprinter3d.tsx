@@ -1,7 +1,3 @@
-import {
-  renderFootprinter3dModel,
-  type Footprinter3dModel,
-} from "./utils/Footprinter3dModel"
 import { SOT89, sot89NominalDimensions } from "./SOT89"
 import { fp } from "@tscircuit/footprinter"
 import { mp } from "@tscircuit/modelprinter"
@@ -95,19 +91,7 @@ import { FlexScreen } from "./FlexScreen"
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
  */
 
-export type { Footprinter3dModel } from "./utils/Footprinter3dModel"
-export interface Footprinter3dProps {
-  footprint: string
-  /** Explicit package identity/dimensions; never inferred from ignored suffixes. */
-  model?: Footprinter3dModel
-}
-export const Footprinter3d = ({ footprint, model }: Footprinter3dProps) => {
-  if (model) {
-    // Validate the actual footprint through Footprinter even when package props
-    // are explicit. A new model does not make an unknown footprint name legal.
-    fp.string(footprint).circuitJson()
-    return renderFootprinter3dModel(model)
-  }
+export const Footprinter3d = ({ footprint }: { footprint: string }) => {
   const modelFn = mp.string(footprint.split("_", 1)[0]!).params().fn
   if (mp.getModelNames().includes(modelFn)) {
     const model = mp.string(footprint).json()
