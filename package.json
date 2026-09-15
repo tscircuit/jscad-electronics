@@ -35,7 +35,7 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.3",
     "@tscircuit/alphabet": "^0.0.24",
-    "@tscircuit/footprinter": "^0.0.424",
+    "@tscircuit/footprinter": "^0.0.428",
     "@types/pngjs": "^6.0.5",
     "@types/react": "19",
     "@types/react-dom": "19",
@@ -54,7 +54,7 @@
   },
   "peerDependencies": {
     "@jscad/modeling": "^2.12.5",
-    "@tscircuit/footprinter": "*",
+    "@tscircuit/footprinter": ">=0.0.428",
     "@tscircuit/alphabet": "^0.0.24",
     "circuit-json": "^0.0.426",
     "jscad-fiber": "^0.0.85",
