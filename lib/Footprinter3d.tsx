@@ -318,7 +318,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         fpJson.num_pins === 8 &&
         Math.abs((fpJson.thermalpad?.x ?? 0) - 4.1) < 0.02 &&
         Math.abs((fpJson.thermalpad?.y ?? 0) - 4.6) < 0.02
-      return (
+      const dfn = (
         <DFN
           num_pins={fpJson.num_pins}
           bodyWidth={isPowerDfn5x6 ? 6.1 : fpJson.w}
@@ -350,6 +350,14 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
               : undefined
           }
         />
+      )
+      // This footprinter outline rotates its pad rows and exposed pad 90°:
+      // signal pads run along the top and bottom edges, and the raw X thermal
+      // pad offset becomes +Y in the generated footprint geometry.
+      return isPowerDfn5x6 ? (
+        <Rotate rotation={[0, 0, "90deg"]}>{dfn}</Rotate>
+      ) : (
+        dfn
       )
     }
 
