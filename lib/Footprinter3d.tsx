@@ -40,6 +40,7 @@ import { SOT223 } from "./SOT-223"
 import TQFP from "./tqfp"
 import { SOT323 } from "./SOT-323"
 import { LQFP } from "./lqfp"
+import { LGA } from "./LGA"
 import { SOT723 } from "./SOT-723"
 import { DFN } from "./dfn"
 import { HC49 } from "./hc49"
@@ -622,6 +623,27 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
             leadWidth={dim(fpJson.pw, 0.25)}
             padContactLength={dim(fpJson.pl, 0.25)}
             bodyWidth={dim(fpJson.w, 6)}
+          />
+        )
+      }
+      if (
+        fpJson.fn === "lga" &&
+        fpJson.num_pins === 14 &&
+        Math.abs(dim(fpJson.w, 0) - 3.2) < 0.02 &&
+        Math.abs(dim(fpJson.h, 0) - 2.7) < 0.02
+      ) {
+        return (
+          <LGA
+            bodyWidth={3}
+            bodyLength={2.5}
+            bodyHeight={0.86}
+            landsPerSideX={4}
+            landsPerSideY={3}
+            pitch={dim(fpJson.p, 0.5)}
+            landWidth={Math.min(dim(fpJson.pw, 0.28), 0.25)}
+            landLength={0.4}
+            edgeInset={0}
+            landThickness={0.05}
           />
         )
       }
