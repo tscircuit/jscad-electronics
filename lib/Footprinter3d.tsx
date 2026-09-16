@@ -300,6 +300,11 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         fpJson.num_pins === 48 &&
         Math.abs((fpJson.thermalpad?.x ?? 0) - 4.6) < 0.02 &&
         Math.abs((fpJson.thermalpad?.y ?? 0) - 4.6) < 0.02
+      const isRge24 =
+        fpJson.num_pins === 24 &&
+        (fpJson.thermalpad as unknown) === true &&
+        Math.abs((fpJson.w ?? 0) - 5.08) < 0.02 &&
+        Math.abs((fpJson.h ?? 0) - 5.1) < 0.02
       if (isRhb32)
         return (
           <QFN
@@ -352,6 +357,24 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
             pitch={0.4}
             exposedPadWidth={4.6}
             exposedPadLength={4.6}
+          />
+        )
+      if (isRge24)
+        return (
+          <QFN
+            num_pins={24}
+            bodyWidth={4}
+            bodyLength={4}
+            bodyHeight={1}
+            standoff={0}
+            terminalSpanX={4}
+            terminalSpanY={4}
+            terminalThickness={0.01}
+            padWidth={0.24}
+            padLength={0.38}
+            pitch={0.5}
+            exposedPadWidth={2.7}
+            exposedPadLength={2.7}
           />
         )
       return (
