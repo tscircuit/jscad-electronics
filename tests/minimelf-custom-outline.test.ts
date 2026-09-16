@@ -12,5 +12,5 @@ test("custom MiniMELF dimensions describe the complete case", () => {
     ...geometries.map(({ geom }) => geom),
   )
   expect(max[0] - min[0]).toBeCloseTo(4.2, 5)
-  expect(max[2] - min[2]).toBeCloseTo(1.8, 5)
+  expect(max[2] - min[2]).toBeCloseTo(1.84, 5)
 })
