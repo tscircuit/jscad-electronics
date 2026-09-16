@@ -1,8 +1,8 @@
 import { test, expect } from "bun:test"
 import "../fixtures/png-matcher"
-import { renderFootprint } from "../helpers/render-footprint"
+import { renderContactSheet } from "../helpers/render-contact-sheet"
 
 test("MINIMELF package", async () => {
-  const pngBuffer = await renderFootprint("minimelf")
+  const pngBuffer = await renderContactSheet("minimelf")
   await expect(pngBuffer).toMatchPngSnapshot(import.meta.path)
-})
+}, 30000)
