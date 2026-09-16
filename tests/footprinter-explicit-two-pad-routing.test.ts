@@ -25,44 +25,35 @@ const packageCases = [
   },
 ] as const
 
-const testWithExplicitPackageSupport = fp
-  .getFootprintNames()
-  .includes("do219ad")
-  ? test
-  : test.skip
+test("explicit two-pad packages select the same React and vanilla models", async () => {
+  const { getJscadModelForFootprint: get } = await importVanilla()
 
-testWithExplicitPackageSupport(
-  "explicit two-pad packages select the same React and vanilla models",
-  async () => {
-    const { getJscadModelForFootprint: get } = await importVanilla()
-
-    for (const { footprint, fn, size } of packageCases) {
-      const parameters = fp.string(footprint).json() as unknown as {
-        fn: string
-      }
-      expect(parameters.fn).toBe(fn)
-
-      const react = getComponentModel(Footprinter3d, {
-        footprint,
-      }).geometries.map(({ geom }) => geom)
-      const vanilla = get(footprint, jscad).geometries.map(
-        ({ geom }: { geom: jscad.geometries.geom3.Geom3 }) => geom,
-      )
-
-      expect(vanilla).toHaveLength(react.length)
-      expect(react.length).toBeGreaterThan(0)
-
-      for (const solids of [react, vanilla]) {
-        const [min, max] = jscad.measurements.measureAggregateBoundingBox(
-          ...solids,
-        )
-        expect(max[0] - min[0]).toBeCloseTo(size[0], 5)
-        expect(max[1] - min[1]).toBeCloseTo(size[1], 5)
-        expect(max[2] - min[2]).toBeCloseTo(size[2], 5)
-      }
+  for (const { footprint, fn, size } of packageCases) {
+    const parameters = fp.string(footprint).json() as unknown as {
+      fn: string
     }
-  },
-)
+    expect(parameters.fn).toBe(fn)
+
+    const react = getComponentModel(Footprinter3d, {
+      footprint,
+    }).geometries.map(({ geom }) => geom)
+    const vanilla = get(footprint, jscad).geometries.map(
+      ({ geom }: { geom: jscad.geometries.geom3.Geom3 }) => geom,
+    )
+
+    expect(vanilla).toHaveLength(react.length)
+    expect(react.length).toBeGreaterThan(0)
+
+    for (const solids of [react, vanilla]) {
+      const [min, max] = jscad.measurements.measureAggregateBoundingBox(
+        ...solids,
+      )
+      expect(max[0] - min[0]).toBeCloseTo(size[0], 5)
+      expect(max[1] - min[1]).toBeCloseTo(size[1], 5)
+      expect(max[2] - min[2]).toBeCloseTo(size[2], 5)
+    }
+  }
+})
 
 test("generic smdpads2 remains model-agnostic", async () => {
   const { getJscadModelForFootprint: get } = await importVanilla()
