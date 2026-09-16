@@ -1,91 +1,93 @@
-import { renderFootprinterBodyModel } from "./utils/FootprinterBodyModels"
 import { fp } from "@tscircuit/footprinter"
+import { mm } from "@tscircuit/mm"
 import { mp } from "@tscircuit/modelprinter"
 import { Rotate, Translate } from "jscad-fiber"
-import { Dip } from "./DualInlinePackage"
-import { Tssop } from "./Tssop"
-import { MSOP } from "./MSOP"
+import { A01005 } from "./A01005"
+import { A0201 } from "./A0201"
 import { A0402 } from "./A0402"
 import { A0603 } from "./A0603"
 import { A0805 } from "./A0805"
-import { QFP } from "./qfp"
-import { PinRow } from "./PinRow"
-import QFN from "./qfn"
-import SOT235 from "./SOT-235"
-import { SOT233P } from "./SOT-23-3P"
-import { SOT23W } from "./SOT-23W"
-import { A0201 } from "./A0201"
-import { A01005 } from "./A01005"
 import { A1206 } from "./A1206"
 import { A1210 } from "./A1210"
 import { A2010 } from "./A2010"
 import { A2512 } from "./A2512"
+import { AxialCapacitor } from "./AxialCapacitor"
+import { BGA } from "./BGA"
+import { Crystal } from "./Crystal"
+import { DO219AD } from "./DO219AD"
+import { DPAK } from "./DPAK"
+import { Dip } from "./DualInlinePackage"
+import { ElectrolyticCapacitor } from "./ElectrolyticCapacitor"
+import { FPC } from "./FPC"
 import { FemaleHeaderRow } from "./FemaleHeaderRow"
+import { FlexScreen } from "./FlexScreen"
+import { GullWingBody } from "./GullWingBody"
+import { JSTPH2_0mm } from "./JSTPH2_0mm"
+import { JSTXH2_5mm } from "./JSTXH2_5mm"
+import { JSTZH1_5mm } from "./JSTZH1_5mm"
+import { JstSh, isJstShFootprint } from "./JstSh"
+import { Led2835 } from "./Led2835"
+import { Led5050 } from "./Led5050"
+import { MELF } from "./MELF"
+import { MINIMELF } from "./MINIMELF"
+import { MSOP } from "./MSOP"
+import { MicroMELF } from "./MicroMELF"
+import { MountedPcbModule } from "./MountedPcbModule"
+import { ParametricChip } from "./ParametricChip"
+import { PinRow } from "./PinRow"
+import { Potentiometer } from "./Potentiometer"
 import { PushButton } from "./PushButton"
-import { SOIC } from "./SOIC"
-import { VSSOP } from "./VSSOP"
-import { SOD523 } from "./SOD523"
-import { SOD882 } from "./SOD882"
+import { RJ45 } from "./RJ45"
 import { SMA } from "./SMA"
 import { SMB } from "./SMB"
 import { SMC } from "./SMC"
 import { SMF } from "./SMF"
+import { SOD923 } from "./SOD-923"
+import { SOD323HE } from "./SOD323HE"
+import { SOD523 } from "./SOD523"
+import SOD723 from "./SOD723"
+import { SOD882 } from "./SOD882"
+import { SOIC } from "./SOIC"
+import { SOT233P } from "./SOT-23-3P"
+import { SOT23W } from "./SOT-23W"
+import { SOT223 } from "./SOT-223"
+import SOT235 from "./SOT-235"
+import { SOT323 } from "./SOT-323"
+import SOT363 from "./SOT-363"
+import { SOT457 } from "./SOT-457"
+import { SOT563 } from "./SOT-563"
+import { SOT723 } from "./SOT-723"
+import { SOT886 } from "./SOT-886"
+import { SOT963 } from "./SOT-963"
+import { SOT143 } from "./SOT143"
+import { SmdPinHeader } from "./SmdPinHeader"
+import { SmdPushButton } from "./SmdPushButton"
+import { SmdSlideSwitch } from "./SmdSlideSwitch"
+import { TO92 } from "./TO92"
+import { TO220 } from "./TO220"
+import { Tssop } from "./Tssop"
+import { UsbCMidmount } from "./UsbCMidmount"
+import { VSSOP } from "./VSSOP"
+import { DFN } from "./dfn"
+import { HC49 } from "./hc49"
+import { LQFP } from "./lqfp"
+import { MS012 } from "./ms012"
+import { MS013 } from "./ms013"
+import QFN from "./qfn"
+import { QFP } from "./qfp"
+import { SOD123 } from "./sod-123"
 import { SOD123F } from "./sod-123F"
 import { SOD123FL } from "./sod-123FL"
 import { SOD123W } from "./sod-123W"
-import { SOD123 } from "./sod-123"
 import { SOD128 } from "./sod-128"
-import { SOD923 } from "./SOD-923"
-import { SOT223 } from "./SOT-223"
-import TQFP from "./tqfp"
-import { SOT323 } from "./SOT-323"
-import { LQFP } from "./lqfp"
-import { SOT723 } from "./SOT-723"
-import { DFN } from "./dfn"
-import { HC49 } from "./hc49"
-import { MicroMELF } from "./MicroMELF"
-import { MINIMELF } from "./MINIMELF"
-import { MELF } from "./MELF"
-import { MS012 } from "./ms012"
-import { MS013 } from "./ms013"
-import { TO220 } from "./TO220"
-import { SOT457 } from "./SOT-457"
-import { SOT963 } from "./SOT-963"
-import { TO92 } from "./TO92"
-import SOT363 from "./SOT-363"
-import { SOT886 } from "./SOT-886"
 import { SOD323 } from "./sod-323"
 import { SOD323F } from "./sod-323F"
 import { SOD323FL } from "./sod-323FL"
-import { AxialCapacitor } from "./AxialCapacitor"
 import { StampBoard } from "./stampboard"
-import { MountedPcbModule } from "./MountedPcbModule"
-import SOD723 from "./SOD723"
-import { JSTZH1_5mm } from "./JSTZH1_5mm"
-import { JSTPH2_0mm } from "./JSTPH2_0mm"
-import { JSTXH2_5mm } from "./JSTXH2_5mm"
-import { JstSh, isJstShFootprint } from "./JstSh"
-import { Crystal } from "./Crystal"
-import { FPC } from "./FPC"
-import { SmdPinHeader } from "./SmdPinHeader"
-import { mm } from "@tscircuit/mm"
+import TQFP from "./tqfp"
+import { renderFootprinterBodyModel } from "./utils/FootprinterBodyModels"
 import { getPlatedHoleCenters } from "./utils/getPlatedHoleCenters"
 import { getSmtPadRects } from "./utils/getSmtPadRects"
-import { GullWingBody } from "./GullWingBody"
-import { ParametricChip } from "./ParametricChip"
-import { Led5050 } from "./Led5050"
-import { Led2835 } from "./Led2835"
-import { RJ45 } from "./RJ45"
-import { DPAK } from "./DPAK"
-import { ElectrolyticCapacitor } from "./ElectrolyticCapacitor"
-import { Potentiometer } from "./Potentiometer"
-import { SmdPushButton } from "./SmdPushButton"
-import { SmdSlideSwitch } from "./SmdSlideSwitch"
-import { SOT563 } from "./SOT-563"
-import { BGA } from "./BGA"
-import { UsbCMidmount } from "./UsbCMidmount"
-import { SOT143 } from "./SOT143"
-import { FlexScreen } from "./FlexScreen"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -123,8 +125,24 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     w: number
     p: number
     bodywidth?: number
+    bodylength?: number
     bodyheight?: number
     bodythickness?: number
+    leadspan?: number
+    cathodelength?: number
+    cathodewidth?: number
+    anodelength?: number
+    anodewidth?: number
+    terminalinset?: number
+    terminallength?: number
+    terminalwidth?: number
+    terminalpitch?: number
+    terminalthickness?: number
+    standoff?: number
+    taperinset?: number
+    markingwidth?: number
+    pin1terminalchamfer?: number
+    pin1markwidth?: number
     bh?: number
     h: number
     pl: number
@@ -315,11 +333,22 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return (
         <DFN
           num_pins={fpJson.num_pins}
-          bodyWidth={fpJson.w}
-          bodyLength={fpJson.h}
-          pitch={fpJson.p}
-          padLength={fpJson.pl}
-          padWidth={fpJson.pw}
+          bodyWidth={fpJson.bodywidth ?? fpJson.w}
+          bodyLength={fpJson.bodylength ?? fpJson.h}
+          bodyThickness={fpJson.bodythickness}
+          pitch={fpJson.terminalpitch ?? fpJson.p}
+          padLength={fpJson.terminallength ?? fpJson.pl}
+          padWidth={fpJson.terminalwidth ?? fpJson.pw}
+          bodyStyle={
+            fpJson.bodywidth !== undefined || fpJson.bodylength !== undefined
+              ? "rectangular"
+              : undefined
+          }
+          standoff={fpJson.standoff}
+          terminalInset={fpJson.terminalinset}
+          terminalThickness={fpJson.terminalthickness}
+          pin1TerminalChamfer={fpJson.pin1terminalchamfer}
+          pin1MarkWidth={fpJson.pin1markwidth}
           thermalPadSize={
             hasThermalPad
               ? {
@@ -688,6 +717,40 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <SOD323 />
     case "sod323w":
       return <SOD323 />
+    case "do219ad":
+      return (
+        <DO219AD
+          bodyLength={fpJson.bodylength}
+          bodyWidth={fpJson.bodywidth}
+          bodyHeight={fpJson.bodyheight}
+          leadSpan={fpJson.leadspan}
+          cathodeLength={fpJson.cathodelength}
+          cathodeWidth={fpJson.cathodewidth}
+          anodeLength={fpJson.anodelength}
+          anodeWidth={fpJson.anodewidth}
+          terminalThickness={fpJson.terminalthickness}
+          standoff={fpJson.standoff}
+          taperInset={fpJson.taperinset}
+          markingWidth={fpJson.markingwidth}
+        />
+      )
+    case "sod323he":
+      return (
+        <SOD323HE
+          bodyLength={fpJson.bodylength}
+          bodyWidth={fpJson.bodywidth}
+          bodyHeight={fpJson.bodyheight}
+          leadSpan={fpJson.leadspan}
+          cathodeLength={fpJson.cathodelength}
+          cathodeWidth={fpJson.cathodewidth}
+          anodeLength={fpJson.anodelength}
+          anodeWidth={fpJson.anodewidth}
+          terminalThickness={fpJson.terminalthickness}
+          standoff={fpJson.standoff}
+          taperInset={fpJson.taperinset}
+          markingWidth={fpJson.markingwidth}
+        />
+      )
     case "sod80":
       // SOD-80 is the MiniMELF glass body: 3.5 long, 1.5 across.
       return <MINIMELF />
