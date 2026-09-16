@@ -71,6 +71,7 @@ import { SmdPinHeader } from "./SmdPinHeader"
 import { mm } from "@tscircuit/mm"
 import { getPlatedHoleCenters } from "./utils/getPlatedHoleCenters"
 import { getSmtPadRects } from "./utils/getSmtPadRects"
+import { getPin1LocationRotation } from "./utils/getPin1LocationRotation"
 import { GullWingBody } from "./GullWingBody"
 import { ParametricChip } from "./ParametricChip"
 import { Led5050 } from "./Led5050"
@@ -318,6 +319,10 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         fpJson.num_pins === 8 &&
         Math.abs((fpJson.thermalpad?.x ?? 0) - 4.1) < 0.02 &&
         Math.abs((fpJson.thermalpad?.y ?? 0) - 4.6) < 0.02
+      const footprintRotation = getPin1LocationRotation(
+        normalizedFootprint,
+        fpJson.num_pins,
+      )
       const dfn = (
         <DFN
           num_pins={fpJson.num_pins}
@@ -351,11 +356,12 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           }
         />
       )
-      // This footprinter outline rotates its pad rows and exposed pad 90°:
-      // signal pads run along the top and bottom edges, and the raw X thermal
-      // pad offset becomes +Y in the generated footprint geometry.
-      return isPowerDfn5x6 ? (
-        <Rotate rotation={[0, 0, "90deg"]}>{dfn}</Rotate>
+      // Footprinter applies pin1location to the final Circuit JSON, while
+      // json() above intentionally returns the canonical package parameters.
+      // Reapply that measured transform to the complete 3D package so body,
+      // terminals, pin-1 mark and an offset exposed pad remain one rigid part.
+      return footprintRotation !== 0 ? (
+        <Rotate rotation={[0, 0, footprintRotation]}>{dfn}</Rotate>
       ) : (
         dfn
       )
