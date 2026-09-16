@@ -29,7 +29,8 @@ test("explicit two-pad packages select the same React and vanilla models", async
   const { getJscadModelForFootprint: get } = await importVanilla()
 
   for (const { footprint, fn, size } of packageCases) {
-    expect(fp.string(footprint).json().fn).toBe(fn)
+    const parameters = fp.string(footprint).json() as unknown as { fn: string }
+    expect(parameters.fn).toBe(fn)
 
     const react = getComponentModel(Footprinter3d, {
       footprint,
