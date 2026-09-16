@@ -137,6 +137,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     zh?: boolean
     xh?: boolean
     thermalpad?: { x: number; y: number }
+    thermalpadcenteroffsetx?: number
+    thermalpadcenteroffsety?: number
     imperial: String
     male: boolean
     female: boolean
@@ -312,19 +314,38 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       const hasThermalPad =
         typeof fpJson.thermalpad?.x === "number" &&
         typeof fpJson.thermalpad?.y === "number"
+      const isPowerDfn5x6 =
+        fpJson.num_pins === 8 &&
+        Math.abs((fpJson.thermalpad?.x ?? 0) - 4.1) < 0.02 &&
+        Math.abs((fpJson.thermalpad?.y ?? 0) - 4.6) < 0.02
       return (
         <DFN
           num_pins={fpJson.num_pins}
-          bodyWidth={fpJson.w}
-          bodyLength={fpJson.h}
+          bodyWidth={isPowerDfn5x6 ? 6.1 : fpJson.w}
+          bodyLength={isPowerDfn5x6 ? 5.1 : fpJson.h}
+          bodyThickness={isPowerDfn5x6 ? 0.95 : undefined}
           pitch={fpJson.p}
           padLength={fpJson.pl}
           padWidth={fpJson.pw}
+          bodyStyle={isPowerDfn5x6 ? "rectangular" : undefined}
+          standoff={isPowerDfn5x6 ? 0.05 : undefined}
+          terminalThickness={isPowerDfn5x6 ? 0.1 : undefined}
+          thermalPadThickness={isPowerDfn5x6 ? 0.1 : undefined}
+          pin1TerminalChamfer={isPowerDfn5x6 ? 0.12 : undefined}
+          pin1MarkWidth={isPowerDfn5x6 ? 0.15 : undefined}
           thermalPadSize={
             hasThermalPad
               ? {
                   width: fpJson.thermalpad!.x,
                   length: fpJson.thermalpad!.y,
+                }
+              : undefined
+          }
+          thermalPadOffset={
+            hasThermalPad
+              ? {
+                  x: fpJson.thermalpadcenteroffsetx ?? 0,
+                  y: fpJson.thermalpadcenteroffsety ?? 0,
                 }
               : undefined
           }
