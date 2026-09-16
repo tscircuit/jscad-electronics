@@ -11,6 +11,7 @@ export const DFN = ({
   bodyLength = 5.3,
   bodyThickness = 1,
   thermalPadSize,
+  thermalPadOffset = { x: 0, y: 0 },
   // For a body length of 5 the typical pad width/length are 0.6 and 1.
   // Scale those values proportionally when `bodyLength` changes.
   padWidth = (bodyLength / 5.3) * 0.6,
@@ -32,6 +33,7 @@ export const DFN = ({
     width: number
     length: number
   }
+  thermalPadOffset?: { x: number; y: number }
   padWidth?: number
   padLength?: number
   pitch?: number
@@ -191,7 +193,11 @@ export const DFN = ({
               thermalPadSize.length,
               thermalPadThickness,
             ]}
-            center={[0, 0, thermalPadThickness / 2]}
+            center={[
+              thermalPadOffset.x,
+              thermalPadOffset.y,
+              thermalPadThickness / 2,
+            ]}
           />
         )}
         {pin1MarkWidth > 0 && <Colorize color="#969997">{stripe}</Colorize>}
@@ -225,7 +231,11 @@ export const DFN = ({
       {thermalPadSize?.length !== undefined &&
         thermalPadSize?.width !== undefined && (
           <Cuboid
-            center={[0, 0, thermalPadThickness / 2]}
+            center={[
+              thermalPadOffset.x,
+              thermalPadOffset.y,
+              thermalPadThickness / 2,
+            ]}
             size={[
               thermalPadSize.width,
               thermalPadSize.length,

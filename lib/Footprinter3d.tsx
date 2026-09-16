@@ -71,6 +71,7 @@ import { SmdPinHeader } from "./SmdPinHeader"
 import { mm } from "@tscircuit/mm"
 import { getPlatedHoleCenters } from "./utils/getPlatedHoleCenters"
 import { getSmtPadRects } from "./utils/getSmtPadRects"
+import { getPin1LocationRotation } from "./utils/getPin1LocationRotation"
 import { GullWingBody } from "./GullWingBody"
 import { ParametricChip } from "./ParametricChip"
 import { Led5050 } from "./Led5050"
@@ -137,6 +138,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     zh?: boolean
     xh?: boolean
     thermalpad?: { x: number; y: number }
+    thermalpadcenteroffsetx?: number
+    thermalpadcenteroffsety?: number
     imperial: String
     male: boolean
     female: boolean
@@ -312,14 +315,29 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       const hasThermalPad =
         typeof fpJson.thermalpad?.x === "number" &&
         typeof fpJson.thermalpad?.y === "number"
-      return (
+      const isPowerDfn5x6 =
+        fpJson.num_pins === 8 &&
+        Math.abs((fpJson.thermalpad?.x ?? 0) - 4.1) < 0.02 &&
+        Math.abs((fpJson.thermalpad?.y ?? 0) - 4.6) < 0.02
+      const footprintRotation = getPin1LocationRotation(
+        normalizedFootprint,
+        fpJson.num_pins,
+      )
+      const dfn = (
         <DFN
           num_pins={fpJson.num_pins}
-          bodyWidth={fpJson.w}
-          bodyLength={fpJson.h}
+          bodyWidth={isPowerDfn5x6 ? 6.1 : fpJson.w}
+          bodyLength={isPowerDfn5x6 ? 5.1 : fpJson.h}
+          bodyThickness={isPowerDfn5x6 ? 0.95 : undefined}
           pitch={fpJson.p}
           padLength={fpJson.pl}
           padWidth={fpJson.pw}
+          bodyStyle={isPowerDfn5x6 ? "rectangular" : undefined}
+          standoff={isPowerDfn5x6 ? 0.05 : undefined}
+          terminalThickness={isPowerDfn5x6 ? 0.1 : undefined}
+          thermalPadThickness={isPowerDfn5x6 ? 0.1 : undefined}
+          pin1TerminalChamfer={isPowerDfn5x6 ? 0.12 : undefined}
+          pin1MarkWidth={isPowerDfn5x6 ? 0.15 : undefined}
           thermalPadSize={
             hasThermalPad
               ? {
@@ -328,7 +346,24 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
                 }
               : undefined
           }
+          thermalPadOffset={
+            hasThermalPad
+              ? {
+                  x: fpJson.thermalpadcenteroffsetx ?? 0,
+                  y: fpJson.thermalpadcenteroffsety ?? 0,
+                }
+              : undefined
+          }
         />
+      )
+      // Footprinter applies pin1location to the final Circuit JSON, while
+      // json() above intentionally returns the canonical package parameters.
+      // Reapply that measured transform to the complete 3D package so body,
+      // terminals, pin-1 mark and an offset exposed pad remain one rigid part.
+      return footprintRotation !== 0 ? (
+        <Rotate rotation={[0, 0, footprintRotation]}>{dfn}</Rotate>
+      ) : (
+        dfn
       )
     }
 
