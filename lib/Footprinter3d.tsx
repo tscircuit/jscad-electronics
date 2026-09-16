@@ -736,6 +736,23 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
         />
       )
     case "smdpushbutton":
+      if (
+        Math.abs(dim(fpJson.px, 0) - 3.56) < 0.02 &&
+        Math.abs(dim(fpJson.py, 0) - 2) < 0.02
+      )
+        return (
+          <SmdPushButton
+            bodyWidth={3.3}
+            bodyLength={3.3}
+            bodyHeight={0.9}
+            actuatorDiameter={1.8}
+            actuatorHeight={0.6}
+            padSpanX={3.5}
+            padSpanY={2.9}
+            padWidth={0.5}
+            padLength={0.5}
+          />
+        )
       return (
         <SmdPushButton
           padSpanX={dim(fpJson.px, 4.2)}
