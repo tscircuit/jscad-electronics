@@ -17,13 +17,20 @@ test("3.3 mm tactile footprint routes to aligned physical terminals", async () =
   expect(hi[2] - lo[2]).toBeCloseTo(1.5, 5)
   expect(solids).toHaveLength(6)
 
-  const terminalBounds = solids
+  type Bounds3d = [[number, number, number], [number, number, number]]
+  const terminalBounds: Bounds3d[] = (solids as Array<{ geom: unknown }>)
     .slice(2)
-    .map(({ geom }: any) => jscad.measurements.measureBoundingBox(geom))
-  const terminalCenters = terminalBounds.map(([terminalLo, terminalHi]) => [
-    (terminalLo[0] + terminalHi[0]) / 2,
-    (terminalLo[1] + terminalHi[1]) / 2,
-  ])
+    .map(
+      ({ geom }) =>
+        jscad.measurements.measureBoundingBox(geom as any) as Bounds3d,
+    )
+  const terminalCenters = terminalBounds.map(
+    ([terminalLo, terminalHi]) =>
+      [
+        (terminalLo[0] + terminalHi[0]) / 2,
+        (terminalLo[1] + terminalHi[1]) / 2,
+      ] as const,
+  )
   expect([
     ...new Set(terminalCenters.map(([x]) => Math.abs(x).toFixed(5))),
   ]).toEqual(["1.78000"])
