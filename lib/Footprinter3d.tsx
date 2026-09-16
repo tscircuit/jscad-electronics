@@ -747,9 +747,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
             bodyHeight={0.9}
             actuatorDiameter={1.8}
             actuatorHeight={0.6}
-            padSpanX={3.5}
-            padSpanY={2.9}
-            padWidth={0.5}
+            padSpanX={3.56}
+            padSpanY={2}
+            padWidth={0.44}
             padLength={0.5}
           />
         )
