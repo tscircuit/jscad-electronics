@@ -1,7 +1,11 @@
+import {
+  createPhysicalQfn,
+  type PhysicalQfnDimensions,
+} from "./utils/PhysicalQfn"
 import { Cuboid, Colorize } from "jscad-fiber"
 import { getQuadCoords } from "./utils/getQuadCoords"
 import { getQuadPinMap } from "./utils/getQuadPinMap"
-export const QFN = ({
+const LegacyQFN = ({
   num_pins = 16,
   bodyWidth = 9,
   bodyLength = 9,
@@ -87,4 +91,8 @@ export const QFN = ({
   )
 }
 
+/** Supplying bodyHeight opts into physical dimensions; legacy callers are unchanged. */
+export type QFNProps = Parameters<typeof LegacyQFN>[0] | PhysicalQfnDimensions
+export const QFN = (props: QFNProps) =>
+  "bodyHeight" in props ? createPhysicalQfn(props) : LegacyQFN(props)
 export default QFN

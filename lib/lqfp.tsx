@@ -1,7 +1,11 @@
+import {
+  createPhysicalLqfp,
+  type PhysicalLqfpDimensions,
+} from "./utils/PhysicalLqfp"
 import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 
-export const LQFP = ({
+const LegacyLQFP = ({
   pinCount,
   pitch,
   leadWidth,
@@ -125,4 +129,12 @@ export const LQFP = ({
   )
 }
 
+/** leadSpanX selects explicit physical dimensions. Existing callers retain
+ * their legacy geometry. See standard outline evidence in the fixtures.
+ */
+export type LQFPProps =
+  | Parameters<typeof LegacyLQFP>[0]
+  | PhysicalLqfpDimensions
+export const LQFP = (props: LQFPProps) =>
+  "leadSpanX" in props ? createPhysicalLqfp(props) : LegacyLQFP(props)
 export default LQFP

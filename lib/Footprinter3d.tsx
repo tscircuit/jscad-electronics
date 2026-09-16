@@ -1,3 +1,4 @@
+import { renderFootprinterBodyModel } from "./utils/FootprinterBodyModels"
 import { fp } from "@tscircuit/footprinter"
 import { mp } from "@tscircuit/modelprinter"
 import { Rotate, Translate } from "jscad-fiber"
@@ -121,6 +122,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
   const fpJson = fp.string(normalizedFootprint).json() as unknown as {
     w: number
     p: number
+    bodywidth?: number
+    bodyheight?: number
+    bodythickness?: number
     bh?: number
     h: number
     pl: number
@@ -215,6 +219,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     const parsed = mm(value as any)
     return Number.isFinite(parsed) ? parsed : fallback
   }
+
+  const bodyModel = renderFootprinterBodyModel(fpJson)
+  if (bodyModel) return bodyModel
 
   switch (fpJson.fn) {
     case "crystal":

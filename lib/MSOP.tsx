@@ -1,8 +1,12 @@
+import {
+  createDualRowGullWing,
+  type DualRowGullWingDimensions,
+} from "./utils/DualRowGullWing"
 import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 
 // MSOP (mini small outline package) — modeled after Tssop implementation
-export const MSOP = ({
+const LegacyMSOP = ({
   pinCount,
   padContactLength = 0.4,
   leadWidth = 0.2,
@@ -64,3 +68,12 @@ export const MSOP = ({
     </>
   )
 }
+
+/** MO-187 MSOP physical outline. leadSpan selects explicit package dimensions;
+ * existing callers retain the legacy default outline. See fixture source notes.
+ */
+export type MSOPProps =
+  | Parameters<typeof LegacyMSOP>[0]
+  | DualRowGullWingDimensions
+export const MSOP = (props: MSOPProps) =>
+  "leadSpan" in props ? createDualRowGullWing(props) : LegacyMSOP(props)
