@@ -92,12 +92,10 @@ function renderNode(
   }
 
   if (type === Rotate) {
-    const rot: [number, number, number] = Array.isArray(props?.rotation)
-      ? [
-          degToRad(props.rotation[0]),
-          degToRad(props.rotation[1]),
-          degToRad(props.rotation[2]),
-        ]
+    // Match jscad-fiber's angles prop while retaining the vanilla aliases.
+    const angles = props?.angles ?? props?.rotation
+    const rot: [number, number, number] = Array.isArray(angles)
+      ? [degToRad(angles[0]), degToRad(angles[1]), degToRad(angles[2])]
       : [
           degToRad(props?.x ?? 0),
           degToRad(props?.y ?? 0),
