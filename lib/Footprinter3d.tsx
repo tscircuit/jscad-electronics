@@ -86,12 +86,15 @@ import { BGA } from "./BGA"
 import { UsbCMidmount } from "./UsbCMidmount"
 import { SOT143 } from "./SOT143"
 import { FlexScreen } from "./FlexScreen"
+import { HF32FVPowerRelay } from "./PowerRelay"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
  */
 
 export const Footprinter3d = ({ footprint }: { footprint: string }) => {
+  if (footprint === "powerrelay_hf32fv") return <HF32FVPowerRelay />
+
   const modelFn = mp.string(footprint.split("_", 1)[0]!).params().fn
   if (mp.getModelNames().includes(modelFn)) {
     const model = mp.string(footprint).json()
