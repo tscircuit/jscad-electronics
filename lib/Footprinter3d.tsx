@@ -1,6 +1,6 @@
 import { renderFootprinterBodyModel } from "./utils/FootprinterBodyModels"
 import { fp } from "@tscircuit/footprinter"
-import { mp } from "@tscircuit/modelprinter"
+import { mp } from "modelprinter"
 import { Rotate, Translate } from "jscad-fiber"
 import { Dip } from "./DualInlinePackage"
 import { Tssop } from "./Tssop"
