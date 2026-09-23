@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@tscircuit/mm": "^0.0.8",
-    "@tscircuit/modelprinter": "^0.0.2"
+    "modelprinter": "^0.0.2"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.3",
