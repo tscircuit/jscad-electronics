@@ -14,7 +14,9 @@ test("header modules use the matching pin-row model", async () => {
         jscad.measurements.measureVolume(header[index]!.geom),
         8,
       )
-    const bounds = (geometries: typeof module) =>
+    const bounds = (
+      geometries: Array<{ geom: jscad.geometries.geom3.Geom3 }>,
+    ) =>
       jscad.measurements.measureAggregateBoundingBox(
         ...geometries.map(({ geom }) => geom),
       )
