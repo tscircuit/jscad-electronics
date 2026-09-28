@@ -1,26 +1,22 @@
 import { test, expect } from "bun:test"
+import { fp } from "@tscircuit/footprinter"
 import "../fixtures/png-matcher"
 import { renderFootprint } from "../helpers/render-footprint"
 import { cameraForFootprint } from "./footprint-camera"
-import { nominalHeightFor, probeFor } from "./footprint-probes"
+import { probeFor } from "./footprint-probes"
 
-// Body coverage snapshots, from above and from below. Three things are pinned
-// so these are evidence and not just pictures:
-//   - the camera comes from the footprint and the recorded package height,
-//     never from the model, so the view is identical before and after the body
-//     exists and the part arriving is the only difference;
-//   - the grid is pinned to z = 0, the top of the board, so pads and holes lie
-//     ON it and a body at the wrong height is obvious;
-//   - the pads are drawn see-through, so a lead is visible against the pad it
-//     is supposed to land on.
-// The underside view is the one a viewer cannot give you, and it is where a
-// lead count that disagrees with the pad count shows up immediately.
-// Regenerate with BUN_UPDATE_SNAPSHOTS=1.
+// The top and underside views pin the two-sided card-edge copper at z=0.
+// m2host is a feature of the PCB, so these should remain bare-pad views.
 const PAD_OPACITY = 0.45
 
-test("m2host body", async () => {
+test("m2host is a two-sided PCB edge with a cutout", async () => {
   const probe = probeFor("m2host")
-  const height = nominalHeightFor("m2host")
+  const features = fp.string(probe).circuitJson()
+  expect(features.some((f) => f.type === "pcb_cutout")).toBe(true)
+  const pads = features.filter((f) => f.type === "pcb_smtpad")
+  expect(pads.some((p) => p.layer === "top")).toBe(true)
+  expect(pads.some((p) => p.layer === "bottom")).toBe(true)
+  const height = 0
 
   const top = await renderFootprint(probe, {
     ...cameraForFootprint(probe, height, "top"),

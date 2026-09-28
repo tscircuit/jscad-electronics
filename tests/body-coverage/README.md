@@ -23,6 +23,10 @@ enclosure exists to clear.
 | `registry-coverage.test.ts` | walks footprinter's **own registry**, so it cannot drift as footprints are added |
 | `<name>.test.ts` + `__snapshots__/<name>[-underside].snap.png` | two poppygl renders per gap: from above, and from under the board |
 
+`m2host` is a PCB card-edge pattern: Footprinter emits top and bottom pads and
+a board cutout. It belongs in `NO_BODY`; a separate socket model would represent
+a different part.
+
 `registry-coverage.test.ts` puts every registered name in exactly one bucket and
 fails if a name is in the wrong one — including a gap that has been **closed**
 but left in `MISSING_BODIES`. The ledger cannot go stale in either direction.

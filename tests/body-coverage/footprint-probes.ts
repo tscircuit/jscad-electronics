@@ -13,11 +13,11 @@
  */
 
 /**
- * Footprints that are copper features rather than parts. An empty model is the
- * RIGHT answer here — without this list a coverage test drives someone to model
- * a solder pad.
+ * Footprints that are PCB features rather than separate parts. An empty model
+ * is correct here — m2host is the card edge's two-sided copper and board cutout.
  */
 export const NO_BODY = [
+  "m2host",
   "pad",
   "platedhole",
   "smtpad",
@@ -82,8 +82,6 @@ export const PROBE: Record<string, string> = {
 export const MISSING_BODIES: Record<string, string> = {
   headermodule: "no 3D model yet",
   lcc: "no 3D model yet",
-  m2host:
-    "footprinter reports NO dimensions for it (`{fn:'m2host'}`), so the socket has to be modelled from the M.2 spec rather than derived from the footprint",
 }
 
 /** The probe string to feed footprinter for a registered name. */
@@ -118,7 +116,6 @@ export const NOMINAL_HEIGHT_MM: Record<string, number> = {
   jst: 4.2,
   led2835: 1,
   lga: 0.8,
-  m2host: 5,
   mlp: 0.9,
   potentiometer: 5,
   quad: 1,
