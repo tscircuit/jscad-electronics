@@ -16,7 +16,7 @@ test("standard LEDs route to package-sized bodies with two landed contacts", asy
     expect(pads).toHaveLength(2)
     const solids = getJscadModelForFootprint(footprint, jscad)
       .geometries.flat(Infinity)
-      .map((g) => g.geom)
+      .map((g: { geom: jscad.geometries.geom3.Geom3 }) => g.geom)
     expect(solids).toHaveLength(4)
     const b = jscad.measurements.measureAggregateBoundingBox(...solids)
     for (const [axis, expected] of [
