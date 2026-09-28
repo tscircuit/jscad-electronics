@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test"
 import * as jscad from "@jscad/modeling"
 import { fp } from "@tscircuit/footprinter"
-import { smdLedDimensions } from "../lib/smdLED"
+import { smdLedDimensions } from "../lib/SmdLED"
 import { importVanilla } from "./fixtures/importVanilla"
 
 test("standard LEDs route to package-sized bodies with two landed contacts", async () => {
