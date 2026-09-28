@@ -7,6 +7,7 @@ import { Tssop } from "./Tssop"
 import { MSOP } from "./MSOP"
 import { A0402 } from "./A0402"
 import { A0603 } from "./A0603"
+import { SmdLED } from "./SmdLED"
 import { A0805 } from "./A0805"
 import { QFP } from "./qfp"
 import { PinRow } from "./PinRow"
@@ -368,6 +369,13 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       )
     case "led5050":
       return <Led5050 color={color} />
+
+    case "led": {
+      const imperial = String(fpJson.imperial)
+      if (imperial === "0402" || imperial === "0603" || imperial === "0805")
+        return <SmdLED footprint={imperial} color={color} />
+      break
+    }
 
     case "cap": {
       switch (fpJson.imperial) {
