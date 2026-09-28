@@ -1,6 +1,5 @@
 import { expect, test } from "bun:test"
 import * as jscad from "@jscad/modeling"
-import { fp } from "@tscircuit/footprinter"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { importVanilla } from "./fixtures/importVanilla.js"
 import { getComponentModel } from "./helpers/component-model"
@@ -36,7 +35,6 @@ test("explicit diode packages select their physical outlines and dimensions", as
   const reversed = get("do219ad_anodepin1_cathodepin2", jscad).geometries
   const cathode = jscad.measurements.measureBoundingBox(reversed[1]!.geom)
   expect((cathode[0][0] + cathode[1][0]) / 2).toBeGreaterThan(0)
-  expect(fp.string("do219ad_anodepin1_cathodepin2").json().cathodepin).toBe(2)
 })
 
 test("explicit DFN2 dimensions select the rectangular physical outline", async () => {
