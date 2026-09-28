@@ -86,6 +86,8 @@ import { BGA } from "./BGA"
 import { UsbCMidmount } from "./UsbCMidmount"
 import { SOT143 } from "./SOT143"
 import { FlexScreen } from "./FlexScreen"
+import { DO219AD } from "./DO219AD"
+import { SOD323HE } from "./SOD323HE"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -202,6 +204,23 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     p2w?: number
     p1x?: number
     p2x?: number
+    bodylength?: number
+    leadspan?: number
+    cathodelength?: number
+    cathodewidth?: number
+    anodelength?: number
+    anodewidth?: number
+    terminalthickness?: number
+    standoff?: number
+    taperinset?: number
+    markingwidth?: number
+    terminalinset?: number
+    terminallength?: number
+    terminalwidth?: number
+    terminalpitch?: number
+    pin1terminalchamfer?: number
+    pin1markwidth?: number
+    cathodepin?: 1 | 2
   }
 
   const colorMatch = footprint.match(/_color\(([^)]+)\)/)
@@ -315,11 +334,33 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return (
         <DFN
           num_pins={fpJson.num_pins}
-          bodyWidth={fpJson.w}
-          bodyLength={fpJson.h}
-          pitch={fpJson.p}
-          padLength={fpJson.pl}
-          padWidth={fpJson.pw}
+          bodyWidth={fpJson.bodywidth ?? fpJson.w}
+          bodyLength={fpJson.bodylength ?? fpJson.h}
+          bodyThickness={fpJson.bodythickness}
+          bodyStyle={
+            fpJson.num_pins === 2 &&
+            (fpJson.bodywidth !== undefined ||
+              fpJson.bodylength !== undefined ||
+              fpJson.bodythickness !== undefined ||
+              fpJson.terminalinset !== undefined ||
+              fpJson.terminallength !== undefined ||
+              fpJson.terminalwidth !== undefined ||
+              fpJson.terminalpitch !== undefined ||
+              fpJson.terminalthickness !== undefined ||
+              fpJson.pin1terminalchamfer !== undefined ||
+              fpJson.pin1markwidth !== undefined ||
+              fpJson.standoff !== undefined)
+              ? "rectangular"
+              : "chamfered"
+          }
+          pitch={fpJson.terminalpitch ?? fpJson.p}
+          padLength={fpJson.terminallength ?? fpJson.pl}
+          padWidth={fpJson.terminalwidth ?? fpJson.pw}
+          standoff={fpJson.standoff}
+          terminalInset={fpJson.terminalinset}
+          terminalThickness={fpJson.terminalthickness}
+          pin1TerminalChamfer={fpJson.pin1terminalchamfer}
+          pin1MarkWidth={fpJson.pin1markwidth}
           thermalPadSize={
             hasThermalPad
               ? {
@@ -686,6 +727,34 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return <SOD128 />
     case "sod323":
       return <SOD323 />
+    case "do219ad":
+    case "sod323he": {
+      const dimensions = {
+        bodyLength: fpJson.bodylength,
+        bodyWidth: fpJson.bodywidth,
+        bodyHeight: fpJson.bodyheight,
+        leadSpan: fpJson.leadspan,
+        cathodeLength: fpJson.cathodelength,
+        cathodeWidth: fpJson.cathodewidth,
+        anodeLength: fpJson.anodelength,
+        anodeWidth: fpJson.anodewidth,
+        terminalThickness: fpJson.terminalthickness,
+        standoff: fpJson.standoff,
+        taperInset: fpJson.taperinset,
+        markingWidth: fpJson.markingwidth,
+      }
+      const diode =
+        fpJson.fn === "do219ad" ? (
+          <DO219AD {...dimensions} />
+        ) : (
+          <SOD323HE {...dimensions} />
+        )
+      return fpJson.cathodepin === 2 ? (
+        <Rotate rotation={[0, 0, "180deg"]}>{diode}</Rotate>
+      ) : (
+        diode
+      )
+    }
     case "sod323w":
       return <SOD323 />
     case "sod80":
