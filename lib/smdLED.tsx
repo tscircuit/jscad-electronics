@@ -1,94 +1,60 @@
-import { Cuboid, Cylinder, Subtract } from "jscad-fiber"
+import { Colorize, Cuboid, Translate } from "jscad-fiber"
 
-export const SmdLED = ({
+export type SmdLedSize = "0402" | "0603" | "0805"
+
+/** Nominal flat-top, two-contact LED packages in mm. See the Kingbright
+ * package catalog: https://www.kingbrightusa.com/webimages/2015/catalog/SMD%20LED.pdf
+ * These are representative outlines; a footprint alone cannot specify lens
+ * shape, emitted color, or exact height for every manufacturer's part.
+ */
+export const smdLedDimensions = {
+  "0402": { length: 1, width: 0.5, height: 0.5, terminalLength: 0.2 },
+  "0603": { length: 1.6, width: 0.8, height: 0.75, terminalLength: 0.3 },
+  "0805": { length: 2, width: 1.25, height: 0.75, terminalLength: 0.35 },
+} as const
+
+export function SmdLED({
   footprint,
-  color,
+  color = "#ffe8a0",
 }: {
-  footprint: "0402" | "0603" | "0805"
+  footprint: SmdLedSize
   color?: string
-}) => {
-  let padWidth: number
-  let padLength: number
-  let padGap: number
-  let padThickness: number
-  let bodyLength: number
-  let bodyWidth: number
-  let curvedRadius: number
-
-  switch (footprint) {
-    case "0402":
-      {
-        padWidth = 0.6
-        padLength = 0.7
-        padGap = 0.5
-        padThickness = 0.05
-        bodyLength = padWidth * 1.5 + padGap * 2
-        bodyWidth = padLength
-        curvedRadius = 0.35
-      }
-      break
-    case "0603":
-      {
-        padWidth = 0.8
-        padLength = 1
-        padGap = 0.8
-        padThickness = 0.05
-        bodyLength = padWidth * 1.5 + padGap * 2
-        bodyWidth = padLength
-        curvedRadius = 0.3
-      }
-      break
-    case "0805":
-      {
-        padWidth = 1
-        padLength = 1.3
-        padGap = 1
-        padThickness = 0.05
-        bodyLength = padWidth * 1.5 + padGap * 2
-        bodyWidth = padLength
-        curvedRadius = 0.4
-      }
-      break
-  }
+}) {
+  const p = smdLedDimensions[footprint]
+  const terminalThickness = Math.min(0.1, p.height / 4)
+  const apertureHeight = 0.02
   return (
     <>
-      {/* Left pad */}
-      <Cuboid
-        color="#383631"
-        size={[padWidth, padLength, padThickness]}
-        center={[-padGap, 0, padThickness / 2]}
-      />
-      {/* Right pad */}
-      <Cuboid
-        color="#383631"
-        size={[padWidth, padLength, padThickness]}
-        center={[padGap, 0, padThickness / 2]}
-      />
-      <Subtract>
-        <Cuboid
-          color="#fff"
-          size={[bodyLength, bodyWidth, padThickness]}
-          center={[0, 0, padThickness * 1.5]}
-        />
-
-        <Cylinder
-          height={padLength}
-          radius={curvedRadius}
-          center={[-padWidth * 2, 0, 0]}
-        />
-        <Cylinder
-          height={padLength}
-          radius={curvedRadius}
-          center={[padWidth * 2, 0, 0]}
-        />
-      </Subtract>
-
-      {/* Plastic colored cube */}
-      <Cuboid
-        color={color}
-        size={[bodyLength / 2, padLength + 0.005, 0.4]}
-        center={[0, 0, padThickness * 5]}
-      />
+      <Colorize color="#f0eee7">
+        <Translate z={(p.height + terminalThickness - apertureHeight) / 2}>
+          <Cuboid
+            size={[
+              p.length,
+              p.width,
+              p.height - terminalThickness - apertureHeight,
+            ]}
+          />
+        </Translate>
+      </Colorize>
+      <Colorize color="#c7c9ca">
+        {[-1, 1].map((sign) => (
+          <Translate
+            key={sign}
+            offset={[
+              (sign * (p.length - p.terminalLength)) / 2,
+              0,
+              terminalThickness / 2,
+            ]}
+          >
+            <Cuboid size={[p.terminalLength, p.width, terminalThickness]} />
+          </Translate>
+        ))}
+      </Colorize>
+      <Colorize color={color}>
+        <Translate z={p.height - apertureHeight / 2}>
+          <Cuboid size={[p.length * 0.45, p.width * 0.65, apertureHeight]} />
+        </Translate>
+      </Colorize>
     </>
   )
 }
