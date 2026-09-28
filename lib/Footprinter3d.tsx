@@ -86,6 +86,7 @@ import { BGA } from "./BGA"
 import { UsbCMidmount } from "./UsbCMidmount"
 import { SOT143 } from "./SOT143"
 import { FlexScreen } from "./FlexScreen"
+import { SOT89, sot89NominalDimensions } from "./SOT89"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -431,9 +432,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     case "sot563":
       return <SOT563 />
     case "sot89": {
-      // SOT-89 is a SOT-223 at roughly a third of the volume: three leads one
-      // side, one wide tab lead the other. Aliasing it to SOT-223 outright
-      // would report a 6.5 x 3.5 body where there is a 4.5 x 2.5 one.
+      if (fpJson.num_pins === 3) return <SOT89 {...sot89NominalDimensions} />
+      // Keep the existing five-lead approximation until its physical outline
+      // is defined independently.
       const padSpan = dim(fpJson.w, 4.2)
       return (
         <SOT223
