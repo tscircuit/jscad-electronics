@@ -8,7 +8,6 @@ import { MSOP } from "./MSOP"
 import { A0402 } from "./A0402"
 import { A0603 } from "./A0603"
 import { SmdLED } from "./SmdLED"
-import { Ws2812b4020 } from "./Ws2812b4020"
 import { A0805 } from "./A0805"
 import { QFP } from "./qfp"
 import { PinRow } from "./PinRow"
@@ -99,7 +98,7 @@ export interface Footprinter3dProps {
 }
 
 export const Footprinter3d = ({ footprint, model }: Footprinter3dProps) => {
-  if (model === "ws2812b4020") return <Ws2812b4020 />
+  if (model === "ws2812b4020") return <SmdLED footprint="ws2812b4020" />
   const modelFn = mp.string(footprint.split("_", 1)[0]!).params().fn
   if (mp.getModelNames().includes(modelFn)) {
     const model = mp.string(footprint).json()
