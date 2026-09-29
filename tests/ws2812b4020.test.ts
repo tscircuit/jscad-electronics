@@ -8,9 +8,11 @@ test("WS2812B-4020 opt-in model has a side window and four seated contacts", asy
   const footprint = "smdpads4_pin1location(rightside,top)"
   expect(getJscadModelForFootprint(footprint, jscad).geometries).toHaveLength(0)
 
-  const solids = getJscadModelForFootprint(footprint, jscad, {
-    model: "ws2812b4020",
-  }).geometries.map((g) => g.geom)
+  const solids: jscad.geometries.geom3.Geom3[] = getJscadModelForFootprint(
+    footprint,
+    jscad,
+    { model: "ws2812b4020" },
+  ).geometries.map((g: { geom: jscad.geometries.geom3.Geom3 }) => g.geom)
   expect(solids).toHaveLength(6)
 
   const bounds = jscad.measurements.measureAggregateBoundingBox(...solids)
