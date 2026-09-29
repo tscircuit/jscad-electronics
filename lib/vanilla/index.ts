@@ -1,5 +1,5 @@
 import { ExtrudedPads } from "../ExtrudedPads"
-import { Footprinter3d } from "../Footprinter3d"
+import { Footprinter3d, type Footprinter3dProps } from "../Footprinter3d"
 import { Fragment, type VNode, h } from "./h"
 import { type ColoredGeom, type RenderResult, render } from "./render"
 export * from "./convertCSGToThreeGeom"
@@ -11,19 +11,21 @@ export type { VNode, RenderResult, ColoredGeom }
 export function getJscadModelForFootprint(
   footprint: string,
   jscad: typeof jscadModeling,
+  options?: Pick<Footprinter3dProps, "model">,
 ): RenderResult {
-  const vnode = h(Footprinter3d, { footprint })
+  const vnode = h(Footprinter3d, { footprint, ...options })
   return render(vnode, jscad)
 }
 
 export function getJscadModelForFootprintWithPads(
   footprint: string,
   jscad: typeof jscadModeling,
+  options?: Pick<Footprinter3dProps, "model">,
 ): RenderResult {
   const vnode = h(
     Fragment,
     {},
-    h(Footprinter3d, { footprint }),
+    h(Footprinter3d, { footprint, ...options }),
     h(ExtrudedPads, { footprint }),
   )
   return render(vnode, jscad)
