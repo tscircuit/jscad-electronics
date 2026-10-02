@@ -40,7 +40,8 @@ const face = (width: number, chamfer: number): NemaMotorPoint[] => {
 
 /** Renderer-independent closed extrusions in mm. The shaft axis is +Z,
  * mounting face at Z=0, body at -bodyLength. Cap/core profiles are illustrative.
- * Blind holes have actual floors; through holes clear the core and rear cap.
+ * Blind holes have actual floors; front through holes clear the core.
+ * Rear cap bores and screws are configured separately.
  * Threads, wires and manufacturing tolerances are not represented.
  */
 export function createNemaMotorSections(
@@ -75,12 +76,36 @@ export function createNemaMotorSections(
   add("frontCap", front, -holeDepth, 0, holes)
   add("frontCap", front, -p.frontCapLength, -holeDepth)
   add("body", core, -p.bodyLength + p.rearCapLength, -p.frontCapLength)
-  add(
-    "rearCap",
-    p.mountingHoleThrough ? core : front,
-    -p.bodyLength,
-    -p.bodyLength + p.rearCapLength,
-  )
+  if (p.backFace === "plain") {
+    add(
+      "rearCap",
+      p.mountingHoleThrough ? core : front,
+      -p.bodyLength,
+      -p.bodyLength + p.rearCapLength,
+    )
+  } else {
+    const halfPitch = p.backFaceHoleSpacing / 2
+    const rearHoles = [-halfPitch, halfPitch].flatMap((x) =>
+      [-halfPitch, halfPitch].map((y) =>
+        circle(p.backFaceHoleDiameter / 2, x, y),
+      ),
+    )
+    // Rear-facing blind bores open at -bodyLength, with a solid floor inside
+    // the cap. The full cap outline supports NEMA23's rear corner fasteners.
+    add(
+      "rearCap",
+      front,
+      -p.bodyLength,
+      -p.bodyLength + p.backFaceHoleDepth,
+      rearHoles,
+    )
+    add(
+      "rearCap",
+      front,
+      -p.bodyLength + p.backFaceHoleDepth,
+      -p.bodyLength + p.rearCapLength,
+    )
+  }
   add("pilot", circle(p.pilotDiameter / 2), 0, p.pilotLength)
   const r = p.shaftDiameter / 2
   const round = circle(r)
