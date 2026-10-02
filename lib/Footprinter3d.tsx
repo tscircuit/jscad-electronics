@@ -1,3 +1,6 @@
+import { HexSocketBolt } from "./HexSocketBolt"
+import { SheetMetal } from "./SheetMetal"
+import { NemaMotor } from "./NemaMotor"
 import { renderFootprinterBodyModel } from "./utils/FootprinterBodyModels"
 import { fp } from "@tscircuit/footprinter"
 import { mp } from "@tscircuit/modelprinter"
@@ -97,6 +100,18 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
   if (mp.getModelNames().includes(modelFn)) {
     const model = mp.string(footprint).json()
     switch (model.fn) {
+      case "nema": {
+        const { fn, ...props } = model
+        return <NemaMotor {...props} />
+      }
+      case "hexsocketbolt": {
+        const { fn, ...props } = model
+        return <HexSocketBolt {...props} />
+      }
+      case "sheetmetal": {
+        const { fn, ...props } = model
+        return <SheetMetal {...props} />
+      }
       case "flexscreen": {
         const { fn: _, ...flexScreenProps } = model
         return <FlexScreen {...flexScreenProps} />

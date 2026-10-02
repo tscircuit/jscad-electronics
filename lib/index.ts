@@ -105,3 +105,8 @@ export * from "./TwoPadCrystal"
 
 export * from "./CeramicChipAntenna"
 export * from "./MelfResistor"
+
+export * from "./NemaMotor"
+
+export * from "./HexSocketBolt"
+export * from "./SheetMetal"

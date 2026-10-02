@@ -22,3 +22,5 @@ export type Color =
   | string
   | [number, number, number]
   | [number, number, number, number]
+
+export const Custom = Symbol("Custom")

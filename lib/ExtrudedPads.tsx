@@ -1,3 +1,4 @@
+import { mp } from "@tscircuit/modelprinter"
 import type { AnyCircuitElement } from "circuit-json"
 import { fp } from "@tscircuit/footprinter"
 import { FootprintPad } from "./FootprintPad"
@@ -7,6 +8,17 @@ export const ExtrudedPads = ({
   circuitJson,
   footprint,
 }: { circuitJson?: AnyCircuitElement[]; footprint?: string }) => {
+  // Mechanical models do not have PCB copper pads.
+  if (
+    !circuitJson &&
+    footprint &&
+    ["nema", "hexsocketbolt", "sheetmetal"].includes(
+      mp.string(footprint.split("_", 1)[0]!).params().fn,
+    )
+  ) {
+    mp.string(footprint).json() // Validate mechanical parameters before returning.
+    return null
+  }
   if (!circuitJson && footprint) {
     circuitJson = fp.string(footprint).circuitJson() as AnyCircuitElement[]
   }
