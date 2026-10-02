@@ -25,10 +25,9 @@ if (definition.fn === "hexsocketbolt") {
 }
 ```
 
-The cross-repository PR pins the modelprinter Git commit until its updated spec
-is released. Its trusted `prepare` script builds package entrypoints on install.
-Replace the Git pin with the published version before releasing this migration.
-No generated modelprinter build artifacts are committed.
+The renderer depends on the published modelprinter package. Schema and default
+changes should be released there before updating this dependency. Installing
+jscad-electronics does not build modelprinter from a Git checkout.
 
 The bolt and sheet-metal generators retain their original topology checks and
 four-view poppygl PNG snapshots, rendered with this repository's renderer versions. Geometry tests and snapshots belong here;
