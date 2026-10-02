@@ -95,7 +95,13 @@ import { FlexScreen } from "./FlexScreen"
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
  */
 
-export const Footprinter3d = ({ footprint }: { footprint: string }) => {
+export interface Footprinter3dProps {
+  footprint: string
+  model?: "ws2812b4020"
+}
+
+export const Footprinter3d = ({ footprint, model }: Footprinter3dProps) => {
+  if (model === "ws2812b4020") return <SmdLED footprint="ws2812b4020" />
   const modelFn = mp.string(footprint.split("_", 1)[0]!).params().fn
   if (mp.getModelNames().includes(modelFn)) {
     const model = mp.string(footprint).json()
