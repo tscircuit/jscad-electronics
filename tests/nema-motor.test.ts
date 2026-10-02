@@ -54,7 +54,7 @@ test("NEMA motor mounting patterns and blind / through holes in React and vanill
       const [min, max] = bounds(result.geometries)
       expect(min[0]).toBeCloseTo(-width / 2, 3)
       expect(max[1]).toBeCloseTo(width / 2, 3)
-      expect(min[2]).toBeCloseTo(-length, 6)
+      expect(min[2]).toBeCloseTo(-length - { 8: 2, 17: 3, 23: 4 }[size], 6)
       expect(max[2]).toBeCloseTo(shaft, 6)
       for (const { geom } of result.geometries)
         expect(jscad.measurements.measureVolume(geom)).toBeGreaterThan(0)

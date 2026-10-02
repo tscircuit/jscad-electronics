@@ -16,9 +16,8 @@ import { NEMA8, NEMA17, NEMA23, NemaMotor, Footprinter3d } from "jscad-electroni
 `getJscadModelForFootprint` and `getJscadModelForFootprintWithPads` accept the
 same modelprinter strings; motors add no PCB copper pads.
 
-The parameter contract matches the NEMA models in modelprinter. This renderer
-supports that contract locally to remain compatible with the published
-modelprinter dependency. Geometry generation lives in jscad-electronics.
+The parameter contract comes from the NEMA models in modelprinter.
+Geometry generation lives in jscad-electronics.
 The mounting face is Z=0, with the body along -Z and the shaft along +Z.
 Shaft length is measured from the mounting face, including pilot height.
 Flat length runs back from the tip; depth is the radial material removed.
@@ -40,3 +39,30 @@ Mounting dimensions follow representative Nanotec
 drawings. NEMA 8 also has 15.4 mm mounting / 16 mm pilot variants, as in the
 example above. Body lengths, cap thicknesses, chamfers and D cuts are
 configurable defaults. No threads or wires are modeled.
+
+## Rear holes and screws
+
+All three motors show rear socket-head cap screws by default. Use
+`nema17_backfaceholes` for open blind bores, `nema17_backfacescrews` for
+installed screws, or `nema17_plainbackface` for a plain rear cap. The flags
+are mutually exclusive; React and vanilla props use `backFace`.
+
+The rear face is at Z=-bodyLength. Heads project outward along -Z.
+`backFaceHoleSpacing`, `backFaceHoleDiameter`, `backFaceHoleDepth`, and
+`backFaceScrewSize` configure the rear features independently of the front
+mounting holes. String modifiers are `backholespacing`, `backholediameter`,
+`backholedepth`, and `backscrewm3` (also M2/M2.5/M4/etc.).
+Default rear sizes are M2 / M3 / M4; square pitches are 16 / 31 / 47.14 mm.
+These are representative configurable rear details, not frame guarantees.
+The enabled rear face retains the full cap outline to support NEMA23 corner
+fasteners. Blind bores retain their floors; the existing HexSocketBolt
+generator supplies the head and hex recess, with a smooth shank inside the
+rear bore. Internal tie rods and threads are not modeled. `screwColor`
+configures the screw color.
+
+```tsx
+<NEMA8 backFace="holes" />
+<NEMA17 backFace="screws" />
+<NEMA23 backFace="screws" backFaceHoleSpacing={40} backFaceScrewSize="M3" />
+<Footprinter3d footprint="nema23_backfaceholes_backholediameter4mm" />
+```
