@@ -1,12 +1,11 @@
-import { mp } from "@tscircuit/modelprinter"
+import { parseNemaMotorString } from "../../lib/utils/nemaMotorParameters"
 import { createElement } from "react"
 import { Footprinter3d } from "../../lib/Footprinter3d"
 import { renderComponent } from "../helpers/render-component"
 import { createAnnotatedViewSheet } from "./annotated-view-sheet"
 
 export async function renderNemaMotor(footprint: string) {
-  const p = mp.string(footprint).json()
-  if (p.fn !== "nema") throw new Error("Expected NEMA motor")
+  const p = parseNemaMotorString(footprint)
   const center = (p.shaftLength - p.bodyLength) / 2
   const distance = Math.max(p.bodyWidth, p.bodyLength + p.shaftLength) * 2.1
   // GLTF is Y-up after converting from JSCAD's Z-up coordinates.

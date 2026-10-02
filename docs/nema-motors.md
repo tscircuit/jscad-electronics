@@ -16,7 +16,9 @@ import { NEMA8, NEMA17, NEMA23, NemaMotor, Footprinter3d } from "jscad-electroni
 `getJscadModelForFootprint` and `getJscadModelForFootprintWithPads` accept the
 same modelprinter strings; motors add no PCB copper pads.
 
-Geometry, unit conversion and validation come from `@tscircuit/modelprinter`.
+The parameter contract matches the NEMA models in modelprinter. This renderer
+supports that contract locally to remain compatible with the published
+modelprinter dependency. Geometry generation lives in jscad-electronics.
 The mounting face is Z=0, with the body along -Z and the shaft along +Z.
 Shaft length is measured from the mounting face, including pilot height.
 Flat length runs back from the tip; depth is the radial material removed.

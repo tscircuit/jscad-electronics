@@ -1,3 +1,8 @@
+import {
+  parseNemaMotorString,
+  resolveNemaMotorProps,
+  type NemaMotorModelPropsInput,
+} from "../lib/utils/nemaMotorParameters"
 import { expect, test } from "bun:test"
 import * as jscad from "@jscad/modeling"
 import { NEMA8, NEMA17, NEMA23, NemaMotor } from "../lib/NemaMotor"
@@ -117,4 +122,42 @@ test("NEMA shaft flat, round shoulder, tip length, rotation and custom units", a
     "nema17_typo",
   ])
     expect(() => vanilla.getJscadModelForFootprint(source, jscad)).toThrow()
+})
+
+test("renderer accepts the modelprinter parameter contract without unreleased exports", () => {
+  expect(
+    parseNemaMotorString("NEMA17_l6cm_shaftdiameter0.25in_flatangle-90deg"),
+  ).toMatchObject({
+    nemaSize: 17,
+    bodyLength: 60,
+    shaftDiameter: 6.35,
+    shaftFlatAngle: -90,
+  })
+  expect(
+    parseNemaMotorString("nema8_holespacing15.4mm_pilotdiameter16mm"),
+  ).toMatchObject({ mountingHoleSpacing: 15.4, pilotDiameter: 16 })
+  for (const source of [
+    "nema9",
+    "nema170",
+    "nema17.5",
+    "nema17_",
+    "nema17_l",
+    "nema17_l20_length30",
+    "nema17_round_dshaft",
+    "nema17_dshaft0",
+    "nema17_flatangle",
+    "nema17_holedepth6",
+  ])
+    expect(() => parseNemaMotorString(source)).toThrow()
+  for (const props of [
+    { nemaSize: "17" },
+    { nemaSize: 9 },
+    { nemaSize: 17, shaftLength: Infinity },
+    { nemaSize: 17, shaftShape: "hex" },
+    { nemaSize: 17, mountingHoleThrough: "true" },
+    { nemaSize: 17, unknownDimension: 1 },
+  ])
+    expect(() =>
+      resolveNemaMotorProps(props as NemaMotorModelPropsInput),
+    ).toThrow()
 })

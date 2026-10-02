@@ -1,8 +1,6 @@
 import jscad from "@jscad/modeling"
-import {
-  createNemaMotorSections,
-  type NemaMotorModelPropsInput,
-} from "@tscircuit/modelprinter"
+import { createNemaMotorSections } from "./utils/nemaMotorGeometry"
+import type { NemaMotorModelPropsInput } from "./utils/nemaMotorParameters"
 import { Colorize, Custom } from "jscad-fiber"
 
 export type NemaMotorProps = NemaMotorModelPropsInput & {
@@ -13,7 +11,7 @@ export type NemaMotorProps = NemaMotorModelPropsInput & {
 export type NemaFrameMotorProps = Omit<NemaMotorProps, "nemaSize">
 
 /** Mounting face at Z=0, body along -Z, shaft along +Z; all lengths in mm.
- * Dimensions and validated profiles are shared with modelprinter.
+ * Parameters follow the modelprinter NEMA contract; JSCAD builds all geometry.
  */
 export function NemaMotor({
   bodyColor = "#242830",

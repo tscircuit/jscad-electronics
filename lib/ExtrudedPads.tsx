@@ -1,3 +1,4 @@
+import { parseNemaMotorString } from "./utils/nemaMotorParameters"
 import { mp } from "@tscircuit/modelprinter"
 import type { AnyCircuitElement } from "circuit-json"
 import { fp } from "@tscircuit/footprinter"
@@ -14,7 +15,7 @@ export const ExtrudedPads = ({
     footprint &&
     mp.string(footprint.split("_", 1)[0]!).params().fn === "nema"
   ) {
-    mp.string(footprint).json() // Keep invalid motor parameters visible to callers.
+    parseNemaMotorString(footprint) // Keep invalid motor parameters visible to callers.
     return null
   }
   if (!circuitJson && footprint) {
