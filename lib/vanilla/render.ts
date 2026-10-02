@@ -3,6 +3,7 @@ import type * as jscadModeling from "@jscad/modeling"
 import { Fragment, type VNode } from "./h"
 import {
   Colorize,
+  Custom,
   Cube,
   Cuboid,
   Cylinder,
@@ -124,6 +125,10 @@ function renderNode(
       geom = booleans.subtract(geoms[0] as any, geoms.slice(1) as any)
     else geom = hulls.hull(geoms as any)
     return [{ geom, color: colorCtx }]
+  }
+
+  if (type === Custom) {
+    return [{ geom: props.geometry, color: colorCtx }]
   }
 
   if (type === Polygon) {

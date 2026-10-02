@@ -20,6 +20,7 @@ export interface RenderComponentOptions {
   lookAt?: Vec3
   fov?: number
   gridZ?: number
+  showGrid?: boolean
 }
 
 const transformAxis = ([x, y, z]: Vec3): Vec3 => [x, z, -y]
@@ -88,15 +89,18 @@ export async function renderComponent(
     fov: camera.fov,
     camPos: options.camPos ?? [...camera.camPos],
     lookAt: options.lookAt ?? [...camera.lookAt],
-    grid: {
-      infiniteGrid: true,
-      cellSize: 1,
-      sectionSize: 5,
-      fadeDistance: 100,
-      fadeStrength: 1.5,
-      gridColor: [0.9, 0.9, 0.9],
-      sectionColor: [0.7, 0.7, 0.7],
-      offset: { y: options.gridZ ?? 0 },
-    },
+    grid:
+      options.showGrid === false
+        ? false
+        : {
+            infiniteGrid: true,
+            cellSize: 1,
+            sectionSize: 5,
+            fadeDistance: 100,
+            fadeStrength: 1.5,
+            gridColor: [0.9, 0.9, 0.9],
+            sectionColor: [0.7, 0.7, 0.7],
+            offset: { y: options.gridZ ?? 0 },
+          },
   })
 }
