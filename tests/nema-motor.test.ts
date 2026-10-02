@@ -124,7 +124,7 @@ test("NEMA shaft flat, round shoulder, tip length, rotation and custom units", a
     expect(() => vanilla.getJscadModelForFootprint(source, jscad)).toThrow()
 })
 
-test("renderer accepts the modelprinter parameter contract without unreleased exports", () => {
+test("renderer consumes the modelprinter parameter contract", () => {
   expect(
     parseNemaMotorString("NEMA17_l6cm_shaftdiameter0.25in_flatangle-90deg"),
   ).toMatchObject({

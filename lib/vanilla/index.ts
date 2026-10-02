@@ -43,3 +43,6 @@ export function createJSCADRenderer(jscad: typeof jscadModeling) {
 }
 
 export * from "../NemaMotor"
+
+export * from "../HexSocketBolt"
+export * from "../SheetMetal"

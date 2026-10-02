@@ -30,7 +30,8 @@
   },
   "dependencies": {
     "@tscircuit/mm": "^0.0.8",
-    "@tscircuit/modelprinter": "^0.0.2"
+    "@tscircuit/modelprinter": "github:tscircuit/modelprinter#be7b5d09787359baed089ef7ecfce4d80c0bcea1",
+    "earcut": "^3.2.3"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.3",
@@ -50,7 +51,9 @@
     "react-cosmos-plugin-vite": "7.0.0",
     "tsup": "^8.3.0",
     "vite": "^7.1.2",
-    "vite-tsconfig-paths": "^5.0.1"
+    "vite-tsconfig-paths": "^5.0.1",
+    "@types/earcut": "^3.0.0",
+    "gl-matrix": "^3.4.4"
   },
   "peerDependencies": {
     "@jscad/modeling": "^2.12.5",
@@ -69,5 +72,10 @@
   },
   "engines": {
     "node": "24.x"
-  }
+  },
+  "trustedDependencies": [
+    "@tscircuit/modelprinter",
+    "esbuild",
+    "sharp"
+  ]
 }
