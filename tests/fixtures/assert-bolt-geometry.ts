@@ -67,15 +67,17 @@ export function assertBoltGeometry() {
       length: 6,
       showThreads: false,
     })
-    expect(threaded.indices).toEqual(smooth.indices)
+    expect(threaded.indices.length).toBeGreaterThan(smooth.indices.length)
     expect(threaded.positions).not.toEqual(smooth.positions)
-    for (let i = 0; i < threaded.positions.length; i += 3) {
-      if (threaded.positions[i + 2]! >= 0) {
-        expect(threaded.positions.slice(i, i + 3)).toEqual(
-          smooth.positions.slice(i, i + 3),
-        )
-      }
+    const headVertices = (positions: number[]) => {
+      const head = []
+      for (let i = 0; i < positions.length; i += 3)
+        if (positions[i + 2]! >= 0) head.push(...positions.slice(i, i + 3))
+      return head
     }
+    expect(headVertices(threaded.positions)).toEqual(
+      headVertices(smooth.positions),
+    )
     expect(() =>
       createHexSocketBoltMesh({ metricSize: "M3", length: 100000 }),
     ).toThrow("mesh resolution limit")

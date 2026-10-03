@@ -30,7 +30,7 @@ export const createHexSocketBoltMesh = (
   } = hexSocketBoltDimensions[props.metricSize]
   const { length, showThreads } = props
   const segments = 96 // Divisible by six, so socket corners are exact.
-  const steps = Math.max(2, Math.ceil((length / pitch) * 24))
+  const steps = showThreads ? Math.max(2, Math.ceil((length / pitch) * 24)) : 2
   // Avoid unbounded allocations for user-supplied lengths.
   if (steps > 24000)
     throw new Error(
@@ -70,8 +70,16 @@ export const createHexSocketBoltMesh = (
     }
   }
   let previous = -1
-  for (let step = 0; step <= steps; step++) {
-    const z = -length + (length * step) / steps
+  // A smooth shank needs only its tip, bevel end and bearing plane. Sampling
+  // it at thread pitch adds thousands of coplanar faces and makes STEP export
+  // quadratic without improving the shape.
+  const shaftLevels = showThreads
+    ? Array.from(
+        { length: steps + 1 },
+        (_, step) => -length + (length * step) / steps,
+      )
+    : [-length, -length + tipBevel, 0]
+  for (const z of shaftLevels) {
     const current = ring(z, (angle) => {
       // Constant phase winds counterclockwise as Z increases (right-hand).
       const phase = (((z / pitch - angle / (2 * Math.PI)) % 1) + 1) % 1
