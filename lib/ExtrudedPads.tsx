@@ -12,7 +12,7 @@ export const ExtrudedPads = ({
   if (
     !circuitJson &&
     footprint &&
-    ["nema", "hexsocketbolt", "sheetmetal"].includes(
+    ["nema", "hexsocketbolt", "sheetmetal", "spurgear", "wormgear"].includes(
       mp.string(footprint.split("_", 1)[0]!).params().fn,
     )
   ) {

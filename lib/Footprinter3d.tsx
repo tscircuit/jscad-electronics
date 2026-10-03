@@ -1,5 +1,7 @@
 import { HexSocketBolt } from "./HexSocketBolt"
 import { SheetMetal } from "./SheetMetal"
+import { SpurGear } from "./SpurGear"
+import { WormGear } from "./WormGear"
 import { NemaMotor } from "./NemaMotor"
 import { renderFootprinterBodyModel } from "./utils/FootprinterBodyModels"
 import { fp } from "@tscircuit/footprinter"
@@ -111,6 +113,14 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       case "sheetmetal": {
         const { fn, ...props } = model
         return <SheetMetal {...props} />
+      }
+      case "spurgear": {
+        const { fn, ...props } = model
+        return <SpurGear {...props} />
+      }
+      case "wormgear": {
+        const { fn, ...props } = model
+        return <WormGear {...props} />
       }
       case "flexscreen": {
         const { fn: _, ...flexScreenProps } = model
