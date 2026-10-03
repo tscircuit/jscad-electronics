@@ -1,4 +1,5 @@
 import jscad from "@jscad/modeling"
+import { createNemaMotorWireGeometry } from "./utils/nemaMotorWireGeometry"
 import { createNemaMotorSections } from "./utils/nemaMotorGeometry"
 import {
   resolveNemaMotorProps,
@@ -70,6 +71,11 @@ export function NemaMotor({
           </Colorize>
         )
       })}
+      {createNemaMotorWireGeometry(p).map(({ geometry, color }, index) => (
+        <Colorize key={`wire-${index}`} color={color}>
+          <Custom geometry={geometry} />
+        </Colorize>
+      ))}
       {screw &&
         [-halfPitch, halfPitch].flatMap((x) =>
           [-halfPitch, halfPitch].map((y) => (

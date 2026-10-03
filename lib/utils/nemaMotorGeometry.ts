@@ -42,7 +42,7 @@ const face = (width: number, chamfer: number): NemaMotorPoint[] => {
  * mounting face at Z=0, body at -bodyLength. Cap/core profiles are illustrative.
  * Blind holes have actual floors; front through holes clear the core.
  * Rear cap bores and screws are configured separately.
- * Threads, wires and manufacturing tolerances are not represented.
+ * Threads and manufacturing tolerances are not represented. Wire geometry is added separately.
  */
 export function createNemaMotorSections(
   input: NemaMotorModelPropsInput,
