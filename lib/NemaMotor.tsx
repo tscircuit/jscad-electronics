@@ -1,4 +1,6 @@
 import jscad from "@jscad/modeling"
+import type { generalize as Generalize } from "@jscad/modeling/src/operations/modifiers/generalize"
+import { createNemaMotorWireGeometry } from "./utils/nemaMotorWireGeometry"
 import { createNemaMotorSections } from "./utils/nemaMotorGeometry"
 import {
   resolveNemaMotorProps,
@@ -6,6 +8,10 @@ import {
 } from "./utils/nemaMotorParameters"
 import { createHexSocketBoltGeom } from "./HexSocketBolt"
 import { Colorize, Custom } from "jscad-fiber"
+
+// JSCAD exposes generalize as a function at runtime, but its namespace
+// declaration exports a module. Keep the correction at this API boundary.
+const generalize = jscad.modifiers.generalize as unknown as typeof Generalize
 
 export type NemaMotorProps = NemaMotorModelPropsInput & {
   bodyColor?: string
@@ -66,10 +72,15 @@ export function NemaMotor({
                   : capColor
             }
           >
-            <Custom geometry={geometry} />
+            <Custom geometry={generalize({ simplify: true }, geometry)} />
           </Colorize>
         )
       })}
+      {createNemaMotorWireGeometry(p).map(({ geometry, color }, index) => (
+        <Colorize key={`wire-${index}`} color={color}>
+          <Custom geometry={generalize({ simplify: true }, geometry)} />
+        </Colorize>
+      ))}
       {screw &&
         [-halfPitch, halfPitch].flatMap((x) =>
           [-halfPitch, halfPitch].map((y) => (
@@ -79,7 +90,7 @@ export function NemaMotor({
               <Custom
                 geometry={jscad.transforms.translate(
                   [x, y, -p.bodyLength],
-                  screw,
+                  generalize({ simplify: true }, screw),
                 )}
               />
             </Colorize>
