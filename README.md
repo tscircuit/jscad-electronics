@@ -124,6 +124,21 @@ produce the wrong model. Parsing and validation are provided by
 [`@tscircuit/modelprinter`](https://github.com/tscircuit/modelprinter), keeping
 the string grammar independent of this JSCAD renderer.
 
+## Parameterized gears
+
+`SpurGear` generates external involute gears with optional bores and hubs.
+`WormGear` generates single or multiple start worm screws of either hand.
+Both accept ModelPrinter strings through `Footprinter3d` and the vanilla renderer:
+
+```tsx
+<Footprinter3d footprint="spurgear24_m1mm_w5mm_bore5mm" />
+<Footprinter3d footprint="wormgear_m1mm_d10mm_l20mm_starts2_left_bore3mm" />
+```
+
+See [the gear guide](docs/gears.md) for direct props, mesh factories, pitch
+conventions, resolution controls, and geometry limits. Worm wheels require a
+conjugate tooth profile and are outside this initial implementation.
+
 ## Integration with tscircuit
 
 jscad-electronics is designed to work seamlessly with tscircuit. You can use these 3D models in your tscircuit projects to create accurate 3D representations of your PCB designs just by
