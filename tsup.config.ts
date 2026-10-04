@@ -18,7 +18,7 @@ function aliasPlugin(aliases: Record<string, string>) {
 
 export default defineConfig([
   {
-    entry: { index: "./lib/index.ts" },
+    entry: { index: "./lib/index.ts", cables: "./lib/cables/index.ts" },
     dts: true,
     format: ["esm"],
     sourcemap: true,
