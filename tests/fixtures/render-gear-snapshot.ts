@@ -1,3 +1,4 @@
+import { createHelicalGearMesh } from "../../lib/mechanical/helical-gear-mesh"
 import { mp } from "@tscircuit/modelprinter"
 import { createSpurGearMesh } from "../../lib/mechanical/spur-gear-mesh"
 import { createWormGearMesh } from "../../lib/mechanical/worm-gear-mesh"
@@ -94,5 +95,52 @@ export function renderWormGearSnapshot(modelString: string) {
     ],
     footer:
       "POPPYGL / FOUR ORTHOGRAPHIC VIEWS / DIMENSIONS IN mm / VISUAL WORM APPROXIMATION",
+  })
+}
+
+export function renderHelicalGearSnapshot(modelString: string) {
+  const definition = mp.string(modelString).json()
+  if (definition.fn !== "helicalgear") throw new Error("Expected helical gear")
+  const { fn, ...props } = definition
+  const diameter = props.module * (props.toothCount + 2)
+  const height = props.faceWidth + props.hubLength
+  const targetZ = height / 2
+  const span = Math.max(diameter * 1.22, height * 1.5)
+  return renderModelSnapshot({
+    mesh: createHelicalGearMesh(props),
+    title: `HELICAL GEAR / ${props.handedness.toUpperCase()} HAND / ${props.helixAngle} DEG`,
+    modelString,
+    views: [
+      {
+        name: "ISOMETRIC",
+        detail: "TWISTED INVOLUTE FLANKS AND HUB",
+        eye: [diameter * 1.1, -diameter * 1.4, diameter * 1.15],
+        target: [0, 0, targetZ],
+        span,
+      },
+      {
+        name: "TOP",
+        detail: "TOOTH PROFILE AND THROUGH BORE",
+        eye: [0, 0, diameter * 2],
+        target: [0, 0, targetZ],
+        span,
+      },
+      {
+        name: "FRONT",
+        detail: "HELIX ANGLE AND STRAIGHT HUB",
+        eye: [0, -diameter * 2, targetZ],
+        target: [0, 0, targetZ],
+        span,
+      },
+      {
+        name: "UNDERSIDE",
+        detail: "CONTINUOUS BODY AND BORE EXIT",
+        eye: [-diameter * 1.1, -diameter * 1.4, -diameter * 1.15],
+        target: [0, 0, targetZ],
+        span,
+      },
+    ],
+    footer:
+      "POPPYGL / FOUR ORTHOGRAPHIC VIEWS / DIMENSIONS IN mm / APPROXIMATE ROOT TRANSITION",
   })
 }

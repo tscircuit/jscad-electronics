@@ -12,9 +12,14 @@ export const ExtrudedPads = ({
   if (
     !circuitJson &&
     footprint &&
-    ["nema", "hexsocketbolt", "sheetmetal", "spurgear", "wormgear"].includes(
-      mp.string(footprint.split("_", 1)[0]!).params().fn,
-    )
+    [
+      "nema",
+      "hexsocketbolt",
+      "sheetmetal",
+      "spurgear",
+      "wormgear",
+      "helicalgear",
+    ].includes(mp.string(footprint.split("_", 1)[0]!).params().fn)
   ) {
     mp.string(footprint).json() // Validate mechanical parameters before returning.
     return null
