@@ -1,3 +1,4 @@
+import { HelicalGear } from "./HelicalGear"
 import { HexSocketBolt } from "./HexSocketBolt"
 import { SheetMetal } from "./SheetMetal"
 import { SpurGear } from "./SpurGear"
@@ -113,6 +114,10 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       case "sheetmetal": {
         const { fn, ...props } = model
         return <SheetMetal {...props} />
+      }
+      case "helicalgear": {
+        const { fn, ...props } = model
+        return <HelicalGear {...props} />
       }
       case "spurgear": {
         const { fn, ...props } = model

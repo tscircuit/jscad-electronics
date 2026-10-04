@@ -110,5 +110,6 @@ export * from "./NemaMotor"
 
 export * from "./HexSocketBolt"
 export * from "./SheetMetal"
+export * from "./HelicalGear"
 export * from "./SpurGear"
 export * from "./WormGear"

@@ -24,6 +24,15 @@ type Point2 = [number, number]
 export function createSpurGearMesh(
   input: SpurGearModelPropsInput,
 ): SpurGearMesh {
+  return createTwistedSpurGearMesh(input)
+}
+
+/** Shared transverse involute extrusion; twist is signed radians over the face. */
+export function createTwistedSpurGearMesh(
+  input: SpurGearModelPropsInput,
+  twist = 0,
+  segmentsPerTurn = 32,
+): SpurGearMesh {
   const props = spurGearModelPropsSchema.parse(input)
   const dimensions = getSpurGearDimensions(props)
   const pitchRadius = dimensions.pitchDiameter / 2
@@ -52,19 +61,30 @@ export function createSpurGearMesh(
   // A root arc's chord lies inside its analytic circle. Refine that arc when
   // a bore or hub almost fills the root, so the cap loops remain disjoint.
   const safeRootStep =
-    innerRadius > 0 ? 1.8 * Math.acos(innerRadius / rootRadius) : Math.PI
+    innerRadius > 0
+      ? (twist === 0 ? 1.8 : 0.8) * Math.acos(innerRadius / rootRadius)
+      : Math.PI
   const rootArcSteps = Math.max(
     arcSteps,
     Math.ceil(rootValleyAngle / safeRootStep),
   )
+  // Sample at least sixteen layers per tooth of twist, and refine near a bore
+  // or hub so even the triangles between layers stay outside the inner loop.
+  const twistStep = Math.min(
+    toothAngle / 16,
+    (2 * Math.PI) / segmentsPerTurn,
+    safeRootStep,
+  )
+  const layers = Math.max(1, Math.ceil(Math.abs(twist) / twistStep))
   const pointsPerTooth =
     2 * flankSteps + arcSteps + rootArcSteps + (rootRadius < baseRadius ? 2 : 0)
   if (
     !Number.isFinite(rootArcSteps) ||
-    2 * props.toothCount * pointsPerTooth + 1024 > 1_000_000
+    !Number.isFinite(layers) ||
+    (layers + 1) * props.toothCount * pointsPerTooth + 1024 > 1_000_000
   )
     throw new Error(
-      "Spur gear bore or hub clearance exceeds mesh resolution limit (1 million vertices)",
+      "Involute gear exceeds mesh resolution limit (1 million vertices); reduce twist or resolution, or increase bore/hub wall thickness",
     )
   const outline: Point2[] = []
   const polar = (radius: number, angle: number) => {
@@ -168,8 +188,23 @@ export function createSpurGearMesh(
   }
 
   const bottom = ring(outline, 0)
-  const top = ring(outline, props.faceWidth)
-  connect(bottom, top, outline.length)
+  let top = bottom
+  let topOutline = outline
+  for (let layer = 1; layer <= layers; layer++) {
+    const angle = twist * (layer / layers)
+    topOutline =
+      twist === 0
+        ? outline
+        : outline.map(
+            ([x, y]): Point2 => [
+              x * Math.cos(angle) - y * Math.sin(angle),
+              x * Math.sin(angle) + y * Math.cos(angle),
+            ],
+          )
+    const next = ring(topOutline, props.faceWidth * (layer / layers))
+    connect(top, next, outline.length)
+    top = next
+  }
   const hasHub = props.hubDiameter > 0 && props.hubLength > 0
   const height = props.faceWidth + (hasHub ? props.hubLength : 0)
   const bore =
@@ -187,7 +222,7 @@ export function createSpurGearMesh(
     const hub = circle(props.hubDiameter / 2)
     const hubBottom = ring(hub, props.faceWidth)
     const hubTop = ring(hub, height)
-    cap(outline, top, true, { points: hub, start: hubBottom })
+    cap(topOutline, top, true, { points: hub, start: hubBottom })
     connect(hubBottom, hubTop, hub.length)
     // Both circular loops use identical angular samples. Direct annular
     // triangles avoid collinear bridge triangles in polygon triangulation.
@@ -195,7 +230,7 @@ export function createSpurGearMesh(
     else cap(hub, hubTop, true)
   } else
     cap(
-      outline,
+      topOutline,
       top,
       true,
       bore ? { points: bore, start: boreTop! } : undefined,
