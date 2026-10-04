@@ -50,6 +50,35 @@ This example creates a 3D model of an SOT-23-3P component with extruded pads.
 
 ## Available Components
 
+### Cable meshes
+
+`jscad-electronics/cables` creates indexed, colored triangle meshes for USB-C,
+JST SH/PH, and NEMA 5-15P to IEC C13 cables. Pass a physical definition from
+cableprinter and an already resolved path in millimeters (+Z up):
+
+```ts
+import { createCableMeshes } from "jscad-electronics/cables"
+import { parseCableString } from "@tscircuit/cableprinter"
+
+const meshes = createCableMeshes({
+  definition: parseCableString("jst_ph_pins4"),
+  path: resolvedPath,
+})
+```
+
+The first and last path samples are cable exit centers. Connector poses follow
+the endpoint tangents; bundle wires follow parallel-transported frames. Each
+mesh provides `positions`, `indices`, `color`, `name`, and `smooth`. Connector
+details include hollow shells/sockets, contacts, and strain reliefs. Physical
+definitions, route generation and sagging remain separate from this renderer.
+The cables entrypoint does not import React or a viewer.
+
+Cable visual regression tests live in `tests/snapshots/cable-meshes.test.ts`.
+They render local meshes with poppygl: all four cable types and mating faces,
+JST SH/PH pin-count comparisons, and spatial paths viewed from both sides.
+Annotations use `@tscircuit/alphabet`. Regenerate these six PNGs explicitly with
+`BUN_UPDATE_SNAPSHOTS=1 bun test tests/snapshots/cable-meshes.test.ts`.
+
 jscad-electronics includes models for various components, including:
 
 - Resistors (0402, 0603, 0805)

@@ -9,6 +9,10 @@
     },
     "./vanilla": {
       "import": "./dist/vanilla.js"
+    },
+    "./cables": {
+      "import": "./dist/cables.js",
+      "types": "./dist/cables.d.ts"
     }
   },
   "repository": {
