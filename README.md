@@ -184,21 +184,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Support
 
 If you encounter any problems or have any questions, please open an issue on the [GitHub repository](https://github.com/tscircuit/jscad-electronics/issues).
-
-## Component materials
-
-Component geometry carries approximate visual finishes for identified surfaces,
-including molded chip bodies, plated leads, copper pads, connector shells, and
-motor shafts. React components require `jscad-fiber >= 0.0.89`; the vanilla API
-returns appearance settings on both `entry.material` and `entry.geom.material`.
-Cable meshes also expose optional `material` settings for their metal contacts
-and shells. These are visual defaults, not measured material data.
-
-PoppyGL sample renders use `realistic: true`. Unannotated sample geometry defaults
-to nonmetallic material. Enabling realistic lighting alone does not identify a
-part's material: consumers must retain its metadata through conversion. The sample
-exporter is temporarily pinned to the preview from
-[jscad-to-gltf #17](https://github.com/tscircuit/jscad-to-gltf/pull/17); replace that
-pin with its release after merging. This preserves color, metalness, roughness,
-opacity, and emission in glTF/GLB. Three.js-only wireframe/flat-shading settings
-are not part of this glTF material mapping.
