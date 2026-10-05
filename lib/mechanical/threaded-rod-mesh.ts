@@ -10,11 +10,11 @@ export interface ThreadedRodMesh {
   indices: number[]
 }
 /** Renderer resolution affects tessellation only, never model specifications. */
-export interface Resolution {
+export interface ThreadedRodMeshOptions {
   radialSegments?: number
   segmentsPerPitch?: number
 }
-function resolution(options: Resolution) {
+function resolution(options: ThreadedRodMeshOptions) {
   const radial = options.radialSegments ?? 96
   const axial = options.segmentsPerPitch ?? 32
   if (
@@ -73,7 +73,7 @@ function threadDistance(z: number, angle: number, pitch: number, hand = 1) {
 /** Full single-start external thread, phase +X at z=0, flat chamfered ends. */
 export function createThreadedRodMesh(
   input: ThreadedRodModelPropsInput,
-  options: Resolution = {},
+  options: ThreadedRodMeshOptions = {},
 ): ThreadedRodMesh {
   const props = threadedRodModelPropsSchema.parse(input)
   const d = getThreadedRodDimensions(input)
