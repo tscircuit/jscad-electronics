@@ -1,4 +1,4 @@
-import { createShaftCollarMesh } from "../../lib/ShaftCollar"
+import { createShaftCollarMesh } from "../../lib/models/shaftcollar"
 import type { MountMesh } from "./assert-shaft-mount-geometry"
 export const example = "shaftcollar_bore8mm_od16mm_w8mm_mount(setscrew)_m4"
 export const props = {

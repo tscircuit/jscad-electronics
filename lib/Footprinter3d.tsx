@@ -1,4 +1,4 @@
-import { ShaftCollar } from "./ShaftCollar"
+import { ShaftCollar } from "./models/shaftcollar"
 import { HelicalGear } from "./HelicalGear"
 import { HexSocketBolt } from "./HexSocketBolt"
 import { SheetMetal } from "./SheetMetal"

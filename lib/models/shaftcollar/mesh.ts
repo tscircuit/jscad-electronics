@@ -11,7 +11,7 @@ import {
   finishShaftMountMesh,
   subtractShaftMountParts,
   type ShaftMountMesh,
-} from "./shaft-mount-geometry"
+} from "../../mechanical/shaft-mount-geometry"
 
 export type ShaftCollarMesh = ShaftMountMesh
 

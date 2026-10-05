@@ -1,7 +1,7 @@
 import type { ShaftCollarModelPropsInput } from "@tscircuit/modelprinter"
 import { Colorize, Custom } from "jscad-fiber"
-import { createShaftCollarMesh } from "./mechanical/shaft-collar-mesh"
-import { indexedMeshToGeom3 } from "./mechanical/indexedMeshToGeom3"
+import { createShaftCollarMesh } from "./mesh"
+import { indexedMeshToGeom3 } from "../../mechanical/indexedMeshToGeom3"
 
 export type ShaftCollarProps = ShaftCollarModelPropsInput & { color?: string }
 
@@ -17,5 +17,5 @@ export function ShaftCollar({ color = "#737e8f", ...props }: ShaftCollarProps) {
     </Colorize>
   )
 }
-export { createShaftCollarMesh } from "./mechanical/shaft-collar-mesh"
-export type { ShaftCollarMesh } from "./mechanical/shaft-collar-mesh"
+export { createShaftCollarMesh } from "./mesh"
+export type { ShaftCollarMesh } from "./mesh"

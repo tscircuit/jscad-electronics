@@ -50,4 +50,4 @@ export * from "../HelicalGear"
 export * from "../SpurGear"
 export * from "../WormGear"
 
-export * from "../ShaftCollar"
+export * from "../models/shaftcollar"

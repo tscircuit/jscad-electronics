@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test"
-import { createShaftCollarGeom, ShaftCollar } from "../lib/ShaftCollar"
+import { createShaftCollarGeom, ShaftCollar } from "../lib/models/shaftcollar"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { importVanilla } from "./fixtures/importVanilla"

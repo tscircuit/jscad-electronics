@@ -3,7 +3,7 @@ import {
   getShaftCollarDimensions,
   shaftCollarModelPropsSchema,
 } from "@tscircuit/modelprinter"
-import { createShaftCollarMesh } from "../lib/ShaftCollar"
+import { createShaftCollarMesh } from "../lib/models/shaftcollar"
 import {
   assertClosedShaftMount,
   assertNoMountingEndCap,

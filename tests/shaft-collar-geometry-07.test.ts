@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test"
 import { shaftCollarModelPropsSchema } from "@tscircuit/modelprinter"
-import { createShaftCollarMesh } from "../lib/ShaftCollar"
+import { createShaftCollarMesh } from "../lib/models/shaftcollar"
 import { createMountingHoleCutter } from "../lib/mechanical/shaft-mount-geometry"
 import { props } from "./fixtures/shaft-collar-case"
 

@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test"
-import { createShaftCollarMesh } from "../lib/ShaftCollar"
+import { createShaftCollarMesh } from "../lib/models/shaftcollar"
 import {
   assertClosedShaftMount,
   containsMeshPoint,
