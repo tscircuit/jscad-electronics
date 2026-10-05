@@ -10,8 +10,8 @@ Footprint helpers route this mechanical model without PCB pads.
 
 The renderer consumes the schema and mounting-slot resolver from
 [modelprinter PR #35](https://github.com/tscircuit/modelprinter/pull/35), using
-its [pinned package preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@05677bc8a896b9e957b8ac6c2f39b742d7b9c00c).
-See the [parameter contract](https://github.com/tscircuit/modelprinter/blob/codex/roadmap-0023-tslotgusset/docs/tslot-gusset.md)
+its [pinned package preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@1b3f3c88810f1ea564a57a293f3c2a5cdbd28d97).
+See the [parameter contract](https://github.com/tscircuit/modelprinter/blob/1b3f3c88810f1ea564a57a293f3c2a5cdbd28d97/docs/tslot-gusset.md)
 for defaults, triangular datum and the along-edge meaning of `centers`.
 
 The flat triangle contains both full capsule openings, using the upstream
