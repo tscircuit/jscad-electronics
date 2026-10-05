@@ -1,6 +1,6 @@
 # HexNut renderer
 
-Consumes the strict schemas and resolved dimensions from [modelprinter PR #25](https://github.com/tscircuit/modelprinter/pull/25). The dependency and lockfile pin that PR's immutable pkg.pr.new preview SHA so the renderer can be reviewed before a modelprinter release. Replace the preview with a published version after that contract is released.
+Consumes the strict schemas and resolved dimensions from [modelprinter PR #25](https://github.com/tscircuit/modelprinter/pull/25). The dependency and lockfile pin [that PR's immutable package preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@2468674e90204fcd34760285a2502dbf11cd302c) so the renderer can be reviewed before a modelprinter release. Replace the preview with a published version after that contract is released.
 
 `createHexNutMesh` returns indexed outward-facing triangles; `createHexNutGeom` produces a JSCAD solid. `HexNut` is exported from both React and vanilla entrypoints. `Footprinter3d` and vanilla footprint helpers route `hexnut` strings to it; mechanical models produce no PCB pads.
 
