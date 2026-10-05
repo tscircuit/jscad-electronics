@@ -1,3 +1,4 @@
+import { ClampingShaftCollar } from "./ClampingShaftCollar"
 import { HelicalGear } from "./HelicalGear"
 import { HexSocketBolt } from "./HexSocketBolt"
 import { SheetMetal } from "./SheetMetal"
@@ -103,6 +104,10 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
   if (mp.getModelNames().includes(modelFn)) {
     const model = mp.string(footprint).json()
     switch (model.fn) {
+      case "clampingshaftcollar": {
+        const { fn, ...props } = model
+        return <ClampingShaftCollar {...props} />
+      }
       case "nema": {
         const { fn, ...props } = model
         return <NemaMotor {...props} />
