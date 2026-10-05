@@ -1,0 +1,2 @@
+export const tSlotInsideCornerExample =
+  "tslotinsidecorner_w20mm_leg40mm_t4mm_angle90deg_holes2_hole5mm_offset20mm_bendr1mm"
