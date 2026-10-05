@@ -1,4 +1,11 @@
-import { Colorize, Cuboid, Rotate, RoundedCuboid, Translate } from "jscad-fiber"
+import {
+  Colorize,
+  Cuboid,
+  Hull,
+  Rotate,
+  RoundedCuboid,
+  Translate,
+} from "jscad-fiber"
 import { Fragment } from "react"
 import { Screen } from "./Screen"
 
@@ -55,15 +62,32 @@ export interface FlexScreenProps {
 
   /** Centerline length of the modeled cable route. */
   flexCableLength?: number
+  /** Cable body width. The connector end widens when its contacts need more room. */
   flexCableWidth?: number
   flexCableThickness?: number
   flexCableColor?: string
+  /** Number of connector contacts, matching FPC.pinCount. */
+  pinCount?: number
+  /** Center-to-center connector contact spacing, matching FPC.pitch. */
+  pitch?: number
+  /** Connector contact width, matching FPC.padWidth (footprinter pw). */
+  padWidth?: number
+  /** Exposed contact length, matching FPC.padLength (footprinter pl). */
+  padLength?: number
+  /** Straight length of the widened connector end, before the taper. */
+  tailLength?: number
+  /** Length of the transition from the widened tail to the cable body. */
+  taperLength?: number
+  /** @deprecated Use pinCount. */
   conductorCount?: number
+  /** @deprecated Use pitch. */
   conductorPitch?: number
+  /** @deprecated Use padWidth. */
   conductorWidth?: number
   conductorThickness?: number
   conductorColor?: string
   cableEdgeMargin?: number
+  /** @deprecated Use padLength. */
   exposedContactLength?: number
   showConductors?: boolean
   showFlexCable?: boolean
@@ -402,6 +426,8 @@ const CableStrip = ({
   acrossOffset = 0,
   normalOffset = 0,
   overlap = 0.03,
+  widthAtDistance,
+  startDistance = 0,
 }: {
   points: readonly Point3[]
   width: number
@@ -410,42 +436,64 @@ const CableStrip = ({
   acrossOffset?: number
   normalOffset?: number
   overlap?: number
-}) => (
-  <Colorize color={color}>
-    {points.slice(1).map((point, index) => {
-      const previous = points[index]!
-      const dx = point[0] - previous[0]
-      const dy = point[1] - previous[1]
-      const dz = point[2] - previous[2]
-      const segmentLength = Math.hypot(dx, dy, dz)
-      if (segmentLength < EPSILON) return null
+  widthAtDistance?: (distance: number) => number
+  startDistance?: number
+}) => {
+  const distances = getPathDistances(points)
+  return (
+    <Colorize color={color}>
+      {points.slice(1).map((point, index) => {
+        const previous = points[index]!
+        const dx = point[0] - previous[0]
+        const dy = point[1] - previous[1]
+        const dz = point[2] - previous[2]
+        const segmentLength = Math.hypot(dx, dy, dz)
+        if (segmentLength < EPSILON) return null
 
-      const pitch = Math.asin(dz / segmentLength)
-      const yaw = Math.atan2(-dx, dy)
-      const midpoint: Point3 = [
-        (previous[0] + point[0]) / 2,
-        (previous[1] + point[1]) / 2,
-        (previous[2] + point[2]) / 2,
-      ]
-      const roundRadius = Math.max(
-        0.001,
-        Math.min(width, thickness, segmentLength) / 2 - 0.001,
-      )
+        const pitch = Math.asin(dz / segmentLength)
+        const yaw = Math.atan2(-dx, dy)
+        const midpoint: Point3 = [
+          (previous[0] + point[0]) / 2,
+          (previous[1] + point[1]) / 2,
+          (previous[2] + point[2]) / 2,
+        ]
+        const roundRadius = Math.max(
+          0.001,
+          Math.min(width, thickness, segmentLength) / 2 - 0.001,
+        )
+        const startWidth =
+          widthAtDistance?.(startDistance + distances[index]!) ?? width
+        const endWidth =
+          widthAtDistance?.(startDistance + distances[index + 1]!) ?? width
 
-      return (
-        <Translate key={`${index}:${midpoint.join(":")}`} offset={midpoint}>
-          <Rotate rotation={[pitch, 0, yaw]}>
-            <RoundedCuboid
-              size={[width, segmentLength + overlap, thickness]}
-              center={[acrossOffset, 0, normalOffset]}
-              roundRadius={roundRadius}
-            />
-          </Rotate>
-        </Translate>
-      )
-    })}
-  </Colorize>
-)
+        return (
+          <Translate key={`${index}:${midpoint.join(":")}`} offset={midpoint}>
+            <Rotate rotation={[pitch, 0, yaw]}>
+              {widthAtDistance ? (
+                <Hull>
+                  <Cuboid
+                    size={[startWidth, overlap, thickness]}
+                    center={[acrossOffset, -segmentLength / 2, normalOffset]}
+                  />
+                  <Cuboid
+                    size={[endWidth, overlap, thickness]}
+                    center={[acrossOffset, segmentLength / 2, normalOffset]}
+                  />
+                </Hull>
+              ) : (
+                <RoundedCuboid
+                  size={[width, segmentLength + overlap, thickness]}
+                  center={[acrossOffset, 0, normalOffset]}
+                  roundRadius={roundRadius}
+                />
+              )}
+            </Rotate>
+          </Translate>
+        )
+      })}
+    </Colorize>
+  )
+}
 
 export const FlexScreen = (props: FlexScreenProps) => {
   const {
@@ -466,13 +514,15 @@ export const FlexScreen = (props: FlexScreenProps) => {
     flexCableLength = 28,
     flexCableThickness = 0.18,
     flexCableColor = "#d79528",
-    conductorCount = 8,
-    conductorPitch,
-    conductorWidth,
+    pinCount: conductorCount = props.conductorCount ?? 8,
+    pitch: conductorPitch = props.conductorPitch,
+    padWidth: conductorWidth = props.conductorWidth,
     conductorThickness = 0.035,
     conductorColor = "#8c4a18",
     cableEdgeMargin = 0.6,
-    exposedContactLength = 2.4,
+    padLength: exposedContactLength = props.exposedContactLength ?? 2.4,
+    tailLength,
+    taperLength,
     showConductors = true,
     showFlexCable = true,
     showStiffeners = true,
@@ -529,8 +579,11 @@ export const FlexScreen = (props: FlexScreenProps) => {
   assertPositive("foldOutset", foldOutset)
   assertPositive("boardThickness", boardThickness)
   if (showStiffeners) assertPositive("stiffenerThickness", stiffenerThickness)
+  if (!Number.isFinite(exposedContactLength) || exposedContactLength < 0) {
+    throw new Error("padLength must be a finite nonnegative length")
+  }
   if (!Number.isInteger(conductorCount) || conductorCount < 1) {
-    throw new Error("conductorCount must be a positive integer")
+    throw new Error("pinCount must be a positive integer")
   }
   if (!Number.isInteger(bendSegments) || bendSegments < 2) {
     throw new Error("bendSegments must be an integer of at least 2")
@@ -566,24 +619,37 @@ export const FlexScreen = (props: FlexScreenProps) => {
     conductorPitch ??
     (conductorCount === 1 ? 0 : usableCableWidth / conductorCount)
   if (
-    conductorCount > 1 &&
+    (conductorPitch !== undefined || conductorCount > 1) &&
     (!Number.isFinite(resolvedConductorPitch) || resolvedConductorPitch <= 0)
   ) {
-    throw new Error("conductorPitch must be greater than zero")
+    throw new Error("pitch must be greater than zero")
   }
   const resolvedConductorWidth =
     conductorWidth ??
     (conductorCount === 1
       ? Math.min(usableCableWidth, resolvedCableWidth * 0.45)
       : resolvedConductorPitch * 0.48)
-  assertPositive("conductorWidth", resolvedConductorWidth)
+  assertPositive("padWidth", resolvedConductorWidth)
   const conductorSpan =
     (conductorCount - 1) * resolvedConductorPitch + resolvedConductorWidth
-  if (conductorSpan > usableCableWidth + EPSILON) {
-    throw new Error(
-      "conductorPitch and conductorWidth do not fit inside the flex cable margins",
-    )
-  }
+  const connectorWidth = Math.max(
+    resolvedCableWidth,
+    conductorSpan + cableEdgeMargin * 2,
+  )
+  const widensAtConnector = connectorWidth > resolvedCableWidth + EPSILON
+  // Keep the connector contacts at their specified pitch and fit the other end
+  // to the body width, rather than stretching the entire cable.
+  const screenConductorPitch = widensAtConnector
+    ? conductorCount === 1
+      ? 0
+      : usableCableWidth / conductorCount
+    : resolvedConductorPitch
+  const screenConductorWidth = widensAtConnector
+    ? Math.min(
+        resolvedConductorWidth,
+        conductorCount === 1 ? usableCableWidth : screenConductorPitch * 0.48,
+      )
+    : resolvedConductorWidth
 
   const cableStartsBelowBoard = belowBoard && !foldedFace
   const defaultCableZ = cableStartsBelowBoard
@@ -623,23 +689,64 @@ export const FlexScreen = (props: FlexScreenProps) => {
         })
       : createFlatPath(start, flexCableLength)
   const totalCableLength = getPathDistances(path).at(-1)!
+  if (tailLength !== undefined) {
+    assertPositive("tailLength", tailLength)
+    if (tailLength >= totalCableLength) {
+      throw new Error("tailLength must be shorter than flexCableLength")
+    }
+  }
+  if (taperLength !== undefined) assertPositive("taperLength", taperLength)
   const contactLength = Math.min(
     Math.max(0, exposedContactLength),
     totalCableLength / 2,
+    tailLength ?? Infinity,
   )
   const resolvedStiffenerLength = Math.min(
     Math.max(0, stiffenerLength),
     totalCableLength / 2,
+    tailLength ?? Infinity,
   )
+  const connectorLeadLength =
+    tailLength ?? Math.max(contactLength, resolvedStiffenerLength)
+  if (
+    taperLength !== undefined &&
+    connectorLeadLength + taperLength > totalCableLength + EPSILON
+  ) {
+    throw new Error(
+      "tailLength and taperLength must fit within flexCableLength",
+    )
+  }
+  const taperEndDistance = Math.min(
+    totalCableLength,
+    connectorLeadLength +
+      (taperLength ?? Math.max(3, (connectorWidth - resolvedCableWidth) / 2)),
+  )
+  const cableWidthAtDistance = (distance: number) => {
+    if (distance <= connectorLeadLength) return connectorWidth
+    const progress = Math.min(
+      1,
+      (distance - connectorLeadLength) /
+        (taperEndDistance - connectorLeadLength),
+    )
+    return connectorWidth + (resolvedCableWidth - connectorWidth) * progress
+  }
+  const cablePath = widensAtConnector
+    ? [
+        ...slicePath(path, 0, connectorLeadLength),
+        ...slicePath(path, connectorLeadLength, taperEndDistance).slice(1),
+        ...slicePath(path, taperEndDistance, totalCableLength).slice(1),
+      ]
+    : path
+  const widthProfile = widensAtConnector ? cableWidthAtDistance : undefined
   const startContacts = slicePath(path, 0, contactLength)
   const endContacts = slicePath(
     path,
     totalCableLength - contactLength,
     totalCableLength,
   )
-  const startStiffener = slicePath(path, 0, resolvedStiffenerLength)
+  const startStiffener = slicePath(cablePath, 0, resolvedStiffenerLength)
   const endStiffener = slicePath(
-    path,
+    cablePath,
     totalCableLength - resolvedStiffenerLength,
     totalCableLength,
   )
@@ -688,10 +795,9 @@ export const FlexScreen = (props: FlexScreenProps) => {
     screenCenter[2] + (screenOffset?.z ?? 0),
   ]
 
-  const conductorOffsets = Array.from({ length: conductorCount }, (_, index) =>
-    conductorCount === 1
-      ? 0
-      : (index - (conductorCount - 1) / 2) * resolvedConductorPitch,
+  const conductorOffsets = Array.from(
+    { length: conductorCount },
+    (_, index) => (index - (conductorCount - 1) / 2) * resolvedConductorPitch,
   )
   const conductorNormalOffset = (flexCableThickness + conductorThickness) / 2
   const stiffenerNormalOffset = -(flexCableThickness + stiffenerThickness) / 2
@@ -700,8 +806,9 @@ export const FlexScreen = (props: FlexScreenProps) => {
     <>
       {showFlexCable && (
         <CableStrip
-          points={path}
+          points={cablePath}
           width={resolvedCableWidth}
+          widthAtDistance={widthProfile}
           thickness={flexCableThickness}
           color={flexCableColor}
         />
@@ -711,7 +818,7 @@ export const FlexScreen = (props: FlexScreenProps) => {
         <>
           <CableStrip
             points={startStiffener}
-            width={resolvedCableWidth}
+            width={connectorWidth}
             thickness={stiffenerThickness}
             color={stiffenerColor}
             normalOffset={stiffenerNormalOffset}
@@ -719,6 +826,8 @@ export const FlexScreen = (props: FlexScreenProps) => {
           <CableStrip
             points={endStiffener}
             width={resolvedCableWidth}
+            widthAtDistance={widthProfile}
+            startDistance={totalCableLength - resolvedStiffenerLength}
             thickness={stiffenerThickness}
             color={stiffenerColor}
             normalOffset={stiffenerNormalOffset}
@@ -741,10 +850,12 @@ export const FlexScreen = (props: FlexScreenProps) => {
             />
             <CableStrip
               points={endContacts}
-              width={resolvedConductorWidth}
+              width={screenConductorWidth}
               thickness={conductorThickness}
               color={conductorColor}
-              acrossOffset={acrossOffset}
+              acrossOffset={
+                (index - (conductorCount - 1) / 2) * screenConductorPitch
+              }
               normalOffset={conductorNormalOffset}
             />
           </Fragment>

@@ -1,6 +1,6 @@
 # RigidCoupler geometry
 
-This renderer consumes the parameter contract from [modelprinter PR #29](https://github.com/tscircuit/modelprinter/pull/29). Its preview dependency is pinned to commit `01d9d03757168fac11f3c607a93a596c5dea697f` through `https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@01d9d03757168fac11f3c607a93a596c5dea697f`. Replace the preview URL with a published modelprinter release once that contract is released.
+This renderer consumes the parameter contract from [modelprinter PR #29](https://github.com/tscircuit/modelprinter/pull/29). Its preview dependency is pinned to commit `8d396e3918585a220a31b82a54e6bf15ca740419` through `https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@8d396e3918585a220a31b82a54e6bf15ca740419`. Replace the preview URL with a published modelprinter release once that contract is released.
 
 ```ts
 import { mp } from "@tscircuit/modelprinter"
