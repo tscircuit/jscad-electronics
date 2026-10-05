@@ -143,20 +143,6 @@ property:
 <component cadModel="flexscreen_w40mm_h22.5mm_flex60mm_foldsabove_distance20mm_foldstart9mm_outset6mm" />
 ```
 
-Specify connector contacts with the usual pin-count and pitch syntax:
-
-```tsx
-<component cadModel="flexscreen30_w16_h10_flex5_p0.5mm_sitsflat" />
-```
-
-`flexscreen30` sets `conductorCount={30}` and `p0.5mm` sets
-`conductorPitch={0.5}`. If the contact span plus edge margins exceeds
-`flexCableWidth`, the connector end widens and tapers to the cable body.
-The connector contacts keep their specified pitch, while the screen-end
-contacts fit the narrower body. This also works with folded orientations
-and direct `<FlexScreen conductorCount={30} conductorPitch={0.5} />` props.
-Omitting pitch preserves the existing cable shape and automatic spacing.
-
 `distance` is orientation-aware: it becomes `distanceAboveBoard` with
 `foldsabove` and `distanceBelowBoard` with `foldsbelow`. Explicit
 `distanceabove` and `distancebelow` tokens are also supported. Other useful
