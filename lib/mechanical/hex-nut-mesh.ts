@@ -10,11 +10,11 @@ export interface HexNutMesh {
   indices: number[]
 }
 /** Renderer resolution affects tessellation only, never model specifications. */
-export interface Resolution {
+export interface HexNutMeshOptions {
   radialSegments?: number
   segmentsPerPitch?: number
 }
-function resolution(options: Resolution) {
+function resolution(options: HexNutMeshOptions) {
   const radial = options.radialSegments ?? 96
   const axial = options.segmentsPerPitch ?? 32
   if (
@@ -73,7 +73,7 @@ function threadDistance(z: number, angle: number, pitch: number, hand = 1) {
 /** Closed annular surface with a through internal thread and both conical mouths. */
 export function createHexNutMesh(
   input: HexNutModelPropsInput,
-  options: Resolution = {},
+  options: HexNutMeshOptions = {},
 ): HexNutMesh {
   const props = hexNutModelPropsSchema.parse(input)
   const d = getHexNutDimensions(input)
