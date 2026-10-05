@@ -1,6 +1,6 @@
 # ButtonScrew renderer
 
-Consumes the strict schemas and resolved dimensions from [modelprinter PR #24](https://github.com/tscircuit/modelprinter/pull/24). The dependency and lockfile pin that PR's immutable pkg.pr.new preview SHA so the renderer can be reviewed before a modelprinter release. Replace the preview with a published version after that contract is released.
+Consumes the strict schemas and resolved dimensions from [modelprinter PR #24](https://github.com/tscircuit/modelprinter/pull/24). The dependency and lockfile pin [that PR's immutable package preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@5a3ddec8075a2fda1f55b57e1b90d24f49cc1ce8) so the renderer can be reviewed before a modelprinter release. Replace the preview with a published version after that contract is released.
 
 `createButtonScrewMesh` returns indexed outward-facing triangles; `createButtonScrewGeom` produces a JSCAD solid. `ButtonScrew` is exported from both React and vanilla entrypoints. `Footprinter3d` and vanilla footprint helpers route `buttonscrew` strings to it; mechanical models produce no PCB pads.
 
