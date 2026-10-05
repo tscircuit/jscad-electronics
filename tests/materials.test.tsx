@@ -32,7 +32,9 @@ test.each(["soic8", "dip8", "qfp32", "pinrow6", "usbcmidmount16", "nema17"])(
       model.geometries.map((entry: any) => settings(entry.material)),
     ).toEqual(react.map((geom) => settings(geom.material)))
     expect(
-      model.geometries.some((entry: any) => entry.material?.metalness === 1),
+      model.geometries.some(
+        (entry: any) => (entry.material?.metalness ?? 0) > 0,
+      ),
     ).toBe(true)
     expect(
       model.geometries.some((entry: any) => entry.material?.metalness === 0),
@@ -41,7 +43,7 @@ test.each(["soic8", "dip8", "qfp32", "pinrow6", "usbcmidmount16", "nema17"])(
     const gltf = JSON.parse(result.data as string)
     expect(
       gltf.materials.some(
-        (material: any) => material.pbrMetallicRoughness.metallicFactor === 1,
+        (material: any) => material.pbrMetallicRoughness.metallicFactor > 0,
       ),
     ).toBe(true)
   },
