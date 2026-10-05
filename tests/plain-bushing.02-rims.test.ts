@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test"
-import { createPlainBushingMesh } from "../lib/PlainBushing"
+import { createPlainBushingMesh } from "../lib/models/plainbushing"
 import { examples } from "./fixtures/plain-bushing-cases"
 
 test("plain bushing chamfers every bore and outside rim without changing overall length", () => {

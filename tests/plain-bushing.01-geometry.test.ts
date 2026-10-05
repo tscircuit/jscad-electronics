@@ -4,7 +4,7 @@ import { plainBushingModelPropsSchema } from "@tscircuit/modelprinter"
 import {
   createPlainBushingGeom,
   createPlainBushingMesh,
-} from "../lib/PlainBushing"
+} from "../lib/models/plainbushing"
 import { examples } from "./fixtures/plain-bushing-cases"
 import {
   assertClosedGearMesh,

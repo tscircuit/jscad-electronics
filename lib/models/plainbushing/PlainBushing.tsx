@@ -1,7 +1,7 @@
 import type { PlainBushingModelPropsInput } from "@tscircuit/modelprinter"
 import { Colorize, Custom } from "jscad-fiber"
-import { indexedMeshToGeom3 } from "./mechanical/indexedMeshToGeom3"
-import { createPlainBushingMesh } from "./mechanical/plain-bushing-mesh"
+import { indexedMeshToGeom3 } from "../../mechanical/indexedMeshToGeom3"
+import { createPlainBushingMesh } from "./mesh"
 
 export type PlainBushingProps = PlainBushingModelPropsInput & { color?: string }
 
@@ -21,5 +21,5 @@ export function PlainBushing({
   )
 }
 
-export { createPlainBushingMesh } from "./mechanical/plain-bushing-mesh"
-export type { PlainBushingMesh } from "./mechanical/plain-bushing-mesh"
+export { createPlainBushingMesh } from "./mesh"
+export type { PlainBushingMesh } from "./mesh"

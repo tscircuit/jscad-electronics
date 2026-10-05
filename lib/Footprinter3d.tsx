@@ -1,4 +1,4 @@
-import { PlainBushing } from "./PlainBushing"
+import { PlainBushing } from "./models/plainbushing"
 import { HelicalGear } from "./HelicalGear"
 import { HexSocketBolt } from "./HexSocketBolt"
 import { SheetMetal } from "./SheetMetal"

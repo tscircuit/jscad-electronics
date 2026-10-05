@@ -3,7 +3,7 @@ import type { PlainBushingModelPropsInput } from "@tscircuit/modelprinter"
 import {
   createPlainBushingGeom,
   createPlainBushingMesh,
-} from "../lib/PlainBushing"
+} from "../lib/models/plainbushing"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { source } from "./fixtures/plain-bushing-cases"
