@@ -11,8 +11,8 @@ mechanical models emit no PCB pads.
 
 The schema, defaults, units and section identity are consumed from
 [modelprinter PR #33](https://github.com/tscircuit/modelprinter/pull/33), using
-its [pinned package preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@fbd6b68dd6dd4458c33e4d0800d5b6e219b2c6b3).
-See the [parameter contract](https://github.com/tscircuit/modelprinter/blob/codex/roadmap-0021-tslotextrusion/docs/tslot-extrusion.md).
+its [pinned package preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@ea42cf480b0d485b5d4e4dffc0f478d9739f23d1).
+See the [parameter contract](https://github.com/tscircuit/modelprinter/blob/ea42cf480b0d485b5d4e4dffc0f478d9739f23d1/docs/tslot-extrusion.md).
 
 The indexed outward surface models the actual narrow mouths and wider T
 pockets, open along the whole length, and an uncapped axial bore. Outside
