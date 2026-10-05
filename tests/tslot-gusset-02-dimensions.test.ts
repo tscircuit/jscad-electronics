@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test"
 import { tSlotGussetModelPropsSchema } from "@tscircuit/modelprinter"
-import { createTSlotGussetMesh } from "../lib/TSlotGusset"
+import { createTSlotGussetMesh } from "../lib/models/tslotgusset"
 import {
   assertClosedGearMesh as assertClosedMesh,
   meshBounds,

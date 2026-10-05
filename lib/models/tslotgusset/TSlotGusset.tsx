@@ -1,7 +1,7 @@
 import type { TSlotGussetModelPropsInput } from "@tscircuit/modelprinter"
 import { Colorize, Custom } from "jscad-fiber"
-import { indexedMeshToGeom3 } from "./mechanical/indexedMeshToGeom3"
-import { createTSlotGussetMesh } from "./mechanical/tslot-gusset-mesh"
+import { indexedMeshToGeom3 } from "../../mechanical/indexedMeshToGeom3"
+import { createTSlotGussetMesh } from "./mesh"
 
 export type TSlotGussetProps = TSlotGussetModelPropsInput & { color?: string }
 
@@ -17,5 +17,5 @@ export function TSlotGusset({ color = "#8995a3", ...props }: TSlotGussetProps) {
   )
 }
 
-export { createTSlotGussetMesh } from "./mechanical/tslot-gusset-mesh"
-export type { TSlotGussetMesh } from "./mechanical/tslot-gusset-mesh"
+export { createTSlotGussetMesh } from "./mesh"
+export type { TSlotGussetMesh } from "./mesh"

@@ -1,4 +1,4 @@
-import { TSlotGusset } from "./TSlotGusset"
+import { TSlotGusset } from "./models/tslotgusset"
 import { HelicalGear } from "./HelicalGear"
 import { HexSocketBolt } from "./HexSocketBolt"
 import { SheetMetal } from "./SheetMetal"

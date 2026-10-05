@@ -4,7 +4,7 @@ import { mp } from "@tscircuit/modelprinter"
 import {
   createTSlotGussetGeom,
   createTSlotGussetMesh,
-} from "../lib/TSlotGusset"
+} from "../lib/models/tslotgusset"
 import {
   assertClosedGearMesh as assertClosedMesh,
   meshBounds,

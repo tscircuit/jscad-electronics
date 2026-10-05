@@ -5,7 +5,7 @@ import {
   TSlotGusset,
   createTSlotGussetGeom,
   createTSlotGussetMesh,
-} from "../lib/TSlotGusset"
+} from "../lib/models/tslotgusset"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { getComponentModel } from "./helpers/component-model"
 import { importVanilla } from "./fixtures/importVanilla.js"
