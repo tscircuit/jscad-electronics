@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test"
 import { tSlotInsideCornerModelPropsSchema } from "@tscircuit/modelprinter"
-import { createTSlotInsideCornerMesh } from "../lib/TSlotInsideCorner"
+import { createTSlotInsideCornerMesh } from "../lib/models/tslotinsidecorner"
 import {
   assertClosedGearMesh as assertClosedMesh,
   meshBounds,

@@ -7,7 +7,7 @@ import {
   extrudePlanarProfile,
   joinProfileMeshes,
   type ProfilePoint,
-} from "./extrude-planar-profile"
+} from "../../mechanical/extrude-planar-profile"
 
 export interface TSlotInsideCornerMesh {
   positions: number[]

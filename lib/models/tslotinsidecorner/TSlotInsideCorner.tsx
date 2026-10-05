@@ -1,7 +1,7 @@
 import type { TSlotInsideCornerModelPropsInput } from "@tscircuit/modelprinter"
 import { Colorize, Custom } from "jscad-fiber"
-import { indexedMeshToGeom3 } from "./mechanical/indexedMeshToGeom3"
-import { createTSlotInsideCornerMesh } from "./mechanical/tslot-inside-corner-mesh"
+import { indexedMeshToGeom3 } from "../../mechanical/indexedMeshToGeom3"
+import { createTSlotInsideCornerMesh } from "./mesh"
 
 export type TSlotInsideCornerProps = TSlotInsideCornerModelPropsInput & {
   color?: string
@@ -24,5 +24,5 @@ export function TSlotInsideCorner({
   )
 }
 
-export { createTSlotInsideCornerMesh } from "./mechanical/tslot-inside-corner-mesh"
-export type { TSlotInsideCornerMesh } from "./mechanical/tslot-inside-corner-mesh"
+export { createTSlotInsideCornerMesh } from "./mesh"
+export type { TSlotInsideCornerMesh } from "./mesh"

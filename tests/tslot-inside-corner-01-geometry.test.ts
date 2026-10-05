@@ -4,7 +4,7 @@ import { mp } from "@tscircuit/modelprinter"
 import {
   createTSlotInsideCornerGeom,
   createTSlotInsideCornerMesh,
-} from "../lib/TSlotInsideCorner"
+} from "../lib/models/tslotinsidecorner"
 import {
   assertClosedGearMesh as assertClosedMesh,
   meshBounds,

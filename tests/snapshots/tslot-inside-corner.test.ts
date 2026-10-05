@@ -1,6 +1,6 @@
 import { test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
-import { createTSlotInsideCornerMesh } from "../../lib/TSlotInsideCorner"
+import { createTSlotInsideCornerMesh } from "../../lib/models/tslotinsidecorner"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
 

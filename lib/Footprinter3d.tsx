@@ -1,4 +1,4 @@
-import { TSlotInsideCorner } from "./TSlotInsideCorner"
+import { TSlotInsideCorner } from "./models/tslotinsidecorner"
 import { HelicalGear } from "./HelicalGear"
 import { HexSocketBolt } from "./HexSocketBolt"
 import { SheetMetal } from "./SheetMetal"

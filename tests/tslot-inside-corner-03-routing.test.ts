@@ -5,7 +5,7 @@ import {
   TSlotInsideCorner,
   createTSlotInsideCornerGeom,
   createTSlotInsideCornerMesh,
-} from "../lib/TSlotInsideCorner"
+} from "../lib/models/tslotinsidecorner"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { getComponentModel } from "./helpers/component-model"
 import { importVanilla } from "./fixtures/importVanilla.js"
