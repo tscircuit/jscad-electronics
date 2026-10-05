@@ -1,6 +1,6 @@
 import { test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
-import { createHexBoltMesh } from "../../lib/HexBolt"
+import { createHexBoltMesh } from "../../lib/models/hexbolt"
 import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 

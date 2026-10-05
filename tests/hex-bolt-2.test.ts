@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test"
 import jscad from "@jscad/modeling"
 import { mp } from "@tscircuit/modelprinter"
-import { HexBolt, createHexBoltGeom } from "../lib/HexBolt"
+import { HexBolt, createHexBoltGeom } from "../lib/models/hexbolt"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { getComponentModel } from "./helpers/component-model"

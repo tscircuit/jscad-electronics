@@ -1,10 +1,7 @@
 import type { HexBoltModelPropsInput } from "@tscircuit/modelprinter"
 import { Colorize, Custom } from "jscad-fiber"
-import {
-  createHexBoltMesh,
-  type HexBoltMeshOptions,
-} from "./mechanical/hex-bolt-mesh"
-import { indexedMeshToGeom3 } from "./mechanical/indexedMeshToGeom3"
+import { createHexBoltMesh, type HexBoltMeshOptions } from "./mesh"
+import { indexedMeshToGeom3 } from "../../mechanical/indexedMeshToGeom3"
 
 export type HexBoltProps = HexBoltModelPropsInput & { color?: string }
 export function createHexBoltGeom(
@@ -20,8 +17,8 @@ export function HexBolt({ color = "#737e8f", ...props }: HexBoltProps) {
     </Colorize>
   )
 }
-export { createHexBoltMesh } from "./mechanical/hex-bolt-mesh"
+export { createHexBoltMesh } from "./mesh"
 export type {
   HexBoltMesh,
   HexBoltMeshOptions,
-} from "./mechanical/hex-bolt-mesh"
+} from "./mesh"

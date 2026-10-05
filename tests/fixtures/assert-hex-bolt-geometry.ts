@@ -1,5 +1,5 @@
 import { expect } from "bun:test"
-import { createHexBoltMesh } from "../../lib/HexBolt"
+import { createHexBoltMesh } from "../../lib/models/hexbolt"
 import { hexBoltModelPropsSchema } from "@tscircuit/modelprinter"
 
 export function assertHexBoltGeometry() {
