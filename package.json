@@ -52,7 +52,7 @@
     "jscad-to-gltf": "https://pkg.pr.new/jscad-to-gltf@804fbb0",
     "looks-same": "^10.0.1",
     "pngjs": "^7.0.0",
-    "poppygl": "^0.0.33",
+    "poppygl": "^0.0.34",
     "react-cosmos": "7.0.0",
     "react-cosmos-plugin-vite": "7.0.0",
     "tsup": "^8.3.0",
