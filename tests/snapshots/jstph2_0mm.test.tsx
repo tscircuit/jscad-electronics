@@ -3,7 +3,7 @@ import "../fixtures/png-matcher"
 import * as jscadModeling from "@jscad/modeling"
 import { createJSCADRenderer } from "jscad-fiber"
 import { Colorize, Cuboid, Translate } from "jscad-fiber"
-import { convertJscadModelToGltf } from "jscad-to-gltf"
+import { convertJscadModelToGltf } from "../helpers/convert-model-to-gltf"
 import { renderGLTFToPNGFromGLB } from "poppygl"
 import * as React from "react"
 import { JSTPH2_0mm } from "../../lib/JSTPH2_0mm"
@@ -31,6 +31,8 @@ async function renderComponentTopView(
       width: 800,
       height: 600,
       backgroundColor: [1, 1, 1],
+      realistic: true,
+      supersampling: 2,
       ambient: 0.5,
       gamma: true,
       cull: true,

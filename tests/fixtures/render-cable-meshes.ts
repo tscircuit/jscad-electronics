@@ -24,7 +24,12 @@ export function cableDrawCalls(meshes: CableMesh[]): DrawCall[] {
       normals: computeSmoothNormals(positions, indices),
       uvs: null,
       model: mat4.create(),
-      material: { baseColorFactor: mesh.color, baseColorTexture: null },
+      material: {
+        baseColorFactor: mesh.color,
+        baseColorTexture: null,
+        metallicFactor: mesh.material?.metalness ?? 0,
+        roughnessFactor: mesh.material?.roughness ?? 0.7,
+      },
     }
   })
 }
@@ -52,6 +57,7 @@ export function renderCableMeshes(
     lookAt: center,
     up: options.detail ? "y+" : "z+",
     fov: 32,
+    realistic: true,
     ambient: 0.3,
     lightDir: [-0.4, -0.8, -0.6],
     grid: false,

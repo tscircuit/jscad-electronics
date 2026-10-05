@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import { Cuboid, Translate, Colorize } from "jscad-fiber"
 import { DipPinLeg } from "./DualInlinePackage"
 
@@ -93,7 +94,11 @@ export const USB_A = ({
   ]
 
   const metalCasing = positions.map((pos, index) => (
-    <Colorize key={index} color={outerColor}>
+    <Colorize
+      key={index}
+      material={componentMaterials.brushedMetal}
+      color={outerColor}
+    >
       <Cuboid
         size={pos.size as [number, number, number]}
         center={{ x: pos.x, y: pos.y, z: pos.z }}
@@ -104,7 +109,7 @@ export const USB_A = ({
   // Plastic insert (inner part)
   const innerPlastic = (
     <Translate z={(innerHeight - metalThickness) / 2}>
-      <Colorize color={innerColor}>
+      <Colorize material={componentMaterials.moldedPlastic} color={innerColor}>
         <Cuboid
           size={[innerWidth, innerDepth, innerHeight]}
           center={{ x: 0, y: 0, z: metalThickness * 3 }}
@@ -167,6 +172,7 @@ export const USB_A = ({
   const outerPlateThickness = 0.2
   const outerPlate = (
     <Cuboid
+      material={componentMaterials.moldedPlastic}
       color={innerColor}
       center={{ x: 0, y: outerDepth / 4, z: outerPlateThickness }}
       size={[outerWidth, innerDepth / 1.6, outerPlateThickness]}

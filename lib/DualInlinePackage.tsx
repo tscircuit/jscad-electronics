@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import { Polygon, ExtrudeLinear, Rotate, Translate, Union } from "jscad-fiber"
 import { ChipBody } from "./ChipBody"
 import { range } from "./utils/range"
@@ -41,7 +42,10 @@ export const DipPinLeg = ({ x, y, z }: { x: number; y: number; z: number }) => {
   const isRotated = x > 0
   return (
     <>
-      <Translate offset={{ x: x + 0.25 / 2, y, z: z }}>
+      <Translate
+        material={componentMaterials.tinnedLead}
+        offset={{ x: x + 0.25 / 2, y, z: z }}
+      >
         <Rotate rotation={["-90deg", 0, "90deg"]}>
           <ExtrudeLinear height={0.25}>
             <Polygon

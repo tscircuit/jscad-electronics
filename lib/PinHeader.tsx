@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import { Colorize, Cuboid, Hull, Rotate, Translate } from "jscad-fiber"
 import { SmdChipLead } from "./SmdChipLead"
 
@@ -33,11 +34,15 @@ export const PinHeader = ({
       <Translate y={rightangle ? -3 : 0}>
         <Cuboid
           color="#222"
+          material={componentMaterials.moldedPlastic}
           size={[bodyLength, bodyWidth, bodyHeight]}
           center={[x, y, flipZ(bodyHeight / 2)]}
         />
       </Translate>
-      <Colorize color={PIN_METAL_COLOR}>
+      <Colorize
+        color={PIN_METAL_COLOR}
+        material={componentMaterials.goldContact}
+      >
         {smd ? (
           <SmdChipLead
             rotation={-Math.PI / 2}
@@ -72,7 +77,10 @@ export const PinHeader = ({
         )}
       </Colorize>
 
-      <Colorize color={PIN_METAL_COLOR}>
+      <Colorize
+        color={PIN_METAL_COLOR}
+        material={componentMaterials.goldContact}
+      >
         <Translate y={rightangle ? -3.9 : 0} z={rightangle ? 1 : 0}>
           <Rotate rotation={rightangle ? [-Math.PI / 2, 0, 0] : [0, 0, 0]}>
             <Hull>

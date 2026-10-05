@@ -1,7 +1,7 @@
 import * as jscadModeling from "@jscad/modeling"
 import type { Geometry } from "@jscad/modeling/src/geometries/types"
 import { createJSCADRenderer } from "jscad-fiber"
-import { convertJscadModelToGltf } from "jscad-to-gltf"
+import { convertJscadModelToGltf } from "./convert-model-to-gltf"
 import { renderGLTFToPNGFromGLB } from "poppygl"
 import type { ReactElement } from "react"
 import {
@@ -83,6 +83,7 @@ export async function renderComponent(
     width: options.width ?? 800,
     height: options.height ?? 600,
     backgroundColor: [1, 1, 1],
+    realistic: true,
     ambient: 0.38,
     gamma: true,
     cull: true,

@@ -4,7 +4,7 @@ import {
   SoftwareRenderer,
   createUint8Bitmap,
   encodePNG,
-  type Camera,
+  renderDrawCalls,
   type DrawCall,
 } from "poppygl"
 
@@ -102,9 +102,13 @@ export async function renderModelSnapshot({
   modelString,
   views,
   footer,
+  metalness = 0,
+  roughness = 0.65,
 }: {
   mesh: { positions: number[]; indices: number[] }
   title: string
+  metalness?: number
+  roughness?: number
   modelString: string
   views: readonly [SnapshotView, SnapshotView, SnapshotView, SnapshotView]
   footer: string
@@ -113,49 +117,40 @@ export async function renderModelSnapshot({
     mesh.positions.slice(index * 3, index * 3 + 3),
   )
   const model = drawCall(positions, [0.42, 0.49, 0.59, 1])
+  model.material.metallicFactor = metalness
+  model.material.roughnessFactor = roughness
   const sheet = new SoftwareRenderer(width * scale, height * scale)
   sheet.clear([227, 233, 240, 255])
 
   for (const [index, view] of views.entries()) {
-    const panel = new SoftwareRenderer(660 * scale, 440 * scale)
-    panel.clear([241, 244, 248, 255])
-    const half = view.span / 2
-    const camera: Camera = {
-      view: mat4.lookAt(
-        mat4.create(),
-        view.eye,
-        view.target,
-        view.name === "TOP" ? [0, 1, 0] : [0, 0, 1],
-      ),
-      proj: mat4.ortho(
-        mat4.create(),
-        -half * 1.5,
-        half * 1.5,
-        -half,
-        half,
-        0.1,
-        100,
-      ),
-    }
-    panel.drawMesh(
-      model,
-      camera,
-      { dir: [-0.4, 0.7, -0.6], ambient: 0.3 },
-      model.material,
-      true,
-      true,
+    const distance = Math.hypot(
+      ...view.eye.map((value, axis) => value - view.target[axis]!),
     )
+    const { bitmap: panel } = renderDrawCalls([model], {
+      width: 660,
+      height: 440,
+      supersampling: 1,
+      realistic: true,
+      backgroundColor: [241 / 255, 244 / 255, 248 / 255],
+      camPos: view.eye,
+      lookAt: view.target,
+      up: view.name === "TOP" ? "y+" : "z+",
+      fov: (2 * Math.atan(view.span / (2 * distance)) * 180) / Math.PI,
+      grid: false,
+      cull: true,
+    })
     const left = 32 + (index % 2) * 676
     const top = 144 + Math.floor(index / 2) * 476
-    for (let y = 0; y < panel.height; y++) {
+    // Shade at the final panel resolution; supersample the small text separately.
+    for (let y = 0; y < panel.height * scale; y++) {
+      const row = new Uint8Array(panel.width * scale * 4)
+      for (let x = 0; x < panel.width * scale; x++) {
+        const at =
+          (Math.floor(y / scale) * panel.width + Math.floor(x / scale)) * 4
+        row.set(panel.data.subarray(at, at + 4), x * 4)
+      }
       const start = ((top * scale + y) * sheet.width + left * scale) * 4
-      sheet.bitmap.data.set(
-        panel.bitmap.data.subarray(
-          y * panel.width * 4,
-          (y + 1) * panel.width * 4,
-        ),
-        start,
-      )
+      sheet.bitmap.data.set(row, start)
     }
     label(sheet, { text: view.name, x: left + 22, y: top + 7, size: 20 })
     label(sheet, { text: view.detail, x: left + 22, y: top + 401, size: 17 })

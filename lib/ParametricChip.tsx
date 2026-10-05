@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import { Cuboid } from "jscad-fiber"
 
 /**
@@ -50,16 +51,19 @@ export const ParametricChip = ({
       <Cuboid
         size={[bodyLength, width, height]}
         offset={[0, 0, height / 2]}
+        material={componentMaterials.moldedPlastic}
         color={color}
       />
       <Cuboid
         size={[terminatorWidth, height, width]}
         offset={[fullLength / 2 - terminatorWidth / 2, 0, height / 2]}
+        material={componentMaterials.tinnedLead}
         color="#ccc"
       />
       <Cuboid
         size={[terminatorWidth, height, width]}
         offset={[-fullLength / 2 + terminatorWidth / 2, 0, height / 2]}
+        material={componentMaterials.tinnedLead}
         color="#ccc"
       />
     </>

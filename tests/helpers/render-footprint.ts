@@ -1,6 +1,6 @@
 import * as jscadModeling from "@jscad/modeling"
 import type { Geometry } from "@jscad/modeling/src/geometries/types"
-import { convertJscadModelToGltf } from "jscad-to-gltf"
+import { convertJscadModelToGltf } from "./convert-model-to-gltf"
 import {
   createSceneFromGLTF,
   createUint8Bitmap,
@@ -39,11 +39,8 @@ type RenderFootprintOptions = {
    * standing on them stay visible — from underneath especially, where the
    * pads sit between the camera and everything else.
    *
-   * This cannot go through the GLB path: `jscad-to-gltf` writes COLOR_0 as a
-   * VEC3 and emits no materials at all, so a colour's alpha is dropped before
-   * poppygl ever sees it. poppygl itself blends correctly, so a request for
-   * transparency renders through its scene API with a BLEND material attached
-   * to the pad primitives instead.
+   * The inspection override changes only pad alpha; authored metalness,
+   * roughness and colors remain intact.
    */
   padOpacity?: number
 }
@@ -153,6 +150,7 @@ export async function renderFootprint(
     width: 800,
     height: 600,
     backgroundColor: [1, 1, 1] as const,
+    realistic: true,
     ambient: 0.3,
     gamma: true,
     cull: true as const,
@@ -211,12 +209,8 @@ export async function renderFootprint(
 /**
  * Render with the pad primitives made see-through.
  *
- * The GLB path cannot express this: `jscad-to-gltf` emits one mesh per
- * geometry with a VEC3 COLOR_0 and no materials, so alpha is lost in the
- * conversion. poppygl's renderer does support it — `alphaMode: "BLEND"` with
- * an alpha in `baseColorFactor`, blended after the opaque pass without writing
- * depth — so the glTF is patched with such a material for the pad meshes and
- * handed to poppygl's scene API directly.
+ * Override the exported pad materials' alpha while retaining their finish.
+ * This inspection view deliberately leaves the opaque body unobscured.
  *
  * The mesh order is the geometry order, which is why the body count is enough
  * to identify the pads.
@@ -249,19 +243,23 @@ async function renderWithTransparentPads(
   }
 
   gltf.materials = gltf.materials ?? []
-  const materialIndex = gltf.materials.length
-  gltf.materials.push({
-    name: "transparent-pad",
-    // White base colour so the pad's own vertex colour survives: poppygl
-    // multiplies COLOR_0 into baseColorFactor and takes alpha from the factor.
-    pbrMetallicRoughness: { baseColorFactor: [1, 1, 1, padOpacity] },
-    alphaMode: "BLEND",
-    doubleSided: true,
-  })
-
   for (let i = bodyGeometryCount; i < (gltf.meshes?.length ?? 0); i++) {
     for (const primitive of gltf.meshes[i].primitives ?? []) {
-      primitive.material = materialIndex
+      const source = gltf.materials[primitive.material] ?? {}
+      const pbr = source.pbrMetallicRoughness ?? {}
+      primitive.material =
+        gltf.materials.push({
+          ...source,
+          pbrMetallicRoughness: {
+            ...pbr,
+            baseColorFactor: [
+              ...(pbr.baseColorFactor ?? [1, 1, 1, 1]).slice(0, 3),
+              padOpacity,
+            ],
+          },
+          alphaMode: "BLEND",
+          doubleSided: true,
+        }) - 1
     }
   }
 

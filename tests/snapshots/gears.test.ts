@@ -13,7 +13,7 @@ test("spur gear - involute teeth, bore and hub", async () => {
     png,
     import.meta.path.replace("gears.test.ts", "gears-spur-hub.test.ts"),
   )
-}, 30000)
+}, 60000)
 
 test("worm gear - right-hand single start", async () => {
   const png = await renderWormGearSnapshot(
@@ -23,7 +23,7 @@ test("worm gear - right-hand single start", async () => {
     png,
     import.meta.path.replace("gears.test.ts", "gears-worm-right.test.ts"),
   )
-}, 30000)
+}, 60000)
 
 test("worm gear - left-hand three starts", async () => {
   const png = await renderWormGearSnapshot(
@@ -36,4 +36,4 @@ test("worm gear - left-hand three starts", async () => {
       "gears-worm-left-multistart.test.ts",
     ),
   )
-}, 30000)
+}, 60000)
