@@ -1,6 +1,6 @@
 # ClampingShaftCollar geometry
 
-This renderer consumes the parameter contract from [modelprinter PR #28](https://github.com/tscircuit/modelprinter/pull/28). Its preview dependency is pinned to commit `b04f33d8c4f1f0ab3299fa9b2fe3f905655ebf2b` through `https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@b04f33d8c4f1f0ab3299fa9b2fe3f905655ebf2b`. Replace the preview URL with a published modelprinter release once that contract is released.
+This renderer consumes the parameter contract from [modelprinter PR #28](https://github.com/tscircuit/modelprinter/pull/28). Its preview dependency is pinned to commit `831d3cd455476e5fb645a78c309b2fdc2f194055` through `https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@831d3cd455476e5fb645a78c309b2fdc2f194055`. Replace the preview URL with a published modelprinter release once that contract is released.
 
 ```ts
 import { mp } from "@tscircuit/modelprinter"

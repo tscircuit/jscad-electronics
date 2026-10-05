@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@tscircuit/mm": "^0.0.8",
-    "@tscircuit/modelprinter": "https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@b04f33d8c4f1f0ab3299fa9b2fe3f905655ebf2b",
+    "@tscircuit/modelprinter": "https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@831d3cd455476e5fb645a78c309b2fdc2f194055",
     "earcut": "^3.2.3"
   },
   "devDependencies": {
