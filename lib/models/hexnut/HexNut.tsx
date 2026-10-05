@@ -1,10 +1,7 @@
 import type { HexNutModelPropsInput } from "@tscircuit/modelprinter"
 import { Colorize, Custom } from "jscad-fiber"
-import {
-  createHexNutMesh,
-  type HexNutMeshOptions,
-} from "./mechanical/hex-nut-mesh"
-import { indexedMeshToGeom3 } from "./mechanical/indexedMeshToGeom3"
+import { createHexNutMesh, type HexNutMeshOptions } from "./mesh"
+import { indexedMeshToGeom3 } from "../../mechanical/indexedMeshToGeom3"
 
 export type HexNutProps = HexNutModelPropsInput & { color?: string }
 export function createHexNutGeom(
@@ -20,5 +17,5 @@ export function HexNut({ color = "#737e8f", ...props }: HexNutProps) {
     </Colorize>
   )
 }
-export { createHexNutMesh } from "./mechanical/hex-nut-mesh"
-export type { HexNutMesh, HexNutMeshOptions } from "./mechanical/hex-nut-mesh"
+export { createHexNutMesh } from "./mesh"
+export type { HexNutMesh, HexNutMeshOptions } from "./mesh"

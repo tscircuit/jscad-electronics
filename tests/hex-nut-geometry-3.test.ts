@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test"
-import { createHexNutMesh } from "../lib/HexNut"
+import { createHexNutMesh } from "../lib/models/hexnut"
 
 test("hexnut rejects invalid tessellation options before allocation", () => {
   for (const options of [

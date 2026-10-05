@@ -4,7 +4,7 @@ import {
   sliceMesh,
   innerRadiusAtAngle,
 } from "./fixtures/assert-gear-geometry"
-import { createHexNutMesh } from "../lib/HexNut"
+import { createHexNutMesh } from "../lib/models/hexnut"
 import { getHexNutDimensions } from "@tscircuit/modelprinter"
 
 test("hex nut internal helical crests follow the pinned 60-degree profile", () => {

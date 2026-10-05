@@ -5,7 +5,11 @@ import { Footprinter3d } from "../lib/Footprinter3d"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { getComponentModel } from "./helpers/component-model"
 import { importVanilla } from "./fixtures/importVanilla.js"
-import { HexNut, createHexNutMesh, createHexNutGeom } from "../lib/HexNut"
+import {
+  HexNut,
+  createHexNutMesh,
+  createHexNutGeom,
+} from "../lib/models/hexnut"
 
 test("hexnut React and built vanilla routing share geometry and exclude PCB pads", async () => {
   const source = "hexnut_standard(iso4032)_m6"

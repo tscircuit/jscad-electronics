@@ -8,7 +8,7 @@ import {
   innerRadiusAtAngle,
   assertOpenAxialBore,
 } from "./fixtures/assert-gear-geometry"
-import { createHexNutMesh, createHexNutGeom } from "../lib/HexNut"
+import { createHexNutMesh, createHexNutGeom } from "../lib/models/hexnut"
 import { getHexNutDimensions } from "@tscircuit/modelprinter"
 
 for (const metricSize of ["M5", "M6", "M8", "M10", "M12"] as const)
