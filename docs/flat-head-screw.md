@@ -1,6 +1,6 @@
 # FlatHeadScrew geometry
 
-This renderer consumes [modelprinter PR #37](https://github.com/tscircuit/modelprinter/pull/37) through the pinned preview dependency `6f3ea8b67492a797330847fd942b26d95579e51c` from pkg.pr.new. modelprinter owns the parser, dimension tables, defaults and validation; this repository owns the indexed mesh, JSCAD Geom3 factory, React/vanilla component and four-view poppygl snapshot.
+This renderer consumes [modelprinter PR #37](https://github.com/tscircuit/modelprinter/pull/37) through the pinned preview dependency `36850ac4685b19c4f0be901b24943ce29d326ebf` from pkg.pr.new. modelprinter owns the parser, dimension tables, defaults and validation; this repository owns the indexed mesh, JSCAD Geom3 factory, React/vanilla component and four-view poppygl snapshot.
 
 `createFlatHeadScrewMesh` and `createFlatHeadScrewGeom` accept the exported modelprinter props schema inputs. `FlatHeadScrew` also accepts a color. Footprinter3d dispatches the full `flatheadscrew` string, and ExtrudedPads validates it then returns no electrical pads. Datums and dimensions follow the modelprinter contract unchanged. All supported M3/M4/M5/M6 sizes are validated by modelprinter.
 
