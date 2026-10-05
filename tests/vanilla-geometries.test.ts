@@ -24,7 +24,7 @@ test("vanilla build renders a flexscreen model string", async () => {
 test("vanilla flexscreen accepts pin count and pitch with a tapered connector end", async () => {
   const { getJscadModelForFootprint } = await importVanilla()
   const { geometries }: RenderResult = getJscadModelForFootprint(
-    "flexscreen30_w16_h10_flex5_p0.5mm_sitsflat_hidescreen_hidestiffeners_hideconductors",
+    "flexscreen30_w16_h10_flex5_p0.5mm_tail2mm_taper3mm_sitsflat_hidescreen_hidestiffeners_hideconductors",
     jscadModeling,
   )
   const shapes = geometries.map(({ geom }) => geom)

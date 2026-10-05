@@ -66,13 +66,28 @@ export interface FlexScreenProps {
   flexCableWidth?: number
   flexCableThickness?: number
   flexCableColor?: string
+  /** Number of connector contacts, matching FPC.pinCount. */
+  pinCount?: number
+  /** Center-to-center connector contact spacing, matching FPC.pitch. */
+  pitch?: number
+  /** Connector contact width, matching FPC.padWidth (footprinter pw). */
+  padWidth?: number
+  /** Exposed contact length, matching FPC.padLength (footprinter pl). */
+  padLength?: number
+  /** Straight length of the widened connector end, before the taper. */
+  tailLength?: number
+  /** Length of the transition from the widened tail to the cable body. */
+  taperLength?: number
+  /** @deprecated Use pinCount. */
   conductorCount?: number
-  /** Connector contact pitch. Screen-end contacts compress to fit the cable body. */
+  /** @deprecated Use pitch. */
   conductorPitch?: number
+  /** @deprecated Use padWidth. */
   conductorWidth?: number
   conductorThickness?: number
   conductorColor?: string
   cableEdgeMargin?: number
+  /** @deprecated Use padLength. */
   exposedContactLength?: number
   showConductors?: boolean
   showFlexCable?: boolean
@@ -499,13 +514,15 @@ export const FlexScreen = (props: FlexScreenProps) => {
     flexCableLength = 28,
     flexCableThickness = 0.18,
     flexCableColor = "#d79528",
-    conductorCount = 8,
-    conductorPitch,
-    conductorWidth,
+    pinCount: conductorCount = props.conductorCount ?? 8,
+    pitch: conductorPitch = props.conductorPitch,
+    padWidth: conductorWidth = props.conductorWidth,
     conductorThickness = 0.035,
     conductorColor = "#8c4a18",
     cableEdgeMargin = 0.6,
-    exposedContactLength = 2.4,
+    padLength: exposedContactLength = props.exposedContactLength ?? 2.4,
+    tailLength,
+    taperLength,
     showConductors = true,
     showFlexCable = true,
     showStiffeners = true,
@@ -562,8 +579,11 @@ export const FlexScreen = (props: FlexScreenProps) => {
   assertPositive("foldOutset", foldOutset)
   assertPositive("boardThickness", boardThickness)
   if (showStiffeners) assertPositive("stiffenerThickness", stiffenerThickness)
+  if (!Number.isFinite(exposedContactLength) || exposedContactLength < 0) {
+    throw new Error("padLength must be a finite nonnegative length")
+  }
   if (!Number.isInteger(conductorCount) || conductorCount < 1) {
-    throw new Error("conductorCount must be a positive integer")
+    throw new Error("pinCount must be a positive integer")
   }
   if (!Number.isInteger(bendSegments) || bendSegments < 2) {
     throw new Error("bendSegments must be an integer of at least 2")
@@ -602,14 +622,14 @@ export const FlexScreen = (props: FlexScreenProps) => {
     (conductorPitch !== undefined || conductorCount > 1) &&
     (!Number.isFinite(resolvedConductorPitch) || resolvedConductorPitch <= 0)
   ) {
-    throw new Error("conductorPitch must be greater than zero")
+    throw new Error("pitch must be greater than zero")
   }
   const resolvedConductorWidth =
     conductorWidth ??
     (conductorCount === 1
       ? Math.min(usableCableWidth, resolvedCableWidth * 0.45)
       : resolvedConductorPitch * 0.48)
-  assertPositive("conductorWidth", resolvedConductorWidth)
+  assertPositive("padWidth", resolvedConductorWidth)
   const conductorSpan =
     (conductorCount - 1) * resolvedConductorPitch + resolvedConductorWidth
   const connectorWidth = Math.max(
@@ -669,19 +689,37 @@ export const FlexScreen = (props: FlexScreenProps) => {
         })
       : createFlatPath(start, flexCableLength)
   const totalCableLength = getPathDistances(path).at(-1)!
+  if (tailLength !== undefined) {
+    assertPositive("tailLength", tailLength)
+    if (tailLength >= totalCableLength) {
+      throw new Error("tailLength must be shorter than flexCableLength")
+    }
+  }
+  if (taperLength !== undefined) assertPositive("taperLength", taperLength)
   const contactLength = Math.min(
     Math.max(0, exposedContactLength),
     totalCableLength / 2,
+    tailLength ?? Infinity,
   )
   const resolvedStiffenerLength = Math.min(
     Math.max(0, stiffenerLength),
     totalCableLength / 2,
+    tailLength ?? Infinity,
   )
-  const connectorLeadLength = Math.max(contactLength, resolvedStiffenerLength)
+  const connectorLeadLength =
+    tailLength ?? Math.max(contactLength, resolvedStiffenerLength)
+  if (
+    taperLength !== undefined &&
+    connectorLeadLength + taperLength > totalCableLength + EPSILON
+  ) {
+    throw new Error(
+      "tailLength and taperLength must fit within flexCableLength",
+    )
+  }
   const taperEndDistance = Math.min(
     totalCableLength,
     connectorLeadLength +
-      Math.max(3, (connectorWidth - resolvedCableWidth) / 2),
+      (taperLength ?? Math.max(3, (connectorWidth - resolvedCableWidth) / 2)),
   )
   const cableWidthAtDistance = (distance: number) => {
     if (distance <= connectorLeadLength) return connectorWidth

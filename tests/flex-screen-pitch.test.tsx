@@ -4,6 +4,9 @@ import { createJSCADRenderer } from "jscad-fiber"
 import type { ReactElement } from "react"
 import { FlexScreen, type FlexScreenOrientation } from "../lib/FlexScreen"
 import { Footprinter3d } from "../lib/Footprinter3d"
+import { fp } from "@tscircuit/footprinter"
+import { mp } from "@tscircuit/modelprinter"
+import { mm } from "@tscircuit/mm"
 
 const render = (element: ReactElement) => {
   const geometries: any[] = []
@@ -30,8 +33,8 @@ test("footprinter count and pitch widen the connector while retaining a narrow s
       width={16}
       height={10}
       flexCableLength={5}
-      conductorCount={30}
-      conductorPitch={0.5}
+      pinCount={30}
+      pitch={0.5}
       showScreen={false}
       showStiffeners={false}
       showConductors={false}
@@ -56,8 +59,8 @@ test("connector contacts keep exact pitch and screen contacts fit the narrow bod
       width={16}
       height={10}
       flexCableLength={5}
-      conductorCount={30}
-      conductorPitch={0.5}
+      pinCount={30}
+      pitch={0.5}
       showScreen={false}
       showStiffeners={false}
     />,
@@ -96,8 +99,8 @@ test("widening and stiffeners work across every flexscreen orientation", () => {
         width={16}
         height={10}
         flexCableLength={40}
-        conductorCount={30}
-        conductorPitch={0.5}
+        pinCount={30}
+        pitch={0.5}
         orientation={orientation}
         showScreen={false}
       />,
@@ -131,9 +134,9 @@ test("single contacts widen safely and invalid pitch is rejected", () => {
   const [min, max] = bounds(
     render(
       <FlexScreen
-        conductorCount={1}
-        conductorPitch={0.5}
-        conductorWidth={8}
+        pinCount={1}
+        pitch={0.5}
+        padWidth={8}
         flexCableWidth={5}
         showScreen={false}
       />,
@@ -146,8 +149,131 @@ test("single contacts widen safely and invalid pitch is rejected", () => {
     Number.NaN,
     Number.POSITIVE_INFINITY,
   ]) {
-    expect(() => FlexScreen({ conductorCount: 1, conductorPitch })).toThrow(
-      "conductorPitch must be greater than zero",
+    expect(() => FlexScreen({ pinCount: 1, pitch: conductorPitch })).toThrow(
+      "pitch must be greater than zero",
     )
+  }
+})
+
+test("flexscreen contact parameters match the corresponding FPC footprint", () => {
+  const connector = fp
+    .string("fpc30_p0.5mm_pw0.3mm_pl1.25mm")
+    .json() as unknown as {
+    num_pins: number
+    p: number | string
+    pw: number | string
+    pl: number | string
+  }
+  const screen = mp.string("flexscreen30_p0.5mm_pw0.3mm_pl1.25mm").json()
+  expect(screen).toMatchObject({
+    pinCount: connector.num_pins,
+    pitch: mm(connector.p),
+    padWidth: mm(connector.pw),
+    padLength: mm(connector.pl),
+  })
+  const contacts = render(
+    <FlexScreen
+      pinCount={30}
+      pitch={0.5}
+      padWidth={0.3}
+      padLength={1.25}
+      flexCableLength={10}
+      showScreen={false}
+      showStiffeners={false}
+    />,
+  ).filter((g) => bounds([g])[1][2] - bounds([g])[0][2] < 0.04)
+  const connectorContacts = contacts.filter((g) => bounds([g])[0][1] < 1)
+  expect(connectorContacts).toHaveLength(30)
+  for (const contact of connectorContacts) {
+    const [min, max] = bounds([contact])
+    expect(max[0] - min[0]).toBeCloseTo(0.3)
+    expect(max[1] - min[1]).toBeCloseTo(1.28)
+  }
+})
+
+test("tail and taper lengths independently control the widened end", () => {
+  for (const [tailLength, taperLength] of [
+    [3, 2],
+    [1, 3],
+  ]) {
+    const cable = render(
+      <FlexScreen
+        pinCount={30}
+        pitch={0.5}
+        padWidth={0.3}
+        flexCableLength={10}
+        flexCableWidth={5}
+        tailLength={tailLength}
+        taperLength={taperLength}
+        showScreen={false}
+        showStiffeners={false}
+        showConductors={false}
+      />,
+    )
+    expect(cable).toHaveLength(3)
+    const [tailMin, tailMax] = bounds([cable[0]])
+    expect(tailMax[0] - tailMin[0]).toBeCloseTo(16)
+    expect(tailMax[1] - tailMin[1]).toBeCloseTo(tailLength! + 0.03)
+    const [taperMin, taperMax] = bounds([cable[1]])
+    expect(taperMin[1]).toBeCloseTo(tailLength! - 0.015)
+    expect(taperMax[1]).toBeCloseTo(tailLength! + taperLength! + 0.015)
+    const [bodyMin, bodyMax] = bounds([cable[2]])
+    expect(bodyMax[0] - bodyMin[0]).toBeCloseTo(5)
+    expect(bodyMin[1]).toBeCloseTo(tailLength! + taperLength! - 0.015)
+  }
+})
+
+test("legacy contact props render the same geometry as FPC-style props", () => {
+  const legacy = render(
+    <FlexScreen
+      conductorCount={30}
+      conductorPitch={0.5}
+      conductorWidth={0.3}
+      exposedContactLength={1.25}
+      showScreen={false}
+    />,
+  )
+  const canonical = render(
+    <FlexScreen
+      pinCount={30}
+      pitch={0.5}
+      padWidth={0.3}
+      padLength={1.25}
+      showScreen={false}
+    />,
+  )
+  expect(bounds(legacy)).toEqual(bounds(canonical))
+  expect(
+    legacy.map((g) => jscadModeling.measurements.measureVolume(g)),
+  ).toEqual(canonical.map((g) => jscadModeling.measurements.measureVolume(g)))
+  const preferred = render(
+    <FlexScreen
+      pinCount={30}
+      pitch={0.5}
+      padWidth={0.3}
+      padLength={1.25}
+      conductorCount={2}
+      conductorPitch={3}
+      conductorWidth={1}
+      exposedContactLength={5}
+      showScreen={false}
+    />,
+  )
+  expect(bounds(preferred)).toEqual(bounds(canonical))
+})
+
+test("invalid tail and taper lengths are rejected", () => {
+  for (const props of [
+    { tailLength: 0 },
+    { tailLength: -1 },
+    { tailLength: NaN },
+    { tailLength: 10 },
+    { taperLength: 0 },
+    { taperLength: Infinity },
+    { tailLength: 8, taperLength: 3 },
+  ]) {
+    expect(() =>
+      FlexScreen({ flexCableLength: 10, pinCount: 30, pitch: 0.5, ...props }),
+    ).toThrow()
   }
 })
