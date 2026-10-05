@@ -1,13 +1,10 @@
 import { expect, test } from "bun:test"
 import jscad from "@jscad/modeling"
-import { cableGrommetModelPropsSchema, mp } from "@tscircuit/modelprinter"
+import { cableGrommetModelPropsSchema } from "@tscircuit/modelprinter"
 import {
-  CableGrommet,
   createCableGrommetGeom,
   createCableGrommetMesh,
 } from "../lib/CableGrommet"
-import { ExtrudedPads } from "../lib/ExtrudedPads"
-import { Footprinter3d } from "../lib/Footprinter3d"
 import {
   assertClosedGearMesh,
   assertOpenAxialBore,
@@ -17,19 +14,7 @@ import {
   outerRadiusAtAngle,
   sliceMesh,
 } from "./fixtures/assert-gear-geometry"
-import { importVanilla } from "./fixtures/importVanilla.js"
-import { getComponentModel } from "./helpers/component-model"
-
-const source =
-  "cablegrommet_panelhole20mm_id10mm_od24mm_h8mm_groovew3mm_grooved2mm_shape(symmetricring)"
-const base = {
-  panelHoleDiameter: 20,
-  innerDiameter: 10,
-  outerDiameter: 24,
-  height: 8,
-  grooveWidth: 3,
-  grooveDepth: 2,
-}
+import { base } from "./fixtures/cable-grommet-inputs"
 
 for (const [name, input] of [
   ["roadmap example", base],
@@ -98,44 +83,3 @@ for (const [name, input] of [
     ])
   })
 }
-
-test("grommet renderer rejects invalid contracts and impractical resolution before allocation", () => {
-  expect(() =>
-    createCableGrommetMesh({ ...base, panelHoleDiameter: 19 }),
-  ).toThrow()
-  expect(() =>
-    createCableGrommetMesh({ ...base, innerDiameter: 20 - 1e-12 }),
-  ).toThrow(/resolution limit/)
-  for (const radialSegments of [0, 11, 13, 4097, Infinity, 16.5])
-    expect(() => createCableGrommetMesh(base, { radialSegments })).toThrow()
-  assertClosedGearMesh(createCableGrommetMesh(base, { radialSegments: 12 }))
-})
-
-test("grommet React, footprint routing, built vanilla and pad exclusion agree", async () => {
-  const definition = mp.string(source).json()
-  if (definition.fn !== "cablegrommet") throw new Error("Expected grommet")
-  const { fn, ...props } = definition
-  const geometry = createCableGrommetGeom(props)
-  expect(
-    getComponentModel(ExtrudedPads, { footprint: source }).geometries,
-  ).toHaveLength(0)
-  const vanilla = await importVanilla()
-  expect(typeof vanilla.createCableGrommetMesh).toBe("function")
-  expect(typeof vanilla.CableGrommet).toBe("function")
-  for (const result of [
-    getComponentModel(CableGrommet, props),
-    getComponentModel(Footprinter3d, { footprint: source }),
-    vanilla.getJscadModelForFootprintWithPads(source, jscad),
-  ]) {
-    expect(result.geometries).toHaveLength(1)
-    const solid = result.geometries[0]!.geom as jscad.geometries.geom3.Geom3
-    jscad.geometries.geom3.validate(solid)
-    expect(jscad.measurements.measureBoundingBox(solid)).toEqual(
-      jscad.measurements.measureBoundingBox(geometry),
-    )
-    expect(jscad.measurements.measureVolume(solid)).toBeCloseTo(
-      jscad.measurements.measureVolume(geometry),
-      7,
-    )
-  }
-})
