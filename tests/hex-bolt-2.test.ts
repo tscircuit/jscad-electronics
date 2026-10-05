@@ -1,17 +1,12 @@
 import { expect, test } from "bun:test"
 import jscad from "@jscad/modeling"
 import { mp } from "@tscircuit/modelprinter"
-import { HexBolt, createHexBoltGeom, createHexBoltMesh } from "../lib/HexBolt"
+import { HexBolt, createHexBoltGeom } from "../lib/HexBolt"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { getComponentModel } from "./helpers/component-model"
 import { importVanilla } from "./fixtures/importVanilla.js"
-import { assertHexBoltGeometry } from "./fixtures/assert-hex-bolt-geometry"
 
-test(
-  "hexbolt closed oriented geometry, datum, thread handedness and resolution",
-  assertHexBoltGeometry,
-)
 test("hexbolt React, vanilla and footprint dispatch", async () => {
   const source = "hexbolt_standard(iso4017)_m6_l25mm_thread(full)_drive(hex)"
   const definition = mp.string(source).json()

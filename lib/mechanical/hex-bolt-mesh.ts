@@ -3,7 +3,7 @@ import {
   type HexBoltModelPropsInput,
 } from "@tscircuit/modelprinter"
 
-export interface ScrewMeshOptions {
+export interface HexBoltMeshOptions {
   radialSegments?: number
   threadStepsPerTurn?: number
 }
@@ -16,7 +16,7 @@ export interface HexBoltMesh {
 
 export function createHexBoltMesh(
   input: HexBoltModelPropsInput,
-  options: ScrewMeshOptions = {},
+  options: HexBoltMeshOptions = {},
 ): HexBoltMesh {
   const p = hexBoltModelPropsSchema.parse(input)
   const segments = options.radialSegments ?? 96
