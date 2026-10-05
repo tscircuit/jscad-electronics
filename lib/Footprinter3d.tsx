@@ -1,3 +1,4 @@
+import { RigidCoupler } from "./RigidCoupler"
 import { HelicalGear } from "./HelicalGear"
 import { HexSocketBolt } from "./HexSocketBolt"
 import { SheetMetal } from "./SheetMetal"
@@ -103,6 +104,10 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
   if (mp.getModelNames().includes(modelFn)) {
     const model = mp.string(footprint).json()
     switch (model.fn) {
+      case "rigidcoupler": {
+        const { fn, ...props } = model
+        return <RigidCoupler {...props} />
+      }
       case "nema": {
         const { fn, ...props } = model
         return <NemaMotor {...props} />
