@@ -1,10 +1,7 @@
 import type { PanScrewModelPropsInput } from "@tscircuit/modelprinter"
 import { Colorize, Custom } from "jscad-fiber"
-import {
-  createPanScrewMesh,
-  type PanScrewMeshOptions,
-} from "./mechanical/pan-screw-mesh"
-import { indexedMeshToGeom3 } from "./mechanical/indexedMeshToGeom3"
+import { createPanScrewMesh, type PanScrewMeshOptions } from "./mesh"
+import { indexedMeshToGeom3 } from "../../mechanical/indexedMeshToGeom3"
 
 export type PanScrewProps = PanScrewModelPropsInput & { color?: string }
 export function createPanScrewGeom(
@@ -20,8 +17,8 @@ export function PanScrew({ color = "#737e8f", ...props }: PanScrewProps) {
     </Colorize>
   )
 }
-export { createPanScrewMesh } from "./mechanical/pan-screw-mesh"
+export { createPanScrewMesh } from "./mesh"
 export type {
   PanScrewMesh,
   PanScrewMeshOptions,
-} from "./mechanical/pan-screw-mesh"
+} from "./mesh"

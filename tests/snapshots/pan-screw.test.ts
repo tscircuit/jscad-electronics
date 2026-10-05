@@ -1,6 +1,6 @@
 import { test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
-import { createPanScrewMesh } from "../../lib/PanScrew"
+import { createPanScrewMesh } from "../../lib/models/panscrew"
 import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 

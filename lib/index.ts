@@ -114,4 +114,4 @@ export * from "./HelicalGear"
 export * from "./SpurGear"
 export * from "./WormGear"
 
-export * from "./PanScrew"
+export * from "./models/panscrew"

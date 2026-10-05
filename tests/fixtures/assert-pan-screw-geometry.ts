@@ -1,5 +1,5 @@
 import { expect } from "bun:test"
-import { createPanScrewMesh } from "../../lib/PanScrew"
+import { createPanScrewMesh } from "../../lib/models/panscrew"
 import { panScrewModelPropsSchema } from "@tscircuit/modelprinter"
 
 export function assertPanScrewGeometry() {

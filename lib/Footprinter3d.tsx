@@ -1,4 +1,4 @@
-import { PanScrew } from "./PanScrew"
+import { PanScrew } from "./models/panscrew"
 import { HelicalGear } from "./HelicalGear"
 import { HexSocketBolt } from "./HexSocketBolt"
 import { SheetMetal } from "./SheetMetal"

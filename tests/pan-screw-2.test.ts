@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test"
 import jscad from "@jscad/modeling"
 import { mp } from "@tscircuit/modelprinter"
-import { PanScrew, createPanScrewGeom } from "../lib/PanScrew"
+import { PanScrew, createPanScrewGeom } from "../lib/models/panscrew"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { getComponentModel } from "./helpers/component-model"
