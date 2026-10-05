@@ -1,4 +1,4 @@
-import { FlangedBushing } from "./FlangedBushing"
+import { FlangedBushing } from "./models/flangedbushing"
 import { HelicalGear } from "./HelicalGear"
 import { HexSocketBolt } from "./HexSocketBolt"
 import { SheetMetal } from "./SheetMetal"

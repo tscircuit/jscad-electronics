@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test"
-import { createFlangedBushingMesh } from "../lib/FlangedBushing"
+import { createFlangedBushingMesh } from "../lib/models/flangedbushing"
 import { examples } from "./fixtures/flanged-bushing-cases"
 import {
   innerRadiusAtAngle,

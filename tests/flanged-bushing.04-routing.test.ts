@@ -5,7 +5,7 @@ import {
   FlangedBushing,
   createFlangedBushingGeom,
   createFlangedBushingMesh,
-} from "../lib/FlangedBushing"
+} from "../lib/models/flangedbushing"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { getComponentModel } from "./helpers/component-model"

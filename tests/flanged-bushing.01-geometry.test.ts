@@ -4,7 +4,7 @@ import { flangedBushingModelPropsSchema } from "@tscircuit/modelprinter"
 import {
   createFlangedBushingGeom,
   createFlangedBushingMesh,
-} from "../lib/FlangedBushing"
+} from "../lib/models/flangedbushing"
 import { examples } from "./fixtures/flanged-bushing-cases"
 import {
   assertClosedGearMesh,

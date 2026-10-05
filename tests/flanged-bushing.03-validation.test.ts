@@ -3,7 +3,7 @@ import type { FlangedBushingModelPropsInput } from "@tscircuit/modelprinter"
 import {
   createFlangedBushingGeom,
   createFlangedBushingMesh,
-} from "../lib/FlangedBushing"
+} from "../lib/models/flangedbushing"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { source } from "./fixtures/flanged-bushing-cases"

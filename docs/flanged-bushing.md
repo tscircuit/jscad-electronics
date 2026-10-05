@@ -1,5 +1,8 @@
 # Flanged bushing geometry
 
+This renderer pins [modelprinter PR #23](https://github.com/tscircuit/modelprinter/pull/23)
+through its immutable [package preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@89443ebdd6268bea0e462ecc1e539286a1d7c518).
+
 `FlangedBushing`, `createFlangedBushingGeom`, and `createFlangedBushingMesh`
 consume `FlangedBushingModelPropsInput` from modelprinter. Schemas, units,
 defaults, and physical validation stay in modelprinter. The React component also

@@ -1,7 +1,7 @@
 import type { FlangedBushingModelPropsInput } from "@tscircuit/modelprinter"
 import { Colorize, Custom } from "jscad-fiber"
-import { indexedMeshToGeom3 } from "./mechanical/indexedMeshToGeom3"
-import { createFlangedBushingMesh } from "./mechanical/flanged-bushing-mesh"
+import { indexedMeshToGeom3 } from "../../mechanical/indexedMeshToGeom3"
+import { createFlangedBushingMesh } from "./mesh"
 
 export type FlangedBushingProps = FlangedBushingModelPropsInput & {
   color?: string
@@ -23,5 +23,5 @@ export function FlangedBushing({
   )
 }
 
-export { createFlangedBushingMesh } from "./mechanical/flanged-bushing-mesh"
-export type { FlangedBushingMesh } from "./mechanical/flanged-bushing-mesh"
+export { createFlangedBushingMesh } from "./mesh"
+export type { FlangedBushingMesh } from "./mesh"
