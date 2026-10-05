@@ -1,6 +1,6 @@
 # PanScrew geometry
 
-This renderer consumes [modelprinter PR #38](https://github.com/tscircuit/modelprinter/pull/38) through the pinned preview dependency `54b63e7c9b18319c2573df74ac2b8013b730b916` from pkg.pr.new. modelprinter owns the parser, dimension tables, defaults and validation; this repository owns the indexed mesh, JSCAD Geom3 factory, React/vanilla component and four-view poppygl snapshot.
+This renderer consumes [modelprinter PR #38](https://github.com/tscircuit/modelprinter/pull/38) through the pinned preview dependency `6e795e16630d1e18a2e2b499a67b931042592a7e` from pkg.pr.new. modelprinter owns the parser, dimension tables, defaults and validation; this repository owns the indexed mesh, JSCAD Geom3 factory, React/vanilla component and four-view poppygl snapshot.
 
 `createPanScrewMesh` and `createPanScrewGeom` accept the exported modelprinter props schema inputs. `PanScrew` also accepts a color. Footprinter3d dispatches the full `panscrew` string, and ExtrudedPads validates it then returns no electrical pads. Datums and dimensions follow the modelprinter contract unchanged. All supported M3/M4/M5/M6 sizes are validated by modelprinter.
 
