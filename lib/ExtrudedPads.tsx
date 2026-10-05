@@ -15,6 +15,7 @@ export const ExtrudedPads = ({
     [
       "nema",
       "hexsocketbolt",
+      "tslotextrusion",
       "sheetmetal",
       "spurgear",
       "wormgear",

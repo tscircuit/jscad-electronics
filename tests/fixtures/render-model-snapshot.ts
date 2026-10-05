@@ -94,6 +94,8 @@ export type SnapshotView = {
   eye: readonly [number, number, number]
   target: readonly [number, number, number]
   span: number
+  /** Optional far plane for long mechanical models; existing views stay at 100. */
+  far?: number
 }
 
 export async function renderModelSnapshot({
@@ -134,7 +136,7 @@ export async function renderModelSnapshot({
         -half,
         half,
         0.1,
-        100,
+        view.far ?? 100,
       ),
     }
     panel.drawMesh(
