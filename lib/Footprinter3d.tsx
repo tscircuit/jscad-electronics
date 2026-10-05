@@ -1,3 +1,4 @@
+import { PanScrew } from "./PanScrew"
 import { HelicalGear } from "./HelicalGear"
 import { HexSocketBolt } from "./HexSocketBolt"
 import { SheetMetal } from "./SheetMetal"
@@ -103,6 +104,10 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
   if (mp.getModelNames().includes(modelFn)) {
     const model = mp.string(footprint).json()
     switch (model.fn) {
+      case "panscrew": {
+        const { fn, ...props } = model
+        return <PanScrew {...props} />
+      }
       case "nema": {
         const { fn, ...props } = model
         return <NemaMotor {...props} />
