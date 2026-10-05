@@ -3,7 +3,7 @@ import {
   type FlatHeadScrewModelPropsInput,
 } from "@tscircuit/modelprinter"
 
-export interface ScrewMeshOptions {
+export interface FlatHeadScrewMeshOptions {
   radialSegments?: number
   threadStepsPerTurn?: number
 }
@@ -16,7 +16,7 @@ export interface FlatHeadScrewMesh {
 
 export function createFlatHeadScrewMesh(
   input: FlatHeadScrewModelPropsInput,
-  options: ScrewMeshOptions = {},
+  options: FlatHeadScrewMeshOptions = {},
 ): FlatHeadScrewMesh {
   const p = flatHeadScrewModelPropsSchema.parse(input)
   const segments = options.radialSegments ?? 96
