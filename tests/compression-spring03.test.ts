@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test"
-import { createCompressionSpringMesh } from "../lib/CompressionSpring"
+import { createCompressionSpringMesh } from "../lib/models/compressionspring"
 import { assertClosedGearMesh } from "./fixtures/assert-gear-geometry"
 import { base } from "./fixtures/compression-spring-inputs"
 

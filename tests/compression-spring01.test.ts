@@ -4,7 +4,7 @@ import { compressionSpringModelPropsSchema } from "@tscircuit/modelprinter"
 import {
   createCompressionSpringGeom,
   createCompressionSpringMesh,
-} from "../lib/CompressionSpring"
+} from "../lib/models/compressionspring"
 import {
   assertClosedGearMesh,
   assertOpenAxialBore,

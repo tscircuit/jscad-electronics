@@ -1,6 +1,6 @@
 import { test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
-import { createCompressionSpringMesh } from "../../lib/CompressionSpring"
+import { createCompressionSpringMesh } from "../../lib/models/compressionspring"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
 

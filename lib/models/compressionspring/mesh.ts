@@ -4,7 +4,7 @@ import {
   getCompressionSpringDimensions,
   type CompressionSpringModelPropsInput,
 } from "@tscircuit/modelprinter"
-import { clipMeshToZRange } from "./clip-mesh-to-z-range"
+import { clipMeshToZRange } from "../../mechanical/clip-mesh-to-z-range"
 
 export interface CompressionSpringMesh {
   positions: number[]

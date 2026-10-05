@@ -4,7 +4,7 @@ import { mp } from "@tscircuit/modelprinter"
 import {
   CompressionSpring,
   createCompressionSpringGeom,
-} from "../lib/CompressionSpring"
+} from "../lib/models/compressionspring"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { importVanilla } from "./fixtures/importVanilla.js"

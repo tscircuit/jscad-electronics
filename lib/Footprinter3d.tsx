@@ -1,4 +1,4 @@
-import { CompressionSpring } from "./CompressionSpring"
+import { CompressionSpring } from "./models/compressionspring"
 import { HelicalGear } from "./HelicalGear"
 import { HexSocketBolt } from "./HexSocketBolt"
 import { SheetMetal } from "./SheetMetal"

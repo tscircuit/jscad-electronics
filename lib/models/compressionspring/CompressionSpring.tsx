@@ -1,7 +1,7 @@
 import type { CompressionSpringModelPropsInput } from "@tscircuit/modelprinter"
 import { Colorize, Custom } from "jscad-fiber"
-import { createCompressionSpringMesh } from "./mechanical/compression-spring-mesh"
-import { indexedMeshToGeom3 } from "./mechanical/indexedMeshToGeom3"
+import { createCompressionSpringMesh } from "./mesh"
+import { indexedMeshToGeom3 } from "../../mechanical/indexedMeshToGeom3"
 
 export type CompressionSpringProps = CompressionSpringModelPropsInput & {
   color?: string
@@ -24,8 +24,8 @@ export function CompressionSpring({
   )
 }
 
-export { createCompressionSpringMesh } from "./mechanical/compression-spring-mesh"
+export { createCompressionSpringMesh } from "./mesh"
 export type {
   CompressionSpringMesh,
   CompressionSpringMeshOptions,
-} from "./mechanical/compression-spring-mesh"
+} from "./mesh"

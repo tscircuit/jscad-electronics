@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test"
 import { getCompressionSpringCenterlinePoint } from "@tscircuit/modelprinter"
-import { createCompressionSpringMesh } from "../lib/CompressionSpring"
+import { createCompressionSpringMesh } from "../lib/models/compressionspring"
 import { base } from "./fixtures/compression-spring-inputs"
 
 test("compression spring mesh follows imported pitch changes and radial section frames", () => {
