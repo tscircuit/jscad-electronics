@@ -1,6 +1,6 @@
 # HexBolt geometry
 
-This renderer consumes [modelprinter PR #36](https://github.com/tscircuit/modelprinter/pull/36) through the pinned preview dependency `9c9d064549eceb70c3ea666ece005dd26cc18d6a` from pkg.pr.new. modelprinter owns the parser, dimension tables, defaults and validation; this repository owns the indexed mesh, JSCAD Geom3 factory, React/vanilla component and four-view poppygl snapshot.
+This renderer consumes [modelprinter PR #36](https://github.com/tscircuit/modelprinter/pull/36) through the pinned preview dependency `745e964ac3137d515b7586870208142432845444` from pkg.pr.new. modelprinter owns the parser, dimension tables, defaults and validation; this repository owns the indexed mesh, JSCAD Geom3 factory, React/vanilla component and four-view poppygl snapshot.
 
 `createHexBoltMesh` and `createHexBoltGeom` accept the exported modelprinter props schema inputs. `HexBolt` also accepts a color. Footprinter3d dispatches the full `hexbolt` string, and ExtrudedPads validates it then returns no electrical pads. Datums and dimensions follow the modelprinter contract unchanged. All supported M3/M4/M5/M6 sizes are validated by modelprinter.
 
