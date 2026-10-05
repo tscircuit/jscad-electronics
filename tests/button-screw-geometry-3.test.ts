@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test"
-import { createButtonScrewMesh } from "../lib/ButtonScrew"
+import { createButtonScrewMesh } from "../lib/models/buttonscrew"
 
 test("buttonscrew rejects invalid tessellation options before allocation", () => {
   for (const options of [

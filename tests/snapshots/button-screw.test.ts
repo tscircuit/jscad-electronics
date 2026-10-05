@@ -1,6 +1,6 @@
 import { test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
-import { createButtonScrewMesh } from "../../lib/ButtonScrew"
+import { createButtonScrewMesh } from "../../lib/models/buttonscrew"
 import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 

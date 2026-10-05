@@ -9,7 +9,7 @@ import {
   ButtonScrew,
   createButtonScrewMesh,
   createButtonScrewGeom,
-} from "../lib/ButtonScrew"
+} from "../lib/models/buttonscrew"
 
 test("buttonscrew React and built vanilla routing share geometry and exclude PCB pads", async () => {
   const source = "buttonscrew_standard(iso7380-1)_m3_l10mm_drive(hexsocket)"

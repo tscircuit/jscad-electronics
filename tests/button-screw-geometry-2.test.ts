@@ -4,7 +4,7 @@ import {
   sliceMesh,
   outerRadiusAtAngle,
 } from "./fixtures/assert-gear-geometry"
-import { createButtonScrewMesh } from "../lib/ButtonScrew"
+import { createButtonScrewMesh } from "../lib/models/buttonscrew"
 import { getButtonScrewDimensions } from "@tscircuit/modelprinter"
 
 test("button screw profile has the documented thread depth, phase, runout and fillet", () => {

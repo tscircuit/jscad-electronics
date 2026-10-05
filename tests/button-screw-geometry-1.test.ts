@@ -10,7 +10,7 @@ import {
 import {
   createButtonScrewMesh,
   createButtonScrewGeom,
-} from "../lib/ButtonScrew"
+} from "../lib/models/buttonscrew"
 import { getButtonScrewDimensions } from "@tscircuit/modelprinter"
 
 for (const metricSize of ["M3", "M4", "M5", "M6"] as const)

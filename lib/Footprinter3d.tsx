@@ -1,4 +1,4 @@
-import { ButtonScrew } from "./ButtonScrew"
+import { ButtonScrew } from "./models/buttonscrew"
 import { HelicalGear } from "./HelicalGear"
 import { HexSocketBolt } from "./HexSocketBolt"
 import { SheetMetal } from "./SheetMetal"

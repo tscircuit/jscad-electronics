@@ -1,10 +1,7 @@
 import type { ButtonScrewModelPropsInput } from "@tscircuit/modelprinter"
 import { Colorize, Custom } from "jscad-fiber"
-import {
-  createButtonScrewMesh,
-  type ButtonScrewMeshOptions,
-} from "./mechanical/button-screw-mesh"
-import { indexedMeshToGeom3 } from "./mechanical/indexedMeshToGeom3"
+import { createButtonScrewMesh, type ButtonScrewMeshOptions } from "./mesh"
+import { indexedMeshToGeom3 } from "../../mechanical/indexedMeshToGeom3"
 
 export type ButtonScrewProps = ButtonScrewModelPropsInput & { color?: string }
 export function createButtonScrewGeom(
@@ -20,8 +17,8 @@ export function ButtonScrew({ color = "#737e8f", ...props }: ButtonScrewProps) {
     </Colorize>
   )
 }
-export { createButtonScrewMesh } from "./mechanical/button-screw-mesh"
+export { createButtonScrewMesh } from "./mesh"
 export type {
   ButtonScrewMesh,
   ButtonScrewMeshOptions,
-} from "./mechanical/button-screw-mesh"
+} from "./mesh"
