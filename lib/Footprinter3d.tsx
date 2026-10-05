@@ -1,4 +1,4 @@
-import { FlatHeadScrew } from "./FlatHeadScrew"
+import { FlatHeadScrew } from "./models/flatheadscrew"
 import { HelicalGear } from "./HelicalGear"
 import { HexSocketBolt } from "./HexSocketBolt"
 import { SheetMetal } from "./SheetMetal"

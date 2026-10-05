@@ -1,6 +1,6 @@
 import { test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
-import { createFlatHeadScrewMesh } from "../../lib/FlatHeadScrew"
+import { createFlatHeadScrewMesh } from "../../lib/models/flatheadscrew"
 import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 

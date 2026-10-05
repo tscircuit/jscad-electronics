@@ -1,5 +1,5 @@
 import { expect } from "bun:test"
-import { createFlatHeadScrewMesh } from "../../lib/FlatHeadScrew"
+import { createFlatHeadScrewMesh } from "../../lib/models/flatheadscrew"
 import { flatHeadScrewModelPropsSchema } from "@tscircuit/modelprinter"
 
 export function assertFlatHeadScrewGeometry() {
