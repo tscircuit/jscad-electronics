@@ -4,7 +4,7 @@ import { mp } from "@tscircuit/modelprinter"
 import {
   createTSlotExtrusionGeom,
   createTSlotExtrusionMesh,
-} from "../lib/TSlotExtrusion"
+} from "../lib/models/tslotextrusion"
 import {
   assertClosedGearMesh as assertClosedMesh,
   meshBounds,

@@ -1,4 +1,4 @@
-import { TSlotExtrusion } from "./TSlotExtrusion"
+import { TSlotExtrusion } from "./models/tslotextrusion"
 import { HelicalGear } from "./HelicalGear"
 import { HexSocketBolt } from "./HexSocketBolt"
 import { SheetMetal } from "./SheetMetal"

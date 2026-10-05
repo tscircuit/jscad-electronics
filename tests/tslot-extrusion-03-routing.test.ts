@@ -5,7 +5,7 @@ import {
   TSlotExtrusion,
   createTSlotExtrusionGeom,
   createTSlotExtrusionMesh,
-} from "../lib/TSlotExtrusion"
+} from "../lib/models/tslotextrusion"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { getComponentModel } from "./helpers/component-model"
 import { importVanilla } from "./fixtures/importVanilla.js"

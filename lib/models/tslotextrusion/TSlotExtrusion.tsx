@@ -1,7 +1,7 @@
 import type { TSlotExtrusionModelPropsInput } from "@tscircuit/modelprinter"
 import { Colorize, Custom } from "jscad-fiber"
-import { indexedMeshToGeom3 } from "./mechanical/indexedMeshToGeom3"
-import { createTSlotExtrusionMesh } from "./mechanical/tslot-extrusion-mesh"
+import { indexedMeshToGeom3 } from "../../mechanical/indexedMeshToGeom3"
+import { createTSlotExtrusionMesh } from "./mesh"
 
 export type TSlotExtrusionProps = TSlotExtrusionModelPropsInput & {
   color?: string
@@ -24,5 +24,5 @@ export function TSlotExtrusion({
   )
 }
 
-export { createTSlotExtrusionMesh } from "./mechanical/tslot-extrusion-mesh"
-export type { TSlotExtrusionMesh } from "./mechanical/tslot-extrusion-mesh"
+export { createTSlotExtrusionMesh } from "./mesh"
+export type { TSlotExtrusionMesh } from "./mesh"

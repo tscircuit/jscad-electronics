@@ -6,7 +6,7 @@ import {
   circularProfile,
   extrudePlanarProfile,
   type ProfilePoint,
-} from "./extrude-planar-profile"
+} from "../../mechanical/extrude-planar-profile"
 
 export interface TSlotExtrusionMesh {
   positions: number[]

@@ -1,6 +1,6 @@
 import { test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
-import { createTSlotExtrusionMesh } from "../../lib/TSlotExtrusion"
+import { createTSlotExtrusionMesh } from "../../lib/models/tslotextrusion"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
 

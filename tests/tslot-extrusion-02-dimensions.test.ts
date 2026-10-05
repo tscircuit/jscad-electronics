@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test"
 import { tSlotExtrusionModelPropsSchema } from "@tscircuit/modelprinter"
-import { createTSlotExtrusionMesh } from "../lib/TSlotExtrusion"
+import { createTSlotExtrusionMesh } from "../lib/models/tslotextrusion"
 import {
   assertClosedGearMesh as assertClosedMesh,
   meshBounds,
