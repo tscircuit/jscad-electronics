@@ -1,4 +1,4 @@
-import { CableGrommet } from "./CableGrommet"
+import { CableGrommet } from "./models/cablegrommet"
 import { HelicalGear } from "./HelicalGear"
 import { HexSocketBolt } from "./HexSocketBolt"
 import { SheetMetal } from "./SheetMetal"

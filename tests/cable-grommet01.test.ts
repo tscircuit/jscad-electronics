@@ -4,7 +4,7 @@ import { cableGrommetModelPropsSchema } from "@tscircuit/modelprinter"
 import {
   createCableGrommetGeom,
   createCableGrommetMesh,
-} from "../lib/CableGrommet"
+} from "../lib/models/cablegrommet"
 import {
   assertClosedGearMesh,
   assertOpenAxialBore,

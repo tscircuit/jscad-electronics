@@ -1,6 +1,6 @@
 import { test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
-import { createCableGrommetMesh } from "../../lib/CableGrommet"
+import { createCableGrommetMesh } from "../../lib/models/cablegrommet"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
 

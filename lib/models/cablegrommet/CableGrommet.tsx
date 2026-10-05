@@ -1,7 +1,7 @@
 import type { CableGrommetModelPropsInput } from "@tscircuit/modelprinter"
 import { Colorize, Custom } from "jscad-fiber"
-import { createCableGrommetMesh } from "./mechanical/cable-grommet-mesh"
-import { indexedMeshToGeom3 } from "./mechanical/indexedMeshToGeom3"
+import { createCableGrommetMesh } from "./mesh"
+import { indexedMeshToGeom3 } from "../../mechanical/indexedMeshToGeom3"
 
 export type CableGrommetProps = CableGrommetModelPropsInput & { color?: string }
 
@@ -20,8 +20,8 @@ export function CableGrommet({
   )
 }
 
-export { createCableGrommetMesh } from "./mechanical/cable-grommet-mesh"
+export { createCableGrommetMesh } from "./mesh"
 export type {
   CableGrommetMesh,
   CableGrommetMeshOptions,
-} from "./mechanical/cable-grommet-mesh"
+} from "./mesh"

@@ -1,7 +1,10 @@
 import { expect, test } from "bun:test"
 import jscad from "@jscad/modeling"
 import { mp } from "@tscircuit/modelprinter"
-import { CableGrommet, createCableGrommetGeom } from "../lib/CableGrommet"
+import {
+  CableGrommet,
+  createCableGrommetGeom,
+} from "../lib/models/cablegrommet"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { importVanilla } from "./fixtures/importVanilla.js"

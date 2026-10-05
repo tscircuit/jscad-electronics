@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test"
-import { createCableGrommetMesh } from "../lib/CableGrommet"
+import { createCableGrommetMesh } from "../lib/models/cablegrommet"
 import { assertClosedGearMesh } from "./fixtures/assert-gear-geometry"
 import { base } from "./fixtures/cable-grommet-inputs"
 
