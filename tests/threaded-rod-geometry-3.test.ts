@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test"
-import { createThreadedRodMesh } from "../lib/ThreadedRod"
+import { createThreadedRodMesh } from "../lib/models/threadedrod"
 
 test("threaded rod allocation guards reject excessive turns and vanishing radii", () => {
   expect(() =>

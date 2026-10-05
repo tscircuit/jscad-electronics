@@ -1,6 +1,6 @@
 import { test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
-import { createThreadedRodMesh } from "../../lib/ThreadedRod"
+import { createThreadedRodMesh } from "../../lib/models/threadedrod"
 import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 

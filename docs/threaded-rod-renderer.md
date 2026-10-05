@@ -1,6 +1,6 @@
 # ThreadedRod renderer
 
-Consumes the strict schemas and resolved dimensions from [modelprinter PR #20](https://github.com/tscircuit/modelprinter/pull/20). The dependency and lockfile pin that PR's immutable pkg.pr.new preview SHA so the renderer can be reviewed before a modelprinter release. Replace the preview with a published version after that contract is released.
+Consumes the strict schemas and resolved dimensions from [modelprinter PR #20](https://github.com/tscircuit/modelprinter/pull/20). The dependency and lockfile pin [that PR's immutable package preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@befdb3f0f6b333a6348a2fcf58bee11562e89c9d) so the renderer can be reviewed before a modelprinter release. Replace the preview with a published version after that contract is released.
 
 `createThreadedRodMesh` returns indexed outward-facing triangles; `createThreadedRodGeom` produces a JSCAD solid. `ThreadedRod` is exported from both React and vanilla entrypoints. `Footprinter3d` and vanilla footprint helpers route `threadedrod` strings to it; mechanical models produce no PCB pads.
 

@@ -9,7 +9,7 @@ import {
   ThreadedRod,
   createThreadedRodMesh,
   createThreadedRodGeom,
-} from "../lib/ThreadedRod"
+} from "../lib/models/threadedrod"
 
 test("threadedrod React and built vanilla routing share geometry and exclude PCB pads", async () => {
   const source =

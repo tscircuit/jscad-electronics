@@ -4,7 +4,7 @@ import {
   sliceMesh,
   outerRadiusAtAngle,
 } from "./fixtures/assert-gear-geometry"
-import { createThreadedRodMesh } from "../lib/ThreadedRod"
+import { createThreadedRodMesh } from "../lib/models/threadedrod"
 import { getThreadedRodDimensions } from "@tscircuit/modelprinter"
 
 for (const threadHand of ["right", "left"] as const)

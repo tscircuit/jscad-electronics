@@ -7,7 +7,7 @@ import {
 import {
   createThreadedRodMesh,
   createThreadedRodGeom,
-} from "../lib/ThreadedRod"
+} from "../lib/models/threadedrod"
 import { getThreadedRodDimensions } from "@tscircuit/modelprinter"
 
 for (const metricSize of ["M2.5", "M6", "M20"] as const)

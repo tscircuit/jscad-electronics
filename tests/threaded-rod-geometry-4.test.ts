@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test"
-import { createThreadedRodMesh } from "../lib/ThreadedRod"
+import { createThreadedRodMesh } from "../lib/models/threadedrod"
 
 test("threadedrod rejects invalid tessellation options before allocation", () => {
   for (const options of [

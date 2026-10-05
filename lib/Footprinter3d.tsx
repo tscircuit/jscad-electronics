@@ -1,4 +1,4 @@
-import { ThreadedRod } from "./ThreadedRod"
+import { ThreadedRod } from "./models/threadedrod"
 import { HelicalGear } from "./HelicalGear"
 import { HexSocketBolt } from "./HexSocketBolt"
 import { SheetMetal } from "./SheetMetal"

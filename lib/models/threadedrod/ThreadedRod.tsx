@@ -1,10 +1,7 @@
 import type { ThreadedRodModelPropsInput } from "@tscircuit/modelprinter"
 import { Colorize, Custom } from "jscad-fiber"
-import {
-  createThreadedRodMesh,
-  type ThreadedRodMeshOptions,
-} from "./mechanical/threaded-rod-mesh"
-import { indexedMeshToGeom3 } from "./mechanical/indexedMeshToGeom3"
+import { createThreadedRodMesh, type ThreadedRodMeshOptions } from "./mesh"
+import { indexedMeshToGeom3 } from "../../mechanical/indexedMeshToGeom3"
 
 export type ThreadedRodProps = ThreadedRodModelPropsInput & { color?: string }
 export function createThreadedRodGeom(
@@ -20,8 +17,8 @@ export function ThreadedRod({ color = "#737e8f", ...props }: ThreadedRodProps) {
     </Colorize>
   )
 }
-export { createThreadedRodMesh } from "./mechanical/threaded-rod-mesh"
+export { createThreadedRodMesh } from "./mesh"
 export type {
   ThreadedRodMesh,
   ThreadedRodMeshOptions,
-} from "./mechanical/threaded-rod-mesh"
+} from "./mesh"
