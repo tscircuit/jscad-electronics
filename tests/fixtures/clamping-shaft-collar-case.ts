@@ -1,4 +1,4 @@
-import { createClampingShaftCollarMesh } from "../../lib/ClampingShaftCollar"
+import { createClampingShaftCollarMesh } from "../../lib/models/clampingshaftcollar"
 import type { MountMesh } from "./assert-shaft-mount-geometry"
 export const example =
   "clampingshaftcollar_bore8mm_od18mm_w9mm_split1mm_mount(singleclamp)_m4"

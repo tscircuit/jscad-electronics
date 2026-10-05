@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test"
 import { clampingShaftCollarModelPropsSchema } from "@tscircuit/modelprinter"
-import { createClampingShaftCollarMesh } from "../lib/ClampingShaftCollar"
+import { createClampingShaftCollarMesh } from "../lib/models/clampingshaftcollar"
 import { createMountingHoleCutter } from "../lib/mechanical/shaft-mount-geometry"
 import { props } from "./fixtures/clamping-shaft-collar-case"
 

@@ -1,7 +1,7 @@
 import type { ClampingShaftCollarModelPropsInput } from "@tscircuit/modelprinter"
 import { Colorize, Custom } from "jscad-fiber"
-import { createClampingShaftCollarMesh } from "./mechanical/clamping-shaft-collar-mesh"
-import { indexedMeshToGeom3 } from "./mechanical/indexedMeshToGeom3"
+import { createClampingShaftCollarMesh } from "./mesh"
+import { indexedMeshToGeom3 } from "../../mechanical/indexedMeshToGeom3"
 
 export type ClampingShaftCollarProps = ClampingShaftCollarModelPropsInput & {
   color?: string
@@ -24,5 +24,5 @@ export function ClampingShaftCollar({
     </Colorize>
   )
 }
-export { createClampingShaftCollarMesh } from "./mechanical/clamping-shaft-collar-mesh"
-export type { ClampingShaftCollarMesh } from "./mechanical/clamping-shaft-collar-mesh"
+export { createClampingShaftCollarMesh } from "./mesh"
+export type { ClampingShaftCollarMesh } from "./mesh"

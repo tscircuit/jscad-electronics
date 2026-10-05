@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
-import { createClampingShaftCollarMesh } from "../lib/ClampingShaftCollar"
+import { createClampingShaftCollarMesh } from "../lib/models/clampingshaftcollar"
 import {
   assertClosedShaftMount,
   meshRayHits,

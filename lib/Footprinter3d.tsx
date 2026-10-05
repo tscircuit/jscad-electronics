@@ -1,4 +1,4 @@
-import { ClampingShaftCollar } from "./ClampingShaftCollar"
+import { ClampingShaftCollar } from "./models/clampingshaftcollar"
 import { HelicalGear } from "./HelicalGear"
 import { HexSocketBolt } from "./HexSocketBolt"
 import { SheetMetal } from "./SheetMetal"

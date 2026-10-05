@@ -2,7 +2,7 @@ import { expect, test } from "bun:test"
 import {
   createClampingShaftCollarGeom,
   ClampingShaftCollar,
-} from "../lib/ClampingShaftCollar"
+} from "../lib/models/clampingshaftcollar"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { importVanilla } from "./fixtures/importVanilla"

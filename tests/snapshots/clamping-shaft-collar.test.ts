@@ -1,6 +1,6 @@
 import { test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
-import { createClampingShaftCollarMesh } from "../../lib/ClampingShaftCollar"
+import { createClampingShaftCollarMesh } from "../../lib/models/clampingshaftcollar"
 import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 
