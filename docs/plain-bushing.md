@@ -1,5 +1,8 @@
 # Plain bushing geometry
 
+This renderer pins [modelprinter PR #22](https://github.com/tscircuit/modelprinter/pull/22)
+through its immutable [package preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@25d1c9167808527d2dffed558dafa94c98458b54).
+
 `PlainBushing`, `createPlainBushingGeom`, and `createPlainBushingMesh` consume
 `PlainBushingModelPropsInput` from modelprinter. The schema, units, defaults,
 and physical validation remain in modelprinter; the renderer adds no parameter
