@@ -10,11 +10,11 @@ export interface ButtonScrewMesh {
   indices: number[]
 }
 /** Renderer resolution affects tessellation only, never model specifications. */
-export interface Resolution {
+export interface ButtonScrewMeshOptions {
   radialSegments?: number
   segmentsPerPitch?: number
 }
-function resolution(options: Resolution) {
+function resolution(options: ButtonScrewMeshOptions) {
   const radial = options.radialSegments ?? 96
   const axial = options.segmentsPerPitch ?? 32
   if (
@@ -73,7 +73,7 @@ function threadDistance(z: number, angle: number, pitch: number, hand = 1) {
 /** Closed nominal surface: bearing z=0, tip -length, blind hex socket above. */
 export function createButtonScrewMesh(
   input: ButtonScrewModelPropsInput,
-  options: Resolution = {},
+  options: ButtonScrewMeshOptions = {},
 ): ButtonScrewMesh {
   const props = buttonScrewModelPropsSchema.parse(input)
   const d = getButtonScrewDimensions(input)
