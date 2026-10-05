@@ -13,6 +13,7 @@ export const ExtrudedPads = ({
     !circuitJson &&
     footprint &&
     [
+      "compressionspring",
       "nema",
       "hexsocketbolt",
       "sheetmetal",
