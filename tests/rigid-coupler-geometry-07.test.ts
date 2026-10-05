@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test"
 import { rigidCouplerModelPropsSchema } from "@tscircuit/modelprinter"
-import { createRigidCouplerMesh } from "../lib/RigidCoupler"
+import { createRigidCouplerMesh } from "../lib/models/rigidcoupler"
 import { createMountingHoleCutter } from "../lib/mechanical/shaft-mount-geometry"
 import { props } from "./fixtures/rigid-coupler-case"
 

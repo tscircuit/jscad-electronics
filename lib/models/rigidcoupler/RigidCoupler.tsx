@@ -1,7 +1,7 @@
 import type { RigidCouplerModelPropsInput } from "@tscircuit/modelprinter"
 import { Colorize, Custom } from "jscad-fiber"
-import { createRigidCouplerMesh } from "./mechanical/rigid-coupler-mesh"
-import { indexedMeshToGeom3 } from "./mechanical/indexedMeshToGeom3"
+import { createRigidCouplerMesh } from "./mesh"
+import { indexedMeshToGeom3 } from "../../mechanical/indexedMeshToGeom3"
 
 export type RigidCouplerProps = RigidCouplerModelPropsInput & { color?: string }
 
@@ -20,5 +20,5 @@ export function RigidCoupler({
     </Colorize>
   )
 }
-export { createRigidCouplerMesh } from "./mechanical/rigid-coupler-mesh"
-export type { RigidCouplerMesh } from "./mechanical/rigid-coupler-mesh"
+export { createRigidCouplerMesh } from "./mesh"
+export type { RigidCouplerMesh } from "./mesh"

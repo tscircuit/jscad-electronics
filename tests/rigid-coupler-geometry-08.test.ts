@@ -3,7 +3,7 @@ import {
   getRigidCouplerDimensions,
   rigidCouplerModelPropsSchema,
 } from "@tscircuit/modelprinter"
-import { createRigidCouplerMesh } from "../lib/RigidCoupler"
+import { createRigidCouplerMesh } from "../lib/models/rigidcoupler"
 import {
   assertClosedShaftMount,
   assertNoMountingEndCap,

@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
-import { createRigidCouplerMesh } from "../lib/RigidCoupler"
+import { createRigidCouplerMesh } from "../lib/models/rigidcoupler"
 import {
   assertClosedShaftMount,
   meshRayHits,

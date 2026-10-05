@@ -50,4 +50,4 @@ export * from "../HelicalGear"
 export * from "../SpurGear"
 export * from "../WormGear"
 
-export * from "../RigidCoupler"
+export * from "../models/rigidcoupler"

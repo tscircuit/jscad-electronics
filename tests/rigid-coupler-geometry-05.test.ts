@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test"
-import { createRigidCouplerMesh } from "../lib/RigidCoupler"
+import { createRigidCouplerMesh } from "../lib/models/rigidcoupler"
 import {
   assertClosedShaftMount,
   containsMeshPoint,

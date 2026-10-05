@@ -1,4 +1,4 @@
-import { RigidCoupler } from "./RigidCoupler"
+import { RigidCoupler } from "./models/rigidcoupler"
 import { HelicalGear } from "./HelicalGear"
 import { HexSocketBolt } from "./HexSocketBolt"
 import { SheetMetal } from "./SheetMetal"

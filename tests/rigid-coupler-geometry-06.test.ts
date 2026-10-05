@@ -1,5 +1,8 @@
 import { expect, test } from "bun:test"
-import { createRigidCouplerGeom, RigidCoupler } from "../lib/RigidCoupler"
+import {
+  createRigidCouplerGeom,
+  RigidCoupler,
+} from "../lib/models/rigidcoupler"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { importVanilla } from "./fixtures/importVanilla"
