@@ -1,7 +1,7 @@
 # Flanged bushing geometry
 
 This renderer pins [modelprinter PR #23](https://github.com/tscircuit/modelprinter/pull/23)
-through its immutable [package preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@89443ebdd6268bea0e462ecc1e539286a1d7c518).
+through its immutable [package preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@57539e536bf485d61a8726cfc82e5c709c370e1b).
 
 `FlangedBushing`, `createFlangedBushingGeom`, and `createFlangedBushingMesh`
 consume `FlangedBushingModelPropsInput` from modelprinter. Schemas, units,
