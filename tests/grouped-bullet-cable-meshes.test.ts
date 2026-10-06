@@ -8,7 +8,7 @@ test("three bullet contacts line up with three separate wires at each end", () =
     pinCount: 3,
     pitch: 5.5,
     bodyDepth: 12.25,
-  } satisfies CableGeometryDefinition
+  }
   const definition = {
     connectorA: {
       ...contact,
