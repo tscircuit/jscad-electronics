@@ -84,10 +84,15 @@ export function createCableMeshes({
   definition,
   path,
   radialSegments = 24,
+  startWidthDirection,
+  endWidthDirection,
 }: {
   definition: CableGeometryDefinition
   path: CablePoint[]
   radialSegments?: number
+  /** Connector local +X directions in circuit-world XYZ (+Z up), no translation. */
+  startWidthDirection?: CablePoint
+  endWidthDirection?: CablePoint
 }): CableMesh[] {
   validateCableDefinition(definition)
   if (
@@ -96,7 +101,10 @@ export function createCableMeshes({
     radialSegments > 128
   )
     throw new Error("radialSegments must be an integer from 8 to 128")
-  const frames = createCablePathFrames(path)
+  const frames = createCablePathFrames(path, {
+    startWidthDirection,
+    endWidthDirection,
+  })
   const crossSection = definition.crossSection
   const jacketDiameter =
     crossSection.kind === "round_jacket" ? crossSection.diameter : undefined
