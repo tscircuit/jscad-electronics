@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import {
   Cuboid,
   Translate,
@@ -84,6 +85,7 @@ export const USB_C = ({
   const metalCasing = positions.map((pos, index) => (
     <Colorize
       key={index}
+      material={componentMaterials.brushedMetal}
       color={pos.plate === "back" ? innerColor : outerColor}
     >
       <Cuboid
@@ -105,10 +107,11 @@ export const USB_C = ({
     },
   ]
   const curvedSides = curvedSidesPositions.map((pos, index) => (
-    <Subtract color={outerColor}>
+    <Subtract material={componentMaterials.brushedMetal} color={outerColor}>
       <Cylinder
         rotation={[Math.PI / 2, 0, 0]}
         key={index}
+        material={componentMaterials.brushedMetal}
         color={outerColor}
         center={[pos.x, pos.y, pos.z]}
         radius={outerHeight / 2}
@@ -160,7 +163,7 @@ export const USB_C = ({
 
   // Plastic inner body (smaller to fit the metal casing)
   const innerPlastic = (
-    <Colorize color={innerColor}>
+    <Colorize material={componentMaterials.moldedPlastic} color={innerColor}>
       <Cuboid
         size={[innerWidth, innerDepth, innerHeight]}
         center={{ x: 0, y: -0.25, z: outerHeight / 2 }}
@@ -187,7 +190,7 @@ export const USB_C = ({
 
   const innerPins = innerPinsPosition.map((pos, index) => (
     <Translate key={`pin-${index}`} x={pos.x} y={pos.y} z={pos.z}>
-      <Colorize color={pinColor}>
+      <Colorize material={componentMaterials.goldContact} color={pinColor}>
         <Cuboid size={[innerPinsWidth, innerPinsDepth, innerPinsHeight]} />
       </Colorize>
     </Translate>
@@ -231,6 +234,7 @@ export const USB_C = ({
   const legs = legPositions.map((pos, index) => (
     <>
       <Cuboid
+        material={componentMaterials.brushedMetal}
         color={outerColor}
         key={index}
         center={{ x: pos.x, y: pos.y - pos.width / 2, z: pos.z }}
@@ -273,6 +277,7 @@ export const USB_C = ({
       key={index}
       size={[outerPinsWidth, outerPinsDepth, outerPinsThickness]}
       center={{ x: pos.x, y: pos.y, z: pos.z }}
+      material={componentMaterials.goldContact}
       color={pinColor}
     />
   ))

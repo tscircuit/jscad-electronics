@@ -1,3 +1,4 @@
+import type { MaterialOptions } from "jscad-fiber"
 import type * as jscadModeling from "@jscad/modeling"
 
 import { Fragment, type VNode } from "./h"
@@ -24,7 +25,11 @@ interface RenderContext {
   jscad: typeof jscadModeling
 }
 
-export type ColoredGeom = { geom: any; color?: Color }
+export type ColoredGeom = {
+  geom: any
+  color?: Color
+  material?: MaterialOptions
+}
 export type RenderResult = { geometries: ColoredGeom[] }
 
 const isVNode = (n: any): n is VNode =>
@@ -65,6 +70,16 @@ function renderNode(
   if (!isVNode(node)) return []
 
   const { type, props, children } = node
+  if (props?.material) {
+    const { material, ...rest } = props
+    return renderNode({ ...node, props: rest }, colorCtx, renderCtx).map(
+      (entry) => ({
+        ...entry,
+        material: { ...material },
+        geom: { ...entry.geom, material: { ...material } },
+      }),
+    )
+  }
 
   if (type === Fragment) {
     return (children ?? []).flatMap((c) => renderNode(c, colorCtx, renderCtx))
@@ -86,7 +101,8 @@ function renderNode(
     const geoms = (children ?? []).flatMap((c) =>
       renderNode(c, colorCtx, renderCtx),
     )
-    return geoms.map(({ geom, color }) => ({
+    return geoms.map(({ geom, color, material }) => ({
+      material,
       geom: transforms.translate(off as any, geom),
       color: color ?? colorCtx,
     }))
@@ -105,7 +121,8 @@ function renderNode(
     const geoms = (children ?? []).flatMap((c) =>
       renderNode(c, colorCtx, renderCtx),
     )
-    return geoms.map(({ geom, color }) => ({
+    return geoms.map(({ geom, color, material }) => ({
+      material,
       geom: transforms.rotateZ(
         rot[2],
         transforms.rotateY(rot[1], transforms.rotateX(rot[0], geom)),
@@ -115,16 +132,23 @@ function renderNode(
   }
 
   if (type === Union || type === Subtract || type === Hull) {
-    const geoms = (children ?? [])
-      .flatMap((c) => renderNode(c, colorCtx, renderCtx))
-      .map((g) => g.geom)
+    const entries = (children ?? []).flatMap((c) =>
+      renderNode(c, colorCtx, renderCtx),
+    )
+    const geoms = entries.map((g) => g.geom)
     if (geoms.length === 0) return []
     let geom: any
     if (type === Union) geom = booleans.union(geoms as any)
     else if (type === Subtract)
       geom = booleans.subtract(geoms[0] as any, geoms.slice(1) as any)
     else geom = hulls.hull(geoms as any)
-    return [{ geom, color: colorCtx }]
+    return [
+      {
+        geom,
+        color: colorCtx,
+        material: type === Subtract ? entries[0]?.material : undefined,
+      },
+    ]
   }
 
   if (type === Custom) {
@@ -138,9 +162,10 @@ function renderNode(
   }
 
   if (type === ExtrudeLinear) {
-    const geoms2 = (children ?? [])
-      .flatMap((c) => renderNode(c, colorCtx, renderCtx))
-      .map((g) => g.geom)
+    const entries = (children ?? []).flatMap((c) =>
+      renderNode(c, colorCtx, renderCtx),
+    )
+    const geoms2 = entries.map((g) => g.geom)
     if (geoms2.length === 0) return []
     const base2 =
       geoms2.length > 1 ? (booleans.union as any)(geoms2) : geoms2[0]
@@ -155,7 +180,13 @@ function renderNode(
       }
     }
 
-    return [{ geom: g3, color: colorCtx ?? props?.color }]
+    return [
+      {
+        geom: g3,
+        color: colorCtx ?? props?.color,
+        material: entries.length === 1 ? entries[0]?.material : undefined,
+      },
+    ]
   }
 
   if (
@@ -217,5 +248,11 @@ function renderNode(
 
 export function render(root: VNode, jscad: typeof jscadModeling): RenderResult {
   const geometries = renderNode(root, undefined, { jscad })
-  return { geometries }
+  return {
+    geometries: geometries.map((entry) =>
+      entry.material
+        ? { ...entry, geom: { ...entry.geom, material: entry.material } }
+        : entry,
+    ),
+  }
 }

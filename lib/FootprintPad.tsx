@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import type { PcbSmtPad } from "circuit-json"
 import {
   Colorize,
@@ -19,7 +20,7 @@ export const FootprintPad = ({
 
   if (pad.shape === "rect" || pad.shape === "rotated_rect") {
     return (
-      <Colorize color={color}>
+      <Colorize color={color} material={componentMaterials.copper}>
         <Translate offset={[pad.x, pad.y, -0.005]}>
           <Rotate
             angles={[
@@ -40,7 +41,7 @@ export const FootprintPad = ({
   if (pad.shape === "circle") {
     const radius = (pad as any).radius ?? (pad as any).r ?? 0.25
     return (
-      <Colorize color={color}>
+      <Colorize color={color} material={componentMaterials.copper}>
         <Translate offset={[pad.x, pad.y, -0.005]}>
           <Cylinder radius={radius} height={PAD_THICKNESS} />
         </Translate>
@@ -57,7 +58,7 @@ export const FootprintPad = ({
     )
     if (points.length < 3) return null
     return (
-      <Colorize color={color}>
+      <Colorize color={color} material={componentMaterials.copper}>
         <Translate offset={[0, 0, -0.005]}>
           <ExtrudeLinear height={PAD_THICKNESS}>
             <Polygon points={points} />
