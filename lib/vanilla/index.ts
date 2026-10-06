@@ -42,12 +42,4 @@ export function createJSCADRenderer(jscad: typeof jscadModeling) {
   return { createJSCADRoot }
 }
 
-export * from "../NemaMotor"
-
-export * from "../HexSocketBolt"
-export * from "../SheetMetal"
-export * from "../HelicalGear"
-export * from "../SpurGear"
-export * from "../WormGear"
-
-export * from "../models/tslotextrusion"
+export * from "../generated/vanilla-models"
