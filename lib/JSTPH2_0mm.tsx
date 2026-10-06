@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import type { PcbPlatedHole } from "circuit-json"
 import {
   Colorize,
@@ -47,7 +48,10 @@ export const JSTPH2_0mm = ({
     <>
       <Translate offset={[0, 0, bodyHeight]}>
         <Rotate angles={[Math.PI, 0, 0]}>
-          <Colorize color={bodyColor}>
+          <Colorize
+            color={bodyColor}
+            material={componentMaterials.moldedPlastic}
+          >
             <Subtract>
               <Cuboid
                 size={[bodyWidth, bodyDepth, bodyHeight]}
@@ -136,7 +140,11 @@ export const JSTPH2_0mm = ({
 
       {showPins &&
         Array.from({ length: numPins }).map((_, i) => (
-          <Colorize key={i} color={pinColor}>
+          <Colorize
+            key={i}
+            color={pinColor}
+            material={componentMaterials.tinnedLead}
+          >
             <Cuboid
               size={[pinThickness, pinThickness, pinLength]}
               center={[startX + i * pitch, 0, (pinTop - pinTailLength) / 2]}

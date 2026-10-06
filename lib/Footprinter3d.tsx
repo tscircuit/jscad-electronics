@@ -1,10 +1,4 @@
-import { HexNut } from "./models/hexnut"
-import { HelicalGear } from "./HelicalGear"
-import { HexSocketBolt } from "./HexSocketBolt"
-import { SheetMetal } from "./SheetMetal"
-import { SpurGear } from "./SpurGear"
-import { WormGear } from "./WormGear"
-import { NemaMotor } from "./NemaMotor"
+import { modelRendererRegistry } from "./default-model-registry"
 import { renderFootprinterBodyModel } from "./utils/FootprinterBodyModels"
 import { fp } from "@tscircuit/footprinter"
 import { mp } from "@tscircuit/modelprinter"
@@ -93,7 +87,6 @@ import { SOT563 } from "./SOT-563"
 import { BGA } from "./BGA"
 import { UsbCMidmount } from "./UsbCMidmount"
 import { SOT143 } from "./SOT143"
-import { FlexScreen } from "./FlexScreen"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -103,39 +96,9 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
   const modelFn = mp.string(footprint.split("_", 1)[0]!).params().fn
   if (mp.getModelNames().includes(modelFn)) {
     const model = mp.string(footprint).json()
-    switch (model.fn) {
-      case "hexnut": {
-        const { fn, ...props } = model
-        return <HexNut {...props} />
-      }
-      case "nema": {
-        const { fn, ...props } = model
-        return <NemaMotor {...props} />
-      }
-      case "hexsocketbolt": {
-        const { fn, ...props } = model
-        return <HexSocketBolt {...props} />
-      }
-      case "sheetmetal": {
-        const { fn, ...props } = model
-        return <SheetMetal {...props} />
-      }
-      case "helicalgear": {
-        const { fn, ...props } = model
-        return <HelicalGear {...props} />
-      }
-      case "spurgear": {
-        const { fn, ...props } = model
-        return <SpurGear {...props} />
-      }
-      case "wormgear": {
-        const { fn, ...props } = model
-        return <WormGear {...props} />
-      }
-      case "flexscreen": {
-        const { fn: _, ...flexScreenProps } = model
-        return <FlexScreen {...flexScreenProps} />
-      }
+    const renderer = modelRendererRegistry.get(model.fn)
+    if (renderer) {
+      return renderer.render(model)
     }
   }
 

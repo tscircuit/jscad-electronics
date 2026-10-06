@@ -1,7 +1,7 @@
 import { test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
 import { createHexNutMesh } from "../../lib/models/hexnut"
-import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
+import { renderModelSnapshot } from "../fixtures/render-orthographic-model-snapshot"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 
 test("hexnut roadmap example - four-view PoppyGL snapshot", async () => {
