@@ -2,7 +2,7 @@ import { test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
 import { createFlangedBushingMesh } from "../../lib/models/flangedbushing"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
-import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
+import { renderModelSnapshot } from "../fixtures/render-orthographic-model-snapshot"
 
 test("flanged bushing - full roadmap model in four views", async () => {
   const modelString =

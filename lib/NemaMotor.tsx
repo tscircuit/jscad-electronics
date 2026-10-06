@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import jscad from "@jscad/modeling"
 import type { generalize as Generalize } from "@jscad/modeling/src/operations/modifiers/generalize"
 import { createNemaMotorWireGeometry } from "./utils/nemaMotorWireGeometry"
@@ -64,6 +65,13 @@ export function NemaMotor({
         return (
           <Colorize
             key={`${section.name}-${index}`}
+            material={
+              section.name === "body"
+                ? componentMaterials.moldedPlastic
+                : section.name === "shaft"
+                  ? componentMaterials.steel
+                  : componentMaterials.brushedMetal
+            }
             color={
               section.name === "body"
                 ? bodyColor
@@ -77,14 +85,22 @@ export function NemaMotor({
         )
       })}
       {createNemaMotorWireGeometry(p).map(({ geometry, color }, index) => (
-        <Colorize key={`wire-${index}`} color={color}>
+        <Colorize
+          material={componentMaterials.rubber}
+          key={`wire-${index}`}
+          color={color}
+        >
           <Custom geometry={generalize({ simplify: true }, geometry)} />
         </Colorize>
       ))}
       {screw &&
         [-halfPitch, halfPitch].flatMap((x) =>
           [-halfPitch, halfPitch].map((y) => (
-            <Colorize key={`rear-screw-${x}-${y}`} color={screwColor}>
+            <Colorize
+              material={componentMaterials.steel}
+              key={`rear-screw-${x}-${y}`}
+              color={screwColor}
+            >
               {/* HexSocketBolt's +Z head is rotated to face -Z; its bearing plane
               is then placed on the motor's rear face, in the same mm frame. */}
               <Custom

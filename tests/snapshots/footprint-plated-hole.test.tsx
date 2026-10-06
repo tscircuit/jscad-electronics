@@ -9,7 +9,7 @@ import {
   Translate,
   Colorize,
 } from "lib/vanilla/primitives"
-import { convertJscadModelToGltf } from "jscad-to-gltf"
+import { convertJscadModelToGltf } from "../helpers/convert-model-to-gltf"
 import { renderGLTFToPNGFromGLB } from "poppygl"
 import * as jscadModeling from "@jscad/modeling"
 
@@ -56,6 +56,7 @@ test("circular_hole_with_rect_pad plated hole", async () => {
       width: 800,
       height: 600,
       backgroundColor: [1, 1, 1],
+      realistic: false,
       ambient: 0.3,
       gamma: true,
       cull: true,

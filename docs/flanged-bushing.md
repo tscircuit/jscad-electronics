@@ -1,7 +1,7 @@
 # Flanged bushing geometry
 
 This renderer pins [modelprinter PR #23](https://github.com/tscircuit/modelprinter/pull/23)
-through its immutable [package preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@57539e536bf485d61a8726cfc82e5c709c370e1b).
+through the shared immutable [package preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@0262c71788481313bad6d61f7850220c1f6681a4).
 
 `FlangedBushing`, `createFlangedBushingGeom`, and `createFlangedBushingMesh`
 consume `FlangedBushingModelPropsInput` from modelprinter. Schemas, units,
@@ -37,3 +37,8 @@ Tests verify closed oriented topology, positive volume against the analytic
 annular volumes, flange/sleeve cross-sections, overall length and datum,
 uninterrupted bore, schema errors, and React/vanilla routing without pads.
 The labelled four-view poppygl baseline uses the complete roadmap example.
+
+The shared dependency preview is produced by [modelprinter draft PR #41](https://github.com/tscircuit/modelprinter/pull/41),
+which includes this model's contract and the other registry contracts. Replace
+the preview with a published modelprinter version once all contracts consumed
+by the renderer registry are available in that release.
