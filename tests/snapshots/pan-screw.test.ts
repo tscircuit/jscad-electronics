@@ -1,7 +1,7 @@
 import { test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
 import { createPanScrewMesh } from "../../lib/models/panscrew"
-import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
+import { renderModelSnapshot } from "../fixtures/render-orthographic-model-snapshot"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 
 test("panscrew exact roadmap string - four views", async () => {

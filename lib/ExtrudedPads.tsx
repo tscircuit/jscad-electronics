@@ -3,6 +3,7 @@ import type { AnyCircuitElement } from "circuit-json"
 import { fp } from "@tscircuit/footprinter"
 import { FootprintPad } from "./FootprintPad"
 import { FootprintPlatedHole } from "./FootprintPlatedHole"
+import { modelRendererRegistry } from "./default-model-registry"
 
 export const ExtrudedPads = ({
   circuitJson,
@@ -12,15 +13,9 @@ export const ExtrudedPads = ({
   if (
     !circuitJson &&
     footprint &&
-    [
-      "nema",
-      "hexsocketbolt",
-      "panscrew",
-      "sheetmetal",
-      "spurgear",
-      "wormgear",
-      "helicalgear",
-    ].includes(mp.string(footprint.split("_", 1)[0]!).params().fn)
+    modelRendererRegistry.get(
+      mp.string(footprint.split("_", 1)[0]!).params().fn,
+    )?.pads === "none"
   ) {
     mp.string(footprint).json() // Validate mechanical parameters before returning.
     return null

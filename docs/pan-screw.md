@@ -1,6 +1,6 @@
 # PanScrew geometry
 
-This renderer consumes [modelprinter PR #38](https://github.com/tscircuit/modelprinter/pull/38) through the pinned preview dependency `6e795e16630d1e18a2e2b499a67b931042592a7e` from pkg.pr.new. modelprinter owns the parser, dimension tables, defaults and validation; this repository owns the indexed mesh, JSCAD Geom3 factory, React/vanilla component and four-view poppygl snapshot.
+This renderer consumes [modelprinter PR #38](https://github.com/tscircuit/modelprinter/pull/38) through the shared pinned preview dependency `0262c71788481313bad6d61f7850220c1f6681a4` from pkg.pr.new. modelprinter owns the parser, dimension tables, defaults and validation; this repository owns the indexed mesh, JSCAD Geom3 factory, React/vanilla component and four-view poppygl snapshot.
 
 `createPanScrewMesh` and `createPanScrewGeom` accept the exported modelprinter props schema inputs. `PanScrew` also accepts a color. Footprinter3d dispatches the full `panscrew` string, and ExtrudedPads validates it then returns no electrical pads. Datums and dimensions follow the modelprinter contract unchanged. All supported M3/M4/M5/M6 sizes are validated by modelprinter.
 
@@ -11,3 +11,9 @@ The ISO 4757 type-H recess combines the 26.5° outer wing and 28° bottom cone w
 `radialSegments` defaults to 96 and must be a multiple of 24 between 24 and 192. `threadStepsPerTurn` defaults to 24 and must be an integer between 24 and 96. Meshes above 400,000 sampled vertices fail before allocation. Higher resolution improves faceting without altering the nominal profile.
 
 The four-view snapshot labels the complete roadmap string: `panscrew_standard(iso7045)_m3_l10mm_drive(phillips)`. Unit checks cover manifold edge incidence/winding, finite vertices, positive volume, datums, both handednesses, visibility, supported sizes, guard limits, direct React/vanilla geometry and footprint dispatch.
+
+The shared dependency preview is published from
+[modelprinter draft PR #41](https://github.com/tscircuit/modelprinter/pull/41) and
+contains the contract linked above. Replace it with a published modelprinter
+release only after that release contains all contracts used by the renderer
+registry.

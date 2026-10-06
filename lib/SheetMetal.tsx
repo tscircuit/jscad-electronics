@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import type { SheetMetalModelPropsInput } from "@tscircuit/modelprinter"
 import { Colorize, Custom } from "jscad-fiber"
 import { createSheetMetalMesh } from "./mechanical/sheet-metal-mesh"
@@ -12,7 +13,7 @@ export function createSheetMetalGeom(input: SheetMetalModelPropsInput) {
 
 export function SheetMetal({ color = "#737e8f", ...props }: SheetMetalProps) {
   return (
-    <Colorize color={color}>
+    <Colorize color={color} material={componentMaterials.brushedMetal}>
       <Custom geometry={createSheetMetalGeom(props)} />
     </Colorize>
   )

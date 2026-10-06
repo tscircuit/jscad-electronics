@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import {
   Colorize,
   Cuboid,
@@ -37,7 +38,10 @@ export const JSTZH1_5mm = ({
     <>
       <Translate offset={[0, 0, bodyHeight]}>
         <Rotate angles={[Math.PI, 0, 0]}>
-          <Colorize color={bodyColor}>
+          <Colorize
+            material={componentMaterials.moldedPlastic}
+            color={bodyColor}
+          >
             <Subtract>
               <Cuboid
                 size={[bodyWidth, bodyDepth, bodyHeight]}
@@ -102,7 +106,11 @@ export const JSTZH1_5mm = ({
 
       {showPins &&
         Array.from({ length: numPins }).map((_, i) => (
-          <Colorize key={i} color={pinColor}>
+          <Colorize
+            key={i}
+            material={componentMaterials.tinnedLead}
+            color={pinColor}
+          >
             <Cylinder
               height={pinLength}
               radius={0.35}
