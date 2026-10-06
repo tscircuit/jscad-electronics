@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import {
   Colorize,
   Cuboid,
@@ -112,7 +113,7 @@ export const ChipBody = ({
   }
 
   return (
-    <Colorize color={color}>
+    <Colorize color={color} material={componentMaterials.moldedPlastic}>
       <Translate offset={center}>
         <Translate offset={{ x: 0, y: 0, z: heightAboveSurface }}>
           {includeNotch ? (

@@ -1,7 +1,7 @@
 import { test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
 import { createButtonScrewMesh } from "../../lib/models/buttonscrew"
-import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
+import { renderModelSnapshot } from "../fixtures/render-orthographic-model-snapshot"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 
 test("buttonscrew roadmap example - four-view PoppyGL snapshot", async () => {
