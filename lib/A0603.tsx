@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import { Cube, Cuboid, Translate, Union } from "jscad-fiber"
 
 // TERMINATORS are the two gray metal boxes on the ends of the resistor
@@ -15,16 +16,19 @@ export const A0603 = ({ color = "#333" }) => {
       <Cuboid
         size={[bodyLength, width, height]}
         offset={[0, 0, height / 2]}
+        material={componentMaterials.moldedPlastic}
         color={color}
       />
       <Cuboid
         size={[terminatorLength, width, height]}
         offset={[fullLength / 2 - terminatorLength / 2, 0, height / 2]}
+        material={componentMaterials.tinnedLead}
         color="#ccc"
       />
       <Cuboid
         size={[terminatorLength, width, height]}
         offset={[-fullLength / 2 + terminatorLength / 2, 0, height / 2]}
+        material={componentMaterials.tinnedLead}
         color="#ccc"
       />
     </>

@@ -1,7 +1,7 @@
 {
   "name": "jscad-electronics",
   "type": "module",
-  "version": "0.0.187",
+  "version": "0.0.189",
   "main": "./dist/index.js",
   "exports": {
     ".": {
@@ -23,48 +23,54 @@
     "dist"
   ],
   "scripts": {
-    "start": "cosmos",
+    "generate": "node scripts/generate-model-renderers.mjs",
+    "generate:watch": "node scripts/watch-model-renderers.mjs",
+    "start": "node scripts/run-model-dev.mjs",
+    "dev": "node scripts/run-model-dev.mjs",
     "build": "tsup --config tsup.config.ts",
     "vercel-build": "bun run build:site",
-    "format": "biome format --write .",
-    "format:check": "biome format .",
-    "build:site": "cosmos-export",
+    "typecheck": "node scripts/generate-model-renderers.mjs && tsc --noEmit",
+    "format": "node scripts/generate-model-renderers.mjs && biome format --write .",
+    "format:check": "node scripts/generate-model-renderers.mjs && biome format .",
+    "build:site": "node scripts/generate-model-renderers.mjs && cosmos-export",
+    "prepare": "npm run build",
+    "prepack": "npm run build",
     "test:vanilla": "bun run build && node tests/vanilla-smoke.mjs",
     "test": "bun test"
   },
   "dependencies": {
     "@tscircuit/mm": "^0.0.8",
-    "@tscircuit/modelprinter": "https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@dfafe559c55795d2e996637abfb0cf59c223d240",
+    "@tscircuit/modelprinter": "https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@0262c71788481313bad6d61f7850220c1f6681a4",
     "earcut": "^3.2.3"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.3",
     "@tscircuit/alphabet": "^0.0.24",
     "@tscircuit/footprinter": "^0.0.428",
+    "@types/earcut": "^3.0.0",
     "@types/pngjs": "^6.0.5",
     "@types/react": "19",
     "@types/react-dom": "19",
     "@types/three": "^0.179.0",
     "bun-types": "^1.2.20",
-    "jscad-fiber": "^0.0.85",
-    "jscad-to-gltf": "^0.0.7",
+    "gl-matrix": "^3.4.4",
+    "jscad-fiber": "^0.0.89",
+    "jscad-to-gltf": "https://pkg.pr.new/jscad-to-gltf@804fbb0",
     "looks-same": "^10.0.1",
     "pngjs": "^7.0.0",
-    "poppygl": "^0.0.24",
+    "poppygl": "^0.0.34",
     "react-cosmos": "7.0.0",
     "react-cosmos-plugin-vite": "7.0.0",
     "tsup": "^8.3.0",
     "vite": "^7.1.2",
-    "vite-tsconfig-paths": "^5.0.1",
-    "@types/earcut": "^3.0.0",
-    "gl-matrix": "^3.4.4"
+    "vite-tsconfig-paths": "^5.0.1"
   },
   "peerDependencies": {
     "@jscad/modeling": "^2.12.5",
     "@tscircuit/footprinter": "*",
     "@tscircuit/alphabet": "^0.0.24",
     "circuit-json": "^0.0.426",
-    "jscad-fiber": "^0.0.85",
+    "jscad-fiber": "^0.0.89",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "three": "^0.179.1"

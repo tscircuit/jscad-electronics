@@ -2,7 +2,7 @@ import { test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
 import { createCableGrommetMesh } from "../../lib/models/cablegrommet"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
-import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
+import { renderModelSnapshot } from "../fixtures/render-orthographic-model-snapshot"
 
 test("cable grommet: four views of centered panel groove and cable bore", async () => {
   const modelString =
