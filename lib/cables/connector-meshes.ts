@@ -1,3 +1,4 @@
+import { componentMaterials } from "../materials"
 import jscad from "@jscad/modeling"
 import { geometryToCableMesh } from "./geometry-to-mesh"
 import type {
@@ -77,6 +78,7 @@ function createJstMeshes(
   const contacts = Array.from({ length: pinCount }, (_, index) => {
     const x = (index - (pinCount - 1) / 2) * pitch
     return geometryToCableMesh({
+      material: componentMaterials.goldContact,
       name: `contact-${index + 1}`,
       color: metal,
       geometry: subtract(
@@ -168,7 +170,12 @@ function createUsbMeshes(
   )
   return [
     geometryToCableMesh({ geometry: body, color: plastic, name: "overmold" }),
-    geometryToCableMesh({ geometry: shell, color: metal, name: "shell" }),
+    geometryToCableMesh({
+      geometry: shell,
+      color: metal,
+      material: componentMaterials.brushedMetal,
+      name: "shell",
+    }),
     geometryToCableMesh({
       geometry: liner,
       color: [0.025, 0.026, 0.03, 1],
@@ -178,6 +185,7 @@ function createUsbMeshes(
       geometryToCableMesh({
         geometry,
         color: brass,
+        material: componentMaterials.goldContact,
         name: `contact-${index + 1}`,
       }),
     ),
@@ -227,12 +235,14 @@ function createMainsMeshes(connector: CableConnectorSpec): CableMesh[] {
         geometryToCableMesh({
           geometry,
           color: brass,
+          material: componentMaterials.goldContact,
           name: `blade-${index + 1}`,
         }),
       ),
       geometryToCableMesh({
         geometry: ground,
         color: brass,
+        material: componentMaterials.goldContact,
         name: "ground-pin",
       }),
     ]
@@ -273,6 +283,7 @@ function createMainsMeshes(connector: CableConnectorSpec): CableMesh[] {
       geometryToCableMesh({
         geometry: cuboid({ size: [0.15, 2.8, 6], center: [x - 1.05, y, 7.8] }),
         color: brass,
+        material: componentMaterials.goldContact,
         name: `socket-contact-${index + 1}`,
       }),
     ),

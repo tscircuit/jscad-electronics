@@ -1,7 +1,7 @@
 import { test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
 import { createShaftCollarMesh } from "../../lib/models/shaftcollar"
-import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
+import { renderModelSnapshot } from "../fixtures/render-orthographic-model-snapshot"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 
 test("shaftcollar exact roadmap string - four views", async () => {
