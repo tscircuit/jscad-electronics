@@ -1,7 +1,7 @@
 # Plain bushing geometry
 
 This renderer pins [modelprinter PR #22](https://github.com/tscircuit/modelprinter/pull/22)
-through its immutable [package preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@25d1c9167808527d2dffed558dafa94c98458b54).
+through the shared immutable [package preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@0262c71788481313bad6d61f7850220c1f6681a4).
 
 `PlainBushing`, `createPlainBushingGeom`, and `createPlainBushingMesh` consume
 `PlainBushingModelPropsInput` from modelprinter. The schema, units, defaults,
@@ -34,3 +34,8 @@ Allocation is fixed regardless of dimensions. Geometry tests check oriented
 closed topology, volume, measured cross-sections, all four chamfers, open bore,
 invalid inputs, and React/vanilla routing. The four-view poppygl baseline uses
 the full roadmap string and displays the sleeve, openings, and rim chamfers.
+
+The shared dependency preview is produced by [modelprinter draft PR #41](https://github.com/tscircuit/modelprinter/pull/41),
+which includes this model's contract and the other registry contracts. Replace
+the preview with a published modelprinter version once all contracts consumed
+by the renderer registry are available in that release.

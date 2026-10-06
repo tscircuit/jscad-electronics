@@ -9,7 +9,13 @@ export function geometryToCableMesh({
   geometry,
   color,
   name,
-}: { geometry: Geom3; color: CableColor; name: string }): CableMesh {
+  material,
+}: {
+  geometry: Geom3
+  color: CableColor
+  name: string
+  material?: CableMesh["material"]
+}): CableMesh {
   const triangles = jscad.geometries.geom3.toPolygons(geometry)
   const positions: number[] = []
   const indices: number[] = []
@@ -35,7 +41,7 @@ export function geometryToCableMesh({
       )
     }
   }
-  return { name, positions, indices, color, smooth: false }
+  return { name, positions, indices, color, material, smooth: false }
 }
 
 export function placeConnectorMesh({
