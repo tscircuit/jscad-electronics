@@ -4,7 +4,7 @@ import * as React from "react"
 import * as jscadModeling from "@jscad/modeling"
 import type { Geom3 } from "@jscad/modeling/src/geometries/types"
 import { createJSCADRenderer } from "jscad-fiber"
-import { convertJscadModelToGltf } from "jscad-to-gltf"
+import { convertJscadModelToGltf } from "../helpers/convert-model-to-gltf"
 import { renderGLTFToPNGFromGLB } from "poppygl"
 import { JSTXH2_5mm } from "../../lib/JSTXH2_5mm"
 import { Footprinter3d } from "../../lib/Footprinter3d"
@@ -39,6 +39,7 @@ async function renderComponentView(
       width: 800,
       height: 600,
       backgroundColor: [1, 1, 1],
+      realistic: false,
       ambient: 0.5,
       gamma: true,
       cull: true,
