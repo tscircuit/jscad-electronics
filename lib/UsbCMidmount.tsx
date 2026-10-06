@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import { fp } from "@tscircuit/footprinter"
 import {
   Colorize,
@@ -66,7 +67,7 @@ export const UsbCMidmount = ({
     tabTop = centerZ + 0.1
   return (
     <Rotate rotation={[0, 0, angle]}>
-      <Colorize color="#b8bdc4">
+      <Colorize color="#b8bdc4" material={componentMaterials.brushedMetal}>
         <Translate offset={[0, centerY, centerZ]}>
           <Subtract>
             <Capsule width={width} height={height} depth={depth} />
@@ -78,7 +79,7 @@ export const UsbCMidmount = ({
           </Subtract>
         </Translate>
       </Colorize>
-      <Colorize color="#242529">
+      <Colorize color="#242529" material={componentMaterials.moldedPlastic}>
         <Cuboid
           size={[6.65, depth - 1.1, 0.7]}
           center={[0, centerY + 0.3, centerZ]}
@@ -95,7 +96,7 @@ export const UsbCMidmount = ({
           ) : null,
         )}
       </Colorize>
-      <Colorize color="#d3ad57">
+      <Colorize color="#d3ad57" material={componentMaterials.goldContact}>
         {[-1, 1].flatMap((side) =>
           [-2.75, -2.25, -1.25, -0.25, 0.25, 1.25, 2.25, 2.75].map((x) => (
             <Cuboid
@@ -117,7 +118,7 @@ export const UsbCMidmount = ({
           />
         ))}
       </Colorize>
-      <Colorize color="#b8bdc4">
+      <Colorize color="#b8bdc4" material={componentMaterials.brushedMetal}>
         {slots.map((slot, i) => (
           <Cuboid
             key={i}

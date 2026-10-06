@@ -38,6 +38,8 @@ export async function renderBoltSnapshot() {
     },
   ] as const
   return renderModelSnapshot({
+    metalness: 1,
+    roughness: 0.25,
     mesh: createHexSocketBoltMesh(props),
     title: "M3 x 6 mm / METRIC HEX SOCKET BOLT",
     modelString,
