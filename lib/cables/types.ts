@@ -24,8 +24,8 @@ export type CableConnectorSpec = ConnectorBody &
         kind: "bullet_male" | "bullet_female"
         diameter: number
         contactDepth: number
-        pinCount?: number
-        pitch?: number
+        pinCount: number
+        pitch: number
       }
   )
 

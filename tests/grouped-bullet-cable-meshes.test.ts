@@ -8,8 +8,8 @@ test("three bullet contacts line up with three separate wires at each end", () =
     pinCount: 3,
     pitch: 5.5,
     bodyDepth: 12.25,
-  }
-  const definition: CableGeometryDefinition = {
+  } satisfies CableGeometryDefinition
+  const definition = {
     connectorA: {
       ...contact,
       kind: "bullet_male",
@@ -30,7 +30,7 @@ test("three bullet contacts line up with three separate wires at each end", () =
         color,
       })),
     },
-  }
+  } satisfies CableGeometryDefinition
   const path: [number, number, number][] = [
     [0, 0, 0],
     [0, 0, 60],
