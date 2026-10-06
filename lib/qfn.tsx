@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import {
   createPhysicalQfn,
   type PhysicalQfnDimensions,
@@ -63,7 +64,7 @@ const LegacyQFN = ({
 
   return (
     <>
-      <Colorize color="grey">
+      <Colorize material={componentMaterials.tinnedLead} color="grey">
         <Cuboid
           center={[0, 0, bodyThickness / 2]}
           size={[bodyWidth, bodyLength, bodyThickness]}

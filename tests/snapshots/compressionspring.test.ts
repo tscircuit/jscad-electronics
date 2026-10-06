@@ -2,7 +2,7 @@ import { test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
 import { createCompressionSpringMesh } from "../../lib/models/compressionspring"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
-import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
+import { renderModelSnapshot } from "../fixtures/render-orthographic-model-snapshot"
 
 test("compression spring: four views of variable pitch and ground bearing ends", async () => {
   const modelString =

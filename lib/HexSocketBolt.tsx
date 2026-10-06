@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import type { HexSocketBoltModelPropsInput } from "@tscircuit/modelprinter"
 import { Colorize, Custom } from "jscad-fiber"
 import { createHexSocketBoltMesh } from "./mechanical/hex-socket-bolt-mesh"
@@ -17,7 +18,7 @@ export function HexSocketBolt({
   ...props
 }: HexSocketBoltProps) {
   return (
-    <Colorize color={color}>
+    <Colorize color={color} material={componentMaterials.steel}>
       <Custom geometry={createHexSocketBoltGeom(props)} />
     </Colorize>
   )

@@ -1,1 +1,4 @@
 - Do not edit README.md.
+- Add modelprinter renderers under `lib/models/<compactname>/` with a public `index.ts` and typed `register.tsx` descriptor; consume modelprinter schemas instead of duplicating specs.
+- Keep `model` and `register` private to the registration module. Generated main/vanilla barrels use `index.ts`, or an optional `vanilla.ts` override, to preserve each entrypoint's public API.
+- Do not edit ignored `lib/generated/` files or central renderer/pad lists. Use the generation/build hooks and watch workflow described in [docs/model-registration.md](docs/model-registration.md).
