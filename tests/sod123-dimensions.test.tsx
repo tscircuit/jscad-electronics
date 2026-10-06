@@ -33,7 +33,9 @@ test("SOD123 geometry follows the Vishay package drawing", () => {
   expect(bodyMax[1]! - bodyMin[1]!).toBeCloseTo(1.55)
   expect(bodyMin[2]).toBeCloseTo(0.1)
 
-  const leads = geometries.filter(({ color }) => color?.[0] === 1)
+  const leads = geometries.filter(
+    ({ material }) => (material?.metalness ?? 0) > 0,
+  )
   expect(leads).toHaveLength(2)
   for (const lead of leads) {
     const [leadMin, leadMax] =

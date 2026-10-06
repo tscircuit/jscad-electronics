@@ -9,6 +9,8 @@ export function renderSheetMetalSnapshot(index: 0 | 1 | 2) {
   if (definition.fn !== "sheetmetal") throw new Error("Expected sheet metal")
   const { fn, ...props } = definition
   return renderModelSnapshot({
+    metalness: 1,
+    roughness: 0.4,
     mesh: createSheetMetalMesh(props),
     title: `SHEET METAL / ${definition.profile.toUpperCase()}`,
     modelString,
