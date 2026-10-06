@@ -13,7 +13,8 @@ export function createBulletMeshes(
 ): CableMesh[] {
   const { cylinder, sphere, cuboid } = jscad.primitives
   const { subtract, union } = jscad.booleans
-  const { diameter, contactDepth, bodyDepth, bodyWidth, kind } = connector
+  const { diameter, contactDepth, bodyDepth, kind } = connector
+  const bodyWidth = connector.bodyHeight
   const radius = diameter / 2
   let contact =
     kind === "bullet_male"
@@ -68,7 +69,7 @@ export function createBulletMeshes(
       segments: 32,
     }),
   )
-  return [
+  const contactMeshes = [
     geometryToCableMesh({
       geometry: contact,
       color: [0.83, 0.64, 0.22, 1],
@@ -80,4 +81,16 @@ export function createBulletMeshes(
       name: "solder-cup",
     }),
   ]
+  const pinCount = connector.pinCount ?? 1
+  return Array.from({ length: pinCount }, (_, index) => {
+    const offset = (index - (pinCount - 1) / 2) * (connector.pitch ?? bodyWidth)
+    return contactMeshes.map((mesh) => ({
+      ...mesh,
+      name: pinCount === 1 ? mesh.name : `${mesh.name}-${index + 1}`,
+      // Local +X is the cable frame's normal, paired with sweepRoundCable.offset.
+      positions: mesh.positions.map((coordinate, coordinateIndex) =>
+        coordinateIndex % 3 === 0 ? coordinate + offset : coordinate,
+      ),
+    }))
+  }).flat()
 }

@@ -289,7 +289,8 @@ export function createConnectorMeshes({
       ? createUsbMeshes(connector)
       : connector.kind === "bullet_male" || connector.kind === "bullet_female"
         ? createBulletMeshes(connector)
-        : "pinCount" in connector
+        : connector.kind === "jst_sh_housing" ||
+            connector.kind === "jst_ph_housing"
           ? createJstMeshes(connector)
           : createMainsMeshes(connector)
   if (
