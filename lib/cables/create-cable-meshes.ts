@@ -37,13 +37,50 @@ function validateCableDefinition(definition: CableGeometryDefinition) {
         connector.shellDepth,
       )
     if (
+      connector.kind === "bullet_male" ||
+      connector.kind === "bullet_female"
+    ) {
+      const pinCount = connector.pinCount ?? 1
+      const pitch = connector.pitch ?? connector.bodyHeight
+      dimensions.push(connector.diameter, connector.contactDepth, pitch)
+      if (
+        !Number.isInteger(pinCount) ||
+        pinCount < 1 ||
+        pinCount > 16 ||
+        connector.bodyHeight <= connector.diameter ||
+        pitch < connector.bodyHeight ||
+        Math.abs(
+          connector.bodyWidth - (connector.bodyHeight + (pinCount - 1) * pitch),
+        ) > 1e-6 ||
+        connector.contactDepth >= connector.bodyDepth ||
+        connector.contactDepth <= connector.diameter / 2
+      )
+        throw new Error("Bullet contact must fit inside its cylindrical body")
+      if (
+        (pinCount === 1 &&
+          (definition.crossSection.kind !== "round_jacket" ||
+            definition.crossSection.diameter > connector.bodyHeight)) ||
+        (pinCount > 1 &&
+          (definition.crossSection.kind !== "wire_bundle" ||
+            definition.crossSection.wires.length !== pinCount ||
+            definition.crossSection.wirePitch !== pitch ||
+            definition.crossSection.wires.some(
+              (wire) => wire.diameter > connector.bodyHeight,
+            )))
+      )
+        throw new Error(
+          "Bullet cables require one insulated wire per contact that fits its solder cup",
+        )
+    }
+    if (
       dimensions.some(
         (dimension) => !Number.isFinite(dimension) || dimension <= 0,
       )
     )
       throw new Error("Connector dimensions must be finite and positive")
     if (
-      "pinCount" in connector &&
+      (connector.kind === "jst_sh_housing" ||
+        connector.kind === "jst_ph_housing") &&
       (!Number.isInteger(connector.pinCount) ||
         connector.pinCount < 2 ||
         !Number.isFinite(connector.pitch) ||
@@ -72,7 +109,7 @@ function validateCableDefinition(definition: CableGeometryDefinition) {
     for (const connector of [definition.connectorA, definition.connectorB]) {
       if (
         !("pinCount" in connector) ||
-        connector.pinCount !== crossSection.wires.length
+        (connector.pinCount ?? 1) !== crossSection.wires.length
       )
         throw new Error("Bundle wire count must match connector contact count")
     }
