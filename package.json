@@ -23,18 +23,24 @@
     "dist"
   ],
   "scripts": {
-    "start": "cosmos",
+    "generate": "node scripts/generate-model-renderers.mjs",
+    "generate:watch": "node scripts/watch-model-renderers.mjs",
+    "start": "node scripts/run-model-dev.mjs",
+    "dev": "node scripts/run-model-dev.mjs",
     "build": "tsup --config tsup.config.ts",
     "vercel-build": "bun run build:site",
-    "format": "biome format --write .",
-    "format:check": "biome format .",
-    "build:site": "cosmos-export",
+    "typecheck": "node scripts/generate-model-renderers.mjs && tsc --noEmit",
+    "format": "node scripts/generate-model-renderers.mjs && biome format --write .",
+    "format:check": "node scripts/generate-model-renderers.mjs && biome format .",
+    "build:site": "node scripts/generate-model-renderers.mjs && cosmos-export",
+    "prepare": "npm run build",
+    "prepack": "npm run build",
     "test:vanilla": "bun run build && node tests/vanilla-smoke.mjs",
     "test": "bun test"
   },
   "dependencies": {
     "@tscircuit/mm": "^0.0.8",
-    "@tscircuit/modelprinter": "https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@745e964ac3137d515b7586870208142432845444",
+    "@tscircuit/modelprinter": "https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@0262c71788481313bad6d61f7850220c1f6681a4",
     "earcut": "^3.2.3"
   },
   "devDependencies": {
