@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import type { PcbPlatedHole } from "circuit-json"
 import {
   Colorize,
@@ -16,7 +17,7 @@ export const FootprintPlatedHole = ({
 
   if (hole.shape === "circle") {
     return (
-      <Colorize color={color}>
+      <Colorize color={color} material={componentMaterials.copper}>
         <Translate offset={[hole.x, hole.y, -0.005]}>
           <Subtract>
             <Cylinder radius={hole.outer_diameter / 2} height={0.01} />
@@ -28,7 +29,7 @@ export const FootprintPlatedHole = ({
   }
   if (hole.shape === "circular_hole_with_rect_pad") {
     return (
-      <Colorize color={color}>
+      <Colorize color={color} material={componentMaterials.copper}>
         <Translate offset={[hole.x, hole.y, 0]}>
           <Subtract>
             <Cuboid
@@ -51,7 +52,7 @@ export const FootprintPlatedHole = ({
     const holeHeight = hole.hole_height ?? 0.8
 
     return (
-      <Colorize color={color}>
+      <Colorize color={color} material={componentMaterials.copper}>
         <Translate offset={[hole.x, hole.y, 0]}>
           <Subtract>
             <Hull>

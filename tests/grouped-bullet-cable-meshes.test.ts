@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test"
+import { componentMaterials } from "../lib/materials"
 import { createCableMeshes, type CableGeometryDefinition } from "../lib/cables"
 
 test("three bullet contacts line up with three separate wires at each end", () => {
@@ -49,6 +50,8 @@ test("three bullet contacts line up with three separate wires at each end", () =
     }
     expect(center(male.positions)).toBeCloseTo(center(wire.positions), 5)
     expect(center(female.positions)).toBeCloseTo(center(wire.positions), 5)
+    expect(male.material).toEqual(componentMaterials.goldContact)
+    expect(female.material).toEqual(componentMaterials.goldContact)
     expect(male.indices.length > 0 && female.indices.length > 0).toBe(true)
   }
   expect(() =>

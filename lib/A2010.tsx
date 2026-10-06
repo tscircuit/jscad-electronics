@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import { Cuboid } from "jscad-fiber"
 
 const fullLength = 5.0
@@ -13,16 +14,19 @@ export const A2010 = ({ color = "#333" }) => {
       <Cuboid
         size={[bodyLength, width, height]}
         offset={[0, 0, height / 2]}
+        material={componentMaterials.moldedPlastic}
         color={color}
       />
       <Cuboid
         size={[terminatorWidth, width, height]}
         offset={[fullLength / 2 - terminatorWidth / 2, 0, height / 2]}
+        material={componentMaterials.tinnedLead}
         color="#ccc"
       />
       <Cuboid
         size={[terminatorWidth, width, height]}
         offset={[-fullLength / 2 + terminatorWidth / 2, 0, height / 2]}
+        material={componentMaterials.tinnedLead}
         color="#ccc"
       />
     </>

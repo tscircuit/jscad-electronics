@@ -43,6 +43,7 @@ export type CableGeometryDefinition = {
 }
 
 export type CableMesh = {
+  material?: { metalness: number; roughness: number }
   name: string
   positions: number[]
   indices: number[]

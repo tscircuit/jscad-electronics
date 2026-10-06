@@ -1,4 +1,5 @@
 import jscad from "@jscad/modeling"
+import { componentMaterials } from "../materials"
 import { geometryToCableMesh } from "./geometry-to-mesh"
 import type { CableConnectorSpec, CableMesh } from "./types"
 
@@ -72,11 +73,13 @@ export function createBulletMeshes(
   const contactMeshes = [
     geometryToCableMesh({
       geometry: contact,
+      material: componentMaterials.goldContact,
       color: [0.83, 0.64, 0.22, 1],
       name: kind === "bullet_male" ? "bullet-pin" : "bullet-socket",
     }),
     geometryToCableMesh({
       geometry: solderCup,
+      material: componentMaterials.goldContact,
       color: [0.83, 0.64, 0.22, 1],
       name: "solder-cup",
     }),

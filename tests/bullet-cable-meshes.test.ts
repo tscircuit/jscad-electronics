@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test"
+import { componentMaterials } from "../lib/materials"
 import { createCableMeshes, type CableGeometryDefinition } from "../lib/cables"
 import {
   createConnectorMeshes,
@@ -44,6 +45,8 @@ test("bullet contacts have distinct pin and socket geometry at both cable ends",
       "B-solder-cup",
     ])
     for (const mesh of meshes) {
+      if (mesh.name !== "jacket")
+        expect(mesh.material).toEqual(componentMaterials.goldContact)
       expect(mesh.positions.every(Number.isFinite)).toBe(true)
       expect(
         mesh.indices.every(

@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import { fp } from "@tscircuit/footprinter"
 import { mm } from "@tscircuit/mm"
 import { Colorize, Cuboid, Rotate, Subtract, Union } from "jscad-fiber"
@@ -62,7 +63,7 @@ export const JstSh = ({ footprint = "jst6_sh" }: { footprint?: string }) => {
   const pinY = y - direction * 0.25
   return (
     <Rotate rotation={[0, 0, angle]}>
-      <Colorize color="#e4e1d6">
+      <Colorize material={componentMaterials.moldedPlastic} color="#e4e1d6">
         <Subtract>
           <Cuboid
             size={[width, depth, height]}
@@ -92,7 +93,7 @@ export const JstSh = ({ footprint = "jst6_sh" }: { footprint?: string }) => {
           ))}
         </Subtract>
       </Colorize>
-      <Colorize color="#c6c7c9">
+      <Colorize material={componentMaterials.tinnedLead} color="#c6c7c9">
         {signals.map((pad, i) => {
           const tailY = pad.y - direction * pad.height * 0.4
           return (
