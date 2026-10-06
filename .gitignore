@@ -6,3 +6,6 @@ cosmos-export
 dist
 .env
 *.diff.*
+
+# Static renderer discovery is generated before tests, checks and builds.
+/lib/generated/

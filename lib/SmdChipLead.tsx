@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import {
   Polygon,
   ExtrudeLinear,
@@ -77,7 +78,7 @@ export const SmdChipLead = (props: SmdChipLeadProps) => {
 
   const polygon = getExpandedStroke(points, thickness)
   return (
-    <Colorize color="#fff">
+    <Colorize color="#c4c7ca" material={componentMaterials.tinnedLead}>
       <Translate offset={{ z: 0, y: 0, x: 0, ...props.position }}>
         <Rotate rotation={["90deg", 0, rotation ?? 0]}>
           <Translate offset={{ x: 0, y: 0, z: -width / 2 }}>

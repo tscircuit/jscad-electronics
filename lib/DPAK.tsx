@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import { Colorize, Cuboid, Hull, Translate } from "jscad-fiber"
 
 export interface DPAKProps {
@@ -62,14 +63,14 @@ export const DPAK = ({
 
   return (
     <>
-      <Colorize color={tabColor}>
+      <Colorize material={componentMaterials.tinnedLead} color={tabColor}>
         <Cuboid
           size={[tabWidth, tabLength, tabThickness]}
           center={[tabCenterX, 0, tabThickness / 2]}
         />
       </Colorize>
 
-      <Colorize color={color}>
+      <Colorize material={componentMaterials.moldedPlastic} color={color}>
         <Cuboid
           size={[bodyWidth, bodyLength, bodyHeight]}
           center={[bodyCenterX, 0, tabThickness + bodyHeight / 2]}
@@ -78,7 +79,11 @@ export const DPAK = ({
 
       {[-1, 1].map((side) => {
         return (
-          <Colorize color={leadColor} key={`lead-${side}`}>
+          <Colorize
+            material={componentMaterials.tinnedLead}
+            color={leadColor}
+            key={`lead-${side}`}
+          >
             {/* flat pad contact */}
             <Cuboid
               size={[leadContactLength, leadWidth, leadThickness]}

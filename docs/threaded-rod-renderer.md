@@ -1,7 +1,12 @@
 # ThreadedRod renderer
 
-Consumes the strict schemas and resolved dimensions from [modelprinter PR #20](https://github.com/tscircuit/modelprinter/pull/20). The dependency and lockfile pin [that PR's immutable package preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@6ccb323720827555dbb1700509031e54269c74cd) so the renderer can be reviewed before a modelprinter release. Replace the preview with a published version after that contract is released.
+Consumes the strict schemas and resolved dimensions from [modelprinter PR #20](https://github.com/tscircuit/modelprinter/pull/20). The dependency and lockfile pin [the shared immutable package preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@0262c71788481313bad6d61f7850220c1f6681a4) so the renderer can be reviewed before a modelprinter release.
 
 `createThreadedRodMesh` returns indexed outward-facing triangles; `createThreadedRodGeom` produces a JSCAD solid. `ThreadedRod` is exported from both React and vanilla entrypoints. `Footprinter3d` and vanilla footprint helpers route `threadedrod` strings to it; mechanical models produce no PCB pads.
 
 All nominal dimensions, defaults, selectors, validation and datums belong to modelprinter. There is no local parser or second dimension table. Radial sampling resolves the actual mounting, drive and thread surfaces directly, avoiding threaded CSG subtraction. The exported `ThreadedRodMeshOptions` type controls tessellation in the second factory argument: radialSegments defaults to 96 (multiple of 12, 24–192), segmentsPerPitch defaults to 32 (8–64). Inputs requiring more than 24,000 axial thread intervals fail before allocating mesh arrays. Polygonal surfaces approximate the nominal curves; thread depth and hand remain those of the contract. Geometry tests verify manifold topology, positive signed volume, datums and profile sections; a four-view PoppyGL snapshot displays the full roadmap example string.
+
+The shared dependency preview is produced by [modelprinter draft PR #41](https://github.com/tscircuit/modelprinter/pull/41),
+which includes this model's contract and the other registry contracts. Replace
+the preview with a published modelprinter version once all contracts consumed
+by the renderer registry are available in that release.
