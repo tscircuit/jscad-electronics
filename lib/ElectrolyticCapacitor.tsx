@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import {
   Colorize,
   Cuboid,
@@ -56,7 +57,7 @@ export const ElectrolyticCapacitor = ({
     <>
       {/* rubber bung / base. Slightly narrower than the can: coincident side
           faces render as z-fighting moiré, not as a join. */}
-      <Colorize color={baseColor}>
+      <Colorize color={baseColor} material={componentMaterials.rubber}>
         <Cylinder
           radius={radius - 0.05}
           height={baseHeight}
@@ -65,7 +66,7 @@ export const ElectrolyticCapacitor = ({
       </Colorize>
 
       {/* aluminium can with its sleeve */}
-      <Colorize color={sleeveColor}>
+      <Colorize color={sleeveColor} material={componentMaterials.sleeve}>
         <Subtract>
           <RoundedCylinder
             radius={radius}
@@ -85,7 +86,11 @@ export const ElectrolyticCapacitor = ({
       </Colorize>
 
       {[-1, 1].map((side) => (
-        <Colorize color="#c0c0c0" key={`lead-${side}`}>
+        <Colorize
+          material={componentMaterials.tinnedLead}
+          color="#c0c0c0"
+          key={`lead-${side}`}
+        >
           <Cylinder
             radius={leadDiameter / 2}
             height={leadLength + baseHeight}

@@ -2,7 +2,7 @@ import { useEffect, useRef, type ReactElement } from "react"
 import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
 import * as jscad from "@jscad/modeling"
-import { createJSCADRenderer } from "jscad-fiber"
+import { createJSCADRenderer, type MaterialProps } from "jscad-fiber"
 
 /** Fixture-only viewer: fit the camera to millimeter geometry without scaling it. */
 export function ComponentPreview({ children }: { children: ReactElement }) {
@@ -31,9 +31,11 @@ export function ComponentPreview({ children }: { children: ReactElement }) {
       )
       geometry.computeVertexNormals()
       const color = solid.color ?? [0.6, 0.6, 0.6]
+      const appearance = (solid as typeof solid & MaterialProps).material
       const material = new THREE.MeshStandardMaterial({
         color: new THREE.Color(color[0]!, color[1]!, color[2]!),
-        roughness: 0.6,
+        metalness: appearance?.metalness ?? 0,
+        roughness: appearance?.roughness ?? 0.65,
       })
       const mesh = new THREE.Mesh(geometry, material)
       scene.add(mesh)

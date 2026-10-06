@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 /** Parameterized dual-flat no-lead package family. Dimensions are millimeters.
  * Manufacturer case names belong in fixtures, not in model dispatch or exports.
  * Existing chamfered rendering remains the default; rectangular variants expose
@@ -139,7 +140,7 @@ export const DFN = ({
     )
     return (
       <>
-        <Colorize color="#25272a">
+        <Colorize material={componentMaterials.moldedPlastic} color="#25272a">
           {pin1MarkWidth > 0 ? (
             <Subtract>
               {body}
@@ -149,7 +150,7 @@ export const DFN = ({
             body
           )}
         </Colorize>
-        <Colorize color="#c7c9cd">
+        <Colorize material={componentMaterials.tinnedLead} color="#c7c9cd">
           {pinPositions.map((p) =>
             p.pinNumber === 1 && pin1TerminalChamfer > 0 ? (
               <Hull key={p.pinNumber}>
@@ -185,6 +186,7 @@ export const DFN = ({
         </Colorize>
         {thermalPadSize && (
           <Cuboid
+            material={componentMaterials.tinnedLead}
             color="#c7c9cd"
             size={[
               thermalPadSize.width,
