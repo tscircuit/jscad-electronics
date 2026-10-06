@@ -57,7 +57,7 @@ export function renderCableMeshes(
     lookAt: center,
     up: options.detail ? "y+" : "z+",
     fov: 32,
-    realistic: true,
+    realistic: false,
     ambient: 0.3,
     lightDir: [-0.4, -0.8, -0.6],
     grid: false,

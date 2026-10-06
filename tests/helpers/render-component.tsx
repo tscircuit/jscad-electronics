@@ -83,7 +83,7 @@ export async function renderComponent(
     width: options.width ?? 800,
     height: options.height ?? 600,
     backgroundColor: [1, 1, 1],
-    realistic: true,
+    realistic: false,
     ambient: 0.38,
     gamma: true,
     cull: true,

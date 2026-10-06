@@ -130,7 +130,7 @@ export async function renderModelSnapshot({
       width: 660,
       height: 440,
       supersampling: 1,
-      realistic: true,
+      realistic: false,
       backgroundColor: [241 / 255, 244 / 255, 248 / 255],
       camPos: view.eye,
       lookAt: view.target,

@@ -150,7 +150,7 @@ export async function renderFootprint(
     width: 800,
     height: 600,
     backgroundColor: [1, 1, 1] as const,
-    realistic: true,
+    realistic: false,
     ambient: 0.3,
     gamma: true,
     cull: true as const,

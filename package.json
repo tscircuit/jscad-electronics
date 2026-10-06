@@ -30,7 +30,7 @@
     "format:check": "biome format .",
     "build:site": "cosmos-export",
     "test:vanilla": "bun run build && node tests/vanilla-smoke.mjs",
-    "test": "bun test --timeout 60000"
+    "test": "bun test"
   },
   "dependencies": {
     "@tscircuit/mm": "^0.0.8",

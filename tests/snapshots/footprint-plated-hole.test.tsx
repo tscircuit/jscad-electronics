@@ -56,7 +56,7 @@ test("circular_hole_with_rect_pad plated hole", async () => {
       width: 800,
       height: 600,
       backgroundColor: [1, 1, 1],
-      realistic: true,
+      realistic: false,
       ambient: 0.3,
       gamma: true,
       cull: true,

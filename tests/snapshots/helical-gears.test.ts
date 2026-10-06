@@ -14,5 +14,5 @@ for (const hand of ["right", "left"]) {
         `gears-helical-${hand}.test.ts`,
       ),
     )
-  }, 60000)
+  }, 30000)
 }
