@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import { Colorize, Cylinder, ExtrudeLinear, Hull, Polygon } from "jscad-fiber"
 import { ChipBody } from "./ChipBody"
 
@@ -137,7 +138,11 @@ export const Crystal = ({
   return (
     <>
       {terminalPositions.map((center, index) => (
-        <Colorize key={index} color="#d6a258">
+        <Colorize
+          key={index}
+          color="#d6a258"
+          material={componentMaterials.goldContact}
+        >
           <ExtrudeLinear height={terminalThickness}>
             <Polygon
               points={getTerminalPoints(
@@ -163,10 +168,10 @@ export const Crystal = ({
         includeNotch={false}
         chamferSize={bodyChamfer}
       />
-      <Colorize color="#d2a057">
+      <Colorize color="#d2a057" material={componentMaterials.goldContact}>
         <Hull>{sealProfile}</Hull>
       </Colorize>
-      <Colorize color="#b9bec2">
+      <Colorize color="#b9bec2" material={componentMaterials.brushedMetal}>
         <Hull>{lidProfiles}</Hull>
       </Colorize>
     </>

@@ -2,7 +2,7 @@ import { test } from "bun:test"
 import { mp } from "@tscircuit/modelprinter"
 import { createTSlotInsideCornerMesh } from "../../lib/models/tslotinsidecorner"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
-import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
+import { renderModelSnapshot } from "../fixtures/render-orthographic-model-snapshot"
 
 test("T-slot inside corner complete roadmap string - four views", async () => {
   const modelString =

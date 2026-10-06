@@ -1,3 +1,4 @@
+import { componentMaterials } from "./materials"
 import { Colorize, Cuboid, Subtract, Translate } from "jscad-fiber"
 import type { PcbPlatedHole } from "circuit-json"
 import { fp } from "@tscircuit/footprinter"
@@ -46,7 +47,7 @@ export const JSTXH2_5mm = ({
     <>
       {/* 1. White Nylon Connector Housing */}
       <Translate offset={[0, 0, bodyHeight / 2]}>
-        <Colorize color={bodyColor}>
+        <Colorize material={componentMaterials.moldedPlastic} color={bodyColor}>
           <Subtract>
             {/* Outer Solid Block */}
             <Cuboid size={[bodyWidth, bodyDepth, bodyHeight]} />
@@ -125,7 +126,11 @@ export const JSTXH2_5mm = ({
       {/* 2. Metal Square Through-Hole Contact Pins (0.64mm square) */}
       {showPins &&
         Array.from({ length: numPins }).map((_, i) => (
-          <Colorize key={i} color={pinColor}>
+          <Colorize
+            key={i}
+            material={componentMaterials.tinnedLead}
+            color={pinColor}
+          >
             <Translate offset={[startX + i * pitch, 0, pinLength / 2 - 3.4]}>
               <Cuboid size={[0.64, 0.64, pinLength]} />
             </Translate>
