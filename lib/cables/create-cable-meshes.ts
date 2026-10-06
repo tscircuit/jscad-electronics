@@ -37,6 +37,26 @@ function validateCableDefinition(definition: CableGeometryDefinition) {
         connector.shellDepth,
       )
     if (
+      connector.kind === "bullet_male" ||
+      connector.kind === "bullet_female"
+    ) {
+      dimensions.push(connector.diameter, connector.contactDepth)
+      if (
+        connector.bodyWidth <= connector.diameter ||
+        connector.bodyHeight !== connector.bodyWidth ||
+        connector.contactDepth >= connector.bodyDepth ||
+        connector.contactDepth <= connector.diameter / 2
+      )
+        throw new Error("Bullet contact must fit inside its cylindrical body")
+      if (
+        definition.crossSection.kind !== "round_jacket" ||
+        definition.crossSection.diameter > connector.bodyWidth
+      )
+        throw new Error(
+          "Bullet cables require one insulated wire that fits the solder cup body",
+        )
+    }
+    if (
       dimensions.some(
         (dimension) => !Number.isFinite(dimension) || dimension <= 0,
       )

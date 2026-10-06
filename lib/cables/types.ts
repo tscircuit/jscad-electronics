@@ -20,6 +20,11 @@ export type CableConnectorSpec = ConnectorBody &
         pitch: number
       }
     | { kind: "nema_5_15p" | "iec_c13" }
+    | {
+        kind: "bullet_male" | "bullet_female"
+        diameter: number
+        contactDepth: number
+      }
   )
 
 /** Structural subset of a cableprinter definition; no runtime spec dependency. */
