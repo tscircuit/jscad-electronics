@@ -104,11 +104,13 @@ export async function renderModelSnapshot({
   footer,
   metalness = 0,
   roughness = 0.65,
+  color = [0.42, 0.49, 0.59, 1],
 }: {
   mesh: { positions: number[]; indices: number[] }
   title: string
   metalness?: number
   roughness?: number
+  color?: [number, number, number, number]
   modelString: string
   views: readonly [SnapshotView, SnapshotView, SnapshotView, SnapshotView]
   footer: string
@@ -116,7 +118,7 @@ export async function renderModelSnapshot({
   const positions = mesh.indices.flatMap((index) =>
     mesh.positions.slice(index * 3, index * 3 + 3),
   )
-  const model = drawCall(positions, [0.42, 0.49, 0.59, 1])
+  const model = drawCall(positions, color)
   model.material.metallicFactor = metalness
   model.material.roughnessFactor = roughness
   const sheet = new SoftwareRenderer(width * scale, height * scale)

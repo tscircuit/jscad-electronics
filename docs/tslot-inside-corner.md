@@ -10,7 +10,7 @@ Footprint helpers route this mechanical model without PCB pads.
 
 Parameter validation and defaults come from
 [modelprinter PR #34](https://github.com/tscircuit/modelprinter/pull/34), using
-the shared [pinned package preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@0262c71788481313bad6d61f7850220c1f6681a4).
+the published `@tscircuit/modelprinter@0.0.14` dependency.
 The [parameter contract](https://github.com/tscircuit/modelprinter/blob/fc7fd191873b3149b748a1b4e85e2bc67b175568/docs/tslot-inside-corner.md)
 owns leg extents, local axes and the virtual inside mounting datum.
 
@@ -22,8 +22,5 @@ sharp inside corner and concentric outside bend. Geometry tests measure
 bounds, volume, both mounting cuts, inner/outer bend radii, closed topology and
 React/vanilla routing; the complete example has a four-view PNG snapshot.
 
-The shared dependency preview is published from
-[modelprinter draft PR #41](https://github.com/tscircuit/modelprinter/pull/41) and
-contains the contract linked above. Replace it with a published modelprinter
-release only after that release contains all contracts used by the renderer
-registry.
+The renderer registry consumes this contract and its other model contracts
+from the same published modelprinter release.
