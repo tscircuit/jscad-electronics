@@ -2,16 +2,17 @@ import { expect, test } from "bun:test"
 import { getBallBearingDimensions } from "@tscircuit/modelprinter"
 import { createBallBearingMesh } from "../lib/models/ballbearing"
 import { assertAssembly, rayHits } from "./fixtures/ballbearing-geometry"
+import { ballBearingFaceCases } from "./fixtures/ballbearing-face-cases"
 import {
   sliceMesh,
   innerRadiusAtAngle,
   outerRadiusAtAngle,
 } from "./fixtures/assert-gear-geometry"
 
-test("radial race grooves and rim chamfers are actual surfaces; shield/seal faces remain within width", () => {
-  for (const closure of ["open", "shielded", "sealed"] as const) {
-    const d = getBallBearingDimensions({ code: "608", closure }),
-      mesh = createBallBearingMesh({ code: "608", closure })
+test("radial grooves and all nine independent face choices preserve closed surfaces, clear balls and the shaft", () => {
+  for (const { top, bottom, input } of ballBearingFaceCases) {
+    const d = getBallBearingDimensions(input),
+      mesh = createBallBearingMesh(input)
     assertAssembly(mesh.parts)
     const inner = mesh.parts.find((part) => part.name === "inner race")!.mesh
     const outer = mesh.parts.find((part) => part.name === "outer race")!.mesh
@@ -32,25 +33,40 @@ test("radial race grooves and rim chamfers are actual surfaces; shield/seal face
         d.boreRadius + d.rimChamfer / 2,
         8,
       )
-    const covers = mesh.parts.filter((part) =>
-      part.name.startsWith(closure + " "),
-    )
-    expect(covers).toHaveLength(closure === "open" ? 0 : 2)
-    for (const cover of covers) {
-      const heights = cover.mesh.positions.filter((_, i) => i % 3 === 2)
-      expect(Math.min(...heights)).toBeGreaterThanOrEqual(0)
-      expect(Math.max(...heights)).toBeLessThanOrEqual(d.width)
+    for (const [state, face] of [
+      [top, "upper"],
+      [bottom, "lower"],
+    ] as const) {
+      const covers = mesh.parts.filter(
+        (part) =>
+          (part.name.startsWith("shielded ") ||
+            part.name.startsWith("sealed ")) &&
+          part.name.endsWith(face),
+      )
+      expect(covers).toHaveLength(state === "open" ? 0 : 1)
+      for (const cover of covers) {
+        expect(cover.name).toBe(`${state} ${face}`)
+        expect(cover.color).toBe(state === "sealed" ? "#252a30" : "#b5bbc3")
+        const heights = cover.mesh.positions.filter((_, i) => i % 3 === 2)
+        expect(Math.min(...heights)).toBeGreaterThanOrEqual(
+          face === "lower" ? 0 : d.width - d.closureThickness,
+        )
+        expect(Math.max(...heights)).toBeLessThanOrEqual(
+          face === "lower" ? d.closureThickness : d.width,
+        )
+        expect(
+          face === "lower" ? Math.min(...heights) : Math.max(...heights),
+        ).toBe(face === "lower" ? 0 : d.width)
+        const gapRay = [
+          d.pitchRadius * Math.cos(Math.PI / 8),
+          d.pitchRadius * Math.sin(Math.PI / 8),
+          -1,
+        ] as [number, number, number]
+        expect(rayHits(cover.mesh, gapRay, [0, 0, 1])).toBe(true)
+        expect(rayHits(cover.mesh, [0, 0, -1], [0, 0, 1])).toBe(false)
+      }
     }
     expect(rayHits(mesh, [0, 0, -1], [0, 0, 1])).toBe(false)
-    const gapRay = [
-      d.pitchRadius * Math.cos(Math.PI / 8),
-      d.pitchRadius * Math.sin(Math.PI / 8),
-      -1,
-    ] as [number, number, number]
-    // Cage occupies the middle; closures additionally cover their two separate face planes.
-    if (closure !== "open")
-      for (const cover of covers)
-        expect(rayHits(cover.mesh, gapRay, [0, 0, 1])).toBe(true)
   }
   expect(
     createBallBearingMesh({}, { segments: 192 }).positions.length,

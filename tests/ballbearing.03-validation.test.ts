@@ -7,6 +7,13 @@ test("ballbearing rejects unsupported tessellation and unrenderable/invalid dime
   expect(() => createBallBearingMesh({ boreDiameter: 0 } as never)).toThrow()
   expect(() => createBallBearingMesh({ width: "2mmjunk" } as never)).toThrow()
   expect(() => createBallBearingMesh({ typo: true } as never)).toThrow()
+  expect(() => createBallBearingMesh({ closure: "open" } as never)).toThrow()
+  expect(() =>
+    createBallBearingMesh({ topSideOpen: true, topSideSealed: true }),
+  ).toThrow()
+  expect(() =>
+    createBallBearingMesh({ bottomSideShielded: true, bottomSideSealed: true }),
+  ).toThrow()
   expect(() =>
     createBallBearingMesh({
       innerDiameter: 8,

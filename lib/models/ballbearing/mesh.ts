@@ -18,7 +18,7 @@ export interface BallBearingMesh {
 }
 export type BallBearingMeshOptions = { segments?: number }
 
-/** ISO/de-facto envelope, nominal grooved races/balls/cage, and both optional closures. */
+/** ISO/de-facto envelope, nominal grooved races/balls/cage, and independently selected faces. */
 export function createBallBearingMesh(
   input: BallBearingModelPropsInput = {},
   options: BallBearingMeshOptions = {},
@@ -133,37 +133,49 @@ export function createBallBearingMesh(
       ),
     })
   }
-  if (d.closure !== "open")
-    for (const sign of [-1, 1]) {
-      const t = d.closureThickness
-      const ri = d.innerRaceOuterRadius,
-        ro = d.outerRaceInnerRadius
-      const shape: [number, number][] =
-        d.closure === "shielded"
-          ? [
-              [ro, 0],
-              [ro, t * 0.45],
-              [ri, t * 0.45],
-              [ri, 0],
-            ]
-          : [
-              [ro, 0],
-              [ro, t],
-              [ri, t],
-              [ri, 0],
-              [ri + 0.15 * (ro - ri), 0.5 * t],
-              [ro - 0.15 * (ro - ri), 0.5 * t],
-            ]
-      const profile: ProfilePoint[] =
-        sign === -1
-          ? shape
-          : shape.map(([r, z]) => [r, d.width - z] as ProfilePoint).reverse()
-      parts.push({
-        name: `${d.closure} ${sign < 0 ? "lower" : "upper"}`,
-        color: d.closure === "sealed" ? "#252a30" : "#b5bbc3",
-        mesh: revolve(profile, segments),
-      })
-    }
+  for (const sign of [-1, 1]) {
+    const face =
+      sign < 0
+        ? d.bottomSideShielded
+          ? "shielded"
+          : d.bottomSideSealed
+            ? "sealed"
+            : "open"
+        : d.topSideShielded
+          ? "shielded"
+          : d.topSideSealed
+            ? "sealed"
+            : "open"
+    if (face === "open") continue
+    const t = d.closureThickness
+    const ri = d.innerRaceOuterRadius,
+      ro = d.outerRaceInnerRadius
+    const shape: [number, number][] =
+      face === "shielded"
+        ? [
+            [ro, 0],
+            [ro, t * 0.45],
+            [ri, t * 0.45],
+            [ri, 0],
+          ]
+        : [
+            [ro, 0],
+            [ro, t],
+            [ri, t],
+            [ri, 0],
+            [ri + 0.15 * (ro - ri), 0.5 * t],
+            [ro - 0.15 * (ro - ri), 0.5 * t],
+          ]
+    const profile: ProfilePoint[] =
+      sign === -1
+        ? shape
+        : shape.map(([r, z]) => [r, d.width - z] as ProfilePoint).reverse()
+    parts.push({
+      name: `${face} ${sign < 0 ? "lower" : "upper"}`,
+      color: face === "sealed" ? "#252a30" : "#b5bbc3",
+      mesh: revolve(profile, segments),
+    })
+  }
   return { ...combine(parts), parts }
 }
 
