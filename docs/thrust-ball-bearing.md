@@ -25,6 +25,10 @@ bounded: `segments` defaults to 96 and must be a multiple of four from 24 to
 segments rounded down to a multiple of four, at least 24, with half as many
 latitude intervals. Cage pockets use one quarter of the washer segments,
 at least 12, so their polygonal opening retains clearance around each ball.
+The cage polygon's incircle must contain the full pocket circles with a
+floating-point clearance margin. Thin custom envelopes that fail this check
+raise a mesh resolution error before allocation; increase `segments` or widen
+the envelope. This renderer guard preserves the broader modelprinter contract.
 
 The four-view snapshot covers the assembled default, including the real open
 bore and exposed ball/cage band. Topology tests verify outward closed shells,

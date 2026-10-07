@@ -153,6 +153,15 @@ export function createThrustBallBearingMeshParts(
   const d = getThrustBallBearingDimensions(input)
   if (![...Object.values(d)].every(Number.isFinite) || d.ballRadius <= 0)
     throw new Error("Thrust bearing envelope is outside the finite mesh range")
+  // Every pocket must fit inside the outer polygon's incircle. Nominal circle
+  // containment alone can let coarse chords cross pockets in thin envelopes.
+  const cageInradius = d.cageOuterRadius * Math.cos(Math.PI / segments)
+  const pocketExtent = d.pitchRadius + d.cagePocketRadius
+  const precision = 64 * Number.EPSILON * d.cageOuterRadius
+  if (cageInradius - pocketExtent <= precision)
+    throw new Error(
+      "Thrust bearing cage pockets exceed mesh resolution; increase segments or widen the envelope",
+    )
   const profile: [number, number][] = [
     [d.outerRadius, 0],
     [d.outerRadius, d.washerThickness],
