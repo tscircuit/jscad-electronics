@@ -1,4 +1,5 @@
 - Do not edit README.md.
+- Every PR introducing a new model must include a checked-in standard four-view PNG snapshot (ISOMETRIC, TOP, FRONT, SIDE), labeled with its full model string, and a passing visual snapshot test; use `tests/fixtures/render-model-snapshot.ts` and cover newly introduced male/female or grouped variants separately.
 - Add modelprinter renderers under `lib/models/<compactname>/` with a public `index.ts` and typed `register.tsx` descriptor; consume modelprinter schemas instead of duplicating specs.
 - Keep `model` and `register` private to the registration module. Generated main/vanilla barrels use `index.ts`, or an optional `vanilla.ts` override, to preserve each entrypoint's public API.
 - Do not edit ignored `lib/generated/` files or central renderer/pad lists. Use the generation/build hooks and watch workflow described in [docs/model-registration.md](docs/model-registration.md).
