@@ -1,5 +1,8 @@
 import jscad from "@jscad/modeling"
-import { getNemaMotorReferencePoints } from "@tscircuit/modelprinter"
+import {
+  getJstMotorConnector,
+  getNemaMotorReferencePoints,
+} from "@tscircuit/modelprinter"
 import {
   resolveNemaMotorProps,
   type NemaMotorModelPropsInput,
@@ -7,9 +10,8 @@ import {
 
 /** Visible wire termination in motor-local mm: +Z shaft, origin at front face.
  * Placement comes from the same spec reference used by assembly rotation.
- * JST-PH's representative six-position header is 13.9 mm wide, 4.5 mm thick,
- * 6 mm high, with 2 mm pitch; shell and contacts are illustrative.
- * https://www.jst-mfg.com/product/pdf/eng/ePH.pdf
+ * Header dimensions, pin count and pitch come from modelprinter's shared
+ * JST PH/SH profile; shell and contacts are illustrative.
  */
 export function createNemaMotorWireGeometry(input: NemaMotorModelPropsInput) {
   const p = resolveNemaMotorProps(input)
@@ -55,18 +57,29 @@ export function createNemaMotorWireGeometry(input: NemaMotorModelPropsInput) {
       ),
     }))
   }
+  const connector = getJstMotorConnector(p.wireConnection)!
+  const { pinCount, pitch, bodyWidth, bodyHeight, matingDepth } = connector
+  const wall = pitch === 2 ? 0.6 : 0.3
+  const contactLength = pitch === 2 ? 3.4 : 2.4
+  const contactSize = pitch === 2 ? 0.5 : 0.3
   const shell = jscad.booleans.subtract(
-    jscad.primitives.cuboid({ size: [6.1, 13.9, 4.5], center: [2.95, 0, 0] }),
-    jscad.primitives.cuboid({ size: [5.5, 12.7, 3.3], center: [3.55, 0, 0] }),
+    jscad.primitives.cuboid({
+      size: [matingDepth + 0.1, bodyWidth, bodyHeight],
+      center: [(matingDepth - 0.1) / 2, 0, 0],
+    }),
+    jscad.primitives.cuboid({
+      size: [matingDepth - 0.5, bodyWidth - 2 * wall, bodyHeight - 2 * wall],
+      center: [matingDepth / 2 + 0.55, 0, 0],
+    }),
   )
   return [
     { color: "#eeeeea", geometry: place(shell) },
-    ...Array.from({ length: 6 }, (_, i) => ({
+    ...Array.from({ length: pinCount }, (_, i) => ({
       color: "#b8bec6",
       geometry: place(
         jscad.primitives.cuboid({
-          size: [3.4, 0.5, 0.5],
-          center: [1.7, (i - 2.5) * 2, 0],
+          size: [contactLength, contactSize, contactSize],
+          center: [contactLength / 2, (i - (pinCount - 1) / 2) * pitch, 0],
         }),
       ),
     })),
