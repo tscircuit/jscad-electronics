@@ -30,7 +30,7 @@ for (const { name, modelString, definition } of adapterCableExamples) {
       views: [
         {
           name: "ISOMETRIC",
-          detail: "independent end shapes and wire fanout",
+          detail: "compact bundle / fanout in the last 20 mm",
           eye: [100, -100, 130],
           target,
           span,
