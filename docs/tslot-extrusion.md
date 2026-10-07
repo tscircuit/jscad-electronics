@@ -11,7 +11,7 @@ mechanical models emit no PCB pads.
 
 The schema, defaults, units and section identity are consumed from
 [modelprinter PR #33](https://github.com/tscircuit/modelprinter/pull/33), using
-the shared [pinned package preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@0262c71788481313bad6d61f7850220c1f6681a4).
+the published `@tscircuit/modelprinter@0.0.14` dependency.
 See the [parameter contract](https://github.com/tscircuit/modelprinter/blob/3d8ef855d4228a2624f01c6f01a1d4f3520deaad/docs/tslot-extrusion.md).
 
 The indexed outward surface models the actual narrow mouths and wider T
@@ -22,8 +22,5 @@ section is centered in XY, as specified upstream. No supplier profile is inferre
 Topology, analytic volume, mounting-cut rays, route parity and a four-view PNG
 snapshot verify the geometry.
 
-The shared dependency preview is published from
-[modelprinter draft PR #41](https://github.com/tscircuit/modelprinter/pull/41) and
-contains the contract linked above. Replace it with a published modelprinter
-release only after that release contains all contracts used by the renderer
-registry.
+The renderer registry consumes this contract and its other model contracts
+from the same published modelprinter release.
