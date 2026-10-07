@@ -1,15 +1,15 @@
-# Gooseneck
+# Hollow positioning arm tube
 
-`Gooseneck` renders a generic hollow, ribbed tube in a configurable planar
+`HollowPositioningArmTube` renders a generic hollow, ribbed tube in a configurable planar
 pose. The model starts at the origin along +Z, bends toward +X, then follows
-the final tangent. It uses Modelprinter's gooseneck schema and dimensional
-helpers. See [the parameter contract](https://github.com/tscircuit/modelprinter/blob/main/docs/gooseneck.md)
+the final tangent. It uses Modelprinter's hollowpositioningarmtube schema and dimensional
+helpers. See [the parameter contract](https://github.com/tscircuit/modelprinter/blob/main/docs/hollowpositioningarmtube.md)
 for dimensions, defaults, datums and validation.
 
 ```tsx
-import { Gooseneck, Footprinter3d } from "jscad-electronics"
+import { HollowPositioningArmTube, Footprinter3d } from "jscad-electronics"
 
-<Gooseneck
+<HollowPositioningArmTube
   outerDiameter={6}
   innerDiameter={4}
   startLength={38}
@@ -21,11 +21,11 @@ import { Gooseneck, Footprinter3d } from "jscad-electronics"
   color="#343943"
 />
 
-<Footprinter3d footprint="gooseneck_od6mm_id4mm_start38mm_end112mm_radius60mm_angle90_pitch2.25mm_depth0.25mm" />
+<Footprinter3d footprint="hollowpositioningarmtube_od6mm_id4mm_start38mm_end112mm_radius60mm_angle90_pitch2.25mm_depth0.25mm" />
 ```
 
-Both package entrypoints export `Gooseneck`, `createGooseneckGeom` and
-`createGooseneckMesh`. Model-string routing works synchronously through the
+Both package entrypoints export `HollowPositioningArmTube`, `createHollowPositioningArmTubeGeom` and
+`createHollowPositioningArmTubeMesh`. Model-string routing works synchronously through the
 vanilla renderer and produces no PCB pads. Place the result with the assembly's
 position/rotation, rather than baking lamp coordinates into the model.
 

@@ -1,13 +1,17 @@
 import { mp } from "@tscircuit/modelprinter"
-import { createGooseneckMesh } from "../../lib/models/gooseneck"
+import { createHollowPositioningArmTubeMesh } from "../../lib/models/hollowpositioningarmtube"
 import { meshBounds } from "./assert-gear-geometry"
 import { renderModelSnapshot } from "./render-model-snapshot"
 
-export function renderGooseneckSnapshot(modelString: string, title: string) {
+export function renderHollowPositioningArmTubeSnapshot(
+  modelString: string,
+  title: string,
+) {
   const definition = mp.string(modelString).json()
-  if (definition.fn !== "gooseneck") throw new Error("Expected gooseneck")
+  if (definition.fn !== "hollowpositioningarmtube")
+    throw new Error("Expected hollowpositioningarmtube")
   const { fn, ...props } = definition
-  const mesh = createGooseneckMesh(props)
+  const mesh = createHollowPositioningArmTubeMesh(props)
   const { minimum, maximum } = meshBounds(mesh)
   const x = (minimum[0]! + maximum[0]!) / 2
   const z = (minimum[2]! + maximum[2]!) / 2

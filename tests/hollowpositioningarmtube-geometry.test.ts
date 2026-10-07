@@ -1,16 +1,16 @@
 import { expect, test } from "bun:test"
 import jscad from "@jscad/modeling"
 import {
-  getGooseneckDimensions,
-  getGooseneckFrame,
-  gooseneckModelPropsSchema,
-  type GooseneckModelPropsInput,
+  getHollowPositioningArmTubeDimensions,
+  getHollowPositioningArmTubeFrame,
+  hollowPositioningArmTubeModelPropsSchema,
+  type HollowPositioningArmTubeModelPropsInput,
 } from "@tscircuit/modelprinter"
 import { Triangle, Vector3 } from "three"
 import {
-  createGooseneckGeom,
-  createGooseneckMesh,
-} from "../lib/models/gooseneck"
+  createHollowPositioningArmTubeGeom,
+  createHollowPositioningArmTubeMesh,
+} from "../lib/models/hollowpositioningarmtube"
 import {
   assertClosedGearMesh,
   innerRadiusAtAngle,
@@ -48,18 +48,19 @@ for (const [name, input] of [
     "tight bend",
     { startLength: 0, endLength: 0, bendRadius: 3.1, bendAngle: 180 },
   ],
-] satisfies [string, GooseneckModelPropsInput][]) {
-  test(`gooseneck ${name}: closed outward mesh and clear wire passage`, () => {
-    const props = gooseneckModelPropsSchema.parse(input)
-    const mesh = createGooseneckMesh(input)
+] satisfies [string, HollowPositioningArmTubeModelPropsInput][]) {
+  test(`hollowpositioningarmtube ${name}: closed outward mesh and clear wire passage`, () => {
+    const props = hollowPositioningArmTubeModelPropsSchema.parse(input)
+    const mesh = createHollowPositioningArmTubeMesh(input)
     const volume = assertClosedGearMesh(mesh)
-    const geometry = createGooseneckGeom(input)
+    const geometry = createHollowPositioningArmTubeGeom(input)
     jscad.geometries.geom3.validate(geometry)
     expect(jscad.measurements.measureVolume(geometry)).toBeCloseTo(volume, 6)
 
     // Distance to triangle interiors catches caps across the bore, not only
     // vertices. Sample both mounting ends, tangent joins and the entire bend.
-    const { totalLength, bendLength } = getGooseneckDimensions(input)
+    const { totalLength, bendLength } =
+      getHollowPositioningArmTubeDimensions(input)
     const distances = [
       0,
       props.startLength,
@@ -70,7 +71,9 @@ for (const [name, input] of [
     const triangle = new Triangle()
     const nearest = new Vector3()
     for (const s of distances) {
-      const center = new Vector3(...getGooseneckFrame(input, s).position)
+      const center = new Vector3(
+        ...getHollowPositioningArmTubeFrame(input, s).position,
+      )
       let clearance = Infinity
       for (let i = 0; i < mesh.indices.length; i += 3) {
         triangle.a.fromArray(mesh.positions, mesh.indices[i]! * 3)
@@ -84,8 +87,8 @@ for (const [name, input] of [
   }, 30000)
 }
 
-test("gooseneck straight section has the requested bore, rib crests and roots", () => {
-  const mesh = createGooseneckMesh({
+test("hollowpositioningarmtube straight section has the requested bore, rib crests and roots", () => {
+  const mesh = createHollowPositioningArmTubeMesh({
     bendAngle: 0,
     startLength: 9,
     endLength: 0,
@@ -104,18 +107,22 @@ test("gooseneck straight section has the requested bore, rib crests and roots", 
   expect(Math.max(...z)).toBe(9)
 })
 
-test("gooseneck smooth tube volume matches the nominal annulus along the path", () => {
+test("hollowpositioningarmtube smooth tube volume matches the nominal annulus along the path", () => {
   const props = { ribDepth: 0 }
-  const volume = jscad.measurements.measureVolume(createGooseneckGeom(props))
+  const volume = jscad.measurements.measureVolume(
+    createHollowPositioningArmTubeGeom(props),
+  )
   const nominal =
-    Math.PI * (3 ** 2 - 2 ** 2) * getGooseneckDimensions(props).totalLength
+    Math.PI *
+    (3 ** 2 - 2 ** 2) *
+    getHollowPositioningArmTubeDimensions(props).totalLength
   // A 24-sided section loses 1.14% of circular area; bound the additional
   // centerline tessellation error within a 2% total volume tolerance.
   expect(volume / nominal).toBeGreaterThan(0.98)
   expect(volume / nominal).toBeLessThanOrEqual(1)
 })
 
-test("gooseneck guards resolution, impossible geometry and excessive work", () => {
+test("hollowpositioningarmtube guards resolution, impossible geometry and excessive work", () => {
   for (const options of [
     { radialSegments: 0 },
     { radialSegments: 15 },
@@ -124,7 +131,7 @@ test("gooseneck guards resolution, impossible geometry and excessive work", () =
     { segmentsPerRib: 6 },
     { segmentsPerRib: Infinity },
   ])
-    expect(() => createGooseneckMesh({}, options)).toThrow()
+    expect(() => createHollowPositioningArmTubeMesh({}, options)).toThrow()
   for (const props of [
     { ribPitch: 1e-9 },
     { bendRadius: 2 },
@@ -133,11 +140,12 @@ test("gooseneck guards resolution, impossible geometry and excessive work", () =
     { ribDepth: 0, innerDiameter: 6 - 1e-12 },
     { startLength: 1e-12, endLength: 0, bendAngle: 0, ribDepth: 0 },
   ])
-    expect(() => createGooseneckMesh(props)).toThrow()
+    expect(() => createHollowPositioningArmTubeMesh(props)).toThrow()
   // A smooth tube does not depend on pitch, even if s / pitch overflows.
   expect(
-    createGooseneckMesh({ ribDepth: 0, ribPitch: 1e-310 }).positions.every(
-      Number.isFinite,
-    ),
+    createHollowPositioningArmTubeMesh({
+      ribDepth: 0,
+      ribPitch: 1e-310,
+    }).positions.every(Number.isFinite),
   ).toBe(true)
 })

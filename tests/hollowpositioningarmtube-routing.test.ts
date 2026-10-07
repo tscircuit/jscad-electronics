@@ -1,35 +1,39 @@
 import { expect, test } from "bun:test"
 import jscad from "@jscad/modeling"
 import { mp } from "@tscircuit/modelprinter"
-import { Gooseneck, createGooseneckGeom } from "../lib/models/gooseneck"
+import {
+  HollowPositioningArmTube,
+  createHollowPositioningArmTubeGeom,
+} from "../lib/models/hollowpositioningarmtube"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { importVanilla } from "./fixtures/importVanilla.js"
 import {
-  lampGooseneckString,
-  straightGooseneckString,
-  smoothGooseneckString,
-} from "./fixtures/gooseneck-inputs"
+  lampHollowPositioningArmTubeString,
+  straightHollowPositioningArmTubeString,
+  smoothHollowPositioningArmTubeString,
+} from "./fixtures/hollowpositioningarmtube-inputs"
 import { getComponentModel } from "./helpers/component-model"
 
 for (const source of [
-  lampGooseneckString,
-  straightGooseneckString,
-  smoothGooseneckString,
+  lampHollowPositioningArmTubeString,
+  straightHollowPositioningArmTubeString,
+  smoothHollowPositioningArmTubeString,
 ]) {
-  test(`gooseneck React and built vanilla routing: ${source}`, async () => {
+  test(`hollowpositioningarmtube React and built vanilla routing: ${source}`, async () => {
     const definition = mp.string(source).json()
-    if (definition.fn !== "gooseneck") throw new Error("Expected gooseneck")
+    if (definition.fn !== "hollowpositioningarmtube")
+      throw new Error("Expected hollowpositioningarmtube")
     const { fn, ...props } = definition
-    const geometry = createGooseneckGeom(props)
+    const geometry = createHollowPositioningArmTubeGeom(props)
     expect(
       getComponentModel(ExtrudedPads, { footprint: source }).geometries,
     ).toHaveLength(0)
     const vanilla = await importVanilla()
-    expect(typeof vanilla.createGooseneckMesh).toBe("function")
-    expect(typeof vanilla.Gooseneck).toBe("function")
+    expect(typeof vanilla.createHollowPositioningArmTubeMesh).toBe("function")
+    expect(typeof vanilla.HollowPositioningArmTube).toBe("function")
     for (const result of [
-      getComponentModel(Gooseneck, props),
+      getComponentModel(HollowPositioningArmTube, props),
       getComponentModel(Footprinter3d, { footprint: source }),
       vanilla.getJscadModelForFootprintWithPads(source, jscad),
     ]) {
@@ -47,12 +51,12 @@ for (const source of [
   }, 30000)
 }
 
-test("gooseneck malformed strings fail before rendering", async () => {
+test("hollowpositioningarmtube malformed strings fail before rendering", async () => {
   const vanilla = await importVanilla()
   for (const source of [
-    "gooseneck_id6mm",
-    "gooseneck_angle181",
-    "gooseneck_pitch0mm",
+    "hollowpositioningarmtube_id6mm",
+    "hollowpositioningarmtube_angle181",
+    "hollowpositioningarmtube_pitch0mm",
   ]) {
     expect(() =>
       getComponentModel(Footprinter3d, { footprint: source }),

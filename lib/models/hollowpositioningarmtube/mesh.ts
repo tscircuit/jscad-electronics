@@ -1,27 +1,27 @@
 import {
-  getGooseneckDimensions,
-  getGooseneckFrame,
-  gooseneckModelPropsSchema,
-  type GooseneckModelPropsInput,
+  getHollowPositioningArmTubeDimensions,
+  getHollowPositioningArmTubeFrame,
+  hollowPositioningArmTubeModelPropsSchema,
+  type HollowPositioningArmTubeModelPropsInput,
 } from "@tscircuit/modelprinter"
 
-export interface GooseneckMesh {
+export interface HollowPositioningArmTubeMesh {
   positions: number[]
   indices: number[]
 }
 
-export interface GooseneckMeshOptions {
+export interface HollowPositioningArmTubeMeshOptions {
   radialSegments?: number
   segmentsPerRib?: number
 }
 
 /** One closed annular sweep with open ends and a smooth, continuous wire bore. */
-export function createGooseneckMesh(
-  input: GooseneckModelPropsInput,
-  options: GooseneckMeshOptions = {},
-): GooseneckMesh {
-  const props = gooseneckModelPropsSchema.parse(input)
-  const dimensions = getGooseneckDimensions(props)
+export function createHollowPositioningArmTubeMesh(
+  input: HollowPositioningArmTubeModelPropsInput,
+  options: HollowPositioningArmTubeMeshOptions = {},
+): HollowPositioningArmTubeMesh {
+  const props = hollowPositioningArmTubeModelPropsSchema.parse(input)
+  const dimensions = getHollowPositioningArmTubeDimensions(props)
   const radialSegments = options.radialSegments ?? 24
   const segmentsPerRib = options.segmentsPerRib ?? 4
   for (const [name, value, minimum, maximum] of [
@@ -44,7 +44,7 @@ export function createGooseneckMesh(
   const tolerance = scale * 1e-10
   if (Math.min(innerRadius, minimumWallThickness, totalLength) <= tolerance)
     throw new Error(
-      "Gooseneck wall, bore or length exceeds mesh resolution limit",
+      "Hollow positioning arm tube wall, bore or length exceeds mesh resolution limit",
     )
 
   // Limit centerline chord error relative to the bore and wall as well as angle.
@@ -66,7 +66,9 @@ export function createGooseneckMesh(
     !Number.isSafeInteger(bendSteps + ribSteps) ||
     bendSteps + ribSteps + 5 > maximumRings
   )
-    throw new Error("Gooseneck exceeds mesh resolution limit (250000 vertices)")
+    throw new Error(
+      "Hollow positioning arm tube exceeds mesh resolution limit (250000 vertices)",
+    )
 
   const samples = [
     0,
@@ -90,7 +92,7 @@ export function createGooseneckMesh(
   const indices: number[] = []
   const stride = radialSegments * 2
   for (const s of stations) {
-    const { position, normal } = getGooseneckFrame(props, s)
+    const { position, normal } = getHollowPositioningArmTubeFrame(props, s)
     const outerRadius =
       props.outerDiameter / 2 -
       (props.ribDepth === 0
