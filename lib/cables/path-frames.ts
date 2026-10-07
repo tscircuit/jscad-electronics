@@ -31,8 +31,22 @@ export function normalize(point: CablePoint): CablePoint {
   return scale(point, 1 / length)
 }
 
-/** Parallel transport avoids a wire bundle flipping when its tangent crosses an axis. */
-export function createCablePathFrames(path: CablePoint[]): CableFrame[] {
+/** Pin 1 sides point from the connector center toward its first contact
+ * (connector-local -X), expressed as directions (no
+ * translation) in right-handed world XYZ, +Z up. Path points are mm in that
+ * same frame. Parallel transport preserves legacy roll when no directions
+ * are supplied; two constrained ends distribute twist by path arc length.
+ */
+export function createCablePathFrames(
+  path: CablePoint[],
+  {
+    startPin1Side,
+    endPin1Side,
+  }: {
+    startPin1Side?: CablePoint
+    endPin1Side?: CablePoint
+  } = {},
+): CableFrame[] {
   if (
     path.length < 2 ||
     path.some((point) => point.length !== 3 || !point.every(Number.isFinite))
@@ -51,8 +65,24 @@ export function createCablePathFrames(path: CablePoint[]): CableFrame[] {
   )
   const initialUp: CablePoint =
     Math.abs(tangents[0]![2]) > 0.95 ? [0, 1, 0] : [0, 0, 1]
-  let normal = normalize(cross(initialUp, tangents[0]!))
-  return tangents.map((tangent, index) => {
+  const endpointNormal = (pin1Side: CablePoint, tangent: CablePoint) => {
+    if (
+      pin1Side.length !== 3 ||
+      !pin1Side.every(Number.isFinite) ||
+      Math.hypot(...pin1Side) < 1e-10
+    )
+      throw new Error("Connector pin 1 side must be a finite nonzero vector")
+    const normal = scale(normalize(pin1Side), -1)
+    if (Math.abs(dot(normal, tangent)) > 1e-5)
+      throw new Error(
+        "Connector pin 1 side must be perpendicular to its path tangent",
+      )
+    return normalize(subtract(normal, scale(tangent, dot(normal, tangent))))
+  }
+  let normal = startPin1Side
+    ? endpointNormal(startPin1Side, tangents[0]!)
+    : normalize(cross(initialUp, tangents[0]!))
+  const frames = tangents.map((tangent, index) => {
     if (index > 0) {
       const previousTangent = tangents[index - 1]!
       const axis = cross(previousTangent, tangent)
@@ -73,6 +103,34 @@ export function createCablePathFrames(path: CablePoint[]): CableFrame[] {
       tangent,
       normal,
       binormal: normalize(cross(tangent, normal)),
+    }
+  })
+  if (!endPin1Side) return frames
+  const last = frames.at(-1)!
+  const endNormal = endpointNormal(endPin1Side, last.tangent)
+  const twist = Math.atan2(
+    dot(last.tangent, cross(last.normal, endNormal)),
+    dot(last.normal, endNormal),
+  )
+  const distances = [0]
+  for (let index = 1; index < path.length; index++)
+    distances.push(
+      distances[index - 1]! +
+        Math.hypot(...subtract(path[index]!, path[index - 1]!)),
+    )
+  return frames.map((frame, index) => {
+    const angle =
+      twist * (startPin1Side ? distances[index]! / distances.at(-1)! : 1)
+    const normal = normalize(
+      add(
+        scale(frame.normal, Math.cos(angle)),
+        scale(frame.binormal, Math.sin(angle)),
+      ),
+    )
+    return {
+      ...frame,
+      normal,
+      binormal: normalize(cross(frame.tangent, normal)),
     }
   })
 }
