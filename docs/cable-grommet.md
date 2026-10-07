@@ -4,12 +4,10 @@
 the `@tscircuit/modelprinter` cable-grommet contract. Its parser, dimensions,
 validation and groove-root helper remain in that package.
 
-The dependency and lockfile pin the [compatible immutable preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@0262c71788481313bad6d61f7850220c1f6681a4)
-from [modelprinter draft PR #41](https://github.com/tscircuit/modelprinter/pull/41)
-at commit `0262c71788481313bad6d61f7850220c1f6681a4`. It includes
-[modelprinter PR #31](https://github.com/tscircuit/modelprinter/pull/31) and upstream FlexScreen contact and tail parsing.
-Replace the preview with a published modelprinter release once all contracts
-used by the renderer registry are available in that release.
+The dependency and lockfile use the published
+`@tscircuit/modelprinter@0.0.14` release. It includes
+[modelprinter PR #31](https://github.com/tscircuit/modelprinter/pull/31)
+and upstream FlexScreen contact and tail parsing.
 
 ```
 cablegrommet_panelhole20mm_id10mm_od24mm_h8mm_groovew3mm_grooved2mm_shape(symmetricring)
