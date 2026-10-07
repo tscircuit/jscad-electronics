@@ -7,12 +7,10 @@
 compressionspring_spec(custom)_od8mm_wire1mm_l20mm_turns8_active6_ends(closedground)_hand(right)_state(free)
 ```
 
-The dependency and lockfile pin the [compatible immutable preview](https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@0262c71788481313bad6d61f7850220c1f6681a4)
-from [modelprinter draft PR #41](https://github.com/tscircuit/modelprinter/pull/41)
-at commit `0262c71788481313bad6d61f7850220c1f6681a4`. It includes
-[modelprinter PR #26](https://github.com/tscircuit/modelprinter/pull/26) and upstream FlexScreen contact and tail parsing.
-Replace the preview with a published modelprinter release once all contracts
-used by the renderer registry are available in that release.
+The dependency and lockfile use the published
+`@tscircuit/modelprinter@0.0.14` release. It includes
+[modelprinter PR #26](https://github.com/tscircuit/modelprinter/pull/26)
+and upstream FlexScreen contact and tail parsing.
 
 The parser/schema, active-turn default, piecewise pitch, winding and bearing
 datums are owned by `@tscircuit/modelprinter`. Geometry imports its dimensions
