@@ -3,7 +3,8 @@ import {
   connectorWireExitDepth,
 } from "./connector-meshes"
 import { placeConnectorMesh } from "./geometry-to-mesh"
-import { add, scale, subtract, createCablePathFrames } from "./path-frames"
+import { add, scale, createCablePathFrames } from "./path-frames"
+import { createBundleFanoutPath } from "./create-bundle-fanout-path"
 import { sweepRoundCable } from "./sweep-round-cable"
 import type {
   CableColor,
@@ -148,19 +149,18 @@ export function createCableMeshes({
     crossSection.kind === "round_jacket" ? crossSection.diameter : undefined
   // Endpoint pitches are connector-local mm. Offset along transported normals
   // in the same right-handed +Z-up world frame as the supplied centerline.
-  // Arc-length interpolation makes fanout independent of path sampling density.
+  // Keep the middle compact; widen only near the connector wire exits.
   const pitchA =
-    "pitch" in definition.connectorA ? definition.connectorA.pitch : 0
+    "pitch" in definition.connectorA ? definition.connectorA.pitch : undefined
   const pitchB =
-    "pitch" in definition.connectorB ? definition.connectorB.pitch : 0
-  const distances = [0]
-  if (pitchA !== pitchB && crossSection.kind === "wire_bundle") {
-    for (let index = 1; index < path.length; index++)
-      distances.push(
-        distances[index - 1]! +
-          Math.hypot(...subtract(path[index]!, path[index - 1]!)),
-      )
-  }
+    "pitch" in definition.connectorB ? definition.connectorB.pitch : undefined
+  const fanout =
+    pitchA !== pitchB && crossSection.kind === "wire_bundle"
+      ? createBundleFanoutPath(path)
+      : undefined
+  const fanoutFrames = fanout
+    ? createCablePathFrames(fanout.path, { startPin1Side, endPin1Side })
+    : frames
   const meshes =
     crossSection.kind === "round_jacket"
       ? [
@@ -174,12 +174,35 @@ export function createCableMeshes({
         ]
       : crossSection.wires.map((wire, index) => {
           const contactOffset = index - (crossSection.wires.length - 1) / 2
-          const varyingPitch = pitchA !== pitchB
-          const wireFrames = varyingPitch
+          // 20% clearance around the thickest insulated wire, capped by the
+          // declared bundle and both connector pitches to prevent overlap.
+          const compactPitch = Math.min(
+            crossSection.wirePitch,
+            pitchA ?? crossSection.wirePitch,
+            pitchB ?? crossSection.wirePitch,
+            1.2 * Math.max(...crossSection.wires.map((wire) => wire.diameter)),
+          )
+          const smoothstep = (progress: number) =>
+            progress * progress * (3 - 2 * progress)
+          const wireFrames = fanout
             ? createCablePathFrames(
-                frames.map((frame, pathIndex) => {
-                  const progress = distances[pathIndex]! / distances.at(-1)!
-                  const pitch = pitchA + (pitchB - pitchA) * progress
+                fanoutFrames.map((frame, pathIndex) => {
+                  const distance = fanout.distances[pathIndex]!
+                  const start =
+                    1 - smoothstep(Math.min(1, distance / fanout.endLength))
+                  const end =
+                    1 -
+                    smoothstep(
+                      Math.min(
+                        1,
+                        (fanout.length - distance) / fanout.endLength,
+                      ),
+                    )
+                  const pitch =
+                    compactPitch +
+                    ((pitchA ?? crossSection.wirePitch) - compactPitch) *
+                      start +
+                    ((pitchB ?? crossSection.wirePitch) - compactPitch) * end
                   return add(
                     frame.point,
                     scale(frame.normal, contactOffset * pitch),
@@ -190,7 +213,7 @@ export function createCableMeshes({
           return sweepRoundCable({
             frames: wireFrames,
             diameter: wire.diameter,
-            offset: (varyingPitch ? 0 : contactOffset) * crossSection.wirePitch,
+            offset: (fanout ? 0 : contactOffset) * crossSection.wirePitch,
             radialSegments,
             color: parseCableColor(wire.color),
             name: `wire-${index + 1}`,
