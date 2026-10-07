@@ -1,3 +1,4 @@
+import { createBulletMeshes } from "./bullet-meshes"
 import { componentMaterials } from "../materials"
 import jscad from "@jscad/modeling"
 import { geometryToCableMesh } from "./geometry-to-mesh"
@@ -297,10 +298,17 @@ export function createConnectorMeshes({
   const meshes =
     connector.kind === "usb_c_plug"
       ? createUsbMeshes(connector)
-      : "pinCount" in connector
-        ? createJstMeshes(connector)
-        : createMainsMeshes(connector)
-  if (jacketDiameter !== undefined) {
+      : connector.kind === "bullet_male" || connector.kind === "bullet_female"
+        ? createBulletMeshes(connector)
+        : connector.kind === "jst_sh_housing" ||
+            connector.kind === "jst_ph_housing"
+          ? createJstMeshes(connector)
+          : createMainsMeshes(connector)
+  if (
+    jacketDiameter !== undefined &&
+    connector.kind !== "bullet_male" &&
+    connector.kind !== "bullet_female"
+  ) {
     const exit = connectorWireExitDepth(connector)
     const boot = union(
       cylinder({

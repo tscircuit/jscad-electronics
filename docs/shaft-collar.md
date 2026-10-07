@@ -1,6 +1,6 @@
 # ShaftCollar geometry
 
-This renderer consumes the parameter contract from [modelprinter PR #27](https://github.com/tscircuit/modelprinter/pull/27). The shared preview dependency from [modelprinter draft PR #41](https://github.com/tscircuit/modelprinter/pull/41) includes this contract and is pinned to commit `0262c71788481313bad6d61f7850220c1f6681a4` through `https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@0262c71788481313bad6d61f7850220c1f6681a4`. Replace the preview URL with a published modelprinter release once all contracts used by the renderer registry are available in that release.
+This renderer consumes the parameter contract from [modelprinter PR #27](https://github.com/tscircuit/modelprinter/pull/27). The dependency and lockfile use the published `@tscircuit/modelprinter@0.0.14` release.
 
 ```ts
 import { mp } from "@tscircuit/modelprinter"
