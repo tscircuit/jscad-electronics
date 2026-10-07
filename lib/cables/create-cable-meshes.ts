@@ -3,7 +3,8 @@ import {
   connectorWireExitDepth,
 } from "./connector-meshes"
 import { placeConnectorMesh } from "./geometry-to-mesh"
-import { createCablePathFrames } from "./path-frames"
+import { add, scale, createCablePathFrames } from "./path-frames"
+import { createBundleFanoutPath } from "./create-bundle-fanout-path"
 import { sweepRoundCable } from "./sweep-round-cable"
 import type {
   CableColor,
@@ -63,7 +64,6 @@ function validateCableDefinition(definition: CableGeometryDefinition) {
         (pinCount > 1 &&
           (definition.crossSection.kind !== "wire_bundle" ||
             definition.crossSection.wires.length !== pinCount ||
-            definition.crossSection.wirePitch !== pitch ||
             definition.crossSection.wires.some(
               (wire) => wire.diameter > connector.bodyHeight,
             )))
@@ -112,6 +112,11 @@ function validateCableDefinition(definition: CableGeometryDefinition) {
         (connector.pinCount ?? 1) !== crossSection.wires.length
       )
         throw new Error("Bundle wire count must match connector contact count")
+      if (
+        "pitch" in connector &&
+        crossSection.wires.some((wire) => wire.diameter > connector.pitch)
+      )
+        throw new Error("Insulated wires must fit each connector pitch")
     }
   }
 }
@@ -127,7 +132,7 @@ export function createCableMeshes({
   definition: CableGeometryDefinition
   path: CablePoint[]
   radialSegments?: number
-  /** Directions from connector center toward pin 1 (local -X), in circuit-world XYZ (+Z up), no translation. */
+  /** Connector center toward pin 1 (local -X), in right-handed world XYZ, +Z up; directions, no translation. */
   startPin1Side?: CablePoint
   endPin1Side?: CablePoint
 }): CableMesh[] {
@@ -138,13 +143,24 @@ export function createCableMeshes({
     radialSegments > 128
   )
     throw new Error("radialSegments must be an integer from 8 to 128")
-  const frames = createCablePathFrames(path, {
-    startPin1Side,
-    endPin1Side,
-  })
+  const frames = createCablePathFrames(path, { startPin1Side, endPin1Side })
   const crossSection = definition.crossSection
   const jacketDiameter =
     crossSection.kind === "round_jacket" ? crossSection.diameter : undefined
+  // Endpoint pitches are connector-local mm. Offset along transported normals
+  // in the same right-handed +Z-up world frame as the supplied centerline.
+  // Keep the middle compact; widen only near the connector wire exits.
+  const pitchA =
+    "pitch" in definition.connectorA ? definition.connectorA.pitch : undefined
+  const pitchB =
+    "pitch" in definition.connectorB ? definition.connectorB.pitch : undefined
+  const fanout =
+    pitchA !== pitchB && crossSection.kind === "wire_bundle"
+      ? createBundleFanoutPath(path)
+      : undefined
+  const fanoutFrames = fanout
+    ? createCablePathFrames(fanout.path, { startPin1Side, endPin1Side })
+    : frames
   const meshes =
     crossSection.kind === "round_jacket"
       ? [
@@ -156,18 +172,53 @@ export function createCableMeshes({
             name: "jacket",
           }),
         ]
-      : crossSection.wires.map((wire, index) =>
-          sweepRoundCable({
-            frames,
+      : crossSection.wires.map((wire, index) => {
+          const contactOffset = index - (crossSection.wires.length - 1) / 2
+          // 20% clearance around the thickest insulated wire, capped by the
+          // declared bundle and both connector pitches to prevent overlap.
+          const compactPitch = Math.min(
+            crossSection.wirePitch,
+            pitchA ?? crossSection.wirePitch,
+            pitchB ?? crossSection.wirePitch,
+            1.2 * Math.max(...crossSection.wires.map((wire) => wire.diameter)),
+          )
+          const smoothstep = (progress: number) =>
+            progress * progress * (3 - 2 * progress)
+          const wireFrames = fanout
+            ? createCablePathFrames(
+                fanoutFrames.map((frame, pathIndex) => {
+                  const distance = fanout.distances[pathIndex]!
+                  const start =
+                    1 - smoothstep(Math.min(1, distance / fanout.endLength))
+                  const end =
+                    1 -
+                    smoothstep(
+                      Math.min(
+                        1,
+                        (fanout.length - distance) / fanout.endLength,
+                      ),
+                    )
+                  const pitch =
+                    compactPitch +
+                    ((pitchA ?? crossSection.wirePitch) - compactPitch) *
+                      start +
+                    ((pitchB ?? crossSection.wirePitch) - compactPitch) * end
+                  return add(
+                    frame.point,
+                    scale(frame.normal, contactOffset * pitch),
+                  )
+                }),
+              )
+            : frames
+          return sweepRoundCable({
+            frames: wireFrames,
             diameter: wire.diameter,
-            offset:
-              (index - (crossSection.wires.length - 1) / 2) *
-              crossSection.wirePitch,
+            offset: (fanout ? 0 : contactOffset) * crossSection.wirePitch,
             radialSegments,
             color: parseCableColor(wire.color),
             name: `wire-${index + 1}`,
-          }),
-        )
+          })
+        })
   for (const [index, connector] of [
     definition.connectorA,
     definition.connectorB,
