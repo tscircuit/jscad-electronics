@@ -1,0 +1,2 @@
+export const tSlotExtrusionExample =
+  "tslotextrusion_w20mm_h20mm_l100mm_profile(fourtsolid)_slot6mm_pocket10mm_pocketd2mm_lip2mm_bore4mm_corner1mm"
