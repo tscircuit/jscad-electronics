@@ -1,22 +1,23 @@
 import {
-  finnedHeatsinkModelPropsSchema,
-  getFinnedHeatsinkDimensions,
-  type FinnedHeatsinkModelPropsInput,
+  adhesiveMountElectricalComponentHeatsinkModelPropsSchema,
+  getAdhesiveMountElectricalComponentHeatsinkDimensions,
+  type AdhesiveMountElectricalComponentHeatsinkModelPropsInput,
 } from "@tscircuit/modelprinter"
 import {
   extrudePlanarProfile,
   type ProfilePoint,
 } from "../../mechanical/extrude-planar-profile"
-export interface FinnedHeatsinkMesh {
+export interface AdhesiveMountElectricalComponentHeatsinkMesh {
   positions: number[]
   indices: number[]
 }
 /** One closed comb extrusion; no coplanar overlaps between fins and base. */
-export function createFinnedHeatsinkMesh(
-  input: FinnedHeatsinkModelPropsInput,
-): FinnedHeatsinkMesh {
-  const p = finnedHeatsinkModelPropsSchema.parse(input),
-    d = getFinnedHeatsinkDimensions(p)
+export function createAdhesiveMountElectricalComponentHeatsinkMesh(
+  input: AdhesiveMountElectricalComponentHeatsinkModelPropsInput,
+): AdhesiveMountElectricalComponentHeatsinkMesh {
+  const p =
+      adhesiveMountElectricalComponentHeatsinkModelPropsSchema.parse(input),
+    d = getAdhesiveMountElectricalComponentHeatsinkDimensions(p)
   const scale = Math.max(p.width, p.length, p.height)
   if (
     Math.min(

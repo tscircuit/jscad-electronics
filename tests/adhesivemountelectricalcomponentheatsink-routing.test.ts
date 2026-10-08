@@ -2,29 +2,36 @@ import { expect, test } from "bun:test"
 import jscad from "@jscad/modeling"
 import { mp } from "@tscircuit/modelprinter"
 import {
-  FinnedHeatsink,
-  createFinnedHeatsinkGeom,
-} from "../lib/models/finnedheatsink"
+  AdhesiveMountElectricalComponentHeatsink,
+  createAdhesiveMountElectricalComponentHeatsinkGeom,
+} from "../lib/models/adhesivemountelectricalcomponentheatsink"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { importVanilla } from "./fixtures/importVanilla.js"
 import { getComponentModel } from "./helpers/component-model"
-import { standardString, compactString } from "./fixtures/finnedheatsink-inputs"
+import {
+  standardString,
+  compactString,
+} from "./fixtures/adhesivemountelectricalcomponentheatsink-inputs"
 for (const source of [standardString, compactString]) {
-  test(`finnedheatsink React / vanilla routing: ${source}`, async () => {
+  test(`adhesivemountelectricalcomponentheatsink React / vanilla routing: ${source}`, async () => {
     const definition = mp.string(source).json()
-    if (definition.fn !== "finnedheatsink")
-      throw new Error("Expected finnedheatsink")
+    if (definition.fn !== "adhesivemountelectricalcomponentheatsink")
+      throw new Error("Expected adhesivemountelectricalcomponentheatsink")
     const { fn, ...props } = definition
-    const geom = createFinnedHeatsinkGeom(props),
+    const geom = createAdhesiveMountElectricalComponentHeatsinkGeom(props),
       vanilla = await importVanilla()
-    expect(typeof vanilla.FinnedHeatsink).toBe("function")
-    expect(typeof vanilla.createFinnedHeatsinkMesh).toBe("function")
+    expect(typeof vanilla.AdhesiveMountElectricalComponentHeatsink).toBe(
+      "function",
+    )
+    expect(
+      typeof vanilla.createAdhesiveMountElectricalComponentHeatsinkMesh,
+    ).toBe("function")
     expect(
       getComponentModel(ExtrudedPads, { footprint: source }).geometries,
     ).toHaveLength(0)
     for (const result of [
-      getComponentModel(FinnedHeatsink, props),
+      getComponentModel(AdhesiveMountElectricalComponentHeatsink, props),
       getComponentModel(Footprinter3d, { footprint: source }),
       vanilla.getJscadModelForFootprintWithPads(source, jscad),
     ]) {
@@ -41,12 +48,12 @@ for (const source of [standardString, compactString]) {
     }
   }, 30000)
 }
-test("finnedheatsink invalid contract fails before rendering", async () => {
+test("adhesivemountelectricalcomponentheatsink invalid contract fails before rendering", async () => {
   const vanilla = await importVanilla()
   for (const source of [
-    "finnedheatsink_h1mm",
-    "finnedheatsink_fins2.5",
-    "finnedheatsink_fin10mm",
+    "adhesivemountelectricalcomponentheatsink_h1mm",
+    "adhesivemountelectricalcomponentheatsink_fins2.5",
+    "adhesivemountelectricalcomponentheatsink_fin10mm",
   ]) {
     expect(() =>
       getComponentModel(Footprinter3d, { footprint: source }),

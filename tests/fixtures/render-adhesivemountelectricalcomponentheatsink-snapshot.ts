@@ -1,26 +1,28 @@
 import { mp } from "@tscircuit/modelprinter"
-import { createFinnedHeatsinkMesh } from "../../lib/models/finnedheatsink"
+import { createAdhesiveMountElectricalComponentHeatsinkMesh } from "../../lib/models/adhesivemountelectricalcomponentheatsink"
 import { meshBounds } from "./assert-gear-geometry"
 import { renderModelSnapshot } from "./render-model-snapshot"
-export function renderFinnedHeatsinkSnapshot(modelString: string) {
+export function renderAdhesiveMountElectricalComponentHeatsinkSnapshot(
+  modelString: string,
+) {
   const definition = mp.string(modelString).json()
-  if (definition.fn !== "finnedheatsink")
-    throw new Error("Expected finnedheatsink")
+  if (definition.fn !== "adhesivemountelectricalcomponentheatsink")
+    throw new Error("Expected adhesivemountelectricalcomponentheatsink")
   const { fn, ...props } = definition
-  const mesh = createFinnedHeatsinkMesh(props)
+  const mesh = createAdhesiveMountElectricalComponentHeatsinkMesh(props)
   const { minimum, maximum } = meshBounds(mesh)
   const target = minimum.map((v, i) => (v + maximum[i]!) / 2) as [
     number,
     number,
     number,
   ]
-  const span = Math.max(...maximum.map((v, i) => v - minimum[i]!)) * 1.65
+  const span = Math.max(...maximum.map((v, i) => v - minimum[i]!)) * 1.85
   const [x, y, z] = target,
     distance = span * 5
   return renderModelSnapshot({
     mesh,
     modelString,
-    title: "FINNED HEATSINK / PLATE FIN EXTRUSION",
+    title: "ADHESIVE-MOUNT ELECTRICAL COMPONENT HEATSINK",
     views: [
       {
         name: "ISOMETRIC",
@@ -38,7 +40,7 @@ export function renderFinnedHeatsinkSnapshot(modelString: string) {
       },
       {
         name: "FRONT",
-        detail: "MOUNTING FACE Z=0",
+        detail: "ADHESIVE BONDING FACE Z=0",
         eye: [x, y - distance, z],
         target,
         span,
@@ -51,6 +53,6 @@ export function renderFinnedHeatsinkSnapshot(modelString: string) {
         span,
       },
     ],
-    footer: "GENERIC GEOMETRY / DIMENSIONS IN mm / NO THERMAL RATING",
+    footer: "HEATSINK BODY ONLY / ADHESIVE LAYER SEPARATE / DIMENSIONS IN mm",
   })
 }
