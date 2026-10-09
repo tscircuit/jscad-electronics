@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@tscircuit/mm": "^0.0.8",
-    "@tscircuit/modelprinter": "^0.0.18",
+    "@tscircuit/modelprinter": "^0.0.20",
     "earcut": "^3.2.3"
   },
   "devDependencies": {
