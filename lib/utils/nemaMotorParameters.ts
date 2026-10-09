@@ -1,13 +1,13 @@
 import { mp, nemaMotorModelPropsSchema } from "@tscircuit/modelprinter"
+import type { NemaMotorModelProps } from "@tscircuit/modelprinter"
 export type {
   NemaMotorModelProps,
   NemaMotorModelPropsInput,
   NemaSize,
 } from "@tscircuit/modelprinter"
 
-export const resolveNemaMotorProps = nemaMotorModelPropsSchema.parse.bind(
-  nemaMotorModelPropsSchema,
-)
+export const resolveNemaMotorProps: (input: unknown) => NemaMotorModelProps =
+  nemaMotorModelPropsSchema.parse.bind(nemaMotorModelPropsSchema)
 
 export function parseNemaMotorString(source: string) {
   const definition = mp.string(source).json()

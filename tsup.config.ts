@@ -1,6 +1,10 @@
 import { defineConfig, type Options } from "tsup"
 import path from "path"
 import { generateModelRenderers } from "./scripts/generate-model-renderers.mjs"
+import {
+  prepareModelContracts,
+  writeContractProvenance,
+} from "./scripts/prepare-model-contracts.mjs"
 
 function aliasPlugin(aliases: Record<string, string>) {
   return {
@@ -18,6 +22,7 @@ function aliasPlugin(aliases: Record<string, string>) {
 }
 
 export default defineConfig(async () => {
+  await prepareModelContracts()
   await generateModelRenderers({
     modelsDir: path.resolve(__dirname, "lib/models"),
     outputDir: path.resolve(__dirname, "lib/generated"),
@@ -25,20 +30,30 @@ export default defineConfig(async () => {
   const configs: Options[] = [
     {
       entry: { index: "./lib/index.ts", cables: "./lib/cables/index.ts" },
-      dts: true,
+      dts: { resolve: ["@tscircuit/modelprinter", /^\./] },
       format: ["esm"],
       sourcemap: true,
       splitting: false,
       clean: true,
+      noExternal: ["@tscircuit/modelprinter", "@tscircuit/mm", "zod"],
+      onSuccess: writeContractProvenance,
     },
     {
       entry: { vanilla: "./lib/vanilla/index.ts" },
-      dts: true,
+      dts: { resolve: ["@tscircuit/modelprinter", /^\./] },
       format: ["esm"],
       sourcemap: true,
       splitting: false,
       clean: false,
-      noExternal: ["jscad-fiber", "react", "react-dom", "react/jsx-runtime"],
+      noExternal: [
+        "@tscircuit/modelprinter",
+        "@tscircuit/mm",
+        "zod",
+        "jscad-fiber",
+        "react",
+        "react-dom",
+        "react/jsx-runtime",
+      ],
       // Configure esbuild for classic JSX and symbol injection
       esbuildOptions(options) {
         options.jsxFactory = "h"

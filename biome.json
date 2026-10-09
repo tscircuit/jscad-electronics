@@ -8,7 +8,13 @@
     "indentStyle": "space"
   },
   "files": {
-    "ignore": ["cosmos-export", "dist", "package.json", "lib/generated"]
+    "ignore": [
+      "cosmos-export",
+      "dist",
+      "package.json",
+      "lib/generated",
+      ".model-contracts"
+    ]
   },
   "javascript": {
     "formatter": {
