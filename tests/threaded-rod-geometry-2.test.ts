@@ -7,20 +7,20 @@ import {
 import { createThreadedRodMesh } from "../lib/models/threadedrod"
 import { getThreadedRodDimensions } from "@tscircuit/modelprinter"
 
-for (const threadHand of ["right", "left"] as const)
-  test(`threaded rod ${threadHand} winding advances by one lead without end runout`, () => {
+for (const leftHand of [false, true])
+  test(`threaded rod ${leftHand ? "left" : "right"} winding advances by one lead without end runout`, () => {
     const input = {
       metricSize: "M6" as const,
       length: 10,
       threadPitch: 0.75,
-      leftHand: threadHand === "left",
+      leftHand,
       chamfer: 0,
     }
     const d = getThreadedRodDimensions(input)
     const mesh = createThreadedRodMesh(input)
     assertClosedGearMesh(mesh)
     const z = 3.75 + 0.75 / 4,
-      sign = threadHand === "right" ? 1 : -1,
+      sign = leftHand ? -1 : 1,
       crest = ((sign * z) / d.threadPitch) * 2 * Math.PI
     const section = sliceMesh(mesh, z)
     expect(outerRadiusAtAngle(section, crest)).toBeCloseTo(d.diameter / 2, 5)
@@ -46,3 +46,10 @@ for (const threadHand of ["right", "left"] as const)
         end.push(Math.hypot(mesh.positions[i]!, mesh.positions[i + 1]!))
     expect(Math.min(...end)).toBeCloseTo(d.minorDiameter / 2, 6)
   })
+
+test("threaded rod defaults to right-handed winding", () => {
+  const input = { metricSize: "M6" as const, length: 10 }
+  expect(createThreadedRodMesh(input)).toEqual(
+    createThreadedRodMesh({ ...input, leftHand: false }),
+  )
+})
