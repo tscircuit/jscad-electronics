@@ -37,3 +37,34 @@ test("flange nut routes equally through React, footprint and vanilla with no pad
     )
   }
 })
+
+test("flange nut default ISO and explicit ISO flag render identically", async () => {
+  const explicit = "FLANGENUT_ISO4161_M6_PLAINFACE"
+  const defaultModel = mp.string(flangeNutModelString).json()
+  const explicitModel = mp.string(explicit).json()
+  expect(explicitModel).toEqual(defaultModel)
+  if (defaultModel.fn !== "flangenut" || explicitModel.fn !== "flangenut")
+    throw new Error("Expected flange nut")
+  const { fn: defaultFn, ...defaultProps } = defaultModel
+  const { fn: explicitFn, ...explicitProps } = explicitModel
+  expect(createFlangeNutMesh(explicitProps)).toEqual(
+    createFlangeNutMesh(defaultProps),
+  )
+  expect(ExtrudedPads({ footprint: explicit })).toBeNull()
+  const vanilla = await importVanilla()
+  const omittedResult = vanilla.getJscadModelForFootprintWithPads(
+    flangeNutModelString,
+    jscad,
+  )
+  const explicitResult = vanilla.getJscadModelForFootprintWithPads(
+    explicit,
+    jscad,
+  )
+  expect(explicitResult.geometries).toEqual(omittedResult.geometries)
+  expect(
+    getComponentModel(Footprinter3d, { footprint: explicit }).geometries,
+  ).toEqual(
+    getComponentModel(Footprinter3d, { footprint: flangeNutModelString })
+      .geometries,
+  )
+})

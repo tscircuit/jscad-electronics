@@ -1,7 +1,10 @@
 # Flange nut renderer
 
-`flangenut_standard(iso4161)_m6_plainface` renders one steel-colored solid with
+`flangenut_m6_plainface` renders one steel-colored solid with
 a smooth bearing flange, hexagonal body and open internal coarse thread.
+ISO 4161:2012 applies by default; the optional value-free `_iso4161` flag,
+as in `flangenut_iso4161_m6_plainface`, produces identical geometry.
+Modelprinter represents that selection as `iso4161: true`.
 `nothreads` retains the minor bore and conical entrances. Supported sizes,
 strict parameter validation and all dimensions come from modelprinter's
 `flangeNutModelPropsSchema` and `getFlangeNutDimensions`; no standard table is
