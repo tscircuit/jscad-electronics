@@ -11,3 +11,6 @@ bun.lockb
 
 # Static renderer discovery is generated before tests, checks and builds.
 /lib/generated/
+
+# Exact contract checkouts and build provenance are local build inputs.
+/.model-contracts/

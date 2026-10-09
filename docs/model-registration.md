@@ -1,8 +1,10 @@
 # Adding a model renderer
 
 `@tscircuit/modelprinter` owns model strings, schemas, normalization, and default
-dimensions. Add and publish the parameter contract there first, then use its
-schema and props in this repository. jscad-electronics owns meshes, components,
+dimensions. Open the parameter contract PR there, then use its schema and props
+in this repository. Link the paired modelprinter PR in the renderer PR body;
+there is no need to publish the contract or change a dependency pin first.
+jscad-electronics owns meshes, components,
 materials, and geometry snapshots; do not duplicate the parser or dimensions.
 
 ## Model folder
@@ -82,21 +84,65 @@ files are only replaced when their content changes.
 
 ## Commands and watch workflow
 
+### Contract builds without shared dependency edits
+
+New model PRs must not bump package versions or edit the modelprinter dependency.
+The checked-in `latest` development dependency is only an installation bootstrap.
+The contract preparation step replaces it with a local build of current
+modelprinter `main`, plus the renderer's paired contract PR when one is selected.
+It merges the contract into main rather than replacing main with a preview, so
+already accepted models remain available. Genuine source conflicts stop the
+build instead of choosing one contract arbitrarily.
+
+GitHub Actions reads the paired PR link from `GITHUB_EVENT_PATH`, for example:
+
+```text
+Consumes https://github.com/tscircuit/modelprinter/pull/123
+```
+
+Only one modelprinter PR link is allowed unless `MODELPRINTER_PR` explicitly
+selects the pair. Locally, use Bun and Git:
+
+```sh
+MODELPRINTER_PR=123 bun install
+MODELPRINTER_PR=123 bun run typecheck
+MODELPRINTER_PR=123 bun test
+MODELPRINTER_PR=123 bun run build
+```
+
+Keep that environment variable set while working on an unmerged contract. With
+no pair, the build uses modelprinter main. `MODELPRINTER_REF=<full-commit-sha>`
+selects an exact contract commit instead of a PR. Each preparation records the
+resolved main SHA, paired SHA and merged source tree in ignored
+`.model-contracts/`. Subsequent commands reuse that input, including offline;
+`bun run contracts:refresh` fetches updated main and PR heads. A new install also
+refreshes it. Preparation failures never fall back to the npm bootstrap package.
+To reproduce recorded contract inputs, set `MODELPRINTER_MAIN_REF` to the recorded
+main SHA and `MODELPRINTER_REF` to the paired SHA (omit the latter for main-only builds).
+
+Published JavaScript and declarations include the tested modelprinter contracts.
+Consumers do not resolve `latest`, need a PR preview URL, or wait for a separate
+modelprinter npm release. `dist/model-contracts.json` records the exact source
+SHAs used by each published build. Release automation owns package version bumps;
+individual model contributors only add their model files, tests and snapshots.
+
 | Command | Behavior |
 | --- | --- |
 | `npm run generate` | Refresh the generated registration and public barrels. |
 | `npm run generate:watch` | Watch the model tree, including added and removed folders. |
+| `bun run contracts:prepare` | Reuse or prepare the selected exact contract source. |
+| `bun run contracts:refresh` | Refresh modelprinter main and the selected paired PR. |
 | `npm run build` | Generate and build all three package entrypoints. |
 | `npm run typecheck` | Generate before TypeScript checks. |
 | `npm run format` / `npm run format:check` | Generate before formatting. |
 | `npm start` / `npm run dev` | Generate, watch model folders, and start the Cosmos preview. |
 
-The same package scripts work with Bun. Bare `bun test` refreshes generated
-files through its test preload. The tsup configuration also awaits generation,
-so a direct `tsup --config tsup.config.ts` build works with Node 24 and no Bun
-executable. The `prepare` and `prepack` hooks run that build with npm, so a source
-installation or package build needs Node and the development dependencies, not
-a Bun executable. Published consumers import the already built package:
+The same package scripts work with Bun. Bare `bun test` prepares contracts and
+refreshes generated files through its test preload. The tsup configuration also
+awaits contract preparation and generation, including direct tsup builds. Source
+installation and builds require Node 24, Git and Bun; the contract checkout uses
+modelprinter's own build commands. Published consumers import the already built
+package and need none of those build tools:
 
 ```ts
 import { HexBolt, type HexBoltProps } from "jscad-electronics"
