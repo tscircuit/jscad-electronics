@@ -102,12 +102,7 @@ export function createThreadedRodMesh(
         depth,
         Math.max(
           0,
-          (threadDistance(
-            z,
-            angle,
-            d.threadPitch,
-            props.threadHand === "right" ? 1 : -1,
-          ) -
+          (threadDistance(z, angle, d.threadPitch, props.leftHand ? -1 : 1) -
             1 / 16) *
             d.threadPitch *
             Math.sqrt(3),

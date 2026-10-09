@@ -5,8 +5,7 @@ import { renderModelSnapshot } from "../fixtures/render-orthographic-model-snaps
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 
 test("threadedrod roadmap example - four-view PoppyGL snapshot", async () => {
-  const modelString =
-    "threadedrod_spec(custom)_m6_l100mm_thread(full)_ends(flat)_chamfer0.5mm"
+  const modelString = "threadedrod_m6_l100mm_chamfer0.5mm"
   const model = mp.string(modelString).json()
   if (model.fn !== "threadedrod") throw new Error("Unexpected model")
   const { fn, ...props } = model

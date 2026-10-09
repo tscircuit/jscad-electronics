@@ -12,8 +12,7 @@ import {
 } from "../lib/models/threadedrod"
 
 test("threadedrod React and built vanilla routing share geometry and exclude PCB pads", async () => {
-  const source =
-    "threadedrod_spec(custom)_m6_l100mm_thread(full)_ends(flat)_chamfer0.5mm"
+  const source = "threadedrod_m6_l100mm_chamfer0.5mm"
   const definition = mp.string(source).json()
   if (definition.fn !== "threadedrod") throw new Error("Unexpected model")
   const { fn, ...props } = definition

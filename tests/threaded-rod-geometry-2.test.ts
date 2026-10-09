@@ -13,7 +13,7 @@ for (const threadHand of ["right", "left"] as const)
       metricSize: "M6" as const,
       length: 10,
       threadPitch: 0.75,
-      threadHand,
+      leftHand: threadHand === "left",
       chamfer: 0,
     }
     const d = getThreadedRodDimensions(input)

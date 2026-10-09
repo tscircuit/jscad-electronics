@@ -1,0 +1,5 @@
+export const ballTransferUnitString =
+  "balltransferunit_balld25mm_flangeod45mm_h30mm_face3hole_pcd36mm_holed4mm"
+
+export const ballTransferUnitRoadmapString =
+  "balltransferunit_balld25mm_flangeod45mm_h30mm_mount(face3hole)_pcd36mm_holed4mm"
