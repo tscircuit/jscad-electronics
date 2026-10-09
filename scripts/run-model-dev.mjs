@@ -1,7 +1,9 @@
 import { spawn } from "node:child_process"
 import { createRequire } from "node:module"
 import { watchModelRenderers } from "./watch-model-renderers.mjs"
+import { prepareModelContracts } from "./prepare-model-contracts.mjs"
 
+await prepareModelContracts()
 const watcher = await watchModelRenderers()
 const cosmosScript = createRequire(import.meta.url).resolve(
   "react-cosmos/bin/cosmos.js",
