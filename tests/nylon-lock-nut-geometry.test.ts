@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test"
 import jscad from "@jscad/modeling"
-import { getNylonLockNutDimensions } from "@tscircuit/modelprinter"
+import { getNylonLockNutDimensions, mp } from "@tscircuit/modelprinter"
 import {
   createNylonLockNutGeom,
   createNylonLockNutGeometries,
@@ -86,4 +86,20 @@ test("nylon lock nut thread visibility changes metal grooves while preserving th
   expect(() =>
     createNylonLockNutMesh({ metricSize: "M6", threadPitch: 0.75 }),
   ).toThrow()
+})
+
+test("nylon lock nut omitted and explicit ISO flags produce identical material meshes", () => {
+  const resolution = { radialSegments: 48, segmentsPerPitch: 16 }
+  const implicit = mp.string("nylonlocknut_m6").json()
+  const explicit = mp.string("nylonlocknut_m6_ISO7040").json()
+  if (implicit.fn !== "nylonlocknut" || explicit.fn !== "nylonlocknut")
+    throw new Error("Unexpected model")
+  const { fn: implicitFn, ...implicitProps } = implicit
+  const { fn: explicitFn, ...explicitProps } = explicit
+  expect(createNylonLockNutMesh(explicitProps, resolution)).toEqual(
+    createNylonLockNutMesh(implicitProps, resolution),
+  )
+  expect(createNylonLockNutMeshes(explicitProps, resolution)).toEqual(
+    createNylonLockNutMeshes(implicitProps, resolution),
+  )
 })

@@ -5,7 +5,7 @@ import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 
 test("nylonlocknut full model string - four views with separate nylon material", async () => {
-  const modelString = "nylonlocknut_standard(iso7040)_m6"
+  const modelString = "nylonlocknut_m6"
   const model = mp.string(modelString).json()
   if (model.fn !== "nylonlocknut") throw new Error("Unexpected model")
   const { fn, ...props } = model

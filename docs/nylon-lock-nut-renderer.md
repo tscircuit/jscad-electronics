@@ -1,7 +1,9 @@
 # Nylon lock nut renderer
 
 `NylonLockNut` consumes the pinned ISO 7040:2012 contract from modelprinter;
-`nylonlocknut_standard(iso7040)_m6` selects its M6 model. All dimensions,
+`nylonlocknut_m6` selects its M6 model using ISO 7040 by default. The
+optional value-free `iso7040` flag restates that selection:
+`nylonlocknut_m6_iso7040` has identical geometry. All dimensions,
 nominal collar/pocket/insert choices, thread profiles and datums belong to
 modelprinter. This is an assembly visualization without torque, deformation
 or manufacturing certification. The metal extends from Z=0 to the selected

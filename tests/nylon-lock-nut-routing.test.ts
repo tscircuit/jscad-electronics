@@ -11,7 +11,8 @@ import {
 } from "../lib/models/nylonlocknut"
 
 for (const source of [
-  "nylonlocknut_standard(iso7040)_m6",
+  "nylonlocknut_m6",
+  "nylonlocknut_m6_iso7040",
   "nylonlocknut_m5_nothreads",
 ])
   test(`${source} React and built vanilla routing preserve separate nylon color and no pads`, async () => {
