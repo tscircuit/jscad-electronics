@@ -4,8 +4,7 @@ import { createFlangeBoltMesh } from "../../lib/models/flangebolt"
 import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 test("flangebolt complete model string four-view snapshot", async () => {
-  const modelString =
-      "flangebolt_headstandard(iso4162)_m6_l25mm_fullthread_plainface",
+  const modelString = "flangebolt_m6_l25mm_fullthread_plainface",
     model = mp.string(modelString).json()
   if (model.fn !== "flangebolt") throw new Error("Wrong family")
   const { fn, ...props } = model
