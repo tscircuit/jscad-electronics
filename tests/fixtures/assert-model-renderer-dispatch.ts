@@ -24,8 +24,8 @@ type Solid = jscad.geometries.geom3.Geom3
 export const mechanicalModels = [
   {
     name: "hexbolt",
-    source: "hexbolt_standard(iso4017)_m6_l25mm_drive(hex)_nothreads",
-    invalid: "hexbolt_standard(iso4017)_m6_l0mm_drive(hex)",
+    source: "hexbolt_m6_l25mm_drive(hex)_nothreads",
+    invalid: "hexbolt_m6_l0mm_drive(hex)",
     component: HexBolt,
   },
   {
