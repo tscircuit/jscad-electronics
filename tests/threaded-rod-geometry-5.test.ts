@@ -11,9 +11,13 @@ import {
   createThreadedRodGeom,
 } from "../lib/models/threadedrod"
 
-for (const leftHand of [false, true])
-  test(`threadedrod ${leftHand ? "left" : "right"}-handed React and built vanilla routing share geometry and exclude PCB pads`, async () => {
-    const source = `threadedrod_m6_l10mm_chamfer0.5mm${leftHand ? "_lefthanded" : ""}`
+for (const [hand, flag] of [
+  ["right", ""],
+  ["explicit right", "_righthanded"],
+  ["left", "_lefthanded"],
+] as const)
+  test(`threadedrod ${hand}-handed React and built vanilla routing share geometry and exclude PCB pads`, async () => {
+    const source = `threadedrod_m6_l10mm_chamfer0.5mm${flag}`
     const definition = mp.string(source).json()
     if (definition.fn !== "threadedrod") throw new Error("Unexpected model")
     const { fn, ...props } = definition
@@ -36,4 +40,22 @@ for (const leftHand of [false, true])
         6,
       )
     }
+  })
+
+for (const selector of [
+  "spec(custom)",
+  "thread(full)",
+  "ends(flat)",
+  "threadhand(left)",
+  "threadhand(right)",
+])
+  test(`threadedrod public renderers reject enum selector ${selector}`, async () => {
+    const source = `threadedrod_m6_l10mm_${selector}`
+    const vanilla = await importVanilla()
+    expect(() => Footprinter3d({ footprint: source })).toThrow()
+    expect(() => ExtrudedPads({ footprint: source })).toThrow()
+    expect(() => vanilla.getJscadModelForFootprint(source, jscad)).toThrow()
+    expect(() =>
+      vanilla.getJscadModelForFootprintWithPads(source, jscad),
+    ).toThrow()
   })

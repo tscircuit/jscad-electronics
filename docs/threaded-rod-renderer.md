@@ -1,8 +1,8 @@
 # ThreadedRod renderer
 
-Consumes the strict schemas and resolved dimensions from [modelprinter PR #63](https://github.com/tscircuit/modelprinter/pull/63). The string `threadedrod_m6_l100mm_chamfer0.5mm` renders a fully threaded M6 rod with flat ends. Add `_lefthanded` for a left-handed thread; JSON props use `leftHand: true`, with right-handed threads as the default. JSON props omit `spec`, `thread`, and `ends`; legacy string selectors remain accepted by modelprinter.
+Consumes the strict schemas and resolved dimensions from [modelprinter PR #63](https://github.com/tscircuit/modelprinter/pull/63). The string `threadedrod_m6_l100mm_chamfer0.5mm` renders a fully threaded M6 rod with flat ends. Add `_lefthanded` for a left-handed thread or `_righthanded` for an explicit right-handed thread; right-handed threads are the default. JSON props contain dimensions and the `leftHand` boolean. Enum tokens such as `spec(custom)`, `thread(full)`, `ends(flat)`, and `threadhand(left/right)` are rejected.
 
-The dependency and lockfile pin the published pkg.pr.new preview of that contract at commit `02756c0549037ce0dd9b2e47e84b8185b64b1fce`.
+The dependency and lockfile pin the published pkg.pr.new preview of that contract at commit `ddc055945fda05bdc53560299b24e01a72481256`.
 
 `createThreadedRodMesh` returns indexed outward-facing triangles; `createThreadedRodGeom` produces a JSCAD solid. `ThreadedRod` is exported from both React and vanilla entrypoints. `Footprinter3d` and vanilla footprint helpers route `threadedrod` strings to it; mechanical models produce no PCB pads.
 
