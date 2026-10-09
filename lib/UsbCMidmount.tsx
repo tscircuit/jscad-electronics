@@ -124,7 +124,9 @@ export const UsbCMidmount = ({
             key={i}
             size={[
               0.4,
-              "hole_height" in slot ? Math.max(0.3, slot.hole_height - 0.2) : 1,
+              "hole_height" in slot && slot.hole_height !== undefined
+                ? Math.max(0.3, slot.hole_height - 0.2)
+                : 1,
               tabTop - tabBottom,
             ]}
             center={[slot.x, slot.y, (tabTop + tabBottom) / 2]}

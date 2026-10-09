@@ -6,6 +6,8 @@ cosmos-export
 dist
 .env
 *.diff.*
+bun.lock
+bun.lockb
 
 # Static renderer discovery is generated before tests, checks and builds.
 /lib/generated/
