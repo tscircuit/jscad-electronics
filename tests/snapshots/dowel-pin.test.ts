@@ -4,7 +4,7 @@ import { createDowelPinMesh } from "../../lib/models/dowelpin"
 import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 test("dowel pin proposal has a labeled standard four-view snapshot", async () => {
-  const modelString = "dowelpin_standard(iso8734)_d3mm_l10mm"
+  const modelString = "dowelpin_d3mm_l10mm"
   const model = mp.string(modelString).json()
   if (model.fn !== "dowelpin") throw new Error("Unexpected model")
   const { fn, ...props } = model
