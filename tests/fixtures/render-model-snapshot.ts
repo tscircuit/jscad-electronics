@@ -105,8 +105,13 @@ export async function renderModelSnapshot({
   metalness = 0,
   roughness = 0.65,
   color = [0.42, 0.49, 0.59, 1],
+  additionalMeshes = [],
 }: {
   mesh: { positions: number[]; indices: number[] }
+  additionalMeshes?: {
+    mesh: { positions: number[]; indices: number[] }
+    color: [number, number, number, number]
+  }[]
   title: string
   metalness?: number
   roughness?: number
@@ -121,6 +126,17 @@ export async function renderModelSnapshot({
   const model = drawCall(positions, color)
   model.material.metallicFactor = metalness
   model.material.roughnessFactor = roughness
+  const models = [
+    model,
+    ...additionalMeshes.map(({ mesh, color }) =>
+      drawCall(
+        mesh.indices.flatMap((index) =>
+          mesh.positions.slice(index * 3, index * 3 + 3),
+        ),
+        color,
+      ),
+    ),
+  ]
   const sheet = new SoftwareRenderer(width * scale, height * scale)
   sheet.clear([227, 233, 240, 255])
 
@@ -128,7 +144,7 @@ export async function renderModelSnapshot({
     const distance = Math.hypot(
       ...view.eye.map((value, axis) => value - view.target[axis]!),
     )
-    const { bitmap: panel } = renderDrawCalls([model], {
+    const { bitmap: panel } = renderDrawCalls(models, {
       width: 660,
       height: 440,
       supersampling: 1,
