@@ -1,7 +1,7 @@
 {
   "name": "jscad-electronics",
   "type": "module",
-  "version": "0.0.217",
+  "version": "0.0.218",
   "main": "./dist/index.js",
   "exports": {
     ".": {
@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@tscircuit/mm": "^0.0.8",
-    "@tscircuit/modelprinter": "https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@e6de5d4792533c45ed4d64cd4c04f687a047724c",
+    "@tscircuit/modelprinter": "https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@45091f854519df242393c9a50419ee3f423e4702",
     "earcut": "^3.2.3"
   },
   "devDependencies": {
