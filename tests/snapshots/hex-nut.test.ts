@@ -5,7 +5,7 @@ import { renderModelSnapshot } from "../fixtures/render-orthographic-model-snaps
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 
 test("hexnut roadmap example - four-view PoppyGL snapshot", async () => {
-  const modelString = "hexnut_standard(iso4032)_m6"
+  const modelString = "hexnut_m6"
   const model = mp.string(modelString).json()
   if (model.fn !== "hexnut") throw new Error("Unexpected model")
   const { fn, ...props } = model

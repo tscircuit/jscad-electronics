@@ -12,7 +12,7 @@ import {
 } from "../lib/models/buttonscrew"
 
 test("buttonscrew React and built vanilla routing share geometry and exclude PCB pads", async () => {
-  const source = "buttonscrew_standard(iso7380-1)_m3_l10mm_drive(hexsocket)"
+  const source = "buttonscrew_m3_l10mm"
   const definition = mp.string(source).json()
   if (definition.fn !== "buttonscrew") throw new Error("Unexpected model")
   const { fn, ...props } = definition
@@ -35,4 +35,29 @@ test("buttonscrew React and built vanilla routing share geometry and exclude PCB
       6,
     )
   }
+})
+
+test("buttonscrew default ISO and explicit ISO 7380-1 flag render identically", async () => {
+  const omitted = "buttonscrew_m3_l10mm"
+  const explicit = "BUTTONSCREW_ISO7380-1_M3_L10MM"
+  const defaultModel = mp.string(omitted).json()
+  const explicitModel = mp.string(explicit).json()
+  expect(explicitModel).toEqual(defaultModel)
+  if (defaultModel.fn !== "buttonscrew" || explicitModel.fn !== "buttonscrew")
+    throw new Error("Unexpected model")
+  const { fn: defaultFn, ...defaultProps } = defaultModel
+  const { fn: explicitFn, ...explicitProps } = explicitModel
+  expect(createButtonScrewMesh(explicitProps)).toEqual(
+    createButtonScrewMesh(defaultProps),
+  )
+  expect(ExtrudedPads({ footprint: explicit })).toBeNull()
+  const vanilla = await importVanilla()
+  expect(
+    vanilla.getJscadModelForFootprintWithPads(explicit, jscad).geometries,
+  ).toEqual(
+    vanilla.getJscadModelForFootprintWithPads(omitted, jscad).geometries,
+  )
+  expect(
+    getComponentModel(Footprinter3d, { footprint: explicit }).geometries,
+  ).toEqual(getComponentModel(Footprinter3d, { footprint: omitted }).geometries)
 })

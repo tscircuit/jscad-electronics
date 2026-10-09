@@ -18,7 +18,7 @@ import {
 
 const sizes: HexNutModelPropsInput[] = [
   ...Object.keys(hexNutDinDimensions).map((metricSize) => ({
-    standard: "din934" as const,
+    din934: true,
     metricSize: metricSize as keyof typeof hexNutDinDimensions,
   })),
   ...Object.keys(hexNutImperialDimensions).map((imperialSize) => ({

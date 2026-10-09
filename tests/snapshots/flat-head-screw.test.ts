@@ -5,8 +5,7 @@ import { renderModelSnapshot } from "../fixtures/render-orthographic-model-snaps
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 
 test("flatheadscrew exact roadmap string - four views", async () => {
-  const modelString =
-    "flatheadscrew_standard(iso10642)_m3_l10mm_drive(hexsocket)"
+  const modelString = "flatheadscrew_m3_l10mm_drive(hexsocket)"
   const model = mp.string(modelString).json()
   if (model.fn !== "flatheadscrew") throw new Error("Wrong family")
   const { fn, ...props } = model
