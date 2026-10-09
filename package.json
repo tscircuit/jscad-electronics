@@ -59,7 +59,7 @@
     "bun-types": "^1.2.20",
     "gl-matrix": "^3.4.4",
     "jscad-fiber": "^0.0.89",
-    "jscad-to-gltf": "https://pkg.pr.new/jscad-to-gltf@804fbb0",
+    "jscad-to-gltf": "^0.0.9",
     "looks-same": "^10.0.1",
     "pngjs": "^7.0.0",
     "poppygl": "^0.0.34",
