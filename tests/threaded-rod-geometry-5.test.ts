@@ -11,29 +11,29 @@ import {
   createThreadedRodGeom,
 } from "../lib/models/threadedrod"
 
-test("threadedrod React and built vanilla routing share geometry and exclude PCB pads", async () => {
-  const source =
-    "threadedrod_spec(custom)_m6_l100mm_thread(full)_ends(flat)_chamfer0.5mm"
-  const definition = mp.string(source).json()
-  if (definition.fn !== "threadedrod") throw new Error("Unexpected model")
-  const { fn, ...props } = definition
-  const geometry = createThreadedRodGeom(props)
-  const direct = getComponentModel(ThreadedRod, props)
-  const routed = getComponentModel(Footprinter3d, { footprint: source })
-  const vanilla = await importVanilla()
-  const built = vanilla.getJscadModelForFootprintWithPads(source, jscad)
-  expect(ExtrudedPads({ footprint: source })).toBeNull()
-  expect(typeof vanilla.createThreadedRodMesh).toBe("function")
-  expect(typeof vanilla.createThreadedRodGeom).toBe("function")
-  for (const result of [direct, routed, built]) {
-    expect(result.geometries).toHaveLength(1)
-    const solid = result.geometries[0]!.geom as jscad.geometries.geom3.Geom3
-    expect(jscad.measurements.measureBoundingBox(solid)).toEqual(
-      jscad.measurements.measureBoundingBox(geometry),
-    )
-    expect(jscad.measurements.measureVolume(solid)).toBeCloseTo(
-      jscad.measurements.measureVolume(geometry),
-      6,
-    )
-  }
-})
+for (const leftHand of [false, true])
+  test(`threadedrod ${leftHand ? "left" : "right"}-handed React and built vanilla routing share geometry and exclude PCB pads`, async () => {
+    const source = `threadedrod_m6_l10mm_chamfer0.5mm${leftHand ? "_lefthanded" : ""}`
+    const definition = mp.string(source).json()
+    if (definition.fn !== "threadedrod") throw new Error("Unexpected model")
+    const { fn, ...props } = definition
+    const geometry = createThreadedRodGeom(props)
+    const direct = getComponentModel(ThreadedRod, props)
+    const routed = getComponentModel(Footprinter3d, { footprint: source })
+    const vanilla = await importVanilla()
+    const built = vanilla.getJscadModelForFootprintWithPads(source, jscad)
+    expect(ExtrudedPads({ footprint: source })).toBeNull()
+    expect(typeof vanilla.createThreadedRodMesh).toBe("function")
+    expect(typeof vanilla.createThreadedRodGeom).toBe("function")
+    for (const result of [direct, routed, built]) {
+      expect(result.geometries).toHaveLength(1)
+      const solid = result.geometries[0]!.geom as jscad.geometries.geom3.Geom3
+      expect(jscad.measurements.measureBoundingBox(solid)).toEqual(
+        jscad.measurements.measureBoundingBox(geometry),
+      )
+      expect(jscad.measurements.measureVolume(solid)).toBeCloseTo(
+        jscad.measurements.measureVolume(geometry),
+        6,
+      )
+    }
+  })
