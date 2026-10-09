@@ -8,3 +8,20 @@ All nominal dimensions, defaults, selectors, validation and datums belong to mod
 
 The renderer registry consumes this contract and its other model contracts
 from the same published modelprinter release.
+
+
+The paired ModelPrinter changes add DIN M1.6–M24 and imperial UNC #2–#12
+and 1/4–1 inch selections to the same `HexNut` renderer. Examples:
+`hexnut_m3`, `hexnut_standard(din934)_m10`,
+`hexnut_imperial(1/4-20)` and `hexnut_imperial(#6-32)`.
+The mesh consumes the selected pitch, height, bore and envelope from
+ModelPrinter without a second table or string parser. Existing ISO models
+retain their dimensions and geometry. Tests cover all supported added sizes,
+thread visibility, manifold solids, datums, React and built vanilla routing,
+and separate four-view snapshots for DIN, fractional UNC and numbered UNC.
+
+For this paired local change, `package.json` uses `file:../modelprinter`.
+Place the two checkouts beside each other, install and build ModelPrinter,
+then install and build jscad-electronics. Before publishing jscad-electronics,
+replace the local dependency with the published or PR-preview ModelPrinter
+version containing these nut contracts. No package was published by this change.

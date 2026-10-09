@@ -114,7 +114,9 @@ export function createHexNutMesh(
   }
   const levels = new Set(
     props.showThreads
-      ? Array.from({ length: steps + 1 }, (_, i) => (d.height * i) / steps)
+      ? Array.from({ length: steps + 1 }, (_, i) =>
+          i === steps ? d.height : (d.height * i) / steps,
+        )
       : [0, d.height],
   )
   levels.add(d.boreChamferDepth)
