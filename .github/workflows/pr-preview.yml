@@ -1,6 +1,7 @@
 name: PR package preview
 on:
   pull_request:
+    types: [opened, synchronize, reopened, edited]
 permissions:
   contents: read
 jobs:
