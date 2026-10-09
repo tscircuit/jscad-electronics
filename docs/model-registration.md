@@ -101,7 +101,9 @@ Consumes https://github.com/tscircuit/modelprinter/pull/123
 ```
 
 Only one modelprinter PR link is allowed unless `MODELPRINTER_PR` explicitly
-selects the pair. Locally, use Bun and Git:
+selects the pair. Editing the link reruns PR checks and the package preview.
+If the contract PR gains commits, rerun the renderer checks and update snapshots
+against that contract before accepting the pair. Locally, use Bun and Git:
 
 ```sh
 MODELPRINTER_PR=123 bun install
