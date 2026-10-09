@@ -25,14 +25,17 @@
   "scripts": {
     "generate": "node scripts/generate-model-renderers.mjs",
     "generate:watch": "node scripts/watch-model-renderers.mjs",
+    "contracts:prepare": "node scripts/prepare-model-contracts.mjs",
+    "contracts:refresh": "node scripts/prepare-model-contracts.mjs --refresh",
     "start": "node scripts/run-model-dev.mjs",
     "dev": "node scripts/run-model-dev.mjs",
     "build": "tsup --config tsup.config.ts",
     "vercel-build": "bun run build:site",
-    "typecheck": "node scripts/generate-model-renderers.mjs && tsc --noEmit",
+    "typecheck": "node scripts/prepare-model-contracts.mjs && node scripts/generate-model-renderers.mjs && tsc --noEmit",
     "format": "node scripts/generate-model-renderers.mjs && biome format --write .",
     "format:check": "node scripts/generate-model-renderers.mjs && biome format .",
-    "build:site": "node scripts/generate-model-renderers.mjs && cosmos-export",
+    "build:site": "node scripts/prepare-model-contracts.mjs && node scripts/generate-model-renderers.mjs && cosmos-export",
+    "postinstall": "node scripts/prepare-model-contracts.mjs --refresh",
     "prepare": "npm run build",
     "prepack": "npm run build",
     "test:vanilla": "bun run build && node tests/vanilla-smoke.mjs",
@@ -40,10 +43,11 @@
   },
   "dependencies": {
     "@tscircuit/mm": "^0.0.8",
-    "@tscircuit/modelprinter": "https://pkg.pr.new/tscircuit/modelprinter/@tscircuit/modelprinter@032298b2d81fb536373aabc0ad10e62ea874c7d9",
-    "earcut": "^3.2.3"
+    "earcut": "^3.2.3",
+    "zod": "^3.25.67"
   },
   "devDependencies": {
+    "@tscircuit/modelprinter": "latest",
     "@biomejs/biome": "^1.9.3",
     "@tscircuit/alphabet": "^0.0.24",
     "@tscircuit/footprinter": "^0.0.428",
@@ -55,7 +59,7 @@
     "bun-types": "^1.2.20",
     "gl-matrix": "^3.4.4",
     "jscad-fiber": "^0.0.89",
-    "jscad-to-gltf": "https://pkg.pr.new/jscad-to-gltf@804fbb0",
+    "jscad-to-gltf": "^0.0.9",
     "looks-same": "^10.0.1",
     "pngjs": "^7.0.0",
     "poppygl": "^0.0.34",
