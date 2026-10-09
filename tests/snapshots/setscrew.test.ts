@@ -4,7 +4,7 @@ import { createSetScrewMesh } from "../../lib/models/setscrew"
 import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 test("setscrew complete model string four-view snapshot", async () => {
-  const modelString = "setscrew_standard(iso4029)_m3_l6mm_hexsocket_cuppoint",
+  const modelString = "setscrew_m3_l6mm_hexsocket_cuppoint",
     model = mp.string(modelString).json()
   if (model.fn !== "setscrew") throw new Error("Wrong family")
   const { fn, ...props } = model

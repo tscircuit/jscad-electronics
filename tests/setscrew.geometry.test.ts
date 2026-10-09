@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test"
-import { setscrewModelPropsSchema } from "@tscircuit/modelprinter"
+import { mp, setscrewModelPropsSchema } from "@tscircuit/modelprinter"
 import { createSetScrewMesh } from "../lib/models/setscrew"
 import { inspectMesh } from "./fixtures/setscrew-mesh"
 test("setscrew all sizes have one closed oriented mesh and pinned assembly dimensions", () => {
@@ -140,3 +140,25 @@ test("smooth setscrew volume subtracts both blind recesses from the clipped body
       2
   expect(Math.abs(volume / (body - removed) - 1)).toBeLessThan(0.001)
 }, 30000)
+
+test("setscrew omitted ISO and explicit ISO flag produce the same mesh", () => {
+  const source = "setscrew_m3_l6mm_hexsocket_cuppoint"
+  const omitted = mp.string(source).json()
+  const explicit = mp.string(source + "_ISO4029").json()
+  if (omitted.fn !== "setscrew" || explicit.fn !== "setscrew")
+    throw new Error("Wrong family")
+  const { fn: omittedFn, ...omittedProps } = omitted
+  const { fn: explicitFn, ...explicitProps } = explicit
+  expect(createSetScrewMesh(explicitProps)).toEqual(
+    createSetScrewMesh(omittedProps),
+  )
+  expect(
+    createSetScrewMesh({ metricSize: "M3", length: 6, iso4029: true }),
+  ).toEqual(createSetScrewMesh({ metricSize: "M3", length: 6 }))
+  expect(() =>
+    createSetScrewMesh({ ...omittedProps, iso4029: false } as never),
+  ).toThrow()
+  expect(() =>
+    createSetScrewMesh({ ...omittedProps, standard: "iso4029" } as never),
+  ).toThrow()
+})

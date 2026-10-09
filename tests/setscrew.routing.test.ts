@@ -7,7 +7,7 @@ import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { getComponentModel } from "./helpers/component-model"
 import { importVanilla } from "./fixtures/importVanilla.js"
 test("setscrew React and vanilla dispatch preserve actual geometry and omit electrical pads", async () => {
-  const source = "setscrew_standard(iso4029)_m3_l6mm_hexsocket_cuppoint",
+  const source = "setscrew_m3_l6mm_hexsocket_cuppoint",
     model = mp.string(source).json()
   if (model.fn !== "setscrew") throw new Error("Wrong family")
   const { fn, ...props } = model,
@@ -20,7 +20,9 @@ test("setscrew React and vanilla dispatch preserve actual geometry and omit elec
   for (const result of [
     getComponentModel(SetScrew, props),
     getComponentModel(Footprinter3d, { footprint: source }),
+    getComponentModel(Footprinter3d, { footprint: source + "_iso4029" }),
     vanilla.getJscadModelForFootprintWithPads(source, jscad),
+    vanilla.getJscadModelForFootprintWithPads(source + "_iso4029", jscad),
   ]) {
     expect(result.geometries).toHaveLength(1)
     const solid = result.geometries[0]!.geom as jscad.geometries.geom3.Geom3
