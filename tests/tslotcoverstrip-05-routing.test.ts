@@ -1,0 +1,45 @@
+import { expect, test } from "bun:test"
+import jscad from "@jscad/modeling"
+import { mp } from "@tscircuit/modelprinter"
+import {
+  TSlotCoverStrip,
+  createTSlotCoverStripGeom,
+  createTSlotCoverStripMesh,
+} from "../lib/models/tslotcoverstrip"
+import { Footprinter3d } from "../lib/Footprinter3d"
+import { ExtrudedPads } from "../lib/ExtrudedPads"
+import { getComponentModel } from "./helpers/component-model"
+import { importVanilla } from "./fixtures/importVanilla.js"
+const source =
+  "tslotcoverstrip_l100mm_w8mm_t1mm_stemw5.8mm_stemh2mm_barbw6.2mm_profile(tee)"
+test("tslotcoverstrip React, full model string and vanilla share the geometry with no copper pads", async () => {
+  const definition = mp.string(source).json()
+  if (definition.fn !== "tslotcoverstrip") throw new Error("Wrong model")
+  const { fn, ...props } = definition
+  const vanilla = await importVanilla()
+  expect(vanilla.createTSlotCoverStripMesh(props)).toEqual(
+    createTSlotCoverStripMesh(props),
+  )
+  expect(ExtrudedPads({ footprint: source })).toBeNull()
+  const reference = jscad.measurements.measureVolume(
+    createTSlotCoverStripGeom(props),
+  )
+  for (const result of [
+    getComponentModel(TSlotCoverStrip, props),
+    getComponentModel(Footprinter3d, { footprint: source }),
+    vanilla.getJscadModelForFootprintWithPads(source, jscad),
+  ]) {
+    expect(result.geometries.length).toBeGreaterThan(0)
+    const solids = result.geometries.map(
+      (g: { geom: unknown }) => g.geom as jscad.geometries.geom3.Geom3,
+    )
+    for (const solid of solids) jscad.geometries.geom3.validate(solid)
+    expect(
+      solids.reduce(
+        (sum: number, solid: jscad.geometries.geom3.Geom3) =>
+          sum + jscad.measurements.measureVolume(solid),
+        0,
+      ),
+    ).toBeCloseTo(reference, 3)
+  }
+})
