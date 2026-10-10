@@ -4,16 +4,17 @@ import type { generalize as Generalize } from "@jscad/modeling/src/operations/mo
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 import { importVanilla } from "../fixtures/importVanilla.js"
 import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
+import { renderUflReferencePads } from "../fixtures/ufl-reference-pads"
 
 // JSCAD's runtime function is declared as a namespace in its public barrel.
 const generalize = jscad.modifiers.generalize as unknown as typeof Generalize
 
 test("U.FL unmated receptacle standard four-view snapshot with PCB pads", async () => {
-  const { getJscadModelForFootprintWithPads } = await importVanilla()
+  const { getJscadModelForFootprint } = await importVanilla()
   const modelString =
     "ufl_p3mm_pw2.2mm_ph1.1mm_signalw1.5mm_signalh1.1mm_signalx-1.25mm"
-  const { geometries } = getJscadModelForFootprintWithPads(modelString, jscad)
-  const meshes = geometries.map(
+  const { geometries } = getJscadModelForFootprint(modelString, jscad)
+  const meshes = [...geometries, ...renderUflReferencePads()].map(
     ({
       geom,
       color,

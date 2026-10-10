@@ -2,17 +2,12 @@ import { expect, test } from "bun:test"
 import { spawnSync } from "node:child_process"
 import * as jscad from "@jscad/modeling"
 import type { BoundingBox } from "@jscad/modeling/src/measurements/types"
-import { fp } from "@tscircuit/footprinter"
 import { importVanilla } from "./fixtures/importVanilla.js"
+import { uflReferenceCases } from "./fixtures/ufl-reference-pads"
 
 test("public U.FL rendering matches its unmated outline and three PCB terminals", async () => {
-  const { getJscadModelForFootprint, getJscadModelForFootprintWithPads } =
-    await importVanilla()
-  for (const source of [
-    "ufl",
-    "ufl3",
-    "ufl_p3.2mm_pw2mm_signalw1.4mm_signalx-1.3mm",
-  ]) {
+  const { getJscadModelForFootprint } = await importVanilla()
+  for (const { source, pads } of uflReferenceCases) {
     const { geometries } = getJscadModelForFootprint(source, jscad) as {
       geometries: { geom: jscad.geometries.geom3.Geom3 }[]
     }
@@ -21,12 +16,6 @@ test("public U.FL rendering matches its unmated outline and three PCB terminals"
       ({ geom }: { geom: jscad.geometries.geom3.Geom3 }) =>
         jscad.measurements.measureBoundingBox(geom),
     )
-    const pads = fp
-      .string(source)
-      .circuitJson()
-      .filter(
-        (element) => element.type === "pcb_smtpad" && element.shape === "rect",
-      )
     const overlapsPad = (
       [min, max]: BoundingBox,
       pad: (typeof pads)[number],
@@ -61,6 +50,15 @@ test("public U.FL rendering matches its unmated outline and three PCB terminals"
       terminals.filter((bounds) => overlapsPad(bounds, pad)),
     )
     expect(landings.map((landing) => landing.length)).toEqual([1, 1, 1])
+    // A terminal must lie entirely on its intended copper, rather than merely
+    // clipping a pad after an incorrect shift or custom dimension change.
+    for (const [index, pad] of pads.entries()) {
+      const [min, max] = landings[index]![0]!
+      expect(min[0]).toBeGreaterThanOrEqual(pad.x - pad.width / 2)
+      expect(max[0]).toBeLessThanOrEqual(pad.x + pad.width / 2)
+      expect(min[1]).toBeGreaterThanOrEqual(pad.y - pad.height / 2)
+      expect(max[1]).toBeLessThanOrEqual(pad.y + pad.height / 2)
+    }
     const [min, max] = jscad.measurements.measureAggregateBoundingBox(
       ...geometries.map(({ geom }) => geom),
     )
@@ -77,9 +75,6 @@ test("public U.FL rendering matches its unmated outline and three PCB terminals"
     expect((shell![0][0] + shell![1][0]) / 2).toBeCloseTo(pads[0]!.x, 6)
     expect((shell![0][1] + shell![1][1]) / 2).toBeCloseTo(0, 6)
     expect(shell![1][0] - shell![0][0]).toBeCloseTo(2, 6)
-    expect(
-      getJscadModelForFootprintWithPads(source, jscad).geometries.length,
-    ).toBeGreaterThan(geometries.length)
     if (source === "ufl") {
       expect(max[0] - min[0]).toBeCloseTo(3.1, 6)
       expect(max[1] - min[1]).toBeCloseTo(3, 6)
