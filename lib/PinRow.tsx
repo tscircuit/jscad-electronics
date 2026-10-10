@@ -3,6 +3,7 @@ import { PinHeader } from "./PinHeader"
 export const PinRow = ({
   numberOfPins,
   pitch = 2.54,
+  rowPitch = 2.54,
   longSidePinLength = 6,
   invert,
   rows = 1,
@@ -11,6 +12,7 @@ export const PinRow = ({
 }: {
   numberOfPins: number
   pitch?: number
+  rowPitch?: number
   longSidePinLength?: number
   invert?: boolean
   rows?: number
@@ -20,7 +22,6 @@ export const PinRow = ({
   const pinThickness = 0.63
   const bodyHeight = 2
   const pinsPerRow = Math.ceil(numberOfPins / rows)
-  const rowSpacing = 2.54 // Standard spacing between rows
   const shortSidePinLength = 3
   const xoff = -((pinsPerRow - 1) / 2) * pitch
 
@@ -71,7 +72,7 @@ export const PinRow = ({
         const row = Math.floor(i / pinsPerRow)
         const col = i % pinsPerRow
         const x = xoff + col * pitch
-        const y = ((rows - 1) / 2 - row) * rowSpacing
+        const y = ((rows - 1) / 2 - row) * rowPitch
 
         return (
           <PinHeader
