@@ -3,6 +3,7 @@ import { FemaleHeader } from "./FemaleHeader"
 export const FemaleHeaderRow = ({
   numberOfPins,
   pitch = 2.54,
+  rowPitch = 2.54,
   legsLength = 3,
   innerDiameter = 0.945,
   rows = 1,
@@ -10,6 +11,7 @@ export const FemaleHeaderRow = ({
 }: {
   numberOfPins: number
   pitch?: number
+  rowPitch?: number
   legsLength?: number
   outerDiameter?: number
   innerDiameter?: number
@@ -18,7 +20,6 @@ export const FemaleHeaderRow = ({
 }) => {
   const bodyHeight = 5
   const pinsPerRow = Math.ceil(numberOfPins / rows)
-  const rowSpacing = 2.54 // Standard spacing between rows
   const xoff = -((pinsPerRow - 1) / 2) * pitch
 
   // Flip Z for inversion
@@ -30,7 +31,7 @@ export const FemaleHeaderRow = ({
         const row = Math.floor(i / pinsPerRow)
         const col = i % pinsPerRow
         const x = xoff + col * pitch
-        const y = ((rows - 1) / 2 - row) * rowSpacing
+        const y = ((rows - 1) / 2 - row) * rowPitch
 
         return (
           <FemaleHeader

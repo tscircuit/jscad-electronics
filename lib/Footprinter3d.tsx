@@ -342,6 +342,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           <PinRow
             numberOfPins={fpJson.num_pins}
             pitch={fpJson.p}
+            rowPitch={fpJson.py ?? fpJson.p}
             invert={fpJson.invert}
             rows={rows}
             smd={fpJson.smd || fpJson.surface_mount}
@@ -353,6 +354,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
           <FemaleHeaderRow
             numberOfPins={fpJson.num_pins}
             pitch={fpJson.p}
+            rowPitch={fpJson.py ?? fpJson.p}
             rows={rows}
           />
         )
