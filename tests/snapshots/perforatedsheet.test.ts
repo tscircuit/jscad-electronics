@@ -1,11 +1,10 @@
 import { PNG } from "pngjs"
 import { glyphLineAlphabet, glyphAdvanceRatio } from "@tscircuit/alphabet"
-import { expect, test } from "bun:test"
-import { readFileSync, existsSync, writeFileSync, mkdirSync } from "node:fs"
-import { join } from "node:path"
+import { test } from "bun:test"
 import { getPerforatedSheetDimensions } from "@tscircuit/modelprinter"
 import { createPerforatedSheetMesh } from "../../lib/models/perforatedsheet/geometry"
 import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
+import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 test("perforatedsheet standard four-view snapshot", async () => {
   const p = {
     length: 60,
@@ -112,15 +111,5 @@ test("perforatedsheet standard four-view snapshot", async () => {
     label(name, 54 + (i % 2) * 676, 151 + Math.floor(i / 2) * 476, 20)
   label("DIMENSIONS IN mm / BOTTOM DATUM Z=0", 32, 1101, 17)
   const png = PNG.sync.write(sheet)
-  const path = join(
-    import.meta.dir,
-    "__snapshots__",
-    "perforatedsheet.snap.png",
-  )
-  if (process.env.BUN_UPDATE_SNAPSHOTS === "1") {
-    mkdirSync(join(import.meta.dir, "__snapshots__"), { recursive: true })
-    writeFileSync(path, png)
-  }
-  expect(existsSync(path)).toBe(true)
-  expect(Buffer.from(png).equals(readFileSync(path))).toBe(true)
+  await expectPngSnapshot(png, import.meta.path)
 })
