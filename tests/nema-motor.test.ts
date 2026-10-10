@@ -54,9 +54,9 @@ test("NEMA motor mounting patterns and blind / through holes in React and vanill
     for (const result of [direct, routed, pure]) {
       const [min, max] = bounds(result.geometries)
       expect(min[0]).toBeCloseTo(-width / 2, 3)
-      expect(max[1]).toBeCloseTo(width / 2, 3)
+      expect(max[1]).toBeCloseTo(width / 2 + (size === 34 ? 25 : 0), 3)
       expect(min[2]).toBeCloseTo(
-        -length - { 8: 2, 17: 3, 23: 4, 34: 5 }[size],
+        -length - { 8: 2, 17: 3, 23: 4, 34: 0 }[size],
         6,
       )
       expect(max[2]).toBeCloseTo(shaft, 6)

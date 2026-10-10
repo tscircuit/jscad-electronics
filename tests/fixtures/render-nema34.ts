@@ -46,7 +46,7 @@ export async function renderNema34() {
         detail: "FOUR 6.5 MM THROUGH FLANGE HOLES / 69.6 MM PITCH",
         eye: [0, 0, 250],
         target: [0, 0, 0],
-        span: 120,
+        span: 150,
       },
       {
         name: "FRONT",
@@ -57,7 +57,7 @@ export async function renderNema34() {
       },
       {
         name: "SIDE",
-        detail: "ROUND SHAFT / KEYWAY OMITTED / REAR CAP SCREWS",
+        detail: "ROUNDED SHOULDERS / PLAIN REAR CASTING",
         eye: [250, 0, -24],
         target: [0, 0, -24],
         span: 180,

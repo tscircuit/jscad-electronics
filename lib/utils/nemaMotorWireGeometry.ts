@@ -36,7 +36,7 @@ export function createNemaMotorWireGeometry(input: NemaMotorModelPropsInput) {
       "#ce7432",
       "#803e91",
     ]
-    return Array.from({ length: p.wireCount }, (_, i) => ({
+    const wires = Array.from({ length: p.wireCount }, (_, i) => ({
       color: colors[i]!,
       geometry: place(
         jscad.transforms.translate(
@@ -56,6 +56,19 @@ export function createNemaMotorWireGeometry(input: NemaMotorModelPropsInput) {
         ),
       ),
     }))
+    if (p.nemaSize === 34)
+      wires.unshift({
+        color: "#252830",
+        geometry: place(
+          jscad.primitives.roundedCuboid({
+            size: [3, p.wireCount * p.wireDiameter * 1.5 + 3, 6],
+            center: [0.8, 0, 0],
+            roundRadius: 1,
+            segments: 24,
+          }),
+        ),
+      })
+    return wires
   }
   const connector = getJstMotorConnector(p.wireConnection)!
   const { pinCount, pitch, bodyWidth, bodyHeight, matingDepth } = connector

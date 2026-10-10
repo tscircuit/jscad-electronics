@@ -49,7 +49,7 @@ through the shared modelprinter contract.
 
 ## Rear holes and screws
 
-All four motors show rear socket-head cap screws by default. Use
+NEMA8/17/23 show rear socket-head cap screws by default. NEMA34 has a plain rear casting. Use
 `nema17_backfaceholes` for open blind bores, `nema17_backfacescrews` for
 installed screws, or `nema17_plainbackface` for a plain rear cap. The flags
 are mutually exclusive; React and vanilla props use `backFace`.
@@ -59,12 +59,21 @@ The rear face is at Z=-bodyLength. Heads project outward along -Z.
 `backFaceScrewSize` configure the rear features independently of the front
 mounting holes. String modifiers are `backholespacing`, `backholediameter`,
 `backholedepth`, and `backscrewm3` (also M2/M2.5/M4/etc.).
-Default rear sizes are M2 / M3 / M4 / M5; square pitches are 16 / 31 / 47.14 / 58 mm.
+Default rear sizes are M2 / M3 / M4 / M5; square pitches are 16 / 31 / 47.14 / 40 mm.
 These are representative configurable rear details, not frame guarantees.
-NEMA34 uses an illustrative inset rear screw pattern and a 16 mm rear corner
-chamfer, rather than a second mounting flange. `rearCornerChamfer` / `rearchamfer`
-configures the rear outline independently of the front flange and body. These rear
-dimensions are not a manufacturer-specific drawing or mounting standard.
+NEMA34 follows the rounded, stepped shoulders and plain rear casting visible in
+STEPPERONLINE product photos. The rear follows the body profile instead of
+repeating the mounting flange. Front assembly screws sit in edge recesses
+separately from the mounting holes. The side wire bundle has a grommet, a 90 degree
+default exit angle, 2 mm wires, and 25 mm visible length. Threads, laminations,
+and the shaft keyway are omitted.
+
+These visual details are photo-based approximations, not manufacturing dimensions.
+`cornerProfile` (`stepped` / `chamfered`) and `rearCornerChamfer` / `rearchamfer`
+configure the profiles. In stepped mode, the chamfer value divided by sqrt(2)
+sets the corner shoulder depth, with fillets up to 4 mm. Default body and rear
+values are both 24 mm. Rear bores/screws remain opt-in with an illustrative
+40 mm square pitch and can be overridden to match a specific motor.
 NEMA8/17/23 retain their existing rear profiles. Blind bores retain their floors; the existing HexSocketBolt
 generator supplies the head and hex recess, with a smooth shank inside the
 rear bore. Internal tie rods and threads are not modeled. `screwColor`

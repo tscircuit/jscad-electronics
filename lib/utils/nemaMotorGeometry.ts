@@ -38,6 +38,54 @@ const face = (width: number, chamfer: number): NemaMotorPoint[] => {
   ]
 }
 
+const roundedFace = (width: number, radius: number): NemaMotorPoint[] => {
+  if (radius === 0) return face(width, 0)
+  const center = width / 2 - radius
+  return [0, 1, 2, 3].flatMap((corner) =>
+    Array.from({ length: 13 }, (_, i): NemaMotorPoint => {
+      const angle = (i * Math.PI) / 24,
+        rotation = (corner * Math.PI) / 2
+      const x = center + radius * Math.cos(angle),
+        y = center + radius * Math.sin(angle)
+      return [
+        x * Math.cos(rotation) - y * Math.sin(rotation),
+        x * Math.sin(rotation) + y * Math.cos(rotation),
+      ]
+    }),
+  )
+}
+
+// Rounded, stepped corner reliefs follow the shoulders in the NEMA34 photo.
+// Each corner has two convex fillets around a concave shoulder, not a diagonal.
+const steppedFace = (width: number, chamfer: number): NemaMotorPoint[] => {
+  if (chamfer === 0) return face(width, 0)
+  const h = width / 2,
+    c = chamfer / Math.SQRT2,
+    r = Math.min(4, c / 4)
+  const corner: NemaMotorPoint[] = []
+  const arc = (x: number, y: number, from: number, to: number) => {
+    for (let i = 0; i <= 12; i++) {
+      const a = ((from + ((to - from) * i) / 12) * Math.PI) / 180
+      corner.push([x + r * Math.cos(a), y + r * Math.sin(a)])
+    }
+  }
+  arc(h - c - r, h - r, 90, 0)
+  arc(h - c + r, h - c + r, 180, 270)
+  arc(h - r, h - c - r, 90, 0)
+  // Reverse the clockwise outline to match the existing CCW section profiles.
+  return [0, 1, 2, 3]
+    .flatMap((i) =>
+      corner.map(([x, y]): NemaMotorPoint => {
+        const a = (-i * Math.PI) / 2
+        return [
+          x * Math.cos(a) - y * Math.sin(a),
+          x * Math.sin(a) + y * Math.cos(a),
+        ]
+      }),
+    )
+    .reverse()
+}
+
 /** Renderer-independent closed extrusions in mm. The shaft axis is +Z,
  * mounting face at Z=0, body at -bodyLength. Cap/core profiles are illustrative.
  * Blind holes have actual floors; front through holes clear the core.
@@ -58,9 +106,13 @@ export function createNemaMotorSections(
   ) => {
     if (zMax > zMin) sections.push({ name, outline, holes, zMin, zMax })
   }
-  const front = face(p.bodyWidth, p.faceCornerChamfer)
-  const core = face(p.bodyWidth, p.bodyCornerChamfer)
-  const rear = face(
+  const front = (p.nemaSize === 34 ? roundedFace : face)(
+    p.bodyWidth,
+    p.faceCornerChamfer,
+  )
+  const profile = p.cornerProfile === "stepped" ? steppedFace : face
+  const core = profile(p.bodyWidth, p.bodyCornerChamfer)
+  const rear = profile(
     p.bodyWidth,
     p.rearCornerChamfer ??
       (p.backFace === "plain" && p.mountingHoleThrough
