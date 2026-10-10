@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test"
+import { spawnSync } from "node:child_process"
 import * as jscad from "@jscad/modeling"
 import type { BoundingBox } from "@jscad/modeling/src/measurements/types"
 import { fp } from "@tscircuit/footprinter"
@@ -84,4 +85,21 @@ test("public U.FL rendering matches its unmated outline and three PCB terminals"
       expect(max[1] - min[1]).toBeCloseTo(3, 6)
     }
   }
+  // The published vanilla entrypoint must also load in Node ESM. Bun accepts
+  // named CommonJS imports that Node rejects, so an in-process test misses it.
+  const node = spawnSync(
+    "node",
+    [
+      "--input-type=module",
+      "--eval",
+      `import assert from "node:assert/strict";
+       import jscad from "@jscad/modeling";
+       import { getJscadModelForFootprint } from ${JSON.stringify(new URL("../dist/vanilla.js", import.meta.url).href)};
+       const { geometries } = getJscadModelForFootprint("ufl3", jscad);
+       assert.equal(geometries.length, 9);
+       assert.ok(geometries.every(({ geom, color }) => geom.polygons.length > 0 && typeof color === "string"));`,
+    ],
+    { cwd: new URL("..", import.meta.url), encoding: "utf8" },
+  )
+  expect(node.status, node.stderr).toBe(0)
 })

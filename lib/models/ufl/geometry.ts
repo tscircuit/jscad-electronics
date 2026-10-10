@@ -1,4 +1,4 @@
-import { booleans, primitives } from "@jscad/modeling"
+import jscad from "@jscad/modeling"
 import type { Geom3 } from "@jscad/modeling/src/geometries/geom3"
 import {
   getUflDimensions,
@@ -12,6 +12,7 @@ export function createUflGeometries(
   input: UflModelPropsInput = {},
 ): UflGeometry[] {
   const d = getUflDimensions(input)
+  const { booleans, primitives } = jscad
   const silver = "#bcbfc3"
   const dielectric = "#eee9d5"
   const gold = "#d9b45b"
