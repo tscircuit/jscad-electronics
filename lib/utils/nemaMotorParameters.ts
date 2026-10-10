@@ -12,7 +12,7 @@ export const resolveNemaMotorProps: (input: unknown) => NemaMotorModelProps =
 export function parseNemaMotorString(source: string) {
   const definition = mp.string(source).json()
   if (definition.fn !== "nema")
-    throw new Error("Expected nema8, nema17 or nema23")
+    throw new Error("Expected nema8, nema17, nema23 or nema34")
   const { fn, ...props } = definition
   return props
 }

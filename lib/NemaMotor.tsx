@@ -124,3 +124,6 @@ export const NEMA17 = (props: NemaFrameMotorProps) => (
 export const NEMA23 = (props: NemaFrameMotorProps) => (
   <NemaMotor {...props} nemaSize={23} />
 )
+export const NEMA34 = (props: NemaFrameMotorProps) => (
+  <NemaMotor {...props} nemaSize={34} />
+)

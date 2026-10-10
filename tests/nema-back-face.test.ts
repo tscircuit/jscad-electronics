@@ -44,6 +44,7 @@ for (const [
   [8, 33, 16, 1, 2, 1.9, 2, 1.5],
   [17, 38, 31, 1.5, 4.5, 2.75, 3, 2.5],
   [23, 51, 47.14, 2, 4.5, 3.5, 4, 3],
+  [34, 80, 69.6, 2.5, 6, 4.25, 5, 4],
 ] as const) {
   test(`NEMA${size} rear bores and installed screws match in React and vanilla`, async () => {
     const vanilla = await importVanilla()
