@@ -10,17 +10,17 @@ const pointKey = (x: number, y: number) => `${round(x)},${round(y)}`
 
 // Compare the rendered pin/socket centers with the actual plated holes, rather
 // than another renderer. Both header families must honor independent X/Y pitch.
-for (const family of ["pinrow", "headermodule"]) {
-  for (const gender of ["male", "female"]) {
-    for (const layout of [
-      "16_rows2_cols8_p2.54mm_py22.86mm",
-      "12_rows3_cols4_p2.54mm_py5mm",
-      "12_rows3_cols4_p3mm",
-      "8_p2.54mm",
-    ]) {
-      const footprint = `${family}${layout}_${gender}_id1mm_od1.8mm`
-      test(`${footprint} model centers match its plated holes`, async () => {
-        const { getJscadModelForFootprint } = await importVanilla()
+test("header row pitch matches plated holes and preserves direct component defaults", async () => {
+  const { getJscadModelForFootprint } = await importVanilla()
+  for (const family of ["pinrow", "headermodule"]) {
+    for (const gender of ["male", "female"]) {
+      for (const layout of [
+        "16_rows2_cols8_p2.54mm_py22.86mm",
+        "12_rows3_cols4_p2.54mm_py5mm",
+        "12_rows3_cols4_p3mm",
+        "8_p2.54mm",
+      ]) {
+        const footprint = `${family}${layout}_${gender}_id1mm_od1.8mm`
         const holes = fp
           .string(footprint)
           .circuitJson()
@@ -38,17 +38,19 @@ for (const family of ["pinrow", "headermodule"]) {
             return pointKey((min[0] + max[0]) / 2, (min[1] + max[1]) / 2)
           }),
         )
-        expect([...modelCenters].sort()).toEqual([...holeCenters].sort())
-      })
+        expect({ [footprint]: [...modelCenters].sort() }).toEqual({
+          [footprint]: [...holeCenters].sort(),
+        })
+      }
     }
   }
-}
 
-for (const component of [PinRow, FemaleHeaderRow]) {
-  test(`${component.name} retains the direct component's default row pitch`, () => {
+  for (const component of [PinRow, FemaleHeaderRow]) {
     const element = component({ numberOfPins: 4, rows: 2, pitch: 3 })
-    expect(element.props.children.map((child: any) => child.props.y)).toEqual([
-      1.27, 1.27, -1.27, -1.27,
-    ])
-  })
-}
+    expect({
+      [component.name]: element.props.children.map(
+        (child: any) => child.props.y,
+      ),
+    }).toEqual({ [component.name]: [1.27, 1.27, -1.27, -1.27] })
+  }
+})
