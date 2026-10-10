@@ -60,6 +60,13 @@ export function createNemaMotorSections(
   }
   const front = face(p.bodyWidth, p.faceCornerChamfer)
   const core = face(p.bodyWidth, p.bodyCornerChamfer)
+  const rear = face(
+    p.bodyWidth,
+    p.rearCornerChamfer ??
+      (p.backFace === "plain" && p.mountingHoleThrough
+        ? p.bodyCornerChamfer
+        : p.faceCornerChamfer),
+  )
   const h = p.mountingHoleSpacing / 2
   const centers: NemaMotorPoint[] = [
     [-h, -h],
@@ -77,12 +84,7 @@ export function createNemaMotorSections(
   add("frontCap", front, -p.frontCapLength, -holeDepth)
   add("body", core, -p.bodyLength + p.rearCapLength, -p.frontCapLength)
   if (p.backFace === "plain") {
-    add(
-      "rearCap",
-      p.mountingHoleThrough ? core : front,
-      -p.bodyLength,
-      -p.bodyLength + p.rearCapLength,
-    )
+    add("rearCap", rear, -p.bodyLength, -p.bodyLength + p.rearCapLength)
   } else {
     const halfPitch = p.backFaceHoleSpacing / 2
     const rearHoles = [-halfPitch, halfPitch].flatMap((x) =>
@@ -91,17 +93,17 @@ export function createNemaMotorSections(
       ),
     )
     // Rear-facing blind bores open at -bodyLength, with a solid floor inside
-    // the cap. The full cap outline supports NEMA23's rear corner fasteners.
+    // the cap. The rear outline is independent of the mounting flange.
     add(
       "rearCap",
-      front,
+      rear,
       -p.bodyLength,
       -p.bodyLength + p.backFaceHoleDepth,
       rearHoles,
     )
     add(
       "rearCap",
-      front,
+      rear,
       -p.bodyLength + p.backFaceHoleDepth,
       -p.bodyLength + p.rearCapLength,
     )

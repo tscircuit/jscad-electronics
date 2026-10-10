@@ -59,10 +59,13 @@ The rear face is at Z=-bodyLength. Heads project outward along -Z.
 `backFaceScrewSize` configure the rear features independently of the front
 mounting holes. String modifiers are `backholespacing`, `backholediameter`,
 `backholedepth`, and `backscrewm3` (also M2/M2.5/M4/etc.).
-Default rear sizes are M2 / M3 / M4 / M5; square pitches are 16 / 31 / 47.14 / 69.6 mm.
+Default rear sizes are M2 / M3 / M4 / M5; square pitches are 16 / 31 / 47.14 / 58 mm.
 These are representative configurable rear details, not frame guarantees.
-The enabled rear face retains the full cap outline to support NEMA23/NEMA34 corner
-fasteners. Blind bores retain their floors; the existing HexSocketBolt
+NEMA34 uses an illustrative inset rear screw pattern and a 16 mm rear corner
+chamfer, rather than a second mounting flange. `rearCornerChamfer` / `rearchamfer`
+configures the rear outline independently of the front flange and body. These rear
+dimensions are not a manufacturer-specific drawing or mounting standard.
+NEMA8/17/23 retain their existing rear profiles. Blind bores retain their floors; the existing HexSocketBolt
 generator supplies the head and hex recess, with a smooth shank inside the
 rear bore. Internal tie rods and threads are not modeled. `screwColor`
 configures the screw color.
