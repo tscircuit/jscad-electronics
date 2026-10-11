@@ -10,7 +10,7 @@ import { Footprinter3d } from "../lib/Footprinter3d"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { getComponentModel } from "./helpers/component-model"
 import { importVanilla } from "./fixtures/importVanilla.js"
-const source = "hollowshaft_od20mm_id12mm_l200mm_style(roundtube)_endchamfer1mm"
+const source = "hollowshaft_od20mm_id12mm_l200mm_roundtube_endchamfer1mm"
 test("hollowshaft React, full model string and vanilla share the geometry with no copper pads", async () => {
   const definition = mp.string(source).json()
   if (definition.fn !== "hollowshaft") throw new Error("Wrong model")

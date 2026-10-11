@@ -17,7 +17,7 @@ const generalize = modifiers.generalize as unknown as (
   geometry: jscad.geometries.geom3.Geom3,
 ) => jscad.geometries.geom3.Geom3
 
-/** A concentric round tubular drive shaft with a through bore and 45-degree chamfers on both the inner and outer edges of both ends. The centered shaft axis is +Z and bottom face Z=0. endChamfer is the radial and axial chamfer size; validation preserves a positive annular end land. _roundtube is the value-free style flag; _style(roundtube) is accepted as the roadmap alias. */
+/** A concentric round tubular drive shaft with a through bore and 45-degree chamfers on both the inner and outer edges of both ends. The centered shaft axis is +Z and bottom face Z=0. endChamfer is the radial and axial chamfer size; validation preserves a positive annular end land. _roundtube is the value-free flag for the round tubular geometry. */
 export function createHollowShaftGeom(input: HollowShaftModelPropsInput) {
   const p = hollowShaftModelPropsSchema.parse(input)
   const ro = p.outerDiameter / 2

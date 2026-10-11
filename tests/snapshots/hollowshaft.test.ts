@@ -26,8 +26,7 @@ test("hollowshaft standard labeled four-view visual snapshot", async () => {
   const png = await renderModelSnapshot({
     mesh: createHollowShaftMesh(props),
     title: "HollowShaft",
-    modelString:
-      "hollowshaft_od20mm_id12mm_l60mm_style(roundtube)_endchamfer1mm",
+    modelString: "hollowshaft_od20mm_id12mm_l60mm_roundtube_endchamfer1mm",
     footer: "Shaft axis +Z; bottom face Z=0; both ends chamfered",
     views: [
       {
