@@ -6,7 +6,7 @@ import { renderModelSnapshot } from "../fixtures/render-orthographic-model-snaps
 
 test("cable grommet: four views of centered panel groove and cable bore", async () => {
   const modelString =
-    "cablegrommet_panelhole20mm_id10mm_od24mm_h8mm_groovew3mm_grooved2mm_shape(symmetricring)"
+    "cablegrommet_panelhole20mm_id10mm_od24mm_h8mm_groovew3mm_grooved2mm_symmetricring"
   const definition = mp.string(modelString).json()
   if (definition.fn !== "cablegrommet") throw new Error("Expected grommet")
   const { fn, ...props } = definition

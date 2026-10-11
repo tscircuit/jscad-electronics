@@ -2,7 +2,7 @@ import * as jscadModeling from "@jscad/modeling"
 import { expect, test } from "bun:test"
 import { createJSCADRenderer } from "jscad-fiber"
 import type { ReactElement } from "react"
-import { FlexScreen, type FlexScreenOrientation } from "../lib/FlexScreen"
+import { FlexScreen, type FlexScreenProps } from "../lib/FlexScreen"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { fp } from "@tscircuit/footprinter"
 import { mp } from "@tscircuit/modelprinter"
@@ -86,14 +86,14 @@ test("connector contacts keep exact pitch and screen contacts fit the narrow bod
 })
 
 test("widening and stiffeners work across every flexscreen orientation", () => {
-  for (const orientation of [
-    "sitsFlat",
-    "sitsFlatBelowBoard",
-    "foldedToFaceAboveBoard",
-    "foldedToFaceBelowBoard",
-    "foldedToRightAngleAboveBoard",
-    "foldedToRightAngleBelowBoard",
-  ] satisfies FlexScreenOrientation[]) {
+  for (const placement of [
+    { sitsFlat: true },
+    { sitsFlatBelowBoard: true },
+    { foldedToFaceAboveBoard: true },
+    { foldedToFaceBelowBoard: true },
+    { foldedToRightAngleAboveBoard: true },
+    { foldedToRightAngleBelowBoard: true },
+  ] satisfies FlexScreenProps[]) {
     const geometries = render(
       <FlexScreen
         width={16}
@@ -101,7 +101,7 @@ test("widening and stiffeners work across every flexscreen orientation", () => {
         flexCableLength={40}
         pinCount={30}
         pitch={0.5}
-        orientation={orientation}
+        {...placement}
         showScreen={false}
       />,
     )

@@ -1,6 +1,6 @@
 import { createShaftCollarMesh } from "../../lib/models/shaftcollar"
 import type { MountMesh } from "./assert-shaft-mount-geometry"
-export const example = "shaftcollar_bore8mm_od16mm_w8mm_mount(setscrew)_m4"
+export const example = "shaftcollar_bore8mm_od16mm_w8mm_setscrew_m4"
 export const props = {
   boreDiameter: 8,
   outerDiameter: 16,

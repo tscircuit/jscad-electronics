@@ -57,7 +57,7 @@ test("wire termination geometry follows spec references in React and vanilla", a
         )
   }
   expect(
-    createNemaMotorWireGeometry({ nemaSize: 17, wireConnection: "none" }),
+    createNemaMotorWireGeometry({ nemaSize: 17, noWires: true }),
   ).toHaveLength(0)
   const connector = createNemaMotorWireGeometry({
     nemaSize: 17,

@@ -89,13 +89,13 @@ const configurations: SnapshotConfiguration[] = [
     props: { sitsFlat: true },
     boardEdgeY: 58,
     boardDepth: 66,
-    views: aboveFlatViews("sitsFlatDefault"),
+    views: aboveFlatViews("sitsFlat=true"),
   },
   {
     name: "sits-flat-diagonal-four-three",
     title: "sitsFlat supports diagonal sizing and a 4:3 ratio",
     props: {
-      orientation: "sitsFlat",
+      sitsFlat: true,
       diagonal: 50,
       aspectRatio: "4:3",
       flexCableLength: 34,
@@ -104,7 +104,7 @@ const configurations: SnapshotConfiguration[] = [
     },
     boardEdgeY: 72,
     boardDepth: 80,
-    views: aboveFlatViews("sitsFlatFourThree"),
+    views: aboveFlatViews("sitsFlat=true / 4:3"),
   },
   {
     name: "folded-above-screen",
@@ -118,7 +118,7 @@ const configurations: SnapshotConfiguration[] = [
     },
     boardEdgeY: 7,
     boardDepth: 52,
-    views: foldedViews("foldedAboveScreen"),
+    views: foldedViews("foldedToFaceAboveBoard=true"),
   },
   {
     name: "folded-above-high-clearance",
@@ -133,7 +133,7 @@ const configurations: SnapshotConfiguration[] = [
     },
     boardEdgeY: 10,
     boardDepth: 58,
-    views: foldedViews("foldedAboveHigh"),
+    views: foldedViews("foldsAboveBoard=true"),
   },
   {
     name: "folds-above-20mm-fold-outset",
@@ -186,7 +186,7 @@ const configurations: SnapshotConfiguration[] = [
     },
     boardEdgeY: 6,
     boardDepth: 52,
-    views: foldedViews("foldedBelowScreen"),
+    views: foldedViews("foldedToFaceBelowBoard=true"),
   },
   {
     name: "folded-below-long-edge-loop",
@@ -201,7 +201,7 @@ const configurations: SnapshotConfiguration[] = [
     },
     boardEdgeY: 10,
     boardDepth: 60,
-    views: foldedViews("foldedBelowLongEdge"),
+    views: foldedViews("foldsBelowBoard=true"),
   },
   {
     name: "right-angle-above",
@@ -217,15 +217,15 @@ const configurations: SnapshotConfiguration[] = [
     views: [
       {
         cameraPreset: "top-left-corner",
-        annotation: "Angled Above\nrightAngleAbove",
+        annotation: "Angled Above\nfoldedToRightAngleAboveBoard=true",
       },
       {
         cameraPreset: "back",
-        annotation: "Screen Face\nrightAngleAbove",
+        annotation: "Screen Face\nfoldedToRightAngleAboveBoard=true",
       },
       {
         cameraPreset: "left-sideview",
-        annotation: "Bend Profile\nrightAngleAbove",
+        annotation: "Bend Profile\nfoldedToRightAngleAboveBoard=true",
       },
     ],
   },
@@ -243,15 +243,15 @@ const configurations: SnapshotConfiguration[] = [
     views: [
       {
         cameraPreset: "bottom-center-angled",
-        annotation: "Angled Below\nrightAngleBelow",
+        annotation: "Angled Below\nfoldedToRightAngleBelowBoard=true",
       },
       {
         cameraPreset: "front",
-        annotation: "Screen Face\nrightAngleBelow",
+        annotation: "Screen Face\nfoldedToRightAngleBelowBoard=true",
       },
       {
         cameraPreset: "right-sideview",
-        annotation: "Bend Profile\nrightAngleBelow",
+        annotation: "Bend Profile\nfoldedToRightAngleBelowBoard=true",
       },
     ],
   },
@@ -278,7 +278,7 @@ const configurations: SnapshotConfiguration[] = [
     },
     boardEdgeY: 9,
     boardDepth: 62,
-    views: foldedViews("foldedAboveCustom"),
+    views: foldedViews("foldsAboveBoard=true"),
   },
   {
     name: "folded-below-portrait",
@@ -296,7 +296,7 @@ const configurations: SnapshotConfiguration[] = [
     },
     boardEdgeY: 10,
     boardDepth: 64,
-    views: foldedViews("foldedBelowPortrait"),
+    views: foldedViews("foldedToFaceBelowBoard=true"),
   },
 ]
 
@@ -322,7 +322,9 @@ for (const configuration of configurations) {
         }
       }),
     )
-    const sheet = createAnnotatedViewSheet(renderedViews)
+    const sheet = createAnnotatedViewSheet(renderedViews, {
+      fontSize: configuration.name.startsWith("right-angle") ? 24 : 30,
+    })
     await expect(sheet).toMatchPngSnapshot(import.meta.path, configuration.name)
   })
 }

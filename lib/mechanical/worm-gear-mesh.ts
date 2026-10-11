@@ -111,7 +111,7 @@ export const createWormGearMesh = (
   const positions: number[] = []
   const indices: number[] = []
   const phase = ((props.phase % 360) * Math.PI) / 180
-  const direction = props.handedness === "right" ? 1 : -1
+  const direction = props.leftHanded ? -1 : 1
   const ring = (z: number) => {
     const first = positions.length / 3
     const rotation = phase + direction * (z / lead) * Math.PI * 2

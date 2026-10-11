@@ -8,7 +8,7 @@ import { props, mesh } from "./fixtures/rigid-coupler-case"
 
 test("rigidcoupler: handed helical female threads alter the actual wall, not a color or label", () => {
   const right = mesh()
-  const left = createRigidCouplerMesh({ ...props, threadHand: "left" })
+  const left = createRigidCouplerMesh({ ...props, leftHanded: true })
   assertClosedShaftMount(left)
   // At depth 2.25 pitches, the +quarter-angle root is open on the right-hand
   // thread; its mirrored left-hand profile retains material at the same point.

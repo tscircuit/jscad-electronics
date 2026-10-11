@@ -26,7 +26,7 @@ export async function renderNemaMotor(footprint: string) {
     },
     { label: "FRONT", camPos: [0, center, distance], lookAt: [0, center, 0] },
     {
-      label: p.shaftShape === "d" ? "SIDE / SHAFT FLAT" : "SIDE / ROUND SHAFT",
+      label: p.dShaft ? "SIDE / SHAFT FLAT" : "SIDE / ROUND SHAFT",
       camPos: [distance, center, 0],
       lookAt: [0, center, 0],
     },

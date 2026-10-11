@@ -14,7 +14,7 @@ import { base } from "./fixtures/compression-spring-inputs"
 
 for (const [name, input] of [
   ["right-hand roadmap example", base],
-  ["left hand", { ...base, hand: "left" }],
+  ["left hand", { ...base, leftHanded: true }],
   [
     "inch dimensions",
     {

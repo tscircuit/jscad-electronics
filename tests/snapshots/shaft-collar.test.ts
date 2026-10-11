@@ -5,7 +5,7 @@ import { renderModelSnapshot } from "../fixtures/render-orthographic-model-snaps
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 
 test("shaftcollar exact roadmap string - four views", async () => {
-  const modelString = "shaftcollar_bore8mm_od16mm_w8mm_mount(setscrew)_m4"
+  const modelString = "shaftcollar_bore8mm_od16mm_w8mm_setscrew_m4"
   const model = mp.string(modelString).json()
   if (model.fn !== "shaftcollar") throw new Error("Wrong family")
   const { fn, ...props } = model

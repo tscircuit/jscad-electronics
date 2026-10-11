@@ -16,7 +16,7 @@ export function createHelicalGearMesh(
 ): HelicalGearMesh {
   const props = helicalGearModelPropsSchema.parse(input)
   const { twistAngle } = getHelicalGearDimensions(props)
-  const { helixAngle, handedness, segmentsPerTurn, ...spur } = props
+  const { helixAngle, leftHanded, segmentsPerTurn, ...spur } = props
   return createTwistedSpurGearMesh(
     spur,
     (twistAngle * Math.PI) / 180,

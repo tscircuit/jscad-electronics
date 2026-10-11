@@ -55,7 +55,7 @@ export function assertHexBoltGeometry() {
       if (Math.abs(mesh.positions[k + 2]! - p.headHeight) < 1e-9)
         top.push(Math.hypot(mesh.positions[k]!, mesh.positions[k + 1]!))
     expect(Math.max(...top)).toBeCloseTo(p.headChamferDiameter / 2, 8)
-    const left = createHexBoltMesh({ ...input, threadHand: "left" })
+    const left = createHexBoltMesh({ ...input, leftHanded: true })
     const points = (m: typeof mesh) =>
       m.positions.slice(0, 96 * 3).map((v) => Math.round(v * 1e8))
     expect(points(left)).toEqual(points(mesh)) // symmetric tip; handedness changes succeeding rings

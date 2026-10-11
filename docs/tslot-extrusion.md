@@ -1,7 +1,7 @@
 # T-slot extrusion renderer
 
 ```text
-tslotextrusion_w20mm_h20mm_l100mm_profile(fourtsolid)_slot6mm_pocket10mm_pocketd2mm_lip2mm_bore4mm_corner1mm
+tslotextrusion_w20mm_h20mm_l100mm_fourtsolid_slot6mm_pocket10mm_pocketd2mm_lip2mm_bore4mm_corner1mm
 ```
 
 `TSlotExtrusion`, `createTSlotExtrusionGeom`, `createTSlotExtrusionMesh` and the
@@ -24,3 +24,7 @@ snapshot verify the geometry.
 
 The renderer registry consumes this contract and its other model contracts
 from the same published modelprinter release.
+
+The `fourTSolid` boolean defaults to `true`; the model string uses the bare
+`fourtsolid` flag. The old `profile(...)` selector and `profile` JSON property
+are rejected by the upstream contract.

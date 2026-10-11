@@ -10,9 +10,11 @@ The ISO 4757 type-H recess combines the 26.5° outer wing and 28° bottom cone w
 
 `radialSegments` defaults to 96 and must be a multiple of 24 between 24 and 192. `threadStepsPerTurn` defaults to 24 and must be an integer between 24 and 96. Meshes above 400,000 sampled vertices fail before allocation. Higher resolution improves faceting without altering the nominal profile.
 
-ISO 7045 is the default contract; optional value-free `_iso7045` selects identical geometry and normalizes to `iso7045: true`. Legacy `standard(...)` selectors are unsupported. The four-view snapshot labels the complete roadmap string: `panscrew_m3_l10mm_drive(phillips)`. Unit checks cover manifold edge incidence/winding, finite vertices, positive volume, datums, both handednesses, visibility, supported sizes, guard limits, direct React/vanilla geometry and footprint dispatch.
+ISO 7045 is the default contract; optional value-free `_iso7045` selects identical geometry and normalizes to `iso7045: true`. Legacy `standard(...)` selectors are unsupported. The four-view snapshot labels the complete roadmap string: `panscrew_m3_l10mm_phillips`. Unit checks cover manifold edge incidence/winding, finite vertices, positive volume, datums, both handednesses, visibility, supported sizes, guard limits, direct React/vanilla geometry and footprint dispatch.
 
 The renderer registry consumes this contract and its other model contracts
 from the same published modelprinter release.
 
 The ISO 4757:1983 type-H recess table also applies by default. Optional `_iso4757` normalizes to `iso4757: true` and leaves the rendered recess unchanged. The former `recessStandard` property is unsupported.
+
+Boolean model props include `phillips`, `fullThread`, `male`, and `leftHanded`. The first three are fixed true for this family; `leftHanded` defaults false. `_lefthanded` selects the existing left-hand geometry, while `_righthanded` explicitly restates the default. Deprecated drive/thread/hand/gender selectors and properties are rejected. The ISO metric size and 6g thread class remain standard designations.

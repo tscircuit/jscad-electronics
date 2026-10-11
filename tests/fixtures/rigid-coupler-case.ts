@@ -1,7 +1,7 @@
 import { createRigidCouplerMesh } from "../../lib/models/rigidcoupler"
 import type { MountMesh } from "./assert-shaft-mount-geometry"
 export const example =
-  "rigidcoupler_bore8mm_od20mm_l25mm_mount(setscrew)_screwcount4_m4"
+  "rigidcoupler_bore8mm_od20mm_l25mm_setscrew_screwcount4_m4"
 export const props = {
   boreDiameter: 8,
   outerDiameter: 20,

@@ -37,17 +37,16 @@ export function NemaMotor({
   ...props
 }: NemaMotorProps) {
   const p = resolveNemaMotorProps(props)
-  const screw =
-    p.backFace === "screws"
-      ? jscad.transforms.rotateX(
-          Math.PI,
-          createHexSocketBoltGeom({
-            metricSize: p.backFaceScrewSize,
-            length: p.backFaceHoleDepth,
-            showThreads: false,
-          }),
-        )
-      : undefined
+  const screw = p.backFaceScrews
+    ? jscad.transforms.rotateX(
+        Math.PI,
+        createHexSocketBoltGeom({
+          metricSize: p.backFaceScrewSize,
+          length: p.backFaceHoleDepth,
+          showThreads: false,
+        }),
+      )
+    : undefined
   const halfPitch = p.backFaceHoleSpacing / 2
   return (
     <>

@@ -36,7 +36,7 @@ test("compression spring mesh follows imported pitch changes and radial section 
       expect(distance).toBeLessThan(1e-10)
     }
   }
-  const left = createCompressionSpringMesh({ ...base, hand: "left" })
+  const left = createCompressionSpringMesh({ ...base, leftHanded: true })
   const key = (x: number, y: number, z: number) =>
     [x, y, z].map((n) => Math.round(n * 1e8)).join(",")
   const reflected = new Set<string>()

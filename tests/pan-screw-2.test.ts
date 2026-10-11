@@ -8,7 +8,7 @@ import { getComponentModel } from "./helpers/component-model"
 import { importVanilla } from "./fixtures/importVanilla.js"
 
 test("panscrew React, vanilla and footprint dispatch", async () => {
-  const source = "panscrew_m3_l10mm_drive(phillips)"
+  const source = "panscrew_m3_l10mm_phillips"
   const definition = mp.string(source).json()
   if (definition.fn !== "panscrew") throw new Error("Wrong family")
   const explicitSource = source + "_iso7045"

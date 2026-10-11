@@ -6,7 +6,7 @@ import { renderModelSnapshot } from "../fixtures/render-orthographic-model-snaps
 
 test("T-slot extrusion complete roadmap string - four views", async () => {
   const modelString =
-    "tslotextrusion_w20mm_h20mm_l100mm_profile(fourtsolid)_slot6mm_pocket10mm_pocketd2mm_lip2mm_bore4mm_corner1mm"
+    "tslotextrusion_w20mm_h20mm_l100mm_fourtsolid_slot6mm_pocket10mm_pocketd2mm_lip2mm_bore4mm_corner1mm"
   const model = mp.string(modelString).json()
   if (model.fn !== "tslotextrusion") throw new Error("Wrong model family")
   const { fn, ...props } = model

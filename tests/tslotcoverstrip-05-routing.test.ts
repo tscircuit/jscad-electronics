@@ -11,7 +11,7 @@ import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { getComponentModel } from "./helpers/component-model"
 import { importVanilla } from "./fixtures/importVanilla.js"
 const source =
-  "tslotcoverstrip_l100mm_w8mm_t1mm_stemw5.8mm_stemh2mm_barbw6.2mm_profile(tee)"
+  "tslotcoverstrip_l100mm_w8mm_t1mm_stemw5.8mm_stemh2mm_barbw6.2mm_tee"
 test("tslotcoverstrip React, full model string and vanilla share the geometry with no copper pads", async () => {
   const definition = mp.string(source).json()
   if (definition.fn !== "tslotcoverstrip") throw new Error("Wrong model")

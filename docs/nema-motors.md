@@ -4,7 +4,7 @@
 import { NEMA8, NEMA17, NEMA23, NEMA34, NemaMotor, Footprinter3d } from "jscad-electronics"
 
 <NEMA8 />
-<NEMA17 bodyLength={48} shaftLength={24} shaftShape="d"
+<NEMA17 bodyLength={48} shaftLength={24} dShaft
   shaftFlatDepth={0.5} shaftFlatLength={15} shaftFlatAngle={90} />
 <NEMA23 shaftDiameter={8} shaftLength={25} shaftFlatLength={20} />
 <NEMA34 />
@@ -20,6 +20,13 @@ same modelprinter strings; motors add no PCB copper pads.
 
 The parameter contract comes from the NEMA models in modelprinter.
 Geometry generation lives in jscad-electronics.
+Shaft choices use `roundShaft` / `dShaft`, body corner choices use `chamfered` /
+`stepped`, and visible wires use `noWires` / `wireStubs`. Each explicitly provided
+selector group must contain exactly one true flag; resolved props contain false
+for the other choices. `wireConnection` accepts JST catalog identifiers such as
+`"jst-ph-6"` and `"jst-sh-4"`, mutually exclusive with a true wire visibility flag.
+The enum properties `backFace`, `shaftShape` and `cornerProfile`, plus
+`wireConnection="none"` / `"stubs"`, are rejected.
 The mounting face is Z=0, with the body along -Z and the shaft along +Z.
 Shaft length is measured from the mounting face, including pilot height.
 Flat length runs back from the tip; depth is the radial material removed.
@@ -52,7 +59,8 @@ through the shared modelprinter contract.
 NEMA8/17/23 show rear socket-head cap screws by default. NEMA34 has a plain rear casting. Use
 `nema17_backfaceholes` for open blind bores, `nema17_backfacescrews` for
 installed screws, or `nema17_plainbackface` for a plain rear cap. The flags
-are mutually exclusive; React and vanilla props use `backFace`.
+are mutually exclusive; React and vanilla props use `backFaceHoles`,
+`backFaceScrews` or `backFacePlain` booleans.
 
 The rear face is at Z=-bodyLength. Heads project outward along -Z.
 `backFaceHoleSpacing`, `backFaceHoleDiameter`, `backFaceHoleDepth`, and
@@ -69,7 +77,7 @@ default exit angle, 2 mm wires, and 25 mm visible length. Threads, laminations,
 and the shaft keyway are omitted.
 
 These visual details are photo-based approximations, not manufacturing dimensions.
-`cornerProfile` (`stepped` / `chamfered`) and `rearCornerChamfer` / `rearchamfer`
+`stepped` / `chamfered` booleans and `rearCornerChamfer` / `rearchamfer`
 configure the profiles. In stepped mode, the chamfer value divided by sqrt(2)
 sets the corner shoulder depth, with fillets up to 4 mm. Default body and rear
 values are both 24 mm. Rear bores/screws remain opt-in with an illustrative
@@ -80,8 +88,8 @@ rear bore. Internal tie rods and threads are not modeled. `screwColor`
 configures the screw color.
 
 ```tsx
-<NEMA8 backFace="holes" />
-<NEMA17 backFace="screws" />
-<NEMA23 backFace="screws" backFaceHoleSpacing={40} backFaceScrewSize="M3" />
+<NEMA8 backFaceHoles />
+<NEMA17 backFaceScrews />
+<NEMA23 backFaceScrews backFaceHoleSpacing={40} backFaceScrewSize="M3" />
 <Footprinter3d footprint="nema23_backfaceholes_backholediameter4mm" />
 ```

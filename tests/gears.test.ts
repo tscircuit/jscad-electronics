@@ -167,7 +167,7 @@ const wormCases: { name: string; input: WormGearModelPropsInput }[] = [
       clearance: "0.008in",
       backlash: "0.002in",
       boreDiameter: "0.125in",
-      handedness: "left",
+      leftHanded: true,
       phase: 23,
       radialSegments: 64,
       segmentsPerTurn: 48,
@@ -213,7 +213,7 @@ for (const { name, input } of wormCases) {
     const dz = Math.min(lead * 0.137, props.length * 0.29)
     const slice1 = sliceMesh(mesh, z1)
     const slice2 = sliceMesh(mesh, z1 + dz)
-    const direction = props.handedness === "right" ? 1 : -1
+    const direction = props.leftHanded ? -1 : 1
     const rotation = (direction * tau * dz) / lead
     const crestAngle =
       (props.phase * Math.PI) / 180 + (direction * tau * z1) / lead

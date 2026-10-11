@@ -14,7 +14,7 @@ export default {
         toothCount={24}
         faceWidth={8}
         helixAngle={30}
-        handedness="left"
+        leftHanded
         boreDiameter={5}
         hubDiameter={10}
         hubLength={3}
@@ -35,7 +35,7 @@ export default {
           getWormGearDimensions({ module: 1, pitchDiameter: 10, starts: 2 })
             .leadAngle
         }
-        handedness="right"
+        leftHanded={false}
         boreDiameter={5}
       />
     </ComponentPreview>

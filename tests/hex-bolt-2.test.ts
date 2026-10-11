@@ -8,7 +8,7 @@ import { getComponentModel } from "./helpers/component-model"
 import { importVanilla } from "./fixtures/importVanilla.js"
 
 test("hexbolt React, vanilla and footprint dispatch", async () => {
-  const source = "hexbolt_m6_l25mm_thread(full)_drive(hex)"
+  const source = "hexbolt_m6_l25mm_fullthread_hex"
   const definition = mp.string(source).json()
   if (definition.fn !== "hexbolt") throw new Error("Wrong family")
   const explicitSource = source + "_iso4017"

@@ -9,7 +9,7 @@ export default {
   ),
   "Left hand / single start": (
     <ComponentPreview>
-      <WormGear handedness="left" />
+      <WormGear leftHanded />
     </ComponentPreview>
   ),
   "Right hand / two starts": (
@@ -30,7 +30,7 @@ export default {
         pitchDiameter={14}
         length={24}
         starts={3}
-        handedness="left"
+        leftHanded
         boreDiameter={4}
         phase={30}
       />

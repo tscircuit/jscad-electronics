@@ -15,7 +15,7 @@ returns no PCB pads.
 import { mp } from "@tscircuit/modelprinter"
 import { createPlainBushingGeom } from "jscad-electronics"
 
-const model = mp.string("plainbushing_id8mm_od12mm_l20mm_style(plainclosed)_edgechamfer0.5mm").json()
+const model = mp.string("plainbushing_id8mm_od12mm_l20mm_plainclosed_edgechamfer0.5mm").json()
 if (model.fn === "plainbushing") {
   const { fn, ...props } = model
   const solid = createPlainBushingGeom(props)
@@ -37,3 +37,7 @@ the full roadmap string and displays the sleeve, openings, and rim chamfers.
 
 The renderer registry consumes this contract and its other model contracts
 from the same published modelprinter release.
+
+The `plainClosed` boolean defaults to `true`; the model string uses the bare
+`plainclosed` flag. The old `style(...)` selector and `style` JSON property
+are rejected by the upstream contract.

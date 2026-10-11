@@ -4,7 +4,7 @@
 `createCompressionSpringMesh` consume the modelprinter custom spring contract:
 
 ```
-compressionspring_spec(custom)_od8mm_wire1mm_l20mm_turns8_active6_ends(closedground)_hand(right)_state(free)
+compressionspring_custom_od8mm_wire1mm_l20mm_turns8_active6_closedground_righthanded_free
 ```
 
 The dependency and lockfile use the published
@@ -45,3 +45,5 @@ Geometry tests inspect closed oriented topology, finite positive volume,
 open bore, diameters, imported section-frame and pitch samples, mirrored
 winding, actual end-plane faces, and React/vanilla parity. The four-view
 PoppyGL snapshot shows the full example, closed ends and active-coil pitch.
+
+Resolved props use `custom`, `closedGround`, and `free` booleans defaulting to `true`, plus `leftHanded` defaulting to `false`. `_lefthanded` mirrors winding; `_righthanded` explicitly selects right-handed winding. Legacy `spec(...)`, `ends(...)`, `hand(...)`, and `state(...)` selectors are rejected. This grammar change retains the same spring geometry and bearing datums.

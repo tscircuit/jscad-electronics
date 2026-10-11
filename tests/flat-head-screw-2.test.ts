@@ -11,7 +11,7 @@ import { getComponentModel } from "./helpers/component-model"
 import { importVanilla } from "./fixtures/importVanilla.js"
 
 test("flatheadscrew React, vanilla and footprint dispatch", async () => {
-  const source = "flatheadscrew_m3_l10mm_drive(hexsocket)"
+  const source = "flatheadscrew_m3_l10mm_hexsocket"
   const definition = mp.string(source).json()
   if (definition.fn !== "flatheadscrew") throw new Error("Wrong family")
   const explicitSource = source + "_iso10642"

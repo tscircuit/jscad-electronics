@@ -58,7 +58,7 @@ export function renderWormGearSnapshot(modelString: string) {
   const diameter = props.pitchDiameter + 2 * props.module
   const targetZ = props.length / 2
   const span = Math.max(props.length, diameter) * 1.5
-  const hand = props.handedness.toUpperCase()
+  const hand = props.leftHanded ? "LEFT" : "RIGHT"
   return renderModelSnapshot({
     mesh: createWormGearMesh(props),
     title: `WORM GEAR / ${hand} HAND / ${props.starts} START${props.starts === 1 ? "" : "S"}`,
@@ -108,7 +108,7 @@ export function renderHelicalGearSnapshot(modelString: string) {
   const span = Math.max(diameter * 1.22, height * 1.5)
   return renderModelSnapshot({
     mesh: createHelicalGearMesh(props),
-    title: `HELICAL GEAR / ${props.handedness.toUpperCase()} HAND / ${props.helixAngle} DEG`,
+    title: `HELICAL GEAR / ${props.leftHanded ? "LEFT" : "RIGHT"} HAND / ${props.helixAngle} DEG`,
     modelString,
     views: [
       {

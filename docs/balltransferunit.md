@@ -13,8 +13,8 @@ import { BallTransferUnit, Footprinter3d } from "jscad-electronics"
 <Footprinter3d footprint="balltransferunit_balld25mm_flangeod45mm_h30mm_face3hole_pcd36mm_holed4mm" />
 ```
 
-The roadmap spelling `_mount(face3hole)` also renders; `_face3hole` is the
-preferred value-free flag. These strings produce no PCB pads or plated holes.
+`_face3hole` is the value-free mounting flag. These strings produce no PCB pads
+or plated holes.
 
 ```ts
 import {

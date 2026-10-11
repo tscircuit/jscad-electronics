@@ -6,7 +6,7 @@ import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 
 test("clampingshaftcollar exact roadmap string - four views", async () => {
   const modelString =
-    "clampingshaftcollar_bore8mm_od18mm_w9mm_split1mm_mount(singleclamp)_m4"
+    "clampingshaftcollar_bore8mm_od18mm_w9mm_split1mm_singleclamp_m4"
   const model = mp.string(modelString).json()
   if (model.fn !== "clampingshaftcollar") throw new Error("Wrong family")
   const { fn, ...props } = model

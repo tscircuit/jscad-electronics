@@ -119,7 +119,7 @@ export function createHexBoltMesh(
       // Phase is fixed at +X on the nominal tip plane, before chamfer clipping.
       const phase =
         ((((z + p.length) / pitch -
-          ((p.threadHand === "right" ? 1 : -1) * theta) / (2 * Math.PI)) %
+          ((p.leftHanded ? -1 : 1) * theta) / (2 * Math.PI)) %
           1) +
           1) %
         1

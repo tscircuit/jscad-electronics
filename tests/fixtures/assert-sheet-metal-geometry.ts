@@ -34,20 +34,23 @@ export function assertSheetMetalGeometry() {
     }
     expect(volume).toBeGreaterThan(100)
     for (const [key, edge] of edges.entries())
-      expect(edge, `${props.profile}: ${key}`).toEqual({ count: 2, balance: 0 })
+      expect(
+        edge,
+        `${props.channel ? "channel" : props.angle ? "angle" : "plate"}: ${key}`,
+      ).toEqual({ count: 2, balance: 0 })
   }
   expect(() =>
     createSheetMetalMesh({
       width: 10,
       baseLength: 10,
-      holes: [{ panel: "base", shape: "round", diameter: 4, u: 4, v: 0 }],
+      holes: [{ panel: "base", round: true, diameter: 4, u: 4, v: 0 }],
     }),
   ).toThrow("edge")
   expect(() =>
     createSheetMetalMesh({
       width: 10,
       baseLength: 10,
-      holes: [{ panel: "right", shape: "round", diameter: 2, u: 0, v: 0 }],
+      holes: [{ panel: "right", round: true, diameter: 2, u: 0, v: 0 }],
     }),
   ).toThrow("panel")
 }

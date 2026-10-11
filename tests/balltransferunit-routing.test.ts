@@ -10,17 +10,11 @@ import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { getComponentModel } from "./helpers/component-model"
 import { importVanilla } from "./fixtures/importVanilla.js"
-import {
-  ballTransferUnitString,
-  ballTransferUnitRoadmapString,
-} from "./fixtures/balltransferunit-inputs"
+import { ballTransferUnitString } from "./fixtures/balltransferunit-inputs"
 
 test("balltransferunit routes through React and built vanilla with two metal parts and no pads", async () => {
   const vanilla = await importVanilla()
-  for (const source of [
-    ballTransferUnitString,
-    ballTransferUnitRoadmapString,
-  ]) {
+  for (const source of [ballTransferUnitString]) {
     const definition = mp.string(source).json()
     if (definition.fn !== "balltransferunit") throw new Error("Wrong family")
     const { fn, ...props } = definition

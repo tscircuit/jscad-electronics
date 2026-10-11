@@ -8,7 +8,9 @@ The surface is welded and outward-oriented. Threads use the specified single-sta
 
 `radialSegments` defaults to 96 and must be a multiple of 24 between 24 and 192. `threadStepsPerTurn` defaults to 24 and must be an integer between 24 and 96. Meshes above 400,000 sampled vertices fail before allocation. Higher resolution improves faceting without altering the nominal profile.
 
-ISO 10642:2019 is the default contract; the optional value-free `_iso10642` flag selects identical geometry and normalizes to `iso10642: true`. The four-view snapshot labels the complete string: `flatheadscrew_m3_l10mm_drive(hexsocket)`. Unit checks cover manifold edge incidence/winding, finite vertices, positive volume, datums, both handednesses, visibility, supported sizes, guard limits, direct React/vanilla geometry and footprint dispatch.
+ISO 10642:2019 is the default contract; the optional value-free `_iso10642` flag selects identical geometry and normalizes to `iso10642: true`. The four-view snapshot labels the complete string: `flatheadscrew_m3_l10mm_hexsocket`. Unit checks cover manifold edge incidence/winding, finite vertices, positive volume, datums, both handednesses, visibility, supported sizes, guard limits, direct React/vanilla geometry and footprint dispatch.
 
 The renderer registry consumes this contract and its other model contracts
 from the prepared modelprinter source bundle.
+
+Boolean model props include `hexSocket`, `fullThread`, `male`, and `leftHanded`. The first three are fixed true for this family; `leftHanded` defaults false. `_lefthanded` selects the existing left-hand geometry, while `_righthanded` explicitly restates the default. Deprecated drive/thread/hand/gender selectors and properties are rejected. The ISO metric size and 6g thread class remain standard designations.

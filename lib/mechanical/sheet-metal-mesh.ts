@@ -13,11 +13,11 @@ export interface SheetMetalMesh {
 }
 
 function holeOutline(hole: SheetMetalHole): Point2[] {
-  const radius = (hole.shape === "round" ? hole.diameter : hole.width) / 2
-  const straight = hole.shape === "slot" ? (hole.length - hole.width) / 2 : 0
+  const radius = (hole.round ? hole.diameter : hole.width) / 2
+  const straight = hole.slot ? (hole.length - hole.width) / 2 : 0
   if (straight < 0) throw new Error("Slot length must be at least its width")
   return Array.from({ length: 64 }, (_, i) => {
-    if (hole.shape === "round") {
+    if (hole.round) {
       const angle = (i * Math.PI) / 32
       return {
         u: hole.u + radius * Math.cos(angle),
@@ -32,7 +32,7 @@ function holeOutline(hole: SheetMetalHole): Point2[] {
       (i < 32 ? 0 : Math.PI)
     const along = half * straight + radius * Math.cos(angle)
     const across = radius * Math.sin(angle)
-    return hole.shape === "slot" && hole.axis === "v"
+    return hole.slot && hole.axis === "v"
       ? { u: hole.u - across, v: hole.v + along }
       : { u: hole.u + along, v: hole.v + across }
   })
@@ -48,7 +48,8 @@ export function createSheetMetalMesh(
   input: SheetMetalModelPropsInput,
 ): SheetMetalMesh {
   const props = sheetMetalModelPropsSchema.parse(input)
-  const { width, baseLength, flangeHeight, thickness, profile } = props
+  const { width, baseLength, flangeHeight, thickness } = props
+  const profile = props.channel ? "channel" : props.angle ? "angle" : "plate"
   const radius = props.insideBendRadius + thickness / 2
   const positions: number[] = []
   const indices: number[] = []

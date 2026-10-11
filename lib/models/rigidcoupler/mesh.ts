@@ -21,7 +21,11 @@ export function createRigidCouplerMesh(
 ): RigidCouplerMesh {
   const props = rigidCouplerModelPropsSchema.parse(input)
   const dimensions = getRigidCouplerDimensions(props)
-  assertShaftMountResolution(dimensions.screwHoles)
+  const screwHoles = dimensions.screwHoles.map((hole) => ({
+    ...hole,
+    threadHand: hole.leftHanded ? ("left" as const) : ("right" as const),
+  }))
+  assertShaftMountResolution(screwHoles)
   const body = createAnnularSleeve({
     outerRadius: props.outerDiameter / 2,
     boreARadius: props.boreDiameter / 2,
@@ -31,9 +35,6 @@ export function createRigidCouplerMesh(
     stepZ: dimensions.boreADepth,
   })
   return finishShaftMountMesh(
-    subtractShaftMountParts(
-      body,
-      ...dimensions.screwHoles.map(createMountingHoleCutter),
-    ),
+    subtractShaftMountParts(body, ...screwHoles.map(createMountingHoleCutter)),
   )
 }
