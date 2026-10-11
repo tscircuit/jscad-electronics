@@ -5,7 +5,7 @@ import {
 } from "../lib/utils/nemaMotorParameters"
 import { expect, test } from "bun:test"
 import * as jscad from "@jscad/modeling"
-import { NEMA8, NEMA17, NEMA23, NemaMotor } from "../lib/NemaMotor"
+import { NEMA8, NEMA17, NEMA23, NEMA34, NemaMotor } from "../lib/NemaMotor"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { getComponentModel } from "./helpers/component-model"
 import { importVanilla } from "./fixtures/importVanilla.js"
@@ -38,6 +38,7 @@ test("NEMA motor mounting patterns and blind / through holes in React and vanill
     [8, NEMA8, 20.3, 33, 16, 15, 2],
     [17, NEMA17, 42.3, 38, 31, 24, 4.5],
     [23, NEMA23, 56.4, 51, 47.14, 20.6, 5],
+    [34, NEMA34, 86, 80, 69.6, 32, 10],
   ] as const) {
     const direct = getComponentModel(Component, {})
     const routed = getComponentModel(Footprinter3d, {
@@ -53,8 +54,11 @@ test("NEMA motor mounting patterns and blind / through holes in React and vanill
     for (const result of [direct, routed, pure]) {
       const [min, max] = bounds(result.geometries)
       expect(min[0]).toBeCloseTo(-width / 2, 3)
-      expect(max[1]).toBeCloseTo(width / 2, 3)
-      expect(min[2]).toBeCloseTo(-length - { 8: 2, 17: 3, 23: 4 }[size], 6)
+      expect(max[1]).toBeCloseTo(width / 2 + (size === 34 ? 25 : 0), 3)
+      expect(min[2]).toBeCloseTo(
+        -length - { 8: 2, 17: 3, 23: 4, 34: 0 }[size],
+        6,
+      )
       expect(max[2]).toBeCloseTo(shaft, 6)
       for (const { geom } of result.geometries)
         expect(jscad.measurements.measureVolume(geom)).toBeGreaterThan(0)
@@ -65,7 +69,7 @@ test("NEMA motor mounting patterns and blind / through holes in React and vanill
             0,
             8,
           )
-          if (size !== 23)
+          if (size === 8 || size === 17)
             expect(
               materialAt(result.geometries, x, y, -depth - 0.2),
             ).toBeGreaterThan(0.0009)
@@ -74,7 +78,7 @@ test("NEMA motor mounting patterns and blind / through holes in React and vanill
               materialAt(result.geometries, x, y, -length / 2),
             ).toBeCloseTo(0, 8)
           // Hole radius, not just center, must be correct.
-          const radius = { 8: 1, 17: 1.5, 23: 2.5 }[size]
+          const radius = { 8: 1, 17: 1.5, 23: 2.5, 34: 3.25 }[size]
           expect(
             materialAt(result.geometries, x + radius + 0.2, y, -0.2),
           ).toBeGreaterThan(0.0009)

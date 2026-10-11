@@ -1,3 +1,7 @@
+import {
+  cutNema34FrontRecesses,
+  createNema34FrontScrews,
+} from "./utils/nemaMotorAssemblyGeometry"
 import { componentMaterials } from "./materials"
 import jscad from "@jscad/modeling"
 import type { generalize as Generalize } from "@jscad/modeling/src/operations/modifiers/generalize"
@@ -55,13 +59,15 @@ export function NemaMotor({
               ...section.holes.map((h) => jscad.geometries.geom2.fromPoints(h)),
             )
           : outline
-        const geometry = jscad.transforms.translate(
+        let geometry = jscad.transforms.translate(
           [0, 0, section.zMin],
           jscad.extrusions.extrudeLinear(
             { height: section.zMax - section.zMin },
             profile,
           ),
         )
+        if (p.nemaSize === 34 && section.name === "frontCap")
+          geometry = cutNema34FrontRecesses(geometry, p)
         return (
           <Colorize
             key={`${section.name}-${index}`}
@@ -93,6 +99,16 @@ export function NemaMotor({
           <Custom geometry={generalize({ simplify: true }, geometry)} />
         </Colorize>
       ))}
+      {p.nemaSize === 34 &&
+        createNema34FrontScrews(p).map((geometry, index) => (
+          <Colorize
+            key={`front-screw-${index}`}
+            material={componentMaterials.steel}
+            color={screwColor}
+          >
+            <Custom geometry={generalize({ simplify: true }, geometry)} />
+          </Colorize>
+        ))}
       {screw &&
         [-halfPitch, halfPitch].flatMap((x) =>
           [-halfPitch, halfPitch].map((y) => (
@@ -123,4 +139,7 @@ export const NEMA17 = (props: NemaFrameMotorProps) => (
 )
 export const NEMA23 = (props: NemaFrameMotorProps) => (
   <NemaMotor {...props} nemaSize={23} />
+)
+export const NEMA34 = (props: NemaFrameMotorProps) => (
+  <NemaMotor {...props} nemaSize={34} />
 )

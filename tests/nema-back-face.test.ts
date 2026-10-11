@@ -44,6 +44,7 @@ for (const [
   [8, 33, 16, 1, 2, 1.9, 2, 1.5],
   [17, 38, 31, 1.5, 4.5, 2.75, 3, 2.5],
   [23, 51, 47.14, 2, 4.5, 3.5, 4, 3],
+  [34, 80, 40, 2.5, 6, 4.25, 5, 4],
 ] as const) {
   test(`NEMA${size} rear bores and installed screws match in React and vanilla`, async () => {
     const vanilla = await importVanilla()
@@ -132,3 +133,50 @@ test("rear custom pitch, bore and screw size leave the front mounting holes unch
     0.0009,
   )
 })
+
+test("NEMA34 rear cap clears the front flange corners in every rear mode", async () => {
+  const vanilla = await importVanilla()
+  for (const mode of ["holes", "screws", "plain"] as const) {
+    const direct = getComponentModel(NemaMotor, {
+      nemaSize: 34,
+      backFace: mode,
+    })
+    const routed = vanilla.getJscadModelForFootprint(
+      `nema34_${mode === "plain" ? "plainbackface" : `backface${mode}`}`,
+      jscad,
+    )
+    for (const { geometries } of [direct, routed]) {
+      // The front flange retains its corners; the rear cap cuts them away.
+      expect(materialAt(geometries, 38, 38, -1)).toBeGreaterThan(0.0009)
+      expect(materialAt(geometries, 38, 38, -79)).toBeCloseTo(0, 8)
+      expect(materialAt(geometries, 34.8, 34.8, -82.5)).toBeCloseTo(0, 8)
+      expect(materialAt(geometries, 20, 34, -79)).toBeGreaterThan(0.0009)
+    }
+  }
+}, 30_000)
+
+test("NEMA34 photo features have rounded shoulder reliefs and recessed front screws", async () => {
+  const vanilla = await importVanilla()
+  const direct = getComponentModel(NemaMotor, {
+    nemaSize: 34,
+    wireConnection: "none",
+  })
+  const routed = vanilla.getJscadModelForFootprint("nema34_nowires", jscad)
+  for (const { geometries } of [direct, routed]) {
+    // A diagonal bevel would fill this point; the stepped shoulder cuts it out.
+    expect(materialAt(geometries, 32, 32, -40)).toBeCloseTo(0, 8)
+    expect(materialAt(geometries, 25, 36, -40)).toBeGreaterThan(0.0009)
+    expect(materialAt(geometries, 32, 32, -79)).toBeCloseTo(0, 8)
+    // Recessed Phillips head, cross recess, and casting floor below the recess.
+    const x = 39.5,
+      y = 86 * 0.26
+    expect(materialAt(geometries, x, y, -0.6)).toBeCloseTo(0, 8)
+    expect(materialAt(geometries, x + 1.5, y + 1.5, -1)).toBeGreaterThan(0.0009)
+    expect(materialAt(geometries, 42.8, y, -1)).toBeCloseTo(0, 8)
+    expect(materialAt(geometries, 42.8, y, -6)).toBeGreaterThan(0.0009)
+    const bounds = jscad.measurements.measureAggregateBoundingBox(
+      ...geometries.map(({ geom }: Geometry) => geom),
+    )
+    expect(bounds[0][2]).toBe(-80)
+  }
+}, 30_000)
