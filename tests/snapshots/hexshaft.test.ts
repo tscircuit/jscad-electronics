@@ -25,7 +25,7 @@ test("hexshaft standard labeled four-view visual snapshot", async () => {
   const png = await renderModelSnapshot({
     mesh: createHexShaftMesh(props),
     title: "HexShaft",
-    modelString: "hexshaft_af12mm_l60mm_profile(regularhex)_endchamfer1mm",
+    modelString: "hexshaft_af12mm_l60mm_regularhex_endchamfer1mm",
     footer: "Shaft axis +Z; bottom face Z=0; both ends chamfered",
     views: [
       {

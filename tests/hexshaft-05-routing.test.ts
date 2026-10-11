@@ -10,7 +10,7 @@ import { Footprinter3d } from "../lib/Footprinter3d"
 import { ExtrudedPads } from "../lib/ExtrudedPads"
 import { getComponentModel } from "./helpers/component-model"
 import { importVanilla } from "./fixtures/importVanilla.js"
-const source = "hexshaft_af12mm_l200mm_profile(regularhex)_endchamfer1mm"
+const source = "hexshaft_af12mm_l200mm_regularhex_endchamfer1mm"
 test("hexshaft React, full model string and vanilla share the geometry with no copper pads", async () => {
   const definition = mp.string(source).json()
   if (definition.fn !== "hexshaft") throw new Error("Wrong model")

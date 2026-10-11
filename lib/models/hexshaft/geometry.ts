@@ -17,7 +17,7 @@ const generalize = modifiers.generalize as unknown as (
   geometry: jscad.geometries.geom3.Geom3,
 ) => jscad.geometries.geom3.Geom3
 
-/** A regular hexagonal drive shaft with 45-degree chamfers on all six facets at each end. Length runs along the centered +Z axis from Z=0. acrossFlats measures the distance between the flats X=+-acrossFlats/2; vertices lie on the +/-Y axis. endChamfer offsets each flat inward by that amount over the same axial distance. _regularhex is the value-free profile flag; _profile(regularhex) is the roadmap alias. */
+/** A regular hexagonal drive shaft with 45-degree chamfers on all six facets at each end. Length runs along the centered +Z axis from Z=0. acrossFlats measures the distance between the flats X=+-acrossFlats/2; vertices lie on the +/-Y axis. endChamfer offsets each flat inward by that amount over the same axial distance. _regularhex is the value-free flag for the regular hexagonal geometry. */
 export function createHexShaftGeom(input: HexShaftModelPropsInput) {
   const p = hexShaftModelPropsSchema.parse(input)
   const c = p.endChamfer
