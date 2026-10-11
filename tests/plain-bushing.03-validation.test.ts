@@ -16,6 +16,9 @@ test("plain bushing shares modelprinter validation without renderer defaults", (
     { length: 1, edgeChamfer: 0.5 },
     { length: Infinity },
     { length: "20mmjunk" },
+    { plainClosed: false },
+    { plainClosed: "true" },
+    { style: "plainclosed" },
     { style: "split" },
     { unexpected: 1 },
   ]) {

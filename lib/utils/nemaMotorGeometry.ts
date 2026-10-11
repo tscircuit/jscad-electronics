@@ -110,12 +110,12 @@ export function createNemaMotorSections(
     p.bodyWidth,
     p.faceCornerChamfer,
   )
-  const profile = p.cornerProfile === "stepped" ? steppedFace : face
+  const profile = p.stepped ? steppedFace : face
   const core = profile(p.bodyWidth, p.bodyCornerChamfer)
   const rear = profile(
     p.bodyWidth,
     p.rearCornerChamfer ??
-      (p.backFace === "plain" && p.mountingHoleThrough
+      (p.backFacePlain && p.mountingHoleThrough
         ? p.bodyCornerChamfer
         : p.faceCornerChamfer),
   )
@@ -135,7 +135,7 @@ export function createNemaMotorSections(
   add("frontCap", front, -holeDepth, 0, holes)
   add("frontCap", front, -p.frontCapLength, -holeDepth)
   add("body", core, -p.bodyLength + p.rearCapLength, -p.frontCapLength)
-  if (p.backFace === "plain") {
+  if (p.backFacePlain) {
     add("rearCap", rear, -p.bodyLength, -p.bodyLength + p.rearCapLength)
   } else {
     const halfPitch = p.backFaceHoleSpacing / 2
@@ -163,8 +163,7 @@ export function createNemaMotorSections(
   add("pilot", circle(p.pilotDiameter / 2), 0, p.pilotLength)
   const r = p.shaftDiameter / 2
   const round = circle(r)
-  if (p.shaftShape === "round")
-    add("shaft", round, p.pilotLength, p.shaftLength)
+  if (p.roundShaft) add("shaft", round, p.pilotLength, p.shaftLength)
   else {
     const cut = r - p.shaftFlatDepth
     const angle = Math.acos(cut / r)

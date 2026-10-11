@@ -6,7 +6,7 @@ export default () => (
     <FlexScreen
       diagonal={50}
       aspectRatio="16:9"
-      orientation="foldedToFaceBelowBoard"
+      foldedToFaceBelowBoard
       flexCableLength={38}
       flexCableWidth={10}
       conductorCount={10}

@@ -5,7 +5,7 @@ import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 
 test("hexbolt exact roadmap string - four views", async () => {
-  const modelString = "hexbolt_m6_l25mm_thread(full)_drive(hex)"
+  const modelString = "hexbolt_m6_l25mm_fullthread_hex"
   const model = mp.string(modelString).json()
   if (model.fn !== "hexbolt") throw new Error("Wrong family")
   const { fn, ...props } = model

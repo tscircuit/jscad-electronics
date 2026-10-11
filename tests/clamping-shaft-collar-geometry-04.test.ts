@@ -8,7 +8,7 @@ import { props, mesh } from "./fixtures/clamping-shaft-collar-case"
 
 test("clampingshaftcollar: handed helical female threads alter the actual wall, not a color or label", () => {
   const right = mesh()
-  const left = createClampingShaftCollarMesh({ ...props, threadHand: "left" })
+  const left = createClampingShaftCollarMesh({ ...props, leftHanded: true })
   assertClosedShaftMount(left)
   // At depth 2.25 pitches, the +quarter-angle root is open on the right-hand
   // thread; its mirrored left-hand profile retains material at the same point.

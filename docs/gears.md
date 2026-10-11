@@ -21,7 +21,7 @@ import { SpurGear, WormGear } from "jscad-electronics"
   pitchDiameter="10mm"
   length="20mm"
   starts={2}
-  handedness="right"
+  leftHanded={false}
   boreDiameter="3mm"
 />
 ```
@@ -63,6 +63,11 @@ For JSCAD solids, use `createSpurGearGeom(props)` or
 before allocating geometry. Indexed meshes have closed end faces and optional
 round through bores. React and vanilla entrypoints export the components and
 factories.
+
+Both gear components accept the boolean `leftHanded` property: `true` selects
+left hand and `false` selects right hand. Model strings use value-free `_left`
+or `_right` flags. Repeated and conflicting hand flags are rejected, as is the
+former `handedness` string property.
 
 The [ModelPrinter gear specification](https://github.com/tscircuit/modelprinter/blob/main/docs/gears.md)
 defines tokens, defaults, dimension formulas, and validation. Preview variants
@@ -130,7 +135,7 @@ jscad-electronics.
 from both package entrypoints and through `Footprinter3d`/vanilla model strings.
 They share the spur gear's transverse involute profile, length properties,
 bore, hub, and phase convention. Add `helixAngle` (default 20°, unsigned,
-0 ≤ angle < 90°), `handedness` (default `"right"`), and `segmentsPerTurn`
+0 ≤ angle < 90°), `leftHanded` (default `false`), and `segmentsPerTurn`
 (default 32, integer 12–128). A right-hand tooth advances counterclockwise as
 Z increases, matching the worm convention. `phase` specifies orientation at
 the bottom face. Bores and hubs remain straight cylinders.
@@ -139,7 +144,7 @@ the bottom face. Bores and hubs remain straight cylinders.
 import { HelicalGear } from "jscad-electronics"
 
 <HelicalGear toothCount={24} module="1mm" faceWidth="8mm"
-  helixAngle={30} handedness="left" boreDiameter="5mm"
+  helixAngle={30} leftHanded boreDiameter="5mm"
   hubDiameter="10mm" hubLength="3mm" />
 ```
 

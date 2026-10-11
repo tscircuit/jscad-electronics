@@ -6,7 +6,7 @@ import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 
 test("rigidcoupler exact roadmap string - four views", async () => {
   const modelString =
-    "rigidcoupler_bore8mm_od20mm_l25mm_mount(setscrew)_screwcount4_m4"
+    "rigidcoupler_bore8mm_od20mm_l25mm_setscrew_screwcount4_m4"
   const model = mp.string(modelString).json()
   if (model.fn !== "rigidcoupler") throw new Error("Wrong family")
   const { fn, ...props } = model

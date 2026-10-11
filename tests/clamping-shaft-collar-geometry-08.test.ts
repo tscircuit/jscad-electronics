@@ -10,7 +10,7 @@ import { props } from "./fixtures/clamping-shaft-collar-case"
 test("clampingshaftcollar: combined left-hand and fine-pitch threads retain a closed manifold exterior seam", () => {
   const result = createClampingShaftCollarMesh({
     ...props,
-    threadHand: "left",
+    leftHanded: true,
     threadPitch: 0.5,
   })
   assertClosedShaftMount(result)

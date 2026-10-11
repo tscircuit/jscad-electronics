@@ -6,7 +6,7 @@ This renderer consumes the parameter contract from [modelprinter PR #29](https:/
 import { mp } from "@tscircuit/modelprinter"
 import { createRigidCouplerMesh, createRigidCouplerGeom, RigidCoupler } from "jscad-electronics"
 
-const model = mp.string("rigidcoupler_bore8mm_od20mm_l25mm_mount(setscrew)_screwcount4_m4").json()
+const model = mp.string("rigidcoupler_bore8mm_od20mm_l25mm_setscrew_screwcount4_m4").json()
 if (model.fn !== "rigidcoupler") throw new Error("Unexpected family")
 const { fn, ...props } = model
 const mesh = createRigidCouplerMesh(props)
@@ -26,3 +26,5 @@ Closed cutters extend 0.0001 mm into the already empty bore/slit/exterior at eac
 A renderer resolution guard rejects wall/chamfer ligaments thinner than the difference between the inside and outside polygon approximations. Allocation guards reject more than 64 thread turns per hole or more than 100,000 estimated cutter triangles before generating geometry. Thread pitch stays a geometry-driving dimension; small pitches fail explicitly rather than being silently simplified to smooth bores.
 
 Tests inspect the exported mesh's nondegenerate faces, two-use opposite-direction edges, connectedness, positive volume, bounds, open bore/hole axes, material clearances, chamfers, handed thread profiles and pitch changes. The exact full roadmap string has a four-view PNG snapshot in `tests/snapshots/__snapshots__`.
+
+The modelprinter contract exposes `leftHanded: false` by default; `_lefthanded` sets it to `true` and `_righthanded` explicitly selects `false`. Mounting construction is represented by the `setScrew` boolean flag. The renderer translates this boolean into the existing internal cutter handedness while retaining the same nominal geometry. Legacy `mount(...)` and `threadhand(...)` model-string selectors are rejected.

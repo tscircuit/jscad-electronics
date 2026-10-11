@@ -5,7 +5,7 @@ import { renderModelSnapshot } from "../fixtures/render-orthographic-model-snaps
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 
 test("buttonscrew roadmap example - four-view PoppyGL snapshot", async () => {
-  const modelString = "buttonscrew_m3_l10mm"
+  const modelString = "buttonscrew_m3_l10mm_hexsocket_fullthread_righthanded"
   const model = mp.string(modelString).json()
   if (model.fn !== "buttonscrew") throw new Error("Unexpected model")
   const { fn, ...props } = model

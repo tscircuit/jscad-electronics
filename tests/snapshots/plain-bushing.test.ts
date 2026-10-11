@@ -6,7 +6,7 @@ import { renderModelSnapshot } from "../fixtures/render-orthographic-model-snaps
 
 test("plain bushing - full roadmap model in four views", async () => {
   const modelString =
-    "plainbushing_id8mm_od12mm_l20mm_style(plainclosed)_edgechamfer0.5mm"
+    "plainbushing_id8mm_od12mm_l20mm_plainclosed_edgechamfer0.5mm"
   const model = mp.string(modelString).json()
   if (model.fn !== "plainbushing") throw new Error("Expected plain bushing")
   const { fn, ...props } = model

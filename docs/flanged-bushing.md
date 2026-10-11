@@ -14,7 +14,7 @@ and pad rendering returns no PCB pads.
 import { mp } from "@tscircuit/modelprinter"
 import { createFlangedBushingGeom } from "jscad-electronics"
 
-const model = mp.string("flangedbushing_id8mm_od12mm_flangeod18mm_l15mm_flangethickness2mm_style(plainclosed)").json()
+const model = mp.string("flangedbushing_id8mm_od12mm_flangeod18mm_l15mm_flangethickness2mm_plainclosed").json()
 if (model.fn === "flangedbushing") {
   const { fn, ...props } = model
   const solid = createFlangedBushingGeom(props)
@@ -40,3 +40,7 @@ The labelled four-view poppygl baseline uses the complete roadmap example.
 
 The renderer registry consumes this contract and its other model contracts
 from the same published modelprinter release.
+
+The `plainClosed` boolean defaults to `true`; the model string uses the bare
+`plainclosed` flag. The old `style(...)` selector and `style` JSON property
+are rejected by the upstream contract.

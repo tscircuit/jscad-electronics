@@ -6,7 +6,7 @@ import { renderModelSnapshot } from "../fixtures/render-orthographic-model-snaps
 
 test("T-slot gusset complete roadmap string - four views", async () => {
   const modelString =
-    "tslotgusset_w40mm_h40mm_t4mm_shape(righttriangle)_slots2_slot(5mm,12mm)_centers(12mm,28mm)"
+    "tslotgusset_w40mm_h40mm_t4mm_righttriangle_slots2_slot(5mm,12mm)_centers(12mm,28mm)"
   const model = mp.string(modelString).json()
   if (model.fn !== "tslotgusset") throw new Error("Wrong model family")
   const { fn, ...props } = model

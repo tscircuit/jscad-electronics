@@ -1,5 +1,5 @@
 export const source =
-  "cablegrommet_panelhole20mm_id10mm_od24mm_h8mm_groovew3mm_grooved2mm_shape(symmetricring)"
+  "cablegrommet_panelhole20mm_id10mm_od24mm_h8mm_groovew3mm_grooved2mm_symmetricring"
 export const base = {
   panelHoleDiameter: 20,
   innerDiameter: 10,

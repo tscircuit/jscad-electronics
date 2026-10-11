@@ -32,7 +32,7 @@ const cases: HelicalGearModelPropsInput[] = [
     module: "0.05in",
     faceWidth: "0.3in",
     helixAngle: 35,
-    handedness: "left",
+    leftHanded: true,
     boreDiameter: 3,
     hubDiameter: 10,
     hubLength: 3,
@@ -70,7 +70,7 @@ for (const input of cases) {
     expect(bounds.minimum[2]).toBe(0)
     expect(bounds.maximum[2]).toBe(props.faceWidth + props.hubLength)
     expect(bounds.maximumRadius).toBeCloseTo(pitchRadius + props.module, 8)
-    const direction = props.handedness === "right" ? 1 : -1
+    const direction = props.leftHanded ? -1 : 1
     for (const fraction of [0.137, 0.519, 0.893]) {
       const z = props.faceWidth * fraction
       const slice = sliceMesh(mesh, z)
@@ -124,9 +124,9 @@ test("zero helix reproduces the spur mesh exactly, including bore and hub", () =
     {},
     { boreDiameter: 5, hubDiameter: 10, hubLength: 3, phase: 23 },
   ])
-    for (const handedness of ["left", "right"] as const)
+    for (const leftHanded of [true, false])
       expect(
-        createHelicalGearMesh({ ...props, helixAngle: 0, handedness }),
+        createHelicalGearMesh({ ...props, helixAngle: 0, leftHanded }),
       ).toEqual(createSpurGearMesh(props))
 })
 

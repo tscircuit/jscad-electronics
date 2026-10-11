@@ -6,7 +6,7 @@ import { renderModelSnapshot } from "../fixtures/render-orthographic-model-snaps
 
 test("flanged bushing - full roadmap model in four views", async () => {
   const modelString =
-    "flangedbushing_id8mm_od12mm_flangeod18mm_l15mm_flangethickness2mm_style(plainclosed)"
+    "flangedbushing_id8mm_od12mm_flangeod18mm_l15mm_flangethickness2mm_plainclosed"
   const model = mp.string(modelString).json()
   if (model.fn !== "flangedbushing") throw new Error("Expected flanged bushing")
   const { fn, ...props } = model

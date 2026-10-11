@@ -1,7 +1,7 @@
 # T-slot gusset renderer
 
 ```text
-tslotgusset_w40mm_h40mm_t4mm_shape(righttriangle)_slots2_slot(5mm,12mm)_centers(12mm,28mm)
+tslotgusset_w40mm_h40mm_t4mm_righttriangle_slots2_slot(5mm,12mm)_centers(12mm,28mm)
 ```
 
 `TSlotGusset`, `createTSlotGussetGeom`, `createTSlotGussetMesh` and the
@@ -23,3 +23,7 @@ parity are checked. The complete example has a four-view PNG snapshot.
 
 The renderer registry consumes this contract and its other model contracts
 from the same published modelprinter release.
+
+The `rightTriangle` boolean defaults to `true`; the model string uses the bare
+`righttriangle` flag. The old `shape(...)` selector and `shape` JSON property
+are rejected by the upstream contract.

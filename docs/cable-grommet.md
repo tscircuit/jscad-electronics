@@ -10,7 +10,7 @@ The dependency and lockfile use the published
 and upstream FlexScreen contact and tail parsing.
 
 ```
-cablegrommet_panelhole20mm_id10mm_od24mm_h8mm_groovew3mm_grooved2mm_shape(symmetricring)
+cablegrommet_panelhole20mm_id10mm_od24mm_h8mm_groovew3mm_grooved2mm_symmetricring
 ```
 
 `Footprinter3d` and the vanilla footprint helpers render this string without
@@ -31,3 +31,7 @@ The four-view PoppyGL snapshot shows the full example string, bore, symmetric
 flanges and recessed panel interface. Geometry tests check oriented topology,
 positive volume, groove/end planes, radial sections, an unobstructed bore,
 thin-wall refinement, and React/vanilla routing parity.
+
+The `symmetricRing` boolean defaults to `true`; the model string uses the bare
+`symmetricring` flag. The old `shape(...)` selector and `shape` JSON property
+are rejected by the upstream contract.

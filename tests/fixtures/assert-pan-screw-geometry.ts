@@ -140,7 +140,7 @@ export function assertPanScrewGeometry() {
       const profile = [...points.slice(rim), [0, floor] as [number, number]]
       expect(hasCrossing(profile)).toBe(false)
     }
-    const left = createPanScrewMesh({ ...input, threadHand: "left" })
+    const left = createPanScrewMesh({ ...input, leftHanded: true })
     const points = (m: typeof mesh) =>
       m.positions.slice(0, 96 * 3).map((v) => Math.round(v * 1e8))
     expect(points(left)).toEqual(points(mesh)) // symmetric tip; handedness changes succeeding rings

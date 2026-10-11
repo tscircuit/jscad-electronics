@@ -98,6 +98,7 @@ test("NEMA shaft flat, round shoulder, tip length, rotation and custom units", a
   for (const angle of [0, 90]) {
     const props = {
       nemaSize: 17 as const,
+      dShaft: true,
       shaftLength: "30mm",
       shaftDiameter: "8mm",
       shaftFlatDepth: 1,
@@ -106,7 +107,7 @@ test("NEMA shaft flat, round shoulder, tip length, rotation and custom units", a
     }
     const direct = getComponentModel(NemaMotor, props)
     const routed = vanilla.getJscadModelForFootprint(
-      `nema17_shaftlength30mm_shaftdiameter8mm_flatdepth1mm_flatlength12mm_flatangle${angle}deg`,
+      `nema17_dshaft_shaftlength30mm_shaftdiameter8mm_flatdepth1mm_flatlength12mm_flatangle${angle}deg`,
       jscad,
     )
     for (const result of [direct, routed]) {
@@ -117,7 +118,7 @@ test("NEMA shaft flat, round shoulder, tip length, rotation and custom units", a
       expect(bounds(result.geometries)[1][2]).toBe(30)
     }
   }
-  const round = getComponentModel(NEMA17, { shaftShape: "round" })
+  const round = getComponentModel(NEMA17, { roundShaft: true })
   expect(materialAt(round.geometries, 2.2, 0, 20)).toBeGreaterThan(0.0009)
   for (const source of [
     "nema17_holespacing40mm",

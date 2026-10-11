@@ -76,7 +76,7 @@ export function createCompressionSpringMesh(
     }
   }
   const triangle = (a: number, b: number, c: number) => {
-    if (props.hand === "left") indices.push(a, c, b)
+    if (props.leftHanded) indices.push(a, c, b)
     else indices.push(a, b, c)
   }
   for (let step = 0; step < steps; step++)

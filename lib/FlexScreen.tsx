@@ -12,7 +12,7 @@ import { Screen } from "./Screen"
 type Point3 = [number, number, number]
 type Rotation3 = [number | string, number | string, number | string]
 
-export type FlexScreenOrientation =
+type FlexScreenPlacement =
   | "sitsFlat"
   | "sitsFlatBelowBoard"
   | "foldedToFaceAboveBoard"
@@ -39,8 +39,7 @@ export interface FlexScreenProps {
   /** Diagonal used when width, height, and diagonal are all omitted. */
   defaultDiagonal?: number
 
-  orientation?: FlexScreenOrientation
-  /** Boolean orientation shortcuts for footprint/configuration builders. */
+  /** Select exactly one placement; omitted flags default to sitsFlat. */
   sitsFlat?: boolean
   sitsFlatBelowBoard?: boolean
   foldedToFaceAboveBoard?: boolean
@@ -233,7 +232,12 @@ export const resolveFlexScreenSize = ({
   }
 }
 
-const resolveOrientation = (props: FlexScreenProps): FlexScreenOrientation => {
+const resolveOrientation = (props: FlexScreenProps): FlexScreenPlacement => {
+  if ("orientation" in props) {
+    throw new Error(
+      "FlexScreen orientation is no longer supported; use a boolean placement flag",
+    )
+  }
   const shortcuts = [
     ["sitsFlat", props.sitsFlat],
     ["sitsFlatBelowBoard", props.sitsFlatBelowBoard],
@@ -243,14 +247,28 @@ const resolveOrientation = (props: FlexScreenProps): FlexScreenOrientation => {
     ["foldedToFaceBelowBoard", props.foldsBelowBoard],
     ["foldedToRightAngleAboveBoard", props.foldedToRightAngleAboveBoard],
     ["foldedToRightAngleBelowBoard", props.foldedToRightAngleBelowBoard],
-  ].filter((entry) => entry[1]) as Array<[FlexScreenOrientation, boolean]>
+  ] as const
+  for (const [name, value] of shortcuts) {
+    if (value !== undefined && typeof value !== "boolean") {
+      throw new Error(`FlexScreen placement flag "${name}" must be a boolean`)
+    }
+  }
+  const selected = shortcuts.filter((entry) => entry[1] === true)
 
-  if (shortcuts.length > 1) {
+  if (selected.length > 1) {
     throw new Error(
       "Only one FlexScreen boolean orientation shortcut can be true",
     )
   }
-  return shortcuts[0]?.[0] ?? props.orientation ?? "sitsFlat"
+  if (
+    selected.length === 0 &&
+    shortcuts.some((entry) => entry[1] !== undefined)
+  ) {
+    throw new Error(
+      "A FlexScreen orientation flag must be true when placement flags are supplied",
+    )
+  }
+  return selected[0]?.[0] ?? "sitsFlat"
 }
 
 const distance = (a: Point3, b: Point3) =>

@@ -51,7 +51,11 @@ for (const [
     for (const mode of ["holes", "screws"] as const) {
       const direct = getComponentModel(NemaMotor, {
         nemaSize: size,
-        backFace: mode,
+        ...(mode === "holes"
+          ? { backFaceHoles: true }
+          : mode === "screws"
+            ? { backFaceScrews: true }
+            : { backFacePlain: true }),
       })
       const routed = vanilla.getJscadModelForFootprint(
         `nema${size}_backface${mode}`,
@@ -139,7 +143,11 @@ test("NEMA34 rear cap clears the front flange corners in every rear mode", async
   for (const mode of ["holes", "screws", "plain"] as const) {
     const direct = getComponentModel(NemaMotor, {
       nemaSize: 34,
-      backFace: mode,
+      ...(mode === "holes"
+        ? { backFaceHoles: true }
+        : mode === "screws"
+          ? { backFaceScrews: true }
+          : { backFacePlain: true }),
     })
     const routed = vanilla.getJscadModelForFootprint(
       `nema34_${mode === "plain" ? "plainbackface" : `backface${mode}`}`,
@@ -159,7 +167,7 @@ test("NEMA34 photo features have rounded shoulder reliefs and recessed front scr
   const vanilla = await importVanilla()
   const direct = getComponentModel(NemaMotor, {
     nemaSize: 34,
-    wireConnection: "none",
+    noWires: true,
   })
   const routed = vanilla.getJscadModelForFootprint("nema34_nowires", jscad)
   for (const { geometries } of [direct, routed]) {

@@ -1,6 +1,6 @@
 # ButtonScrew renderer
 
-`buttonscrew_m3_l10mm` uses ISO 7380-1:2022 by default. The optional bare flag
+`buttonscrew_m3_l10mm_hexsocket_fullthread_righthanded` uses ISO 7380-1:2022 by default. The optional bare flag
 in `buttonscrew_iso7380-1_m3_l10mm` produces the same geometry and normalized
 `iso73801: true` contract. The old `standard(...)` selector is unsupported.
 The renderer consumes modelprinter's strict schemas and resolved dimensions.
@@ -11,3 +11,5 @@ All nominal dimensions, defaults, selectors, validation and datums belong to mod
 
 The renderer registry consumes this contract and its other model contracts
 from the same prepared modelprinter build.
+
+The renderer consumes `hexSocket: true`, `fullThread: true`, and `leftHanded: false` directly from the contract. Drive/thread/hand selector tokens and corresponding string properties are rejected. This family retains its existing right-hand thread geometry.

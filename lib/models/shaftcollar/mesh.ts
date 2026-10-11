@@ -21,7 +21,13 @@ export function createShaftCollarMesh(
 ): ShaftCollarMesh {
   const props = shaftCollarModelPropsSchema.parse(input)
   const dimensions = getShaftCollarDimensions(props)
-  assertShaftMountResolution([dimensions.screwHole])
+  const screwHole = {
+    ...dimensions.screwHole,
+    threadHand: dimensions.screwHole.leftHanded
+      ? ("left" as const)
+      : ("right" as const),
+  }
+  assertShaftMountResolution([screwHole])
   const body = createAnnularSleeve({
     outerRadius: props.outerDiameter / 2,
     boreARadius: props.boreDiameter / 2,
@@ -29,9 +35,6 @@ export function createShaftCollarMesh(
     chamfer: props.chamfer,
   })
   return finishShaftMountMesh(
-    subtractShaftMountParts(
-      body,
-      createMountingHoleCutter(dimensions.screwHole),
-    ),
+    subtractShaftMountParts(body, createMountingHoleCutter(screwHole)),
   )
 }

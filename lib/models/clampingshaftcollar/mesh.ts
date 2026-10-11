@@ -21,7 +21,13 @@ export function createClampingShaftCollarMesh(
 ): ClampingShaftCollarMesh {
   const props = clampingShaftCollarModelPropsSchema.parse(input)
   const dimensions = getClampingShaftCollarDimensions(props)
-  assertShaftMountResolution([dimensions.threadedHole])
+  const threadedHole = {
+    ...dimensions.threadedHole,
+    threadHand: dimensions.threadedHole.leftHanded
+      ? ("left" as const)
+      : ("right" as const),
+  }
+  assertShaftMountResolution([threadedHole])
   const body = createAnnularSleeve({
     outerRadius: props.outerDiameter / 2,
     boreARadius: props.boreDiameter / 2,
@@ -47,7 +53,7 @@ export function createClampingShaftCollarMesh(
       body,
       slit,
       createMountingHoleCutter(dimensions.clearanceHole),
-      createMountingHoleCutter(dimensions.threadedHole),
+      createMountingHoleCutter(threadedHole),
     ),
   )
 }

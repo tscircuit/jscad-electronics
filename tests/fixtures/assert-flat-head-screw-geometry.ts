@@ -63,7 +63,7 @@ export function assertFlatHeadScrewGeometry() {
           mesh.positions[i + 2] === -p.socketDepth,
       ),
     ).toBe(true)
-    const left = createFlatHeadScrewMesh({ ...input, threadHand: "left" })
+    const left = createFlatHeadScrewMesh({ ...input, leftHanded: true })
     const points = (m: typeof mesh) =>
       m.positions.slice(0, 96 * 3).map((v) => Math.round(v * 1e8))
     expect(points(left)).toEqual(points(mesh)) // symmetric tip; handedness changes succeeding rings

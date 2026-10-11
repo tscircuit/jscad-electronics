@@ -6,7 +6,7 @@ import { renderModelSnapshot } from "../fixtures/render-orthographic-model-snaps
 
 test("compression spring: four views of variable pitch and ground bearing ends", async () => {
   const modelString =
-    "compressionspring_spec(custom)_od8mm_wire1mm_l20mm_turns8_active6_ends(closedground)_hand(right)_state(free)"
+    "compressionspring_custom_od8mm_wire1mm_l20mm_turns8_active6_closedground_righthanded_free"
   const definition = mp.string(modelString).json()
   if (definition.fn !== "compressionspring") throw new Error("Expected spring")
   const { fn, ...props } = definition

@@ -30,7 +30,7 @@ test("tslotcoverstrip standard labeled four-view visual snapshot", async () => {
     mesh: createTSlotCoverStripMesh(props),
     title: "TSlotCoverStrip",
     modelString:
-      "tslotcoverstrip_l40mm_w8mm_t1mm_stemw5.8mm_stemh2mm_barbw6.2mm_profile(tee)",
+      "tslotcoverstrip_l40mm_w8mm_t1mm_stemw5.8mm_stemh2mm_barbw6.2mm_tee",
     footer: "Cover underside Y=0; lower bead retains the groove mouth",
     views: [
       {

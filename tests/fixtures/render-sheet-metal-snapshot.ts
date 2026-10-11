@@ -12,7 +12,7 @@ export function renderSheetMetalSnapshot(index: 0 | 1 | 2) {
     metalness: 1,
     roughness: 0.4,
     mesh: createSheetMetalMesh(props),
-    title: `SHEET METAL / ${definition.profile.toUpperCase()}`,
+    title: `SHEET METAL / ${definition.channel ? "CHANNEL" : definition.angle ? "ANGLE" : "PLATE"}`,
     modelString,
     views: [
       {

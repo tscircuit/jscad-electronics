@@ -1,7 +1,7 @@
 import type { FlangedBushingModelPropsInput } from "@tscircuit/modelprinter"
 
 export const source =
-  "flangedbushing_id8mm_od12mm_flangeod18mm_l15mm_flangethickness2mm_style(plainclosed)"
+  "flangedbushing_id8mm_od12mm_flangeod18mm_l15mm_flangethickness2mm_plainclosed"
 export const examples: FlangedBushingModelPropsInput[] = [
   {
     innerDiameter: 8,

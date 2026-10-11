@@ -15,7 +15,7 @@ import {
  */
 export function createNemaMotorWireGeometry(input: NemaMotorModelPropsInput) {
   const p = resolveNemaMotorProps(input)
-  if (p.wireConnection === "none") return []
+  if (p.noWires) return []
   const { position } = getNemaMotorReferencePoints(p).wireside
   const angle = (p.wireSideAngle * Math.PI) / 180
   // Only transform the direction/profile about +Z; the reference point already
@@ -25,7 +25,7 @@ export function createNemaMotorWireGeometry(input: NemaMotorModelPropsInput) {
       [position.x, position.y, position.z],
       jscad.transforms.rotateZ(angle, geometry),
     )
-  if (p.wireConnection === "stubs") {
+  if (p.wireStubs) {
     const colors = [
       "#d53f3f",
       "#2463af",
@@ -70,7 +70,7 @@ export function createNemaMotorWireGeometry(input: NemaMotorModelPropsInput) {
       })
     return wires
   }
-  const connector = getJstMotorConnector(p.wireConnection)!
+  const connector = getJstMotorConnector(p.wireConnection!)!
   const { pinCount, pitch, bodyWidth, bodyHeight, matingDepth } = connector
   const wall = pitch === 2 ? 0.6 : 0.3
   const contactLength = pitch === 2 ? 3.4 : 2.4

@@ -2,7 +2,7 @@ import * as jscadModeling from "@jscad/modeling"
 import { expect, test } from "bun:test"
 import { createJSCADRenderer } from "jscad-fiber"
 import type { ReactElement } from "react"
-import { FlexScreen } from "../lib/FlexScreen"
+import { FlexScreen, type FlexScreenProps } from "../lib/FlexScreen"
 
 const boundsFor = (element: ReactElement) => {
   const geometries: any[] = []
@@ -67,4 +67,61 @@ test("rejects a cable too short for the requested 180-degree fold", () => {
       foldOutset: 5,
     }),
   ).toThrow("flexCableLength must be at least")
+})
+
+test("boolean placement flags preserve the flat default and below-board placement", () => {
+  const defaultBounds = boundsFor(
+    <FlexScreen width={30} height={18} flexCableLength={20} />,
+  )
+  const flatBounds = boundsFor(
+    <FlexScreen sitsFlat width={30} height={18} flexCableLength={20} />,
+  )
+  expect(defaultBounds).toEqual(flatBounds)
+  const [belowMinimum, belowMaximum] = boundsFor(
+    <FlexScreen
+      sitsFlatBelowBoard
+      width={30}
+      height={18}
+      flexCableLength={20}
+    />,
+  )
+  expect(belowMaximum[2]).toBeLessThan(-1.6)
+  expect(belowMinimum[2]).toBeLessThan(belowMaximum[2])
+})
+
+test("placement aliases produce the same folded geometry", () => {
+  for (const [canonical, alias] of [
+    ["foldedToFaceAboveBoard", "foldsAboveBoard"],
+    ["foldedToFaceBelowBoard", "foldsBelowBoard"],
+  ] as const) {
+    const dimensions = { width: 30, height: 18, flexCableLength: 40 }
+    expect(
+      boundsFor(<FlexScreen {...dimensions} {...{ [canonical]: true }} />),
+    ).toEqual(boundsFor(<FlexScreen {...dimensions} {...{ [alias]: true }} />))
+  }
+})
+
+test("FlexScreen rejects removed enum props and invalid or conflicting booleans", () => {
+  const invalid = [
+    { orientation: "sitsFlat" },
+    { orientation: "foldedToFaceAboveBoard", sitsFlat: true },
+    { sitsFlat: false },
+    { foldsAboveBoard: false },
+    { sitsFlat: true, foldedToFaceBelowBoard: true },
+    { foldsAboveBoard: true, foldedToFaceAboveBoard: true },
+    { sitsFlat: "true" },
+    { sitsFlat: 1 },
+    { sitsFlat: null },
+    {
+      sitsFlat: false,
+      sitsFlatBelowBoard: false,
+      foldedToFaceAboveBoard: false,
+      foldedToFaceBelowBoard: false,
+      foldedToRightAngleAboveBoard: false,
+      foldedToRightAngleBelowBoard: false,
+    },
+  ]
+  for (const props of invalid) {
+    expect(() => FlexScreen(props as unknown as FlexScreenProps)).toThrow()
+  }
 })

@@ -18,6 +18,9 @@ test("flanged bushing consumes modelprinter validation and rejects impossible fl
     { flangeThickness: 16 },
     { length: Infinity },
     { length: "15mmjunk" },
+    { plainClosed: false },
+    { plainClosed: "true" },
+    { style: "plainclosed" },
     { style: "split" },
     { unexpected: 1 },
   ]) {
