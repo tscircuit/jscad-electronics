@@ -35,16 +35,17 @@ for (const [
   size,
   length,
   pitch,
+  pitchY,
   radius,
   depth,
   headRadius,
   headHeight,
   socketWidth,
 ] of [
-  [8, 33, 16, 1, 2, 1.9, 2, 1.5],
-  [17, 38, 31, 1.5, 4.5, 2.75, 3, 2.5],
-  [23, 51, 47.14, 2, 4.5, 3.5, 4, 3],
-  [34, 80, 40, 2.5, 6, 4.25, 5, 4],
+  [8, 33, 16, 16, 1, 2, 1.9, 2, 1.5],
+  [17, 38, 31, 31, 1.5, 4.5, 2.75, 3, 2.5],
+  [23, 51, 50, 32, 1.5, 4.5, 2.75, 3, 2.5],
+  [34, 80, 40, 40, 2.5, 6, 4.25, 5, 4],
 ] as const) {
   test(`NEMA${size} rear bores and installed screws match in React and vanilla`, async () => {
     const vanilla = await importVanilla()
@@ -70,7 +71,7 @@ for (const [
           5,
         )
         for (const x of [-pitch / 2, pitch / 2])
-          for (const y of [-pitch / 2, pitch / 2]) {
+          for (const y of [-pitchY / 2, pitchY / 2]) {
             // Bore opens on -Z, stays open nearly to its depth, and has a real floor.
             for (const z of [-length + 0.2, -length + depth - 0.2])
               if (mode === "holes")
@@ -137,6 +138,57 @@ test("rear custom pitch, bore and screw size leave the front mounting holes unch
     0.0009,
   )
 })
+
+test("NEMA23 rear recesses and rounded tabs leave the front flange unchanged in every rear mode", async () => {
+  const vanilla = await importVanilla()
+  for (const mode of ["holes", "screws", "plain"] as const) {
+    const props =
+      mode === "plain"
+        ? { backFacePlain: true }
+        : mode === "holes"
+          ? { backFaceHoles: true }
+          : { backFaceScrews: true }
+    const direct = getComponentModel(NemaMotor, {
+      nemaSize: 23,
+      noWires: true,
+      ...props,
+    })
+    const routed = vanilla.getJscadModelForFootprint(
+      `nema23_nowires_${mode === "plain" ? "plainbackface" : `backface${mode}`}`,
+      jscad,
+    )
+    for (const { geometries } of [direct, routed]) {
+      expect(materialAt(geometries, 25.5, 25.5, -1)).toBeGreaterThan(0.0009)
+      expect(materialAt(geometries, 25.5, 25.5, -50)).toBeCloseTo(0, 8)
+      expect(materialAt(geometries, 20, 20, -50)).toBeGreaterThan(0.0009)
+      expect(materialAt(geometries, 21, 21, -50)).toBeCloseTo(0, 8)
+      expect(materialAt(geometries, 27, 16, -50)).toBeGreaterThan(0.0009)
+      expect(materialAt(geometries, 18.9, 27.9, -50)).toBeCloseTo(0, 8)
+      expect(materialAt(geometries, 18.1, 27.1, -50)).toBeGreaterThan(0.0009)
+      expect(materialAt(geometries, 23.57, 23.57, -0.2)).toBeCloseTo(0, 8)
+    }
+  }
+}, 30_000)
+
+test("NEMA23 rectangular overrides move rear bores without moving the front holes", async () => {
+  const vanilla = await importVanilla()
+  const direct = getComponentModel(NemaMotor, {
+    nemaSize: 23,
+    noWires: true,
+    backFaceHoles: true,
+    backFaceHoleSpacingX: 46,
+    backFaceHoleSpacingY: 28,
+  })
+  const routed = vanilla.getJscadModelForFootprint(
+    "nema23_nowires_backfaceholes_backholespacingx46mm_backholespacingy28mm",
+    jscad,
+  )
+  for (const { geometries } of [direct, routed]) {
+    expect(materialAt(geometries, 23, 14, -50)).toBeCloseTo(0, 8)
+    expect(materialAt(geometries, 25, 16, -50)).toBeGreaterThan(0.0009)
+    expect(materialAt(geometries, 23.57, 23.57, -0.2)).toBeCloseTo(0, 8)
+  }
+}, 30_000)
 
 test("NEMA34 rear cap clears the front flange corners in every rear mode", async () => {
   const vanilla = await importVanilla()

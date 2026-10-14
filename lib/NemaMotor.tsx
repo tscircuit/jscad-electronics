@@ -47,7 +47,8 @@ export function NemaMotor({
         }),
       )
     : undefined
-  const halfPitch = p.backFaceHoleSpacing / 2
+  const halfPitchX = p.backFaceHoleSpacingX / 2
+  const halfPitchY = p.backFaceHoleSpacingY / 2
   return (
     <>
       {createNemaMotorSections(p).map((section, index) => {
@@ -109,8 +110,8 @@ export function NemaMotor({
           </Colorize>
         ))}
       {screw &&
-        [-halfPitch, halfPitch].flatMap((x) =>
-          [-halfPitch, halfPitch].map((y) => (
+        [-halfPitchX, halfPitchX].flatMap((x) =>
+          [-halfPitchY, halfPitchY].map((y) => (
             <Colorize
               material={componentMaterials.steel}
               key={`rear-screw-${x}-${y}`}

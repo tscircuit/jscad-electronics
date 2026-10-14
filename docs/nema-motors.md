@@ -67,7 +67,10 @@ The rear face is at Z=-bodyLength. Heads project outward along -Z.
 `backFaceScrewSize` configure the rear features independently of the front
 mounting holes. String modifiers are `backholespacing`, `backholediameter`,
 `backholedepth`, and `backscrewm3` (also M2/M2.5/M4/etc.).
-Default rear sizes are M2 / M3 / M4 / M5; square pitches are 16 / 31 / 47.14 / 40 mm.
+Default rear sizes are M2 / M3 / M3 / M5; patterns are 16 × 16 / 31 × 31 /
+50 × 32 / 40 × 40 mm. `backFaceHoleSpacingX` / `backFaceHoleSpacingY`
+(`backholespacingx` / `backholespacingy`) override each axis; the existing
+`backFaceHoleSpacing` / `backholespacing` sets both axes when supplied.
 These are representative configurable rear details, not frame guarantees.
 NEMA34 follows the rounded, stepped shoulders and plain rear casting visible in
 STEPPERONLINE product photos. The rear follows the body profile instead of
@@ -82,7 +85,24 @@ configure the profiles. In stepped mode, the chamfer value divided by sqrt(2)
 sets the corner shoulder depth, with fillets up to 4 mm. Default body and rear
 values are both 24 mm. Rear bores/screws remain opt-in with an illustrative
 40 mm square pitch and can be overridden to match a specific motor.
-NEMA8/17/23 retain their existing rear profiles. Blind bores retain their floors; the existing HexSocketBolt
+NEMA8/17 retain their existing rear profiles. NEMA23's rear cap has R5 concave
+recesses and R2.5 convex fillets around side tabs. Its 50 × 32 mm pattern and
+profile use [STEPPERONLINE’s ST-M10 rear adapter drawing](https://www.omc-stepperonline.com/image/catalog/dimensions/ST-M10_Dimension.svg)
+as a representative reference. The adapter itself is 56 × 56 mm with Ø4 clearance
+holes; the motor model retains its 56.4 mm envelope and uses illustrative M3
+socket screws/bores. Exact motor threads, screw style and rear-cover dimensions
+are not established by that adapter drawing. Front flange and core geometry
+remain unchanged.
+
+`rearStepped` / `rearChamfered` (`rearstepped` / `rearchamfered`) select the rear
+profile independently. Explicit `stepped` / `chamfered` still apply to both
+profiles unless a rear selector is supplied. `rearCornerChamfer` / `rearchamfer`
+sets the stepped shoulder depth after division by sqrt(2); NEMA23 defaults to
+9 mm. `rearCornerRecessRadius` / `rearCornerFilletRadius` (`rearrecess` /
+`rearfillet`) independently configure the arcs. Bores, heads, reference points
+and React/vanilla geometry consume the same modelprinter parameters.
+`nema23_rearchamfered_backholespacing47.14mm_backscrewm4` requests the previous
+rear depiction explicitly. Blind bores retain their floors; the existing HexSocketBolt
 generator supplies the head and hex recess, with a smooth shank inside the
 rear bore. Internal tie rods and threads are not modeled. `screwColor`
 configures the screw color.
@@ -90,6 +110,6 @@ configures the screw color.
 ```tsx
 <NEMA8 backFaceHoles />
 <NEMA17 backFaceScrews />
-<NEMA23 backFaceScrews backFaceHoleSpacing={40} backFaceScrewSize="M3" />
+<NEMA23 backFaceScrews backFaceHoleSpacingX={46} backFaceHoleSpacingY={28} />
 <Footprinter3d footprint="nema23_backfaceholes_backholediameter4mm" />
 ```
