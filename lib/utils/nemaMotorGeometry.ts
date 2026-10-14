@@ -57,21 +57,38 @@ const roundedFace = (width: number, radius: number): NemaMotorPoint[] => {
 
 // Rounded, stepped corner reliefs follow the shoulders in the NEMA34 photo.
 // Each corner has two convex fillets around a concave shoulder, not a diagonal.
-const steppedFace = (width: number, chamfer: number): NemaMotorPoint[] => {
+const steppedFace = (
+  width: number,
+  chamfer: number,
+  recessRadius?: number,
+  filletRadius?: number,
+): NemaMotorPoint[] => {
   if (chamfer === 0) return face(width, 0)
   const h = width / 2,
     c = chamfer / Math.SQRT2,
     r = Math.min(4, c / 4)
   const corner: NemaMotorPoint[] = []
-  const arc = (x: number, y: number, from: number, to: number) => {
+  const arc = (
+    x: number,
+    y: number,
+    radius: number,
+    from: number,
+    to: number,
+  ) => {
+    if (radius === 0) {
+      corner.push([x, y])
+      return
+    }
     for (let i = 0; i <= 12; i++) {
       const a = ((from + ((to - from) * i) / 12) * Math.PI) / 180
-      corner.push([x + r * Math.cos(a), y + r * Math.sin(a)])
+      corner.push([x + radius * Math.cos(a), y + radius * Math.sin(a)])
     }
   }
-  arc(h - c - r, h - r, 90, 0)
-  arc(h - c + r, h - c + r, 180, 270)
-  arc(h - r, h - c - r, 90, 0)
+  const convex = filletRadius ?? r
+  const concave = recessRadius ?? r
+  arc(h - c - convex, h - convex, convex, 90, 0)
+  arc(h - c + concave, h - c + concave, concave, 180, 270)
+  arc(h - convex, h - c - convex, convex, 90, 0)
   // Reverse the clockwise outline to match the existing CCW section profiles.
   return [0, 1, 2, 3]
     .flatMap((i) =>
@@ -110,15 +127,22 @@ export function createNemaMotorSections(
     p.bodyWidth,
     p.faceCornerChamfer,
   )
-  const profile = p.stepped ? steppedFace : face
-  const core = profile(p.bodyWidth, p.bodyCornerChamfer)
-  const rear = profile(
-    p.bodyWidth,
-    p.rearCornerChamfer ??
-      (p.backFacePlain && p.mountingHoleThrough
-        ? p.bodyCornerChamfer
-        : p.faceCornerChamfer),
-  )
+  const core = p.stepped
+    ? steppedFace(
+        p.bodyWidth,
+        p.bodyCornerChamfer,
+        p.bodyCornerRecessRadius,
+        p.bodyCornerFilletRadius,
+      )
+    : face(p.bodyWidth, p.bodyCornerChamfer)
+  const rear = p.rearStepped
+    ? steppedFace(
+        p.bodyWidth,
+        p.rearCornerChamfer,
+        p.rearCornerRecessRadius,
+        p.rearCornerFilletRadius,
+      )
+    : face(p.bodyWidth, p.rearCornerChamfer)
   const h = p.mountingHoleSpacing / 2
   const centers: NemaMotorPoint[] = [
     [-h, -h],
@@ -138,9 +162,10 @@ export function createNemaMotorSections(
   if (p.backFacePlain) {
     add("rearCap", rear, -p.bodyLength, -p.bodyLength + p.rearCapLength)
   } else {
-    const halfPitch = p.backFaceHoleSpacing / 2
-    const rearHoles = [-halfPitch, halfPitch].flatMap((x) =>
-      [-halfPitch, halfPitch].map((y) =>
+    const halfPitchX = p.backFaceHoleSpacingX / 2
+    const halfPitchY = p.backFaceHoleSpacingY / 2
+    const rearHoles = [-halfPitchX, halfPitchX].flatMap((x) =>
+      [-halfPitchY, halfPitchY].map((y) =>
         circle(p.backFaceHoleDiameter / 2, x, y),
       ),
     )
