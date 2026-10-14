@@ -35,7 +35,7 @@ export async function renderNema23RearProfile(modelString: string) {
     views: [
       {
         name: "ISOMETRIC",
-        detail: "CURVED REAR RECESSES AND SIDE TABS",
+        detail: "MATCHING BODY AND REAR OUTLINES / NO SIDE OVERHANG",
         eye: [140, -140, -135],
         target: [0, 0, -25],
         span: 120,
@@ -56,7 +56,7 @@ export async function renderNema23RearProfile(modelString: string) {
       },
       {
         name: "SIDE",
-        detail: "INDEPENDENT REAR CAP AND FASTENERS",
+        detail: "FLUSH BODY AND REAR SHOULDERS",
         eye: [180, 0, -16],
         target: [0, 0, -16],
         span: 110,

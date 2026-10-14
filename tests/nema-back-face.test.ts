@@ -139,7 +139,7 @@ test("rear custom pitch, bore and screw size leave the front mounting holes unch
   )
 })
 
-test("NEMA23 rear recesses and rounded tabs leave the front flange unchanged in every rear mode", async () => {
+test("NEMA23 rear cap follows the curved body without side overhang in every rear mode", async () => {
   const vanilla = await importVanilla()
   for (const mode of ["holes", "screws", "plain"] as const) {
     const props =
@@ -159,14 +159,56 @@ test("NEMA23 rear recesses and rounded tabs leave the front flange unchanged in 
     )
     for (const { geometries } of [direct, routed]) {
       expect(materialAt(geometries, 25.5, 25.5, -1)).toBeGreaterThan(0.0009)
-      expect(materialAt(geometries, 25.5, 25.5, -50)).toBeCloseTo(0, 8)
-      expect(materialAt(geometries, 20, 20, -50)).toBeGreaterThan(0.0009)
-      expect(materialAt(geometries, 21, 21, -50)).toBeCloseTo(0, 8)
-      expect(materialAt(geometries, 27, 16, -50)).toBeGreaterThan(0.0009)
-      expect(materialAt(geometries, 18.9, 27.9, -50)).toBeCloseTo(0, 8)
-      expect(materialAt(geometries, 18.1, 27.1, -50)).toBeGreaterThan(0.0009)
+      for (const z of [-25, -50])
+        for (const sx of [-1, 1])
+          for (const sy of [-1, 1]) {
+            // The rear side shoulders are supported by the body, not a wider cap.
+            expect(materialAt(geometries, sx * 27, sy * 16, z)).toBeGreaterThan(
+              0.0009,
+            )
+            expect(materialAt(geometries, sx * 16, sy * 27, z)).toBeGreaterThan(
+              0.0009,
+            )
+            expect(materialAt(geometries, sx * 25.5, sy * 25.5, z)).toBeCloseTo(
+              0,
+              8,
+            )
+            expect(materialAt(geometries, sx * 20, sy * 20, z)).toBeGreaterThan(
+              0.0009,
+            )
+            expect(materialAt(geometries, sx * 21, sy * 21, z)).toBeCloseTo(
+              0,
+              8,
+            )
+            expect(materialAt(geometries, sx * 18.9, sy * 27.9, z)).toBeCloseTo(
+              0,
+              8,
+            )
+            expect(
+              materialAt(geometries, sx * 18.1, sy * 27.1, z),
+            ).toBeGreaterThan(0.0009)
+          }
       expect(materialAt(geometries, 23.57, 23.57, -0.2)).toBeCloseTo(0, 8)
     }
+  }
+}, 30_000)
+
+test("NEMA23 custom body arcs route through React and vanilla independently of the rear cap", async () => {
+  const vanilla = await importVanilla()
+  const direct = getComponentModel(NemaMotor, {
+    nemaSize: 23,
+    noWires: true,
+    bodyCornerRecessRadius: 4,
+    bodyCornerFilletRadius: 2,
+  })
+  const routed = vanilla.getJscadModelForFootprint(
+    "nema23_nowires_bodyrecess4mm_bodyfillet2mm",
+    jscad,
+  )
+  for (const { geometries } of [direct, routed]) {
+    expect(materialAt(geometries, 20.6, 20.6, -25)).toBeCloseTo(0, 8)
+    expect(materialAt(geometries, 20.6, 20.6, -50)).toBeGreaterThan(0.0009)
+    expect(materialAt(geometries, 23.57, 23.57, -0.2)).toBeCloseTo(0, 8)
   }
 }, 30_000)
 

@@ -127,8 +127,14 @@ export function createNemaMotorSections(
     p.bodyWidth,
     p.faceCornerChamfer,
   )
-  const profile = p.stepped ? steppedFace : face
-  const core = profile(p.bodyWidth, p.bodyCornerChamfer)
+  const core = p.stepped
+    ? steppedFace(
+        p.bodyWidth,
+        p.bodyCornerChamfer,
+        p.bodyCornerRecessRadius,
+        p.bodyCornerFilletRadius,
+      )
+    : face(p.bodyWidth, p.bodyCornerChamfer)
   const rear = p.rearStepped
     ? steppedFace(
         p.bodyWidth,

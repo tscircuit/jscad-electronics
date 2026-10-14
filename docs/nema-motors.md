@@ -91,8 +91,15 @@ profile use [STEPPERONLINE’s ST-M10 rear adapter drawing](https://www.omc-step
 as a representative reference. The adapter itself is 56 × 56 mm with Ø4 clearance
 holes; the motor model retains its 56.4 mm envelope and uses illustrative M3
 socket screws/bores. Exact motor threads, screw style and rear-cover dimensions
-are not established by that adapter drawing. Front flange and core geometry
-remain unchanged.
+are not established by that adapter drawing. The body uses the same curved
+outline as the rear cap, keeping its side shoulders flush rather than
+overhanging an octagonal core. Front flange geometry remains unchanged.
+
+`bodyCornerRecessRadius` / `bodyCornerFilletRadius` (`bodyrecess` / `bodyfillet`)
+configure body arcs independently of the rear. The default NEMA23 body and rear
+shoulder depths are both 9 mm; other frames retain their existing body shapes.
+Arc radii must fit the shoulder, and the complete front through-hole radius must
+clear the body, including the concave recess.
 
 `rearStepped` / `rearChamfered` (`rearstepped` / `rearchamfered`) select the rear
 profile independently. Explicit `stepped` / `chamfered` still apply to both
@@ -101,8 +108,8 @@ sets the stepped shoulder depth after division by sqrt(2); NEMA23 defaults to
 9 mm. `rearCornerRecessRadius` / `rearCornerFilletRadius` (`rearrecess` /
 `rearfillet`) independently configure the arcs. Bores, heads, reference points
 and React/vanilla geometry consume the same modelprinter parameters.
-`nema23_rearchamfered_backholespacing47.14mm_backscrewm4` requests the previous
-rear depiction explicitly. Blind bores retain their floors; the existing HexSocketBolt
+`nema23_chamfered_backholespacing47.14mm_backscrewm4` requests the previous
+body and rear depiction explicitly. Blind bores retain their floors; the existing HexSocketBolt
 generator supplies the head and hex recess, with a smooth shank inside the
 rear bore. Internal tie rods and threads are not modeled. `screwColor`
 configures the screw color.
