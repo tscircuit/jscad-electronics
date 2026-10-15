@@ -1,0 +1,3023 @@
+{
+  "auditDate": "2026-10-13",
+  "author": "seveibar",
+  "scope": "All historical authored PRs, including open, merged, closed without merge; current main trees; main Footprinter3d route; source-index searches for alternate names.",
+  "retrieval": {
+    "method": "GitHub issue-search collection through github_fetch",
+    "query": "repo:<repository> is:pr author:seveibar",
+    "perPage": 100,
+    "pagesFetched": [1, 2],
+    "allStates": true,
+    "incompleteResults": false
+  },
+  "repositories": [
+    {
+      "name": "tscircuit/modelprinter",
+      "totalHistoricalAuthoredPullRequests": 104,
+      "mainModelFamilies": [
+        "adhesivemountelectricalcomponentheatsink",
+        "anglebar",
+        "ballbearing",
+        "balltransferunit",
+        "buttonscrew",
+        "cablegrommet",
+        "channelbar",
+        "clampingshaftcollar",
+        "compressionspring",
+        "dowelpin",
+        "femalestandoff",
+        "flangebolt",
+        "flangedbushing",
+        "flangenut",
+        "flatcableclip",
+        "flatgasket",
+        "flatheadscrew",
+        "flexscreen",
+        "hatsection",
+        "heatsetinsert",
+        "helicalgear",
+        "hexbolt",
+        "hexnut",
+        "hexsocketbolt",
+        "hollowpositioningarmtube",
+        "malefemalestandoff",
+        "nema",
+        "nylonlocknut",
+        "panscrew",
+        "perforatedangle",
+        "perforatedsheet",
+        "plainbushing",
+        "pushfitplug",
+        "rectangularbar",
+        "rectangulargasket",
+        "rectangulartube",
+        "rigidcoupler",
+        "setscrew",
+        "shaftcollar",
+        "sheetmetal",
+        "slottedchannel",
+        "spacer",
+        "splitgrommet",
+        "splitwasher",
+        "spurgear",
+        "threadedrod",
+        "torsionspring",
+        "tslotcoverstrip",
+        "tslotextrusion",
+        "tslotgusset",
+        "tslotinsidecorner",
+        "ufl",
+        "wormgear",
+        "zeebar"
+      ],
+      "pullRequests": [
+        {
+          "number": 1,
+          "title": "Add metric hex socket bolt models and M3 \u00d7 6 mm visual snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/1",
+          "createdAt": "2026-09-21T23:32:30Z",
+          "mergedAt": "2026-09-21T23:49:29Z"
+        },
+        {
+          "number": 2,
+          "title": "Configure modelprinter npm publishing and stop tracking generated files",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/2",
+          "createdAt": "2026-09-21T23:54:26Z",
+          "mergedAt": "2026-09-22T06:00:07Z"
+        },
+        {
+          "number": 3,
+          "title": "Add parameterized sheet metal plates, brackets and channels",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/3",
+          "createdAt": "2026-09-23T19:34:22Z",
+          "mergedAt": "2026-09-23T19:49:45Z"
+        },
+        {
+          "number": 4,
+          "title": "Publish modelprinter through GitHub Packages for jscdn",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/4",
+          "createdAt": "2026-09-23T19:52:34Z",
+          "mergedAt": "2026-09-23T20:31:17Z"
+        },
+        {
+          "number": 5,
+          "title": "Use consumer-provided Zod as a wildcard peer dependency",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/5",
+          "createdAt": "2026-09-24T15:51:43Z",
+          "mergedAt": "2026-09-24T19:45:22Z"
+        },
+        {
+          "number": 6,
+          "title": "Release modelprinter 0.0.4 with the Zod peer fix",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/6",
+          "createdAt": "2026-09-24T19:46:21Z",
+          "mergedAt": null
+        },
+        {
+          "number": 7,
+          "title": "Add NEMA motor specs and move geometry to jscad-electronics",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/7",
+          "createdAt": "2026-10-02T06:38:56Z",
+          "mergedAt": "2026-10-02T07:53:40Z"
+        },
+        {
+          "number": 8,
+          "title": "Publish modelprinter to npm using trusted publishing",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/8",
+          "createdAt": "2026-10-02T08:08:03Z",
+          "mergedAt": "2026-10-02T15:52:29Z"
+        },
+        {
+          "number": 9,
+          "title": "Add NEMA rear-face holes and screw specifications",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/9",
+          "createdAt": "2026-10-02T18:58:32Z",
+          "mergedAt": "2026-10-02T20:43:22Z"
+        },
+        {
+          "number": 10,
+          "title": "Add NEMA wire termination specs and named reference points",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/10",
+          "createdAt": "2026-10-03T18:44:05Z",
+          "mergedAt": "2026-10-03T19:24:16Z"
+        },
+        {
+          "number": 11,
+          "title": "Add ModelPrinter specs for spur gears and worm screws",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/11",
+          "createdAt": "2026-10-03T23:00:49Z",
+          "mergedAt": "2026-10-03T23:10:44Z"
+        },
+        {
+          "number": 12,
+          "title": "Add helical gear schemas, dimensions, and model strings",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/12",
+          "createdAt": "2026-10-04T00:32:46Z",
+          "mergedAt": "2026-10-04T00:47:30Z"
+        },
+        {
+          "number": 19,
+          "title": "Add PCB card guide model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/19",
+          "createdAt": "2026-10-05T17:27:32Z",
+          "mergedAt": null
+        },
+        {
+          "number": 20,
+          "title": "Add threaded rod model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/20",
+          "createdAt": "2026-10-05T17:28:39Z",
+          "mergedAt": "2026-10-06T23:53:07Z"
+        },
+        {
+          "number": 21,
+          "title": "Add male pin header model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/21",
+          "createdAt": "2026-10-05T17:29:10Z",
+          "mergedAt": null
+        },
+        {
+          "number": 22,
+          "title": "Add plain bushing model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/22",
+          "createdAt": "2026-10-05T17:31:29Z",
+          "mergedAt": "2026-10-06T23:52:38Z"
+        },
+        {
+          "number": 23,
+          "title": "Add flanged bushing model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/23",
+          "createdAt": "2026-10-05T17:31:59Z",
+          "mergedAt": "2026-10-06T23:52:53Z"
+        },
+        {
+          "number": 24,
+          "title": "Add ISO button screw model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/24",
+          "createdAt": "2026-10-05T17:33:30Z",
+          "mergedAt": "2026-10-06T23:53:01Z"
+        },
+        {
+          "number": 25,
+          "title": "Add ISO hex nut model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/25",
+          "createdAt": "2026-10-05T17:33:58Z",
+          "mergedAt": "2026-10-06T23:52:47Z"
+        },
+        {
+          "number": 26,
+          "title": "Add compression spring model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/26",
+          "createdAt": "2026-10-05T17:34:26Z",
+          "mergedAt": "2026-10-06T23:53:21Z"
+        },
+        {
+          "number": 27,
+          "title": "Add shaft collar model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/27",
+          "createdAt": "2026-10-05T17:35:51Z",
+          "mergedAt": "2026-10-06T23:53:56Z"
+        },
+        {
+          "number": 28,
+          "title": "Add clamping shaft collar model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/28",
+          "createdAt": "2026-10-05T17:36:21Z",
+          "mergedAt": "2026-10-06T23:53:48Z"
+        },
+        {
+          "number": 29,
+          "title": "Add rigid shaft coupler model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/29",
+          "createdAt": "2026-10-05T17:36:49Z",
+          "mergedAt": "2026-10-06T23:54:03Z"
+        },
+        {
+          "number": 30,
+          "title": "Add cable tie model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/30",
+          "createdAt": "2026-10-05T17:37:58Z",
+          "mergedAt": null
+        },
+        {
+          "number": 31,
+          "title": "Add cable grommet model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/31",
+          "createdAt": "2026-10-05T17:38:26Z",
+          "mergedAt": "2026-10-06T23:53:14Z"
+        },
+        {
+          "number": 32,
+          "title": "Add straight flexible hose model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/32",
+          "createdAt": "2026-10-05T17:38:55Z",
+          "mergedAt": null
+        },
+        {
+          "number": 33,
+          "title": "Add T-slot extrusion model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/33",
+          "createdAt": "2026-10-05T17:39:55Z",
+          "mergedAt": "2026-10-06T23:53:34Z"
+        },
+        {
+          "number": 34,
+          "title": "Add T-slot inside corner model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/34",
+          "createdAt": "2026-10-05T17:40:31Z",
+          "mergedAt": "2026-10-06T23:53:27Z"
+        },
+        {
+          "number": 35,
+          "title": "Add T-slot triangular gusset model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/35",
+          "createdAt": "2026-10-05T17:41:03Z",
+          "mergedAt": "2026-10-06T23:53:40Z"
+        },
+        {
+          "number": 36,
+          "title": "Add ISO hex bolt model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/36",
+          "createdAt": "2026-10-05T17:41:49Z",
+          "mergedAt": "2026-10-05T22:47:40Z"
+        },
+        {
+          "number": 37,
+          "title": "Add ISO countersunk socket screw model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/37",
+          "createdAt": "2026-10-05T17:42:47Z",
+          "mergedAt": "2026-10-06T23:54:13Z"
+        },
+        {
+          "number": 38,
+          "title": "Add ISO Phillips pan screw model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/38",
+          "createdAt": "2026-10-05T17:43:16Z",
+          "mergedAt": "2026-10-06T23:54:19Z"
+        },
+        {
+          "number": 39,
+          "title": "Support FPC-style flexscreen contacts and tail dimensions",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/39",
+          "createdAt": "2026-10-05T18:09:30Z",
+          "mergedAt": "2026-10-05T22:47:42Z"
+        },
+        {
+          "number": 40,
+          "title": "Discover models from per-model registrations",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/40",
+          "createdAt": "2026-10-06T01:22:28Z",
+          "mergedAt": "2026-10-06T20:02:37Z"
+        },
+        {
+          "number": 41,
+          "title": "Preview combined model contracts for renderer integration",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/41",
+          "createdAt": "2026-10-06T20:23:39Z",
+          "mergedAt": null
+        },
+        {
+          "number": 42,
+          "title": "Support generalized JST PH and SH motor wire connection aliases",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/42",
+          "createdAt": "2026-10-06T20:35:41Z",
+          "mergedAt": "2026-10-06T20:50:47Z"
+        },
+        {
+          "number": 43,
+          "title": "Fix NEMA variant test typechecking to unblock npm release",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/43",
+          "createdAt": "2026-10-06T20:54:18Z",
+          "mergedAt": "2026-10-06T20:59:38Z"
+        },
+        {
+          "number": 44,
+          "title": "Add leadscrew model contract with folder-local registration",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/44",
+          "createdAt": "2026-10-07T03:43:32Z",
+          "mergedAt": null
+        },
+        {
+          "number": 45,
+          "title": "Add leadscrewnut model contract with folder-local registration",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/45",
+          "createdAt": "2026-10-07T03:43:58Z",
+          "mergedAt": null
+        },
+        {
+          "number": 46,
+          "title": "Add linearrail model contract with folder-local registration",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/46",
+          "createdAt": "2026-10-07T03:44:24Z",
+          "mergedAt": null
+        },
+        {
+          "number": 47,
+          "title": "Add linearcarriage model contract with folder-local registration",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/47",
+          "createdAt": "2026-10-07T03:45:10Z",
+          "mergedAt": null
+        },
+        {
+          "number": 48,
+          "title": "Add timingpulley model contract with folder-local registration",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/48",
+          "createdAt": "2026-10-07T03:45:59Z",
+          "mergedAt": null
+        },
+        {
+          "number": 49,
+          "title": "Add beltidler model contract with folder-local registration",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/49",
+          "createdAt": "2026-10-07T03:47:10Z",
+          "mergedAt": null
+        },
+        {
+          "number": 50,
+          "title": "Add timingbelt model contract with folder-local registration",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/50",
+          "createdAt": "2026-10-07T03:47:50Z",
+          "mergedAt": null
+        },
+        {
+          "number": 51,
+          "title": "Add NEMA motor mount contract with folder-local registration",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/51",
+          "createdAt": "2026-10-07T03:50:17Z",
+          "mergedAt": null
+        },
+        {
+          "number": 52,
+          "title": "Add linearballbearing model contract with folder-local registration",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/52",
+          "createdAt": "2026-10-07T03:56:25Z",
+          "mergedAt": null
+        },
+        {
+          "number": 53,
+          "title": "Add linearbearingblock model contract with folder-local registration",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/53",
+          "createdAt": "2026-10-07T03:56:25Z",
+          "mergedAt": null
+        },
+        {
+          "number": 54,
+          "title": "[Preview only] Combined motion contracts for renderer review",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/54",
+          "createdAt": "2026-10-07T03:56:35Z",
+          "mergedAt": null
+        },
+        {
+          "number": 55,
+          "title": "Add radial bearing shorthand and per-face flags",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/55",
+          "createdAt": "2026-10-07T03:58:02Z",
+          "mergedAt": "2026-10-07T06:28:37Z"
+        },
+        {
+          "number": 60,
+          "title": "Add compatible mechanical model-string flag syntax",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/60",
+          "createdAt": "2026-10-08T05:04:50Z",
+          "mergedAt": "2026-10-08T05:46:57Z"
+        },
+        {
+          "number": 63,
+          "title": "Use flags for ThreadedRod strings and JSON",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/63",
+          "createdAt": "2026-10-09T05:32:15Z",
+          "mergedAt": "2026-10-09T05:58:13Z"
+        },
+        {
+          "number": 64,
+          "title": "Add balltransferunit model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/64",
+          "createdAt": "2026-10-09T06:05:16Z",
+          "mergedAt": "2026-10-09T15:50:43Z"
+        },
+        {
+          "number": 65,
+          "title": "Add metric and imperial UNC hex nut sizes",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/65",
+          "createdAt": "2026-10-09T17:15:44Z",
+          "mergedAt": "2026-10-09T17:27:45Z"
+        },
+        {
+          "number": 66,
+          "title": "Add round spacer model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/66",
+          "createdAt": "2026-10-09T18:03:22Z",
+          "mergedAt": "2026-10-09T21:36:06Z"
+        },
+        {
+          "number": 67,
+          "title": "Add female hex standoff model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/67",
+          "createdAt": "2026-10-09T18:04:18Z",
+          "mergedAt": "2026-10-09T21:36:12Z"
+        },
+        {
+          "number": 68,
+          "title": "Add male-female hex standoff model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/68",
+          "createdAt": "2026-10-09T18:04:23Z",
+          "mergedAt": "2026-10-09T21:36:17Z"
+        },
+        {
+          "number": 69,
+          "title": "Add nylon insert lock nut model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/69",
+          "createdAt": "2026-10-09T18:04:27Z",
+          "mergedAt": "2026-10-09T21:36:24Z"
+        },
+        {
+          "number": 70,
+          "title": "Add plain-face hex flange nut model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/70",
+          "createdAt": "2026-10-09T18:04:31Z",
+          "mergedAt": "2026-10-09T21:36:31Z"
+        },
+        {
+          "number": 71,
+          "title": "Add fully threaded bolt with ISO 4162 head geometry",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/71",
+          "createdAt": "2026-10-09T18:04:36Z",
+          "mergedAt": "2026-10-09T21:36:37Z"
+        },
+        {
+          "number": 72,
+          "title": "Add hex socket cup-point set screw model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/72",
+          "createdAt": "2026-10-09T18:04:39Z",
+          "mergedAt": "2026-10-09T21:36:42Z"
+        },
+        {
+          "number": 73,
+          "title": "Add rectangular split washer model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/73",
+          "createdAt": "2026-10-09T18:06:15Z",
+          "mergedAt": "2026-10-09T19:03:27Z"
+        },
+        {
+          "number": 74,
+          "title": "Add nominal ISO 8734 dowel pin model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/74",
+          "createdAt": "2026-10-09T18:12:07Z",
+          "mergedAt": "2026-10-09T21:01:10Z"
+        },
+        {
+          "number": 75,
+          "title": "Add diamond-knurled heat-set insert model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/75",
+          "createdAt": "2026-10-09T18:12:47Z",
+          "mergedAt": "2026-10-09T21:01:23Z"
+        },
+        {
+          "number": 76,
+          "title": "Preview combined model contracts for continuous renderer reviews",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/76",
+          "createdAt": "2026-10-09T19:23:37Z",
+          "mergedAt": null
+        },
+        {
+          "number": 78,
+          "title": "Default dowel pins to ISO 8734 and use a boolean ISO flag",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/78",
+          "createdAt": "2026-10-09T21:09:39Z",
+          "mergedAt": "2026-10-09T21:36:48Z"
+        },
+        {
+          "number": 79,
+          "title": "Use defaulted ISO flags for existing fastener models",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/79",
+          "createdAt": "2026-10-09T21:15:17Z",
+          "mergedAt": "2026-10-09T21:36:54Z"
+        },
+        {
+          "number": 80,
+          "title": "Add rectangularbar model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/80",
+          "createdAt": "2026-10-10T00:24:05Z",
+          "mergedAt": "2026-10-10T01:23:18Z"
+        },
+        {
+          "number": 81,
+          "title": "Add rectangulartube model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/81",
+          "createdAt": "2026-10-10T00:24:07Z",
+          "mergedAt": "2026-10-10T01:23:11Z"
+        },
+        {
+          "number": 82,
+          "title": "Add anglebar model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/82",
+          "createdAt": "2026-10-10T00:24:09Z",
+          "mergedAt": "2026-10-10T01:24:23Z"
+        },
+        {
+          "number": 83,
+          "title": "Add channelbar model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/83",
+          "createdAt": "2026-10-10T00:24:11Z",
+          "mergedAt": "2026-10-10T01:24:21Z"
+        },
+        {
+          "number": 84,
+          "title": "Add perforatedsheet model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/84",
+          "createdAt": "2026-10-10T00:24:13Z",
+          "mergedAt": "2026-10-10T01:24:10Z"
+        },
+        {
+          "number": 85,
+          "title": "Add fixtureplate model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/85",
+          "createdAt": "2026-10-10T00:24:16Z",
+          "mergedAt": null
+        },
+        {
+          "number": 86,
+          "title": "Add vblock model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/86",
+          "createdAt": "2026-10-10T00:24:18Z",
+          "mergedAt": null
+        },
+        {
+          "number": 87,
+          "title": "Add stepblock model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/87",
+          "createdAt": "2026-10-10T00:24:20Z",
+          "mergedAt": null
+        },
+        {
+          "number": 88,
+          "title": "Add pushfitplug model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/88",
+          "createdAt": "2026-10-10T00:24:22Z",
+          "mergedAt": "2026-10-10T01:23:57Z"
+        },
+        {
+          "number": 89,
+          "title": "Add sandwichmount model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/89",
+          "createdAt": "2026-10-10T00:24:24Z",
+          "mergedAt": null
+        },
+        {
+          "number": 90,
+          "title": "Add cableclamp model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/90",
+          "createdAt": "2026-10-10T01:45:24Z",
+          "mergedAt": null
+        },
+        {
+          "number": 91,
+          "title": "Add cableclip model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/91",
+          "createdAt": "2026-10-10T01:45:27Z",
+          "mergedAt": null
+        },
+        {
+          "number": 92,
+          "title": "Add cablecomb model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/92",
+          "createdAt": "2026-10-10T01:45:29Z",
+          "mergedAt": null
+        },
+        {
+          "number": 93,
+          "title": "Add cabletiebase model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/93",
+          "createdAt": "2026-10-10T01:45:31Z",
+          "mergedAt": null
+        },
+        {
+          "number": 94,
+          "title": "Add cornerfoot model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/94",
+          "createdAt": "2026-10-10T01:45:33Z",
+          "mergedAt": null
+        },
+        {
+          "number": 95,
+          "title": "Add edgegrommet model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/95",
+          "createdAt": "2026-10-10T01:45:35Z",
+          "mergedAt": null
+        },
+        {
+          "number": 96,
+          "title": "Add flatcableclip model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/96",
+          "createdAt": "2026-10-10T01:45:37Z",
+          "mergedAt": "2026-10-11T03:27:14Z"
+        },
+        {
+          "number": 97,
+          "title": "Add flatgasket model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/97",
+          "createdAt": "2026-10-10T01:45:40Z",
+          "mergedAt": "2026-10-11T03:27:08Z"
+        },
+        {
+          "number": 98,
+          "title": "Add hatsection model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/98",
+          "createdAt": "2026-10-10T01:45:41Z",
+          "mergedAt": "2026-10-11T03:27:02Z"
+        },
+        {
+          "number": 99,
+          "title": "Add hexshaft model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/99",
+          "createdAt": "2026-10-10T01:45:43Z",
+          "mergedAt": null
+        },
+        {
+          "number": 100,
+          "title": "Add hollowshaft model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/100",
+          "createdAt": "2026-10-10T01:45:46Z",
+          "mergedAt": null
+        },
+        {
+          "number": 101,
+          "title": "Add keyedshaft model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/101",
+          "createdAt": "2026-10-10T01:45:48Z",
+          "mergedAt": null
+        },
+        {
+          "number": 102,
+          "title": "Add keywasher model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/102",
+          "createdAt": "2026-10-10T01:45:49Z",
+          "mergedAt": null
+        },
+        {
+          "number": 103,
+          "title": "Add pcbcornerclip model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/103",
+          "createdAt": "2026-10-10T01:45:51Z",
+          "mergedAt": null
+        },
+        {
+          "number": 104,
+          "title": "Add pcbedgesupport model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/104",
+          "createdAt": "2026-10-10T01:45:53Z",
+          "mergedAt": null
+        },
+        {
+          "number": 105,
+          "title": "Add pcbrail model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/105",
+          "createdAt": "2026-10-10T01:45:54Z",
+          "mergedAt": null
+        },
+        {
+          "number": 106,
+          "title": "Add perforatedangle model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/106",
+          "createdAt": "2026-10-10T01:45:56Z",
+          "mergedAt": "2026-10-11T03:25:08Z"
+        },
+        {
+          "number": 107,
+          "title": "Add pottingbox model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/107",
+          "createdAt": "2026-10-10T01:45:58Z",
+          "mergedAt": null
+        },
+        {
+          "number": 108,
+          "title": "Add rectangulargasket model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/108",
+          "createdAt": "2026-10-10T01:46:01Z",
+          "mergedAt": "2026-10-10T04:55:54Z"
+        },
+        {
+          "number": 109,
+          "title": "Add slottedchannel model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/109",
+          "createdAt": "2026-10-10T01:46:02Z",
+          "mergedAt": "2026-10-10T04:55:35Z"
+        },
+        {
+          "number": 110,
+          "title": "Add splitgrommet model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/110",
+          "createdAt": "2026-10-10T01:46:04Z",
+          "mergedAt": "2026-10-10T04:55:30Z"
+        },
+        {
+          "number": 111,
+          "title": "Add tslotcoverstrip model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/111",
+          "createdAt": "2026-10-10T01:46:06Z",
+          "mergedAt": "2026-10-10T04:55:09Z"
+        },
+        {
+          "number": 112,
+          "title": "Add tslotendcap model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/112",
+          "createdAt": "2026-10-10T01:46:08Z",
+          "mergedAt": null
+        },
+        {
+          "number": 113,
+          "title": "Add tslotpanelretainer model contract",
+          "state": "open",
+          "url": "https://github.com/tscircuit/modelprinter/pull/113",
+          "createdAt": "2026-10-10T01:46:10Z",
+          "mergedAt": null
+        },
+        {
+          "number": 114,
+          "title": "Add zeebar model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/114",
+          "createdAt": "2026-10-10T01:46:12Z",
+          "mergedAt": "2026-10-10T04:54:45Z"
+        },
+        {
+          "number": 115,
+          "title": "Add U.FL three-terminal model contract",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/115",
+          "createdAt": "2026-10-10T06:18:16Z",
+          "mergedAt": "2026-10-11T03:24:59Z"
+        },
+        {
+          "number": 116,
+          "title": "Add NEMA34 motor support",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/116",
+          "createdAt": "2026-10-10T19:32:02Z",
+          "mergedAt": "2026-10-10T23:23:52Z"
+        },
+        {
+          "number": 117,
+          "title": "Replace model geometry enums with boolean flags",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/modelprinter/pull/117",
+          "createdAt": "2026-10-11T03:46:37Z",
+          "mergedAt": "2026-10-11T17:31:26Z"
+        }
+      ],
+      "mainCommitSha": "6a20e9677863faaecccc0f926e667f283cc74a22"
+    },
+    {
+      "name": "tscircuit/jscad-electronics",
+      "totalHistoricalAuthoredPullRequests": 170,
+      "mainModelFamilies": [
+        "anglebar",
+        "ballbearing",
+        "balltransferunit",
+        "buttonscrew",
+        "cablegrommet",
+        "channelbar",
+        "clampingshaftcollar",
+        "compressionspring",
+        "dowelpin",
+        "femalestandoff",
+        "flangebolt",
+        "flangedbushing",
+        "flangenut",
+        "flatcableclip",
+        "flatgasket",
+        "flatheadscrew",
+        "flexscreen",
+        "hatsection",
+        "heatsetinsert",
+        "helicalgear",
+        "hexbolt",
+        "hexnut",
+        "hexsocketbolt",
+        "hollowpositioningarmtube",
+        "malefemalestandoff",
+        "nema",
+        "nylonlocknut",
+        "panscrew",
+        "perforatedangle",
+        "perforatedsheet",
+        "plainbushing",
+        "pushfitplug",
+        "rectangularbar",
+        "rectangulargasket",
+        "rectangulartube",
+        "rigidcoupler",
+        "setscrew",
+        "shaftcollar",
+        "sheetmetal",
+        "slottedchannel",
+        "spacer",
+        "splitgrommet",
+        "splitwasher",
+        "spurgear",
+        "threadedrod",
+        "torsionspring",
+        "tslotcoverstrip",
+        "tslotextrusion",
+        "tslotgusset",
+        "tslotinsidecorner",
+        "ufl",
+        "wormgear",
+        "zeebar"
+      ],
+      "pullRequests": [
+        {
+          "number": 7,
+          "title": "Add Footprint Pads for sizing, add 0603 resistor footprint + 3d model",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/7",
+          "createdAt": "2024-07-23T00:58:52Z",
+          "mergedAt": "2024-07-23T06:18:23Z"
+        },
+        {
+          "number": 12,
+          "title": "Add Smd Lead",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/12",
+          "createdAt": "2024-07-31T23:31:40Z",
+          "mergedAt": "2024-07-31T23:31:46Z"
+        },
+        {
+          "number": 13,
+          "title": "Implement tssop",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/13",
+          "createdAt": "2024-08-01T00:22:01Z",
+          "mergedAt": "2024-08-18T19:36:59Z"
+        },
+        {
+          "number": 18,
+          "title": "zaxisup",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/18",
+          "createdAt": "2024-08-26T18:56:42Z",
+          "mergedAt": null
+        },
+        {
+          "number": 19,
+          "title": "BGA Balls Derived",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/19",
+          "createdAt": "2024-08-26T19:12:22Z",
+          "mergedAt": null
+        },
+        {
+          "number": 34,
+          "title": "<Footprinter3d /> initial",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/34",
+          "createdAt": "2024-09-17T17:36:47Z",
+          "mergedAt": "2024-09-27T22:19:21Z"
+        },
+        {
+          "number": 43,
+          "title": "Footprinter3d, fix path issues, minor formatting fixes",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/43",
+          "createdAt": "2024-09-27T22:18:11Z",
+          "mergedAt": "2024-09-27T22:19:20Z"
+        },
+        {
+          "number": 44,
+          "title": "fix QFN to not be on side, fix footprints to render properly",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/44",
+          "createdAt": "2024-09-27T22:21:58Z",
+          "mergedAt": "2024-09-27T22:23:08Z"
+        },
+        {
+          "number": 46,
+          "title": "DIP fix, coord flip",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/46",
+          "createdAt": "2024-10-02T00:10:58Z",
+          "mergedAt": "2024-10-02T00:21:01Z"
+        },
+        {
+          "number": 61,
+          "title": "Create CODEOWNERS",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/61",
+          "createdAt": "2024-10-06T15:04:58Z",
+          "mergedAt": "2024-10-06T15:05:36Z"
+        },
+        {
+          "number": 70,
+          "title": "Add anas as codeowner",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/70",
+          "createdAt": "2024-10-16T20:57:11Z",
+          "mergedAt": "2024-10-17T05:13:55Z"
+        },
+        {
+          "number": 82,
+          "title": "Update jscad-fiber",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/82",
+          "createdAt": "2024-12-14T00:47:02Z",
+          "mergedAt": "2024-12-14T00:47:48Z"
+        },
+        {
+          "number": 95,
+          "title": "Add DIP divot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/95",
+          "createdAt": "2025-06-04T04:42:48Z",
+          "mergedAt": null
+        },
+        {
+          "number": 96,
+          "title": "Add DIP divot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/96",
+          "createdAt": "2025-06-04T04:46:58Z",
+          "mergedAt": null
+        },
+        {
+          "number": 100,
+          "title": "move footprinter and circuit-json to peer deps",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/100",
+          "createdAt": "2025-07-14T04:36:41Z",
+          "mergedAt": "2025-07-14T04:38:44Z"
+        },
+        {
+          "number": 101,
+          "title": "Remove bundling for all dependencies",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/101",
+          "createdAt": "2025-07-14T05:12:46Z",
+          "mergedAt": "2025-07-14T05:13:14Z"
+        },
+        {
+          "number": 102,
+          "title": "Add multi-row header support",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/102",
+          "createdAt": "2025-07-28T00:10:47Z",
+          "mergedAt": null
+        },
+        {
+          "number": 103,
+          "title": "rewrite plan generation",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/103",
+          "createdAt": "2025-08-10T02:44:22Z",
+          "mergedAt": null
+        },
+        {
+          "number": 104,
+          "title": "Planner Library Export",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/104",
+          "createdAt": "2025-08-10T04:36:55Z",
+          "mergedAt": null
+        },
+        {
+          "number": 120,
+          "title": "Allow jscad injection (allows using jscad-planner)",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/120",
+          "createdAt": "2025-09-29T04:38:17Z",
+          "mergedAt": "2025-09-29T04:49:39Z"
+        },
+        {
+          "number": 131,
+          "title": "Add stalebot GitHub workflow",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/131",
+          "createdAt": "2025-10-13T17:58:11Z",
+          "mergedAt": "2025-10-13T19:21:39Z"
+        },
+        {
+          "number": 304,
+          "title": "Add crystal 3D model",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/304",
+          "createdAt": "2026-07-25T21:31:37Z",
+          "mergedAt": null
+        },
+        {
+          "number": 305,
+          "title": "Add FPC connector 3D model",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/305",
+          "createdAt": "2026-07-25T21:31:48Z",
+          "mergedAt": "2026-07-25T22:42:48Z"
+        },
+        {
+          "number": 306,
+          "title": "Add LGA 3D model",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/306",
+          "createdAt": "2026-07-25T21:32:00Z",
+          "mergedAt": null
+        },
+        {
+          "number": 307,
+          "title": "Add SMD push button 3D model",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/307",
+          "createdAt": "2026-07-25T21:32:13Z",
+          "mergedAt": null
+        },
+        {
+          "number": 308,
+          "title": "Add USB-C mid-mount 3D model",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/308",
+          "createdAt": "2026-07-25T21:32:28Z",
+          "mergedAt": null
+        },
+        {
+          "number": 309,
+          "title": "Add WSON 3D model",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/309",
+          "createdAt": "2026-07-25T21:32:41Z",
+          "mergedAt": null
+        },
+        {
+          "number": 310,
+          "title": "add vertical SMD pin header model",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/310",
+          "createdAt": "2026-07-25T22:02:35Z",
+          "mergedAt": "2026-07-25T22:52:42Z"
+        },
+        {
+          "number": 313,
+          "title": "Add parametric RJ45 component support",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/313",
+          "createdAt": "2026-07-27T18:29:20Z",
+          "mergedAt": "2026-07-27T18:36:17Z"
+        },
+        {
+          "number": 314,
+          "title": "Add all JST footprint models",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/314",
+          "createdAt": "2026-07-27T23:38:11Z",
+          "mergedAt": null
+        },
+        {
+          "number": 334,
+          "title": "ci: migrate npm publishing to OIDC",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/334",
+          "createdAt": "2026-08-19T23:24:02Z",
+          "mergedAt": "2026-08-20T00:54:47Z"
+        },
+        {
+          "number": 335,
+          "title": "Add configurable FlexScreen component",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/335",
+          "createdAt": "2026-08-20T00:14:01Z",
+          "mergedAt": "2026-08-20T02:14:36Z"
+        },
+        {
+          "number": 338,
+          "title": "Support FlexScreen model strings",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/338",
+          "createdAt": "2026-08-20T22:33:13Z",
+          "mergedAt": "2026-08-21T02:59:33Z"
+        },
+        {
+          "number": 339,
+          "title": "Use published @tscircuit/modelprinter package",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/339",
+          "createdAt": "2026-08-21T04:18:03Z",
+          "mergedAt": "2026-08-21T04:34:21Z"
+        },
+        {
+          "number": 342,
+          "title": "Add SOT143B model with multiview visual snapshots",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/342",
+          "createdAt": "2026-09-13T23:14:33Z",
+          "mergedAt": "2026-09-14T02:34:16Z"
+        },
+        {
+          "number": 343,
+          "title": "Add USB-C midmount model with six-view visual fixtures",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/343",
+          "createdAt": "2026-09-13T23:18:57Z",
+          "mergedAt": "2026-09-13T23:43:34Z"
+        },
+        {
+          "number": 344,
+          "title": "Add SMD slide-switch model with composite visual fixtures",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/344",
+          "createdAt": "2026-09-13T23:24:18Z",
+          "mergedAt": "2026-09-14T02:33:49Z"
+        },
+        {
+          "number": 345,
+          "title": "Add JST SH top-entry connector model with six-view snapshots",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/345",
+          "createdAt": "2026-09-13T23:31:13Z",
+          "mergedAt": "2026-09-14T02:34:01Z"
+        },
+        {
+          "number": 346,
+          "title": "Fix USB-C midmount leg connection and remove model doc",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/346",
+          "createdAt": "2026-09-13T23:45:39Z",
+          "mergedAt": "2026-09-13T23:49:12Z"
+        },
+        {
+          "number": 347,
+          "title": "Add molded tantalum capacitor model with A\u2013D cases",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/347",
+          "createdAt": "2026-09-14T02:39:31Z",
+          "mergedAt": "2026-09-14T04:47:43Z"
+        },
+        {
+          "number": 348,
+          "title": "Add MELF resistor model with three physical package sizes",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/348",
+          "createdAt": "2026-09-14T02:41:51Z",
+          "mergedAt": "2026-09-14T14:20:39Z"
+        },
+        {
+          "number": 349,
+          "title": "Add two-pad crystal model with Epson and NDK packages",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/349",
+          "createdAt": "2026-09-14T04:51:12Z",
+          "mergedAt": "2026-09-14T05:30:41Z"
+        },
+        {
+          "number": 350,
+          "title": "Add RFANT ceramic chip antenna with composite renders",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/350",
+          "createdAt": "2026-09-14T04:52:54Z",
+          "mergedAt": "2026-09-14T14:50:23Z"
+        },
+        {
+          "number": 351,
+          "title": "Add Murata BLM41 ferrite bead model",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/351",
+          "createdAt": "2026-09-14T15:38:23Z",
+          "mergedAt": null
+        },
+        {
+          "number": 352,
+          "title": "Add AEM MF2410 fuse model",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/352",
+          "createdAt": "2026-09-14T15:38:25Z",
+          "mergedAt": null
+        },
+        {
+          "number": 353,
+          "title": "Add Omron B3U-1000P tactile switch model",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/353",
+          "createdAt": "2026-09-14T15:38:27Z",
+          "mergedAt": null
+        },
+        {
+          "number": 354,
+          "title": "Add Sunlord SWPA4030 inductor model",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/354",
+          "createdAt": "2026-09-14T15:38:29Z",
+          "mergedAt": null
+        },
+        {
+          "number": 355,
+          "title": "Remove unsupported footprint suffix routes",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/355",
+          "createdAt": "2026-09-14T17:10:01Z",
+          "mergedAt": "2026-09-14T18:19:08Z"
+        },
+        {
+          "number": 357,
+          "title": "Add standalone X1SON2 component",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/357",
+          "createdAt": "2026-09-14T18:40:10Z",
+          "mergedAt": null
+        },
+        {
+          "number": 358,
+          "title": "Add standalone X3DFN2 component",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/358",
+          "createdAt": "2026-09-14T18:40:15Z",
+          "mergedAt": null
+        },
+        {
+          "number": 359,
+          "title": "Add standalone MicroSMP component",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/359",
+          "createdAt": "2026-09-14T18:40:19Z",
+          "mergedAt": null
+        },
+        {
+          "number": 360,
+          "title": "Add standalone PowerDI123 component",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/360",
+          "createdAt": "2026-09-14T18:40:23Z",
+          "mergedAt": null
+        },
+        {
+          "number": 361,
+          "title": "Add standalone TUMD2SM component",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/361",
+          "createdAt": "2026-09-14T18:40:27Z",
+          "mergedAt": null
+        },
+        {
+          "number": 362,
+          "title": "Add standalone MFSM075ResettableFuse component",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/362",
+          "createdAt": "2026-09-14T18:40:31Z",
+          "mergedAt": null
+        },
+        {
+          "number": 364,
+          "title": "Extend DFN with parameterized low-profile package variants",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/364",
+          "createdAt": "2026-09-14T19:04:09Z",
+          "mergedAt": "2026-09-14T19:13:36Z"
+        },
+        {
+          "number": 365,
+          "title": "Add parameterized DO-219AD standard package",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/365",
+          "createdAt": "2026-09-14T19:04:13Z",
+          "mergedAt": "2026-09-14T19:16:23Z"
+        },
+        {
+          "number": 366,
+          "title": "Add parameterized SOD-323HE standard package",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/366",
+          "createdAt": "2026-09-14T19:04:17Z",
+          "mergedAt": "2026-09-14T19:14:38Z"
+        },
+        {
+          "number": 367,
+          "title": "Add parameterized SOIC physical outlines",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/367",
+          "createdAt": "2026-09-14T19:32:02Z",
+          "mergedAt": "2026-09-14T19:36:59Z"
+        },
+        {
+          "number": 368,
+          "title": "Add parameterized MO-187 MSOP physical outlines",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/368",
+          "createdAt": "2026-09-14T19:32:07Z",
+          "mergedAt": "2026-09-14T19:38:41Z"
+        },
+        {
+          "number": 369,
+          "title": "Add parameterized TSSOP physical outlines",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/369",
+          "createdAt": "2026-09-14T19:32:11Z",
+          "mergedAt": "2026-09-14T19:39:16Z"
+        },
+        {
+          "number": 370,
+          "title": "Add parameterized QFN physical outlines",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/370",
+          "createdAt": "2026-09-14T19:53:12Z",
+          "mergedAt": "2026-09-14T20:38:48Z"
+        },
+        {
+          "number": 371,
+          "title": "Add parameterized LQFP physical outlines",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/371",
+          "createdAt": "2026-09-14T19:53:17Z",
+          "mergedAt": "2026-09-14T20:21:08Z"
+        },
+        {
+          "number": 372,
+          "title": "Add parameterized SSOP standard package model",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/372",
+          "createdAt": "2026-09-14T20:56:38Z",
+          "mergedAt": "2026-09-14T21:04:07Z"
+        },
+        {
+          "number": 373,
+          "title": "Add parameterized LGA standard package model",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/373",
+          "createdAt": "2026-09-14T20:56:41Z",
+          "mergedAt": "2026-09-14T21:12:50Z"
+        },
+        {
+          "number": 374,
+          "title": "Add parameterized SOT89 standard package model",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/374",
+          "createdAt": "2026-09-14T20:56:45Z",
+          "mergedAt": "2026-09-14T21:12:59Z"
+        },
+        {
+          "number": 375,
+          "title": "Add parameterized TO277 standard package model",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/375",
+          "createdAt": "2026-09-14T20:56:49Z",
+          "mergedAt": "2026-09-14T21:13:09Z"
+        },
+        {
+          "number": 376,
+          "title": "Use the standard SOT-89 model for Footprinter3d string routing",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/376",
+          "createdAt": "2026-09-14T21:24:53Z",
+          "mergedAt": null
+        },
+        {
+          "number": 377,
+          "title": "Support LGA and SSOP body dimensions in Footprinter3d strings",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/377",
+          "createdAt": "2026-09-15T15:02:36Z",
+          "mergedAt": "2026-09-15T15:22:13Z"
+        },
+        {
+          "number": 388,
+          "title": "Fix floating JST housing by honoring Rotate angles in vanilla renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/388",
+          "createdAt": "2026-09-18T19:10:27Z",
+          "mergedAt": "2026-09-18T20:02:31Z"
+        },
+        {
+          "number": 389,
+          "title": "Load modelprinter 0.0.3 from jscdn",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/389",
+          "createdAt": "2026-09-23T20:27:13Z",
+          "mergedAt": null
+        },
+        {
+          "number": 398,
+          "title": "Add NEMA motors and migrate mechanical models from modelprinter",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/398",
+          "createdAt": "2026-10-02T06:41:29Z",
+          "mergedAt": "2026-10-02T07:54:30Z"
+        },
+        {
+          "number": 399,
+          "title": "Use the published modelprinter spec dependency",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/399",
+          "createdAt": "2026-10-02T07:59:41Z",
+          "mergedAt": "2026-10-02T17:52:26Z"
+        },
+        {
+          "number": 400,
+          "title": "Render NEMA rear-face holes and socket-head screws",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/400",
+          "createdAt": "2026-10-02T19:09:56Z",
+          "mergedAt": "2026-10-02T21:27:40Z"
+        },
+        {
+          "number": 401,
+          "title": "Render NEMA wire exits and optional six-pin JST-PH connector",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/401",
+          "createdAt": "2026-10-03T18:59:22Z",
+          "mergedAt": "2026-10-03T22:10:38Z"
+        },
+        {
+          "number": 402,
+          "title": "Add parameterized spur gears and worm screws",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/402",
+          "createdAt": "2026-10-03T23:06:13Z",
+          "mergedAt": "2026-10-03T23:10:59Z"
+        },
+        {
+          "number": 403,
+          "title": "Add helical gears compatible with spur and worm parameter conventions",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/403",
+          "createdAt": "2026-10-04T00:37:12Z",
+          "mergedAt": "2026-10-04T00:44:06Z"
+        },
+        {
+          "number": 404,
+          "title": "Add 3D cable meshes for USB-C, JST and US mains",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/404",
+          "createdAt": "2026-10-04T21:05:55Z",
+          "mergedAt": "2026-10-04T21:38:49Z"
+        },
+        {
+          "number": 405,
+          "title": "Add component material metadata and preserve it in exports",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/405",
+          "createdAt": "2026-10-05T18:09:30Z",
+          "mergedAt": "2026-10-06T19:59:55Z"
+        },
+        {
+          "number": 406,
+          "title": "Add flanged bushing renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/406",
+          "createdAt": "2026-10-05T18:09:42Z",
+          "mergedAt": "2026-10-07T00:16:05Z"
+        },
+        {
+          "number": 407,
+          "title": "Support FPC-style flexscreen contacts and explicit tail dimensions",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/407",
+          "createdAt": "2026-10-05T18:11:25Z",
+          "mergedAt": "2026-10-05T20:25:37Z"
+        },
+        {
+          "number": 408,
+          "title": "Add plain bushing renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/408",
+          "createdAt": "2026-10-05T18:11:54Z",
+          "mergedAt": "2026-10-07T00:14:57Z"
+        },
+        {
+          "number": 409,
+          "title": "Add threaded rod renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/409",
+          "createdAt": "2026-10-05T18:12:38Z",
+          "mergedAt": "2026-10-07T00:30:45Z"
+        },
+        {
+          "number": 410,
+          "title": "Add cable grommet renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/410",
+          "createdAt": "2026-10-05T18:16:42Z",
+          "mergedAt": "2026-10-07T00:19:59Z"
+        },
+        {
+          "number": 411,
+          "title": "Add countersunk socket screw renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/411",
+          "createdAt": "2026-10-05T18:17:01Z",
+          "mergedAt": "2026-10-07T00:11:51Z"
+        },
+        {
+          "number": 412,
+          "title": "Add T-slot inside corner renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/412",
+          "createdAt": "2026-10-05T18:17:23Z",
+          "mergedAt": "2026-10-07T00:24:14Z"
+        },
+        {
+          "number": 413,
+          "title": "Add T-slot triangular gusset renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/413",
+          "createdAt": "2026-10-05T18:17:42Z",
+          "mergedAt": "2026-10-07T00:25:21Z"
+        },
+        {
+          "number": 414,
+          "title": "Add ISO hex bolt renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/414",
+          "createdAt": "2026-10-05T18:19:20Z",
+          "mergedAt": "2026-10-05T22:48:54Z"
+        },
+        {
+          "number": 415,
+          "title": "Add ISO button socket screw renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/415",
+          "createdAt": "2026-10-05T18:19:39Z",
+          "mergedAt": "2026-10-07T00:17:24Z"
+        },
+        {
+          "number": 416,
+          "title": "Add ISO hex nut renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/416",
+          "createdAt": "2026-10-05T18:19:59Z",
+          "mergedAt": "2026-10-07T00:18:42Z"
+        },
+        {
+          "number": 417,
+          "title": "Add T-slot extrusion renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/417",
+          "createdAt": "2026-10-05T18:20:21Z",
+          "mergedAt": "2026-10-07T00:22:45Z"
+        },
+        {
+          "number": 418,
+          "title": "Add compression spring renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/418",
+          "createdAt": "2026-10-05T18:20:41Z",
+          "mergedAt": "2026-10-07T00:21:17Z"
+        },
+        {
+          "number": 419,
+          "title": "Add ISO Phillips pan screw renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/419",
+          "createdAt": "2026-10-05T18:28:28Z",
+          "mergedAt": "2026-10-07T00:13:29Z"
+        },
+        {
+          "number": 420,
+          "title": "Add set-screw shaft collar renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/420",
+          "createdAt": "2026-10-05T18:36:09Z",
+          "mergedAt": "2026-10-07T00:26:40Z"
+        },
+        {
+          "number": 421,
+          "title": "Add clamping shaft collar renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/421",
+          "createdAt": "2026-10-05T18:36:37Z",
+          "mergedAt": "2026-10-07T00:27:58Z"
+        },
+        {
+          "number": 422,
+          "title": "Add rigid shaft coupler renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/422",
+          "createdAt": "2026-10-05T18:36:59Z",
+          "mergedAt": "2026-10-07T00:29:16Z"
+        },
+        {
+          "number": 423,
+          "title": "Add single and grouped bullet connector cable meshes",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/423",
+          "createdAt": "2026-10-06T17:29:29Z",
+          "mergedAt": "2026-10-06T21:27:53Z"
+        },
+        {
+          "number": 424,
+          "title": "Orient cable plugs and conductors using explicit pin 1 sides",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/424",
+          "createdAt": "2026-10-06T20:24:17Z",
+          "mergedAt": "2026-10-06T22:02:51Z"
+        },
+        {
+          "number": 425,
+          "title": "Discover typed model renderer registrations without changing package APIs",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/425",
+          "createdAt": "2026-10-06T20:29:11Z",
+          "mergedAt": "2026-10-06T20:41:47Z"
+        },
+        {
+          "number": 426,
+          "title": "Generate JST PH and SH motor headers for selected pin counts",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/426",
+          "createdAt": "2026-10-06T20:44:07Z",
+          "mergedAt": "2026-10-06T22:01:35Z"
+        },
+        {
+          "number": 427,
+          "title": "Fan adapter cable wires between independent connector pitches",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/427",
+          "createdAt": "2026-10-06T23:26:28Z",
+          "mergedAt": "2026-10-07T02:50:10Z"
+        },
+        {
+          "number": 428,
+          "title": "Update modelprinter to released model contracts",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/428",
+          "createdAt": "2026-10-07T00:01:37Z",
+          "mergedAt": "2026-10-07T00:07:44Z"
+        },
+        {
+          "number": 429,
+          "title": "[Preview only] Shared motion contract dependency for renderer reviews",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/429",
+          "createdAt": "2026-10-07T04:34:09Z",
+          "mergedAt": null
+        },
+        {
+          "number": 430,
+          "title": "Add belt idler renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/430",
+          "createdAt": "2026-10-07T04:34:40Z",
+          "mergedAt": null
+        },
+        {
+          "number": 431,
+          "title": "Add lead screw renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/431",
+          "createdAt": "2026-10-07T04:34:47Z",
+          "mergedAt": null
+        },
+        {
+          "number": 432,
+          "title": "Add lead screw nut renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/432",
+          "createdAt": "2026-10-07T04:34:55Z",
+          "mergedAt": null
+        },
+        {
+          "number": 433,
+          "title": "Add linear carriage renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/433",
+          "createdAt": "2026-10-07T04:35:02Z",
+          "mergedAt": null
+        },
+        {
+          "number": 434,
+          "title": "Add linear rail renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/434",
+          "createdAt": "2026-10-07T04:35:09Z",
+          "mergedAt": null
+        },
+        {
+          "number": 435,
+          "title": "Add NEMA motor mounting bracket renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/435",
+          "createdAt": "2026-10-07T04:35:16Z",
+          "mergedAt": null
+        },
+        {
+          "number": 436,
+          "title": "Add thrust ball bearing renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/436",
+          "createdAt": "2026-10-07T04:35:23Z",
+          "mergedAt": null
+        },
+        {
+          "number": 437,
+          "title": "Add timing belt renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/437",
+          "createdAt": "2026-10-07T04:35:30Z",
+          "mergedAt": null
+        },
+        {
+          "number": 438,
+          "title": "Add timing pulley renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/438",
+          "createdAt": "2026-10-07T04:35:36Z",
+          "mergedAt": null
+        },
+        {
+          "number": 439,
+          "title": "Render radial bearings with compact designations and face flags",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/439",
+          "createdAt": "2026-10-07T04:42:17Z",
+          "mergedAt": "2026-10-07T06:47:10Z"
+        },
+        {
+          "number": 440,
+          "title": "Add linear ball bearing renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/440",
+          "createdAt": "2026-10-07T04:42:24Z",
+          "mergedAt": null
+        },
+        {
+          "number": 441,
+          "title": "Add linear bearing block renderer",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/441",
+          "createdAt": "2026-10-07T04:42:32Z",
+          "mergedAt": null
+        },
+        {
+          "number": 445,
+          "title": "Use modelprinter 0.0.18 for mechanical model flags",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/445",
+          "createdAt": "2026-10-08T05:58:39Z",
+          "mergedAt": "2026-10-08T17:06:14Z"
+        },
+        {
+          "number": 447,
+          "title": "Use the ThreadedRod flag and boolean API",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/447",
+          "createdAt": "2026-10-09T05:45:10Z",
+          "mergedAt": "2026-10-09T06:16:11Z"
+        },
+        {
+          "number": 448,
+          "title": "Add BallTransferUnit renderer and disable Bun lockfile saving",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/448",
+          "createdAt": "2026-10-09T06:14:55Z",
+          "mergedAt": "2026-10-09T15:50:47Z"
+        },
+        {
+          "number": 449,
+          "title": "Support metric and imperial UNC hex nuts",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/449",
+          "createdAt": "2026-10-09T17:17:36Z",
+          "mergedAt": "2026-10-09T17:29:19Z"
+        },
+        {
+          "number": 450,
+          "title": "Add round spacer renderer and visual snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/450",
+          "createdAt": "2026-10-09T18:16:02Z",
+          "mergedAt": "2026-10-09T21:37:54Z"
+        },
+        {
+          "number": 451,
+          "title": "Add female hex standoff renderer and visual snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/451",
+          "createdAt": "2026-10-09T18:16:07Z",
+          "mergedAt": "2026-10-09T21:38:01Z"
+        },
+        {
+          "number": 452,
+          "title": "Add male-female hex standoff renderer and visual snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/452",
+          "createdAt": "2026-10-09T18:16:10Z",
+          "mergedAt": "2026-10-09T21:38:06Z"
+        },
+        {
+          "number": 453,
+          "title": "Add nylon insert lock nut renderer and colored snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/453",
+          "createdAt": "2026-10-09T18:16:15Z",
+          "mergedAt": "2026-10-09T21:38:12Z"
+        },
+        {
+          "number": 454,
+          "title": "Add cup-point set screw renderer and visual snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/454",
+          "createdAt": "2026-10-09T18:16:19Z",
+          "mergedAt": "2026-10-09T21:38:31Z"
+        },
+        {
+          "number": 455,
+          "title": "Add split washer renderer and handed visual snapshots",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/455",
+          "createdAt": "2026-10-09T18:16:24Z",
+          "mergedAt": "2026-10-09T19:03:30Z"
+        },
+        {
+          "number": 456,
+          "title": "Add nominal dowel pin renderer and visual snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/456",
+          "createdAt": "2026-10-09T18:17:43Z",
+          "mergedAt": "2026-10-09T21:01:13Z"
+        },
+        {
+          "number": 457,
+          "title": "Add plain-face flange nut renderer and visual snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/457",
+          "createdAt": "2026-10-09T18:21:05Z",
+          "mergedAt": "2026-10-09T21:38:17Z"
+        },
+        {
+          "number": 458,
+          "title": "Add diamond-knurled heat-set insert renderer and snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/458",
+          "createdAt": "2026-10-09T18:22:13Z",
+          "mergedAt": "2026-10-09T21:01:26Z"
+        },
+        {
+          "number": 459,
+          "title": "Add flange bolt renderer with ISO 4162 head geometry",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/459",
+          "createdAt": "2026-10-09T18:26:41Z",
+          "mergedAt": "2026-10-09T21:38:25Z"
+        },
+        {
+          "number": 460,
+          "title": "Bundle model contracts without per-model dependency bumps",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/460",
+          "createdAt": "2026-10-09T20:06:29Z",
+          "mergedAt": "2026-10-09T20:40:17Z"
+        },
+        {
+          "number": 461,
+          "title": "Use default ISO dowel-pin strings in renderer examples and tests",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/461",
+          "createdAt": "2026-10-09T21:17:23Z",
+          "mergedAt": "2026-10-09T21:37:49Z"
+        },
+        {
+          "number": 462,
+          "title": "Use default ISO flag contracts for existing fastener renderers",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/462",
+          "createdAt": "2026-10-09T21:19:37Z",
+          "mergedAt": "2026-10-09T21:37:41Z"
+        },
+        {
+          "number": 463,
+          "title": "Add rectangularbar renderer and four-view snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/463",
+          "createdAt": "2026-10-10T00:24:29Z",
+          "mergedAt": "2026-10-10T01:23:21Z"
+        },
+        {
+          "number": 464,
+          "title": "Add rectangulartube renderer and four-view snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/464",
+          "createdAt": "2026-10-10T00:24:31Z",
+          "mergedAt": "2026-10-10T01:23:13Z"
+        },
+        {
+          "number": 465,
+          "title": "Add anglebar renderer and four-view snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/465",
+          "createdAt": "2026-10-10T00:24:33Z",
+          "mergedAt": "2026-10-10T01:24:26Z"
+        },
+        {
+          "number": 466,
+          "title": "Add channelbar renderer and four-view snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/466",
+          "createdAt": "2026-10-10T00:24:35Z",
+          "mergedAt": "2026-10-10T01:24:23Z"
+        },
+        {
+          "number": 467,
+          "title": "Add perforatedsheet renderer and four-view snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/467",
+          "createdAt": "2026-10-10T00:24:38Z",
+          "mergedAt": "2026-10-10T01:24:13Z"
+        },
+        {
+          "number": 468,
+          "title": "Add fixtureplate renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/468",
+          "createdAt": "2026-10-10T00:24:40Z",
+          "mergedAt": null
+        },
+        {
+          "number": 469,
+          "title": "Add vblock renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/469",
+          "createdAt": "2026-10-10T00:24:42Z",
+          "mergedAt": null
+        },
+        {
+          "number": 470,
+          "title": "Add stepblock renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/470",
+          "createdAt": "2026-10-10T00:24:44Z",
+          "mergedAt": null
+        },
+        {
+          "number": 471,
+          "title": "Add pushfitplug renderer and four-view snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/471",
+          "createdAt": "2026-10-10T00:24:46Z",
+          "mergedAt": "2026-10-10T01:23:59Z"
+        },
+        {
+          "number": 472,
+          "title": "Add sandwichmount renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/472",
+          "createdAt": "2026-10-10T00:24:49Z",
+          "mergedAt": null
+        },
+        {
+          "number": 473,
+          "title": "Add cableclamp renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/473",
+          "createdAt": "2026-10-10T01:55:39Z",
+          "mergedAt": null
+        },
+        {
+          "number": 474,
+          "title": "Add cableclip renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/474",
+          "createdAt": "2026-10-10T01:55:41Z",
+          "mergedAt": null
+        },
+        {
+          "number": 475,
+          "title": "Add cablecomb renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/475",
+          "createdAt": "2026-10-10T01:55:44Z",
+          "mergedAt": null
+        },
+        {
+          "number": 476,
+          "title": "Add cabletiebase renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/476",
+          "createdAt": "2026-10-10T01:55:46Z",
+          "mergedAt": null
+        },
+        {
+          "number": 477,
+          "title": "Add cornerfoot renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/477",
+          "createdAt": "2026-10-10T01:55:48Z",
+          "mergedAt": null
+        },
+        {
+          "number": 478,
+          "title": "Add edgegrommet renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/478",
+          "createdAt": "2026-10-10T01:55:51Z",
+          "mergedAt": null
+        },
+        {
+          "number": 479,
+          "title": "Add flatcableclip renderer and four-view snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/479",
+          "createdAt": "2026-10-10T01:55:53Z",
+          "mergedAt": "2026-10-11T03:27:17Z"
+        },
+        {
+          "number": 480,
+          "title": "Add flatgasket renderer and four-view snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/480",
+          "createdAt": "2026-10-10T01:55:55Z",
+          "mergedAt": "2026-10-11T03:27:11Z"
+        },
+        {
+          "number": 481,
+          "title": "Add hatsection renderer and four-view snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/481",
+          "createdAt": "2026-10-10T01:55:58Z",
+          "mergedAt": "2026-10-11T03:27:04Z"
+        },
+        {
+          "number": 482,
+          "title": "Add hexshaft renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/482",
+          "createdAt": "2026-10-10T01:56:02Z",
+          "mergedAt": null
+        },
+        {
+          "number": 483,
+          "title": "Add hollowshaft renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/483",
+          "createdAt": "2026-10-10T01:56:06Z",
+          "mergedAt": null
+        },
+        {
+          "number": 484,
+          "title": "Add keyedshaft renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/484",
+          "createdAt": "2026-10-10T01:56:08Z",
+          "mergedAt": null
+        },
+        {
+          "number": 485,
+          "title": "Add keywasher renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/485",
+          "createdAt": "2026-10-10T01:56:11Z",
+          "mergedAt": null
+        },
+        {
+          "number": 486,
+          "title": "Add pcbcornerclip renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/486",
+          "createdAt": "2026-10-10T01:56:14Z",
+          "mergedAt": null
+        },
+        {
+          "number": 487,
+          "title": "Add pcbedgesupport renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/487",
+          "createdAt": "2026-10-10T01:56:16Z",
+          "mergedAt": null
+        },
+        {
+          "number": 488,
+          "title": "Add pcbrail renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/488",
+          "createdAt": "2026-10-10T01:56:18Z",
+          "mergedAt": null
+        },
+        {
+          "number": 489,
+          "title": "Add perforatedangle renderer and four-view snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/489",
+          "createdAt": "2026-10-10T01:56:21Z",
+          "mergedAt": "2026-10-11T03:25:10Z"
+        },
+        {
+          "number": 490,
+          "title": "Add pottingbox renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/490",
+          "createdAt": "2026-10-10T01:56:23Z",
+          "mergedAt": null
+        },
+        {
+          "number": 491,
+          "title": "Add rectangulargasket renderer and four-view snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/491",
+          "createdAt": "2026-10-10T01:58:06Z",
+          "mergedAt": "2026-10-10T04:55:56Z"
+        },
+        {
+          "number": 492,
+          "title": "Add slottedchannel renderer and four-view snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/492",
+          "createdAt": "2026-10-10T01:58:08Z",
+          "mergedAt": "2026-10-10T04:55:37Z"
+        },
+        {
+          "number": 493,
+          "title": "Add splitgrommet renderer and four-view snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/493",
+          "createdAt": "2026-10-10T01:58:11Z",
+          "mergedAt": "2026-10-10T04:55:32Z"
+        },
+        {
+          "number": 494,
+          "title": "Add tslotcoverstrip renderer and four-view snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/494",
+          "createdAt": "2026-10-10T01:58:13Z",
+          "mergedAt": "2026-10-10T04:55:11Z"
+        },
+        {
+          "number": 495,
+          "title": "Add tslotendcap renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/495",
+          "createdAt": "2026-10-10T01:58:16Z",
+          "mergedAt": null
+        },
+        {
+          "number": 496,
+          "title": "Add tslotpanelretainer renderer and four-view snapshot",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/496",
+          "createdAt": "2026-10-10T01:58:18Z",
+          "mergedAt": null
+        },
+        {
+          "number": 497,
+          "title": "Add zeebar renderer and four-view snapshot",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/497",
+          "createdAt": "2026-10-10T01:58:20Z",
+          "mergedAt": "2026-10-10T04:54:48Z"
+        },
+        {
+          "number": 498,
+          "title": "Honor independent row pitch in header CAD models",
+          "state": "open",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/498",
+          "createdAt": "2026-10-10T05:28:18Z",
+          "mergedAt": null
+        },
+        {
+          "number": 499,
+          "title": "Render U.FL antenna receptacles with aligned solder terminals",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/499",
+          "createdAt": "2026-10-10T06:41:10Z",
+          "mergedAt": "2026-10-11T03:25:02Z"
+        },
+        {
+          "number": 500,
+          "title": "Add NEMA34 React and vanilla motor support",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/500",
+          "createdAt": "2026-10-10T19:32:56Z",
+          "mergedAt": "2026-10-11T01:13:32Z"
+        },
+        {
+          "number": 501,
+          "title": "Consume boolean model flags throughout renderers",
+          "state": "closed",
+          "url": "https://github.com/tscircuit/jscad-electronics/pull/501",
+          "createdAt": "2026-10-11T04:00:05Z",
+          "mergedAt": "2026-10-11T17:31:41Z"
+        }
+      ],
+      "mainCommitSha": "470267493ef11a350601d965265bc899020a9800"
+    }
+  ],
+  "excludedModelFamilies": [
+    "adhesivemountelectricalcomponentheatsink",
+    "anglebar",
+    "ballbearing",
+    "balltransferunit",
+    "beltidler",
+    "buttonscrew",
+    "cableclamp",
+    "cableclip",
+    "cablecomb",
+    "cablegrommet",
+    "cabletie",
+    "cabletiebase",
+    "channelbar",
+    "clampingshaftcollar",
+    "compressionspring",
+    "cornerfoot",
+    "dowelpin",
+    "edgegrommet",
+    "femalestandoff",
+    "fixtureplate",
+    "flangebolt",
+    "flangedbushing",
+    "flangenut",
+    "flatcableclip",
+    "flatgasket",
+    "flatheadscrew",
+    "flexiblehose",
+    "flexscreen",
+    "hatsection",
+    "heatsetinsert",
+    "helicalgear",
+    "hexbolt",
+    "hexnut",
+    "hexshaft",
+    "hexsocketbolt",
+    "hollowpositioningarmtube",
+    "hollowshaft",
+    "keyedshaft",
+    "keywasher",
+    "leadscrew",
+    "leadscrewnut",
+    "linearballbearing",
+    "linearbearingblock",
+    "linearcarriage",
+    "linearrail",
+    "malefemalestandoff",
+    "nema",
+    "nemamotormount",
+    "nylonlocknut",
+    "panscrew",
+    "pcbcardguide",
+    "pcbcornerclip",
+    "pcbedgesupport",
+    "pcbrail",
+    "perforatedangle",
+    "perforatedsheet",
+    "pinheader",
+    "plainbushing",
+    "pottingbox",
+    "pushfitplug",
+    "rectangularbar",
+    "rectangulargasket",
+    "rectangulartube",
+    "rigidcoupler",
+    "sandwichmount",
+    "setscrew",
+    "shaftcollar",
+    "sheetmetal",
+    "slottedchannel",
+    "spacer",
+    "splitgrommet",
+    "splitwasher",
+    "spurgear",
+    "stepblock",
+    "threadedrod",
+    "thrustballbearing",
+    "timingbelt",
+    "timingpulley",
+    "torsionspring",
+    "tslotcoverstrip",
+    "tslotendcap",
+    "tslotextrusion",
+    "tslotgusset",
+    "tslotinsidecorner",
+    "tslotpanelretainer",
+    "ufl",
+    "vblock",
+    "wormgear",
+    "zeebar"
+  ],
+  "aliasExclusions": {
+    "nemamount": "nemamotormount",
+    "thrustbearing": "thrustballbearing",
+    "radialbearing": "ballbearing",
+    "setscrewshaftcollar": "shaftcollar",
+    "tslotcorner": "tslotinsidecorner",
+    "pcbguide": "pcbcardguide",
+    "worm": "wormgear"
+  },
+  "semanticReview": [
+    {
+      "candidate": "flatwasher",
+      "finding": "No flatwasher/Washer component, model alias, or Footprinter3d case exists; source search 'washer' returns only splitwasher models and mention of washer faces in other fasteners.",
+      "relatedExisting": [
+        "splitwasher",
+        "keywasher",
+        "flatgasket",
+        "thrustballbearing"
+      ],
+      "distinction": "Flat washer is the fundamental unbroken, planar load-spreading family. Split/key washers have different retention features. Flat gasket shares annular geometry but has a separate sealing purpose."
+    },
+    {
+      "candidate": "retainingring",
+      "alternateNamesReviewed": ["circlip", "snapring", "retaining ring"],
+      "finding": "No family, alias, historical PR topic, or source-index match.",
+      "distinction": "Open C-section ring with plier lugs, not a washer."
+    },
+    {
+      "candidate": "rigidpipe",
+      "relatedExisting": [
+        "flexiblehose",
+        "hollowshaft",
+        "hollowpositioningarmtube"
+      ],
+      "finding": "No rigid pipe/fitting PRs; the excluded straight flexible hose has the same simple annular primitive.",
+      "distinction": "Generic rigid fluid transport family; geometry reuse is explicit, no new size counted as a model."
+    },
+    {
+      "candidate": "roundbar",
+      "relatedExisting": [
+        "hollowshaft",
+        "keyedshaft",
+        "hexshaft",
+        "threadedrod"
+      ],
+      "distinction": "Solid plain round raw stock, without hollow bore, keyway, hex section or threads."
+    },
+    {
+      "candidate": "cylindermount",
+      "relatedExisting": ["nemamotormount", "clevis"],
+      "distinction": "Mounting bracket specific to cylinder end envelope and machine base, not motor bolt-pattern bracket. Choose one mounting construction, not multiple count variants."
+    },
+    {
+      "candidate": "pushbuttonoperator",
+      "relatedExisting": ["PushButton", "SmdPushButton"],
+      "distinction": "Industrial panel-mounted operator includes barrel and locknut/bezel; existing root components are PCB-contact push buttons."
+    },
+    {
+      "candidate": "wireduct",
+      "relatedExisting": ["channelbar", "slottedchannel"],
+      "distinction": "Wiring duct has repeating finger slots in both sidewalls and removable snap-on lid, not an open structural channel."
+    },
+    {
+      "candidate": "flangebearing",
+      "relatedExisting": ["flangedbushing", "ballbearing"],
+      "distinction": "Housing plus rolling bearing and external mounting bores; not flanged plain sleeve."
+    },
+    {
+      "candidate": "shaftsupport",
+      "relatedExisting": ["linearbearingblock", "clampingshaftcollar"],
+      "distinction": "Static support clamp and mounting pedestal, not a moving linear bearing or shaft locating collar."
+    },
+    {
+      "candidate": "jawcoupling",
+      "relatedExisting": ["rigidcoupler", "beamcoupling", "oldhamcoupling"],
+      "distinction": "Elastomer spider and meshing jaws; each chosen coupling has a different fundamental compliance construction."
+    },
+    {
+      "candidate": "bevelgear",
+      "relatedExisting": ["spurgear", "helicalgear", "wormgear"],
+      "distinction": "Conical pitch envelope for intersecting axes; nominal teeth visualization only."
+    }
+  ],
+  "proposals": [
+    {
+      "groupNumber": 1,
+      "group": "fasteners-and-retainers",
+      "models": [
+        {
+          "name": "flatwasher",
+          "identifyingFeatures": "Flat load-spreading annulus"
+        },
+        {
+          "name": "toothedwasher",
+          "identifyingFeatures": "Annulus with radial locking teeth"
+        },
+        {
+          "name": "wavewasher",
+          "identifyingFeatures": "Axially undulating annulus"
+        },
+        {
+          "name": "bellevillewasher",
+          "identifyingFeatures": "Conical annulus"
+        },
+        {
+          "name": "shoulderbolt",
+          "identifyingFeatures": "Large shoulder, small shank and socket head"
+        },
+        {
+          "name": "ubolt",
+          "identifyingFeatures": "Bent U rod with two parallel legs"
+        },
+        {
+          "name": "eyebolt",
+          "identifyingFeatures": "Axial shank with ring eye"
+        },
+        {
+          "name": "carriagebolt",
+          "identifyingFeatures": "Domed head and square neck"
+        },
+        {
+          "name": "wingnut",
+          "identifyingFeatures": "Central bore and two wings"
+        },
+        {
+          "name": "capnut",
+          "identifyingFeatures": "Hex base with closed dome"
+        },
+        {
+          "name": "couplingnut",
+          "identifyingFeatures": "Long hex sleeve with through bore"
+        },
+        {
+          "name": "tslotnut",
+          "identifyingFeatures": "T-section threaded slug"
+        },
+        {
+          "name": "rivetnut",
+          "identifyingFeatures": "Flanged cylindrical insert and blind bore"
+        },
+        {
+          "name": "solidrivet",
+          "identifyingFeatures": "Domed head and solid shank"
+        },
+        {
+          "name": "blindrivet",
+          "identifyingFeatures": "Flanged sleeve and projecting mandrel"
+        },
+        {
+          "name": "clevispin",
+          "identifyingFeatures": "Headed shaft with transverse retention bore"
+        },
+        {
+          "name": "springpin",
+          "identifyingFeatures": "Slit cylindrical tube"
+        },
+        {
+          "name": "taperpin",
+          "identifyingFeatures": "Tapered solid rod"
+        },
+        {
+          "name": "retainingring",
+          "identifyingFeatures": "Split C-ring with lug holes"
+        },
+        {
+          "name": "hairpincotter",
+          "identifyingFeatures": "Bent hairpin wire with curved retention leg"
+        }
+      ]
+    },
+    {
+      "groupNumber": 2,
+      "group": "motion-transmission-and-bearings",
+      "models": [
+        {
+          "name": "pillowblockbearing",
+          "identifyingFeatures": "Bearing in foot-mounted housing"
+        },
+        {
+          "name": "flangebearing",
+          "identifyingFeatures": "Bearing in pierced flange housing"
+        },
+        {
+          "name": "needlebearing",
+          "identifyingFeatures": "Races and slender roller cage"
+        },
+        {
+          "name": "cylindricalrollerbearing",
+          "identifyingFeatures": "Races and large cylindrical rollers"
+        },
+        {
+          "name": "camfollower",
+          "identifyingFeatures": "Bearing wheel with projecting stud"
+        },
+        {
+          "name": "vgroovewheel",
+          "identifyingFeatures": "Wheel with V running groove"
+        },
+        {
+          "name": "rodend",
+          "identifyingFeatures": "Eye with spherical bearing and stem"
+        },
+        {
+          "name": "sphericalbearing",
+          "identifyingFeatures": "Bored spherical inner member in outer race"
+        },
+        {
+          "name": "clevis",
+          "identifyingFeatures": "Fork with two cross-pierced ears"
+        },
+        {
+          "name": "universaljoint",
+          "identifyingFeatures": "Two yokes connected by cross"
+        },
+        {
+          "name": "jawcoupling",
+          "identifyingFeatures": "Opposed jaw hubs and center spider"
+        },
+        {
+          "name": "beamcoupling",
+          "identifyingFeatures": "Sleeve with helical flexure slots"
+        },
+        {
+          "name": "oldhamcoupling",
+          "identifyingFeatures": "Two hubs and orthogonally grooved center disk"
+        },
+        {
+          "name": "gearrack",
+          "identifyingFeatures": "Linear tooth row on base"
+        },
+        {
+          "name": "sprocket",
+          "identifyingFeatures": "Chain-toothed wheel and bore"
+        },
+        {
+          "name": "rollerchain",
+          "identifyingFeatures": "Repeated paired plate, pin and roller links"
+        },
+        {
+          "name": "vbeltsheave",
+          "identifyingFeatures": "Pulley with V belt groove"
+        },
+        {
+          "name": "conveyorroller",
+          "identifyingFeatures": "Drum with end bearings and axle"
+        },
+        {
+          "name": "shaftsupport",
+          "identifyingFeatures": "Split bore pedestal on pierced feet"
+        },
+        {
+          "name": "bevelgear",
+          "identifyingFeatures": "Conical tooth wheel and hub"
+        }
+      ]
+    },
+    {
+      "groupNumber": 3,
+      "group": "pipes-fittings-and-valves",
+      "models": [
+        {
+          "name": "rigidpipe",
+          "identifyingFeatures": "Annular rigid pipe with cut ends"
+        },
+        {
+          "name": "pipeelbow",
+          "identifyingFeatures": "Right-angle curved bore"
+        },
+        {
+          "name": "pipetee",
+          "identifyingFeatures": "Three intersecting ports"
+        },
+        {
+          "name": "pipecross",
+          "identifyingFeatures": "Four intersecting ports"
+        },
+        {
+          "name": "pipecoupling",
+          "identifyingFeatures": "Thick annular coupling sleeve"
+        },
+        {
+          "name": "pipeunion",
+          "identifyingFeatures": "Two pipe ends with central hex union"
+        },
+        {
+          "name": "pipenipple",
+          "identifyingFeatures": "Short pipe with raised threaded end envelopes"
+        },
+        {
+          "name": "pipecap",
+          "identifyingFeatures": "Closed end with blind bore"
+        },
+        {
+          "name": "pipeplug",
+          "identifyingFeatures": "Solid hex-headed plug"
+        },
+        {
+          "name": "reducingbushing",
+          "identifyingFeatures": "Hex head and stepped bore"
+        },
+        {
+          "name": "hosebarb",
+          "identifyingFeatures": "Raised conical barb rings and bore"
+        },
+        {
+          "name": "bulkheadfitting",
+          "identifyingFeatures": "Tube with flange and locknut"
+        },
+        {
+          "name": "pushconnectfitting",
+          "identifyingFeatures": "Fitting body with collet and bore"
+        },
+        {
+          "name": "compressionfitting",
+          "identifyingFeatures": "Fitting body with compression nuts"
+        },
+        {
+          "name": "hoseclamp",
+          "identifyingFeatures": "Clamping band and screw housing"
+        },
+        {
+          "name": "pipeflange",
+          "identifyingFeatures": "Annulus with bolt circle"
+        },
+        {
+          "name": "ballvalve",
+          "identifyingFeatures": "Inline valve body, ports and lever"
+        },
+        {
+          "name": "checkvalve",
+          "identifyingFeatures": "Inline valve with identifiable direction feature"
+        },
+        {
+          "name": "needlevalve",
+          "identifyingFeatures": "Valve body with stem and handwheel"
+        },
+        {
+          "name": "manifold",
+          "identifyingFeatures": "Rectangular bar with intersecting port array"
+        }
+      ]
+    },
+    {
+      "groupNumber": 4,
+      "group": "industrial-automation",
+      "models": [
+        {
+          "name": "pneumaticcylinder",
+          "identifyingFeatures": "Barrel, end caps and extending rod"
+        },
+        {
+          "name": "cylindermount",
+          "identifyingFeatures": "Cylinder bracket with mounting or pivot bores"
+        },
+        {
+          "name": "airfilter",
+          "identifyingFeatures": "Ported head and filter bowl"
+        },
+        {
+          "name": "airregulator",
+          "identifyingFeatures": "Ported body and adjustment knob"
+        },
+        {
+          "name": "airlubricator",
+          "identifyingFeatures": "Ported head, oil bowl and sight dome"
+        },
+        {
+          "name": "solenoidvalve",
+          "identifyingFeatures": "Multiport block with coil"
+        },
+        {
+          "name": "pressureswitch",
+          "identifyingFeatures": "Pressure connection, body and electrical head"
+        },
+        {
+          "name": "pressuregauge",
+          "identifyingFeatures": "Round case, readable dial features and stem"
+        },
+        {
+          "name": "flowmeter",
+          "identifyingFeatures": "Transparent measuring tube with float and end fittings"
+        },
+        {
+          "name": "vacuumcup",
+          "identifyingFeatures": "Bell-shaped suction cup and neck"
+        },
+        {
+          "name": "inductiveproximitysensor",
+          "identifyingFeatures": "Cylindrical sensing face, locknuts and cable"
+        },
+        {
+          "name": "photoelectricsensor",
+          "identifyingFeatures": "Rectangular housing, lenses and mount bores"
+        },
+        {
+          "name": "limitswitch",
+          "identifyingFeatures": "Housing with lever and roller"
+        },
+        {
+          "name": "pushbuttonoperator",
+          "identifyingFeatures": "Panel barrel, bezel and plunger"
+        },
+        {
+          "name": "emergencystopswitch",
+          "identifyingFeatures": "Mushroom button and panel barrel"
+        },
+        {
+          "name": "selectoroperator",
+          "identifyingFeatures": "Panel barrel and rotary lever"
+        },
+        {
+          "name": "pilotlight",
+          "identifyingFeatures": "Bezel, lens and panel barrel"
+        },
+        {
+          "name": "dinrail",
+          "identifyingFeatures": "Top-hat section with slotted web"
+        },
+        {
+          "name": "terminalblock",
+          "identifyingFeatures": "DIN foot, insulated body and screw wells"
+        },
+        {
+          "name": "wireduct",
+          "identifyingFeatures": "Slotted channel sidewalls and removable cover"
+        }
+      ]
+    },
+    {
+      "groupNumber": 5,
+      "group": "machine-hardware-and-structural",
+      "models": [
+        {
+          "name": "hinge",
+          "identifyingFeatures": "Leaves, alternating knuckles and pin"
+        },
+        {
+          "name": "barrelhinge",
+          "identifyingFeatures": "Two barrels and connecting pin"
+        },
+        {
+          "name": "drawlatch",
+          "identifyingFeatures": "Keeper, hook and lever base"
+        },
+        {
+          "name": "toggleclamp",
+          "identifyingFeatures": "Mount base, pivoting links and clamp foot"
+        },
+        {
+          "name": "levelingfoot",
+          "identifyingFeatures": "Base pad and adjusting stud"
+        },
+        {
+          "name": "caster",
+          "identifyingFeatures": "Fork, wheel, top plate and swivel"
+        },
+        {
+          "name": "rubberbumper",
+          "identifyingFeatures": "Resilient dome, flat bottom and mounting bore"
+        },
+        {
+          "name": "bridgehandle",
+          "identifyingFeatures": "Two mounting feet and raised grip"
+        },
+        {
+          "name": "handwheel",
+          "identifyingFeatures": "Rim, spokes and hub"
+        },
+        {
+          "name": "starknob",
+          "identifyingFeatures": "Lobed grip and mounting bore"
+        },
+        {
+          "name": "leverhandle",
+          "identifyingFeatures": "Mounting hub and offset lever"
+        },
+        {
+          "name": "squarekey",
+          "identifyingFeatures": "Rectangular shaft key with end chamfers"
+        },
+        {
+          "name": "woodruffkey",
+          "identifyingFeatures": "Half-disk shaft key"
+        },
+        {
+          "name": "ibeam",
+          "identifyingFeatures": "I-shaped structural section"
+        },
+        {
+          "name": "teebar",
+          "identifyingFeatures": "T-shaped structural section"
+        },
+        {
+          "name": "roundbar",
+          "identifyingFeatures": "Solid round stock with cut ends"
+        },
+        {
+          "name": "splitringhanger",
+          "identifyingFeatures": "Split pipe ring with top mounting boss"
+        },
+        {
+          "name": "detentpin",
+          "identifyingFeatures": "Grip, smooth shaft and tip detent ball"
+        },
+        {
+          "name": "expandedmetal",
+          "identifyingFeatures": "Diamond mesh of connected strands"
+        },
+        {
+          "name": "coolingfan",
+          "identifyingFeatures": "Square frame, circular shroud, hub and blades"
+        }
+      ]
+    }
+  ],
+  "catalogSources": [
+    {
+      "group": "fasteners-and-retainers",
+      "url": "https://www.mcmaster.com/products/flat-washers/",
+      "families": ["flatwasher"]
+    },
+    {
+      "group": "fasteners-and-retainers",
+      "url": "https://www.mcmaster.com/products/vibration-control-washers/",
+      "families": ["toothedwasher", "wavewasher", "bellevillewasher"]
+    },
+    {
+      "group": "fasteners-and-retainers",
+      "url": "https://www.mcmaster.com/products/steel-retaining-washers/",
+      "families": ["retainingring"]
+    },
+    {
+      "group": "motion-transmission-and-bearings",
+      "url": "https://www.mcmaster.com/products/pillow-blocks/",
+      "families": [
+        "pillowblockbearing",
+        "needlebearing",
+        "cylindricalrollerbearing"
+      ]
+    },
+    {
+      "group": "motion-transmission-and-bearings",
+      "url": "https://www.mcmaster.com/products/oldham-couplings/",
+      "families": ["oldhamcoupling"]
+    },
+    {
+      "group": "motion-transmission-and-bearings",
+      "url": "https://www.mcmaster.com/products/couplings/shaft-diameter~9-mm/",
+      "families": ["jawcoupling", "beamcoupling"]
+    },
+    {
+      "group": "pipes-fittings-and-valves",
+      "url": "https://www.mcmaster.com/products/pipe-fittings/",
+      "families": ["manifold", "ballvalve", "pipeflange", "solenoidvalve"],
+      "note": "Catalog family validation; no dimensional/compatibility claim."
+    },
+    {
+      "group": "industrial-automation",
+      "url": "https://www.mcmaster.com/products/pneumatics/",
+      "families": ["pneumaticcylinder", "cylindermount"]
+    },
+    {
+      "group": "industrial-automation",
+      "url": "https://www.mcmaster.com/products/air-preparation-units/",
+      "families": ["airfilter", "airregulator", "airlubricator"]
+    },
+    {
+      "group": "industrial-automation",
+      "url": "https://www.mcmaster.com/products/emergency-stop-switches/",
+      "families": ["emergencystopswitch"]
+    },
+    {
+      "group": "machine-hardware-and-structural",
+      "url": "https://www.mcmaster.com/products/cabinet-hardware/",
+      "families": ["hinge"]
+    },
+    {
+      "group": "machine-hardware-and-structural",
+      "url": "https://www.mcmaster.com/products/handles/",
+      "families": ["bridgehandle", "leverhandle", "starknob"]
+    },
+    {
+      "group": "machine-hardware-and-structural",
+      "url": "https://www.mcmaster.com/products/cabinet-door-hardware/",
+      "families": ["drawlatch"]
+    }
+  ],
+  "checks": {
+    "proposalCount": 100,
+    "uniqueProposalCount": 100,
+    "directNameCollisions": [],
+    "noSizeVariantsCounted": true,
+    "previewContractPrFileListsReviewed": [
+      "tscircuit/modelprinter#41",
+      "tscircuit/modelprinter#54",
+      "tscircuit/modelprinter#76",
+      "tscircuit/jscad-electronics#429"
+    ],
+    "finalDuplicateCheck": "No additional seveibar PRs created on or after 2026-10-12 were found before opening this pair."
+  }
+}
