@@ -47,6 +47,7 @@
     "zod": "^3.25.67"
   },
   "devDependencies": {
+    "@tscircuit/circuit-json-to-drawing": "github:tscircuit/circuit-json-to-drawing#59fc2c922e29eb90a8eda7a524e8cea6fc0ff52d",
     "@tscircuit/modelprinter": "latest",
     "@biomejs/biome": "^1.9.3",
     "@tscircuit/alphabet": "^0.0.24",
@@ -57,6 +58,7 @@
     "@types/react-dom": "19",
     "@types/three": "^0.179.0",
     "bun-types": "^1.2.20",
+    "bun-match-svg": "^0.0.17",
     "gl-matrix": "^3.4.4",
     "jscad-fiber": "^0.0.89",
     "jscad-to-gltf": "^0.0.9",

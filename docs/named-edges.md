@@ -54,3 +54,10 @@ width uses `widthOfView`, independently of named features. A horizontal or verti
 dimension of a curved profile uses the projected extent of the entire contour;
 an aligned straight-edge dimension must first verify that its path is collinear.
 No named edge geometry needs to be stored in Circuit JSON.
+
+The model PNG snapshot highlights these retained features on the solid. The
+companion drawing SVG snapshot uses the real model and reader with a development
+dependency on `@tscircuit/circuit-json-to-drawing`: the actual straight top is
+34 mm, the closed rounded profile spans 40 mm, and inferred view dimensions give
+20 mm height and 80 mm extrusion length. Drawing export remains outside the
+runtime model package.
