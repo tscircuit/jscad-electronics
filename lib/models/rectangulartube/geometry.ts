@@ -3,6 +3,7 @@ import {
   rectangularTubeModelPropsSchema,
   type RectangularTubeModelPropsInput,
 } from "@tscircuit/modelprinter"
+import type { NamedJscadModel } from "../../named-edges"
 const {
   booleans,
   primitives,
@@ -34,18 +35,51 @@ const roundedRect = (width: number, height: number, radius: number) =>
 export function createRectangularTubeGeom(
   input: RectangularTubeModelPropsInput,
 ) {
+  return createRectangularTubeModel(input).geometry
+}
+
+/** Native geometry and named planar features are created together. The actual
+ * outer/inner geom2 profiles feed extrusion; straight named sides are queried
+ * from that same outer boundary, so rounded corners shorten them naturally.
+ * All geometry is model-local CAD mm (+Z up), cut end at Z=0.
+ */
+export function createRectangularTubeModel(
+  input: RectangularTubeModelPropsInput,
+): NamedJscadModel {
   const p = rectangularTubeModelPropsSchema.parse(input)
-  return profile(
-    subtract(
-      roundedRect(p.width, p.height, p.outerRadius),
-      roundedRect(
-        p.width - 2 * p.wallThickness,
-        p.height - 2 * p.wallThickness,
-        p.innerRadius,
-      ),
-    ),
-    p.length,
+  const outer = roundedRect(p.width, p.height, p.outerRadius)
+  const inner = roundedRect(
+    p.width - 2 * p.wallThickness,
+    p.height - 2 * p.wallThickness,
+    p.innerRadius,
   )
+  const sides = geometries.geom2.toSides(geometries.geom2.clone(outer))
+  const vertices = sides.flat()
+  const top = Math.max(...vertices.map((point) => point[1]!))
+  const left = Math.min(...vertices.map((point) => point[0]!))
+  const sidePath = (axis: 0 | 1, coordinate: number) => {
+    const epsilon = Math.max(1, Math.abs(coordinate)) * Number.EPSILON * 64
+    const side = sides.find(
+      ([start, end]) =>
+        Math.abs(start[axis]! - coordinate) < epsilon &&
+        Math.abs(end[axis]! - coordinate) < epsilon &&
+        start[1 - axis] !== end[1 - axis],
+    )
+    if (!side) return undefined
+    const ordered = [...side].sort((a, b) => a[1 - axis]! - b[1 - axis]!)
+    return geometries.path2.fromPoints({ closed: false }, ordered)
+  }
+  const topPath = sidePath(1, top)
+  const leftPath = sidePath(0, left)
+  return {
+    geometry: profile(subtract(outer, inner), p.length),
+    namedEdges: {
+      outer_profile: outer,
+      inner_profile: inner,
+      ...(topPath ? { outer_top: topPath } : {}),
+      ...(leftPath ? { outer_left: leftPath } : {}),
+    },
+  }
 }
 export function createRectangularTubeMesh(
   input: RectangularTubeModelPropsInput,

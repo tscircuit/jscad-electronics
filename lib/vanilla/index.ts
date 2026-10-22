@@ -3,6 +3,7 @@ import { Footprinter3d } from "../Footprinter3d"
 import { Fragment, type VNode, h } from "./h"
 import { type ColoredGeom, type RenderResult, render } from "./render"
 export * from "./convertCSGToThreeGeom"
+export * from "../named-edges"
 import type * as jscadModeling from "@jscad/modeling"
 
 export { h, Fragment }
