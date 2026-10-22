@@ -1,39 +1,41 @@
-# Named features declared in JSCAD Fiber
+# Named extrusion outlines
 
-Declare feature names in the component that defines the model, using the same
-`name` and `reference` pattern as Fiber reference rectangles:
+Declare feature names directly on the operations that create a model:
 
 ```tsx
-import { Custom, Colorize } from "jscad-fiber/headless"
-import { createRectangularTubeConstruction } from "./geometry"
+import { Colorize, ExtrudeLinear, Polygon, Subtract } from "jscad-fiber/headless"
+import { getRectangularTubeProfiles } from "./profiles"
 
 function RectangularTube(props) {
-  const { solid, outer, inner, topPath, leftPath } =
-    createRectangularTubeConstruction(props)
-  return <>
-    <Colorize color="#929da9"><Custom geometry={solid} /></Colorize>
-    <Custom name="outer_profile" geometry={outer} reference />
-    <Custom name="inner_profile" geometry={inner} reference />
-    {topPath && <Custom name="outer_top" geometry={topPath} reference />}
-    {leftPath && <Custom name="outer_left" geometry={leftPath} reference />}
-  </>
+  const { length, outerPoints, innerPoints } = getRectangularTubeProfiles(props)
+  return <Colorize color="#929da9">
+    <Subtract>
+      <ExtrudeLinear height={length}
+        topOutlineName="outer_top" bottomOutlineName="outer_bottom">
+        <Polygon points={outerPoints} />
+      </ExtrudeLinear>
+      <ExtrudeLinear height={length}
+        topOutlineName="inner_top" bottomOutlineName="inner_bottom">
+        <Polygon points={innerPoints} />
+      </ExtrudeLinear>
+    </Subtract>
+  </Colorize>
 }
 ```
 
-`Custom` accepts native JSCAD `Geom2`, `Path2`, or `Geom3` geometry. `name` declares
-an identity; `reference` keeps that feature out of the solid and boolean
-operations. A named node without `reference` remains ordinary rendered geometry
-and is also collected. Names must be nonblank and unique within the supplied
-model tree. Features can represent paths, closed profiles, clearance volumes,
-or other native geometry; a name does not force every feature to be a straight
-edge.
+These are the actual construction nodes used by the rectangular tube. The profile
+samples come from its native rounded-rectangle construction, and both extrusions
+use the same exact length. Their names identify complete closed outer and bore
+contours at the actual ends. A 40 × 20 × 80 mm tube with a 3 mm wall has a 40 mm
+outer outline width and a 34 mm bore outline width. The rounded contours retain
+all native samples, including their corners.
 
-The rectangular tube uses the actual outer and inner construction profiles that
-produce its solid. Its top and left sides are discovered from the outer profile's
-native segments. Rounded corners shorten those straight sides naturally; a
-40 × 20 mm tube with R3 outer corners has a 34 mm `outer_top` and a complete
-40 mm `outer_profile` span. A straight side name is omitted if the native profile
-does not contain that side.
+`bottomOutlineName` names the authored profile at local Z=0.
+`topOutlineName` names its signed extrusion endpoint at Z=height, including the
+full `twistAngle` rotation in radians. Offset/center wrappers and enclosing
+Rotate/Translate nodes compose with these cap placements. Names must be nonblank
+and unique within the supplied model tree. Named extrusions require one evaluated
+profile; an explicit Union/Subtract can produce that profile.
 
 ## Collect declarations from the model tree
 
@@ -57,42 +59,50 @@ const model = renderToJscadModel(
   jscad,
 )
 
-// Render model.geometries; reference features add no material.
+// Render model.geometries.
 listJscadReferenceFeatures(model)
-// ["outer_profile", "inner_profile", "outer_top", "outer_left"]
-const top = readJscadNamedEdge(model, "outer_top")
-// All path samples include the full ancestor translation and rotation.
+// ["outer_top", "outer_bottom", "inner_top", "inner_bottom"]
+const bore = readJscadNamedEdge(model, "inner_top")
+// Closed contour samples include the cap and ancestor placements.
 ```
 
 `renderToJscadModel` returns `{geometries, referenceFeatures}`. Each collected
-reference contains its native `geometry` and composed 4×4 `matrix`. A native
-planar feature stays in its authored XY plane; the reader applies its full 3D
-placement after sampling. This preserves out-of-plane rotations that cannot be
-represented by transforming a native `Geom2` or `Path2` alone. Any additional
-placement of the owning CAD component is applied by that component's adapter.
+reference retains its native `geometry` and composed 4×4 `matrix`. A native
+planar profile stays in its authored XY plane; the reader applies its complete
+3D placement after sampling. Any additional placement of the owning CAD
+component is applied by that component's adapter.
 
-`listJscadReferenceFeatures` and `readJscadReferenceFeature` expose generic named
-features. `listJscadNamedEdges` filters the planar contours and paths supported by
-the drawing reader. `readJscadNamedEdge` preserves every native sample and whether
-the contour is closed; it rejects undeclared names, solid features used as edges,
-and ambiguous multiple contours. It does not modify the source geometry.
+A profile with holes remains one native Geom2 containing every contour.
+`readJscadReferenceFeature` exposes that complete native feature. The initial
+drawing path reader explicitly requires one contour and rejects a multi-contour
+profile rather than inventing a segment between separate loops. The tube names
+the outer and bore extrusion outlines separately, so each drawing reference is
+unambiguous.
 
-`createRectangularTubeModel(props)` is a convenience that renders the same
-`RectangularTube` component through this collector. There is no separately
-authored feature map. Its reader helpers are also available from the React-free
-`jscad-electronics/vanilla` entrypoint, whose existing renderer follows the same
-declarations and transform contract.
+`listJscadReferenceFeatures` exposes generic names, including features other than
+edges. `listJscadNamedEdges` filters supported planar paths and contours.
+`readJscadNamedEdge` preserves every native sample and the closed/open flag,
+checks placement matrices, and leaves source geometry unchanged. A horizontal or
+vertical dimension measures the full projected outline extent; an aligned
+dimension requires a straight open path.
 
-## Native models and serializable plans
+`createRectangularTubeModel(props)` renders the same component through this
+collector. `createRectangularTubeGeom` returns that collected solid, and
+`createRectangularTubeMesh` converts it through the shared edge-conforming indexed
+mesh converter. `geom3ToIndexedMesh` is also public for converting an already
+collected solid into drawing geometry with consistent triangle boundaries.
+The React-free `jscad-electronics/vanilla` entrypoint follows the same declaration
+and placement contract.
 
-`jscad-fiber/model` is a viewer-free native model renderer with a supplied JSCAD
-kernel. The existing `renderToJscadPlan` compiler remains the pure serializable
-operation-plan path and continues to reject raw native `Custom` geometry. Native
-feature declarations do not add geometry to Circuit JSON.
+## Drawing snapshots
 
-The checked-in model PNG highlights the declared features. The drawing SVG uses
-the real collected model with a development dependency on the drawing exporter:
-the actual straight top is 34 mm, the closed profile spans 40 mm, and inferred
-view dimensions give 20 mm height and 80 mm length. Overall view width/height
-presets remain independent of named features. Drawing export stays outside the
-runtime model package.
+The model PNG highlights the actual top and bottom outlines. The drawing SVG uses
+the same collected solid and measures its bore width as 34 mm, outer width as
+40 mm, and inferred view height/length as 20/80 mm. Overall view width/height
+presets remain independent of named features.
+
+The viewer-free `jscad-fiber/model` entry evaluates these components with a supplied
+JSCAD kernel. Serializable operation plans retain the outline-name metadata on
+the extrusion; native feature extraction uses the model renderer. Feature
+geometry stays in the model reader, outside Circuit JSON. The drawing exporter
+remains a development dependency.

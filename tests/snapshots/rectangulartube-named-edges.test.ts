@@ -16,16 +16,15 @@ test("rectangular tube native feature four-view snapshot", async () => {
   }
   const model = createRectangularTubeModel(p)
   const highlight = (name: string) => {
-    const native = model.referenceFeatures[name]!.geometry
+    const feature = model.referenceFeatures[name]!
+    const native = feature.geometry
     if (
       !jscad.geometries.geom2.isA(native) &&
       !jscad.geometries.path2.isA(native)
     )
       throw new Error("Expected profile or path")
-    // Display retained construction profiles on the far cut end. The same
-    // features occur on both ends of this constant-section extrusion.
-    const geometry = jscad.transforms.translate(
-      [0, 0, p.length],
+    const geometry = jscad.transforms.transform(
+      feature.matrix as jscad.maths.mat4.Mat4,
       jscad.extrusions.extrudeRectangular({ size: 0.28, height: 0.3 }, native),
     )
     const positions: number[] = []
@@ -42,28 +41,28 @@ test("rectangular tube native feature four-view snapshot", async () => {
   const target: [number, number, number] = [0, 0, 40]
   const png = await renderModelSnapshot({
     mesh: createRectangularTubeMesh(p),
-    title: "RectangularTube Fiber named features",
+    title: "RectangularTube named extrusion outlines",
     modelString:
       "rectangulartube_w40mm_h20mm_wall3mm_l80mm_outerr3mm_innerr1mm",
     footer:
-      "Orange outer_profile / blue inner_profile / red outer_top / green outer_left",
+      "Orange outer_top / blue inner_top / green outer_bottom / purple inner_bottom",
     additionalMeshes: [
-      { mesh: highlight("outer_profile"), color: [0.95, 0.57, 0.08, 1] },
-      { mesh: highlight("inner_profile"), color: [0.12, 0.42, 0.86, 1] },
-      { mesh: highlight("outer_top"), color: [0.88, 0.14, 0.14, 1] },
-      { mesh: highlight("outer_left"), color: [0.1, 0.64, 0.28, 1] },
+      { mesh: highlight("outer_top"), color: [0.95, 0.57, 0.08, 1] },
+      { mesh: highlight("inner_top"), color: [0.12, 0.42, 0.86, 1] },
+      { mesh: highlight("outer_bottom"), color: [0.1, 0.64, 0.28, 1] },
+      { mesh: highlight("inner_bottom"), color: [0.6, 0.15, 0.7, 1] },
     ],
     views: [
       {
         name: "ISOMETRIC",
-        detail: "Native curves retained on actual stock profile",
+        detail: "Outlines declared on actual ExtrudeLinear nodes",
         eye: [span, -span, 40 + span],
         target,
         span,
       },
       {
         name: "TOP",
-        detail: "Width 40 / straight outer_top 34 / corner R3",
+        detail: "Outer width 40 / bore width 34 / corners R3 R1",
         eye: [0, 0, 330],
         target,
         span: 45,
@@ -77,7 +76,7 @@ test("rectangular tube native feature four-view snapshot", async () => {
       },
       {
         name: "SIDE",
-        detail: "Features declared by Custom name/reference",
+        detail: "Top Z80 / bottom Z0 / native cap contours",
         eye: [290, 0, 40],
         target,
         span,

@@ -87,6 +87,33 @@ const transformFeatureContext = (
   return { ...context, matrix }
 }
 
+const validateFeatureName = (name: unknown) => {
+  if (name !== undefined && (typeof name !== "string" || !name.trim()))
+    throw new Error("Named JSCAD features require a nonblank name")
+}
+
+const recordFeature = (
+  context: RenderContext,
+  name: string | undefined,
+  geometry: NativeGeometry,
+) => {
+  if (!context.referenceFeatures || name === undefined) return
+  if (Object.hasOwn(context.referenceFeatures, name))
+    throw new Error(`Duplicate JSCAD feature name "${name}"`)
+  const { geometries } = context.jscad
+  if (
+    !geometries.geom2.isA(geometry) &&
+    !geometries.path2.isA(geometry) &&
+    !geometries.geom3.isA(geometry)
+  )
+    throw new Error(`Named JSCAD feature "${name}" requires native geometry`)
+  assertFiniteFeatureTransform(context.matrix!)
+  context.referenceFeatures[name] = {
+    geometry,
+    matrix: [...context.matrix!],
+  }
+}
+
 function renderNode(
   node: any,
   colorCtx: Color | undefined,
@@ -215,28 +242,10 @@ function renderNode(
 
   if (type === Custom) {
     const { name, reference, geometry } = props
-    if (
-      (name !== undefined && (typeof name !== "string" || !name.trim())) ||
-      (reference && name === undefined)
-    )
+    validateFeatureName(name)
+    if (reference && name === undefined)
       throw new Error("Named JSCAD features require a nonblank name")
-    if (renderCtx.referenceFeatures && name !== undefined) {
-      if (Object.hasOwn(renderCtx.referenceFeatures, name))
-        throw new Error(`Duplicate JSCAD feature name "${name}"`)
-      if (
-        !geometries.geom2.isA(geometry) &&
-        !geometries.path2.isA(geometry) &&
-        !geometries.geom3.isA(geometry)
-      )
-        throw new Error(
-          `Named JSCAD feature "${name}" requires native geometry`,
-        )
-      assertFiniteFeatureTransform(renderCtx.matrix!)
-      renderCtx.referenceFeatures[name] = {
-        geometry,
-        matrix: [...renderCtx.matrix!],
-      }
-    }
+    recordFeature(renderCtx, name, geometry)
     if (reference) return []
     return [{ geom: props.geometry, color: colorCtx }]
   }
@@ -248,23 +257,63 @@ function renderNode(
   }
 
   if (type === ExtrudeLinear) {
+    const { topOutlineName, bottomOutlineName, twistAngle, twistSteps } = props
+    const namedOutline =
+      topOutlineName !== undefined || bottomOutlineName !== undefined
+    const height = props?.height ?? props?.h ?? 1
+    validateFeatureName(topOutlineName)
+    validateFeatureName(bottomOutlineName)
+    if (namedOutline) {
+      if (!Number.isFinite(height) || !Number.isFinite(twistAngle ?? 0))
+        throw new Error(
+          "Named extrusion outlines require finite height and twistAngle",
+        )
+      if (
+        twistSteps !== undefined &&
+        (!Number.isInteger(twistSteps) || twistSteps < 1)
+      )
+        throw new Error(
+          "Named extrusion outlines require positive integer twistSteps",
+        )
+    }
     const entries = (children ?? []).flatMap((c) =>
       renderNode(c, colorCtx, renderCtx),
     )
     const geoms2 = entries.map((g) => g.geom)
     if (geoms2.length === 0) return []
+    if (namedOutline && geoms2.length !== 1)
+      throw new Error("Named extrusion outlines require exactly one profile")
     const base2 =
       geoms2.length > 1 ? (booleans.union as any)(geoms2) : geoms2[0]
-    const height = props?.height ?? props?.h ?? 1
-    let g3 = extrusions.extrudeLinear({ height }, base2)
-
-    if (g3.polygons) {
-      for (const poly of g3.polygons) {
-        if (!poly.plane || !poly.vertices || poly.vertices.length < 3) continue
-        // The `extrudeLinear` operation have an inverted winding order.
-        poly.vertices.reverse()
-      }
+    if (
+      namedOutline &&
+      !geometries.geom2.isA(base2) &&
+      !(geometries.path2.isA(base2) && base2.isClosed)
+    )
+      throw new Error(
+        "Named extrusion outlines require a geom2 or closed path2 profile",
+      )
+    if (namedOutline && renderCtx.referenceFeatures) {
+      const { mat4 } = renderCtx.jscad.maths
+      const topContext = transformFeatureContext(
+        renderCtx,
+        mat4.multiply(
+          mat4.create(),
+          mat4.fromTranslation(mat4.create(), [0, 0, height]),
+          mat4.fromZRotation(mat4.create(), twistAngle ?? 0),
+        ),
+      )
+      recordFeature(topContext, topOutlineName, base2)
+      recordFeature(renderCtx, bottomOutlineName, base2)
     }
+    const g3 = extrusions.extrudeLinear(
+      {
+        height,
+        ...(twistAngle !== undefined ? { twistAngle } : {}),
+        ...(twistSteps !== undefined ? { twistSteps } : {}),
+      },
+      base2,
+    )
 
     return [
       {

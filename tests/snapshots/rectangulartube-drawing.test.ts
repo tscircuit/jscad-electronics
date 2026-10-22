@@ -7,9 +7,10 @@ import {
   type DrawingOptions,
 } from "@tscircuit/circuit-json-to-drawing"
 import { createRectangularTubeModel } from "../../lib/models/rectangulartube/model"
+import { geom3ToIndexedMesh } from "../../lib/mechanical/geom3-to-indexed-mesh"
 import { readJscadNamedEdge } from "../../lib/named-edges"
 
-test("native JSCAD profiles and straight sides produce conventional dimensions", async () => {
+test("named extrusion outlines produce conventional tube dimensions", async () => {
   const model = createRectangularTubeModel({
     width: 40,
     height: 20,
@@ -21,20 +22,21 @@ test("native JSCAD profiles and straight sides produce conventional dimensions",
   const positions: number[] = []
   const geometry = model.geometries[0]!
   if (!jscad.geometries.geom3.isA(geometry)) throw new Error("Expected solid")
-  for (const polygon of jscad.geometries.geom3.toPolygons(geometry))
-    for (let i = 1; i < polygon.vertices.length - 1; i++)
-      for (const vertex of [
-        polygon.vertices[0]!,
-        polygon.vertices[i]!,
-        polygon.vertices[i + 1]!,
-      ])
-        positions.push(...cadToGltf(vertex as [number, number, number]))
+  const mesh = geom3ToIndexedMesh(geometry)
+  for (let i = 0; i < mesh.positions.length; i += 3)
+    positions.push(
+      ...cadToGltf([
+        mesh.positions[i]!,
+        mesh.positions[i + 1]!,
+        mesh.positions[i + 2]!,
+      ]),
+    )
   const scene = {
     gltf: { asset: { version: "2.0" } },
     drawCalls: [
       {
         positions: new Float32Array(positions),
-        indices: null,
+        indices: new Uint32Array(mesh.indices),
         normals: null,
         uvs: null,
         model: new Float32Array([
@@ -98,8 +100,8 @@ test("native JSCAD profiles and straight sides produce conventional dimensions",
     view("end", "END PROFILE", "z_positive", -85, 35, 90, 90),
     view("side", "SIDE ELEVATION", "y_negative", 5, 20, 70, 140),
     view("iso", "ISOMETRIC", "isometric", 100, 20, 75, 115),
-    edge("actual_straight_side", "outer_top", 10),
-    edge("complete_native_profile", "outer_profile", -10),
+    edge("bore_width", "inner_top", 10),
+    edge("outer_width", "outer_top", -10),
     {
       type: "drawing_dimension",
       drawing_dimension_id: "overall_height",
@@ -150,14 +152,14 @@ test("native JSCAD profiles and straight sides produce conventional dimensions",
         ),
       )?.[1],
     )
-  expect(measured("actual_straight_side")).toBeCloseTo(34, 3)
-  expect(measured("complete_native_profile")).toBeCloseTo(40, 3)
+  expect(measured("bore_width")).toBeCloseTo(34, 3)
+  expect(measured("outer_width")).toBeCloseTo(40, 3)
   expect(measured("overall_height")).toBeCloseTo(20, 3)
   expect(measured("overall_length")).toBeCloseTo(80, 3)
-  expect(readJscadNamedEdge(model, "outer_profile").closed).toBe(true)
-  expect(
-    readJscadNamedEdge(model, "outer_profile").points.length,
-  ).toBeGreaterThan(4)
+  expect(readJscadNamedEdge(model, "outer_top").closed).toBe(true)
+  expect(readJscadNamedEdge(model, "outer_top").points.length).toBeGreaterThan(
+    4,
+  )
   expect(svg.match(/data-drawing-dimension-id=/g)).toHaveLength(4)
   await expect(svg).toMatchSvgSnapshot(import.meta.path)
 })

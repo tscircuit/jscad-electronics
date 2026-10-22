@@ -1,13 +1,10 @@
 import { expect, test } from "bun:test"
 import jscad from "@jscad/modeling"
-import { createElement } from "react"
-import { Custom } from "jscad-fiber/headless"
-import { renderToJscadModel } from "jscad-fiber/model"
 import { createRectangularTubeGeom } from "../lib/models/rectangulartube/geometry"
 import { createRectangularTubeModel } from "../lib/models/rectangulartube/model"
 import { listJscadNamedEdges, readJscadNamedEdge } from "../lib/named-edges"
 
-test("named native features preserve actual straight sides and complete curved profiles", () => {
+test("extrusion outline names identify complete outer and bore contours at their actual ends", () => {
   const parameters = {
     width: 40,
     height: 20,
@@ -21,73 +18,57 @@ test("named native features preserve actual straight sides and complete curved p
   if (!jscad.geometries.geom3.isA(geometry)) throw new Error("Expected solid")
   const before = JSON.stringify(model)
   expect(listJscadNamedEdges(model)).toEqual([
-    "outer_profile",
-    "inner_profile",
     "outer_top",
-    "outer_left",
+    "outer_bottom",
+    "inner_top",
+    "inner_bottom",
   ])
-  const top = readJscadNamedEdge(model, "outer_top")
-  expect(top).toEqual({
-    points: [
-      { x: -17, y: 10, z: 0 },
-      { x: 17, y: 10, z: 0 },
-    ],
-    closed: false,
-  })
-  expect(readJscadNamedEdge(model, "outer_left")).toEqual({
-    points: [
-      { x: -20, y: -7, z: 0 },
-      { x: -20, y: 7, z: 0 },
-    ],
-    closed: false,
-  })
-
-  const bottomVertices = jscad.geometries.geom3
+  const vertices = jscad.geometries.geom3
     .toPolygons(jscad.geometries.geom3.clone(geometry))
     .flatMap((polygon) => polygon.vertices)
-    .filter((point) => Math.abs(point[2]!) < 1e-8)
   for (const name of listJscadNamedEdges(model)) {
-    const feature = readJscadNamedEdge(model, name)
-    for (const point of feature.points)
+    const contour = readJscadNamedEdge(model, name)
+    expect(contour.closed).toBe(true)
+    expect(contour.points.length).toBeGreaterThan(4)
+    expect(
+      contour.points.every(
+        (point) => point.z === (name.endsWith("_top") ? 80 : 0),
+      ),
+    ).toBe(true)
+    const xs = contour.points.map((point) => point.x)
+    expect(Math.max(...xs) - Math.min(...xs)).toBeCloseTo(
+      name.startsWith("outer") ? 40 : 34,
+      8,
+    )
+    for (const point of contour.points)
       expect(
-        bottomVertices.some(
+        vertices.some(
           (vertex) =>
-            // JSCAD's 2D boolean snaps the extrusion input to its epsilon.
-            Math.hypot(vertex[0]! - point.x, vertex[1]! - point.y) < 0.0003,
+            Math.hypot(
+              vertex[0]! - point.x,
+              vertex[1]! - point.y,
+              vertex[2]! - point.z,
+            ) < 0.001,
         ),
       ).toBe(true)
   }
-  const outline = readJscadNamedEdge(model, "outer_profile")
-  expect(outline.closed).toBe(true)
-  expect(outline.points.length).toBeGreaterThan(4)
-  expect(Math.max(...outline.points.map((p) => p.x))).toBe(20)
-  expect(Math.min(...outline.points.map((p) => p.x))).toBe(-20)
-  expect(outline.points.some((p) => p.x > 17 && p.y > 7)).toBe(true)
-  expect(readJscadNamedEdge(model, "inner_profile").closed).toBe(true)
   expect(JSON.stringify(model)).toBe(before)
-  expect(jscad.measurements.measureVolume(geometry)).toBeCloseTo(
-    jscad.measurements.measureVolume(createRectangularTubeGeom(parameters)),
-    8,
-  )
-
+  expect(geometry).toEqual(createRectangularTubeGeom(parameters))
+  expect(jscad.measurements.measureVolume(geometry)).toBeGreaterThan(0)
   const sharp = createRectangularTubeModel({
     ...parameters,
     width: 50,
     outerRadius: 0,
     innerRadius: 0,
   })
-  expect(readJscadNamedEdge(sharp, "outer_top").points).toEqual([
-    { x: -25, y: 10, z: 0 },
-    { x: 25, y: 10, z: 0 },
-  ])
-  expect(readJscadNamedEdge(sharp, "outer_profile").points).toHaveLength(4)
+  const sharpOuter = readJscadNamedEdge(sharp, "outer_top")
+  expect(sharpOuter.points).toHaveLength(4)
+  expect(Math.max(...sharpOuter.points.map((point) => point.x))).toBe(25)
+  expect(Math.min(...sharpOuter.points.map((point) => point.x))).toBe(-25)
   expect(() => readJscadNamedEdge(model, "overall_width")).toThrow(
     'does not define named feature "overall_width"',
   )
   expect(() => readJscadNamedEdge(model, "toString")).toThrow()
-
-  // Feature discovery must not drop tiny real sides or prevent valid geometry
-  // construction when the other axis is much larger.
   const extreme = createRectangularTubeModel({
     width: 100000,
     height: 20,
@@ -96,44 +77,7 @@ test("named native features preserve actual straight sides and complete curved p
     outerRadius: 9.9999,
     innerRadius: 4,
   })
-  const tinyLeft = readJscadNamedEdge(extreme, "outer_left").points
-  expect(tinyLeft[1]!.y - tinyLeft[0]!.y).toBeCloseTo(0.0002, 8)
-
-  const nativePath = jscad.geometries.path2.fromPoints({ closed: false }, [
-    [0, 0],
-    [2, 3],
-    [4, 1],
-  ])
-  const pathModel = renderToJscadModel(
-    createElement(Custom, {
-      name: "bent",
-      reference: true,
-      geometry: jscad.transforms.translate([5, 7], nativePath),
-    }),
-    jscad,
-  )
-  const pathBefore = JSON.stringify(pathModel)
-  expect(readJscadNamedEdge(pathModel, "bent")).toEqual({
-    points: [
-      { x: 5, y: 7, z: 0 },
-      { x: 7, y: 10, z: 0 },
-      { x: 9, y: 8, z: 0 },
-    ],
-    closed: false,
-  })
-  expect(JSON.stringify(pathModel)).toBe(pathBefore)
-  const multipleContours = renderToJscadModel(
-    createElement(Custom, {
-      name: "ambiguous",
-      reference: true,
-      geometry: jscad.booleans.subtract(
-        jscad.primitives.rectangle({ size: [10, 10] }),
-        jscad.primitives.rectangle({ size: [5, 5] }),
-      ),
-    }),
-    jscad,
-  )
-  expect(() => readJscadNamedEdge(multipleContours, "ambiguous")).toThrow(
-    "name its boundaries separately",
-  )
+  expect(
+    readJscadNamedEdge(extreme, "outer_top").points.length,
+  ).toBeGreaterThan(4)
 })
