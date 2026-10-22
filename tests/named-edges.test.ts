@@ -16,6 +16,7 @@ test("extrusion outline names identify complete outer and bore contours at their
   const model = createRectangularTubeModel(parameters)
   const geometry = model.geometries[0]!
   if (!jscad.geometries.geom3.isA(geometry)) throw new Error("Expected solid")
+  jscad.geometries.geom3.validate(geometry)
   const before = JSON.stringify(model)
   expect(listJscadNamedEdges(model)).toEqual([
     "outer_top",
@@ -80,4 +81,9 @@ test("extrusion outline names identify complete outer and bore contours at their
   expect(
     readJscadNamedEdge(extreme, "outer_top").points.length,
   ).toBeGreaterThan(4)
+  for (const variant of [sharp, extreme]) {
+    const solid = variant.geometries[0]!
+    if (!jscad.geometries.geom3.isA(solid)) throw new Error("Expected solid")
+    jscad.geometries.geom3.validate(solid)
+  }
 })

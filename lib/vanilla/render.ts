@@ -1,3 +1,4 @@
+import { repairGeom3 } from "./repair-geom3"
 import type { MaterialOptions } from "jscad-fiber"
 import type * as jscadModeling from "@jscad/modeling"
 
@@ -231,6 +232,8 @@ function renderNode(
     else if (type === Subtract)
       geom = booleans.subtract(geoms[0] as any, geoms.slice(1) as any)
     else geom = hulls.hull(geoms as any)
+    if (type === Subtract && props?.repair)
+      geom = repairGeom3(renderCtx.jscad, geom)
     return [
       {
         geom,
@@ -252,7 +255,17 @@ function renderNode(
 
   if (type === Polygon) {
     const points: Array<[number, number]> = props?.points ?? []
-    const g2 = geometries.geom2.fromPoints(points as any)
+    const origin: [number, number] = points[0] ?? [0, 0]
+    const area = points.reduce((sum, point, index) => {
+      const next = points[(index + 1) % points.length]!
+      return (
+        sum +
+        (point[0] - origin[0]) * (next[1] - origin[1]) -
+        (next[0] - origin[0]) * (point[1] - origin[1])
+      )
+    }, 0)
+    const oriented = area < 0 ? [...points].reverse() : points
+    const g2 = geometries.geom2.fromPoints(oriented as any)
     return [{ geom: g2, color: colorCtx ?? props?.color }]
   }
 
