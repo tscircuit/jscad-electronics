@@ -24,3 +24,34 @@ jobs:
 
       - name: Run type check
         run: bun run typecheck
+
+      - name: Capture reviewed rendering baselines
+        run: |
+          bun run build
+          BUN_UPDATE_SNAPSHOTS=1 UPDATE_SNAPSHOTS=1 bun test -u tests/snapshots/rectangulartube-named-edges.test.ts tests/snapshots/rectangulartube-drawing.test.ts tests/snapshots/pushbutton.test.ts
+          cat > .snapshot-export.ts <<'TS'
+          const paths = process.argv.slice(2)
+          function emit(path, encoding, data) {
+            const count = Math.ceil(data.length / 4000)
+            for (let part = 0; part < count; part++)
+              console.log("CODEX_SNAPSHOT " + JSON.stringify({
+                path,encoding,part,count,data:data.slice(part*4000,(part+1)*4000),
+              }))
+          }
+          for (const path of paths) {
+            const file=Bun.file(path)
+            if(path.endsWith(".svg")) {
+              const svg=await file.text()
+              emit(path,"utf8",svg)
+              try {
+                const { Resvg } = await import("@resvg/resvg-js")
+                const png=new Resvg(svg,{fitTo:{mode:"width",value:1200}}).render().asPng()
+                emit(path+".preview.png","base64",Buffer.from(png).toString("base64"))
+              } catch(error) { console.log("CODEX_PREVIEW_ERROR "+String(error)) }
+            } else {
+              emit(path,"base64",Buffer.from(await file.arrayBuffer()).toString("base64"))
+            }
+          }
+          
+          TS
+          bun .snapshot-export.ts tests/snapshots/__snapshots__/rectangulartube-named-edges.snap.png tests/snapshots/__snapshots__/rectangulartube-drawing.snap.svg tests/snapshots/__snapshots__/pushbutton.snap.png
