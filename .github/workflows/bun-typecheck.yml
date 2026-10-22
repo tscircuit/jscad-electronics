@@ -55,3 +55,16 @@ jobs:
           
           TS
           bun .snapshot-export.ts tests/snapshots/__snapshots__/rectangulartube-named-edges.snap.png tests/snapshots/__snapshots__/rectangulartube-drawing.snap.svg tests/snapshots/__snapshots__/pushbutton.snap.png
+
+          cat > .snapshot-before.ts <<'TS'
+          const result=Bun.spawnSync(["git","show","HEAD:tests/snapshots/__snapshots__/pushbutton.snap.png"])
+          if(result.exitCode!==0) throw new Error("Cannot read existing PushButton snapshot")
+          const data=Buffer.from(result.stdout).toString("base64")
+          const count=Math.ceil(data.length/4000)
+          for(let part=0;part<count;part++)
+            console.log("CODEX_SNAPSHOT "+JSON.stringify({
+              path:"pushbutton.before.png",encoding:"base64",part,count,
+              data:data.slice(part*4000,(part+1)*4000),
+            }))
+          TS
+          bun .snapshot-before.ts
