@@ -24,3 +24,38 @@ jobs:
 
       - name: Run type check
         run: bun run typecheck
+
+      - name: Diagnose extrusion boundary normalization
+        run: |
+          cat > .extrusion-probe.ts <<'TS'
+          import jscad from "@jscad/modeling"
+          import { createRectangularTubeModel } from "./lib/models/rectangulartube/model"
+          import { geom3ToIndexedMesh } from "./lib/mechanical/geom3-to-indexed-mesh"
+          const { geometries, modifiers, measurements } = jscad
+          const model = createRectangularTubeModel({
+            width:40,height:20,wallThickness:2,length:60,outerRadius:4,innerRadius:2,
+          })
+          const solid = model.geometries[0]
+          function report(name, shape) {
+            try {
+              geometries.geom3.validate(shape)
+              console.log(JSON.stringify({name,valid:true,volume:measurements.measureVolume(shape),polygons:shape.polygons.length}))
+            } catch(error) {
+              console.log(JSON.stringify({name,valid:false,error:String(error)}))
+            }
+          }
+          report("raw",solid)
+          for(const snap of [false,true]) {
+            for(const simplify of [false,true]) {
+              try { report("generalize-"+snap+"-"+simplify,modifiers.generalize({snap,simplify,triangulate:true},solid)) }
+              catch(error) { console.log(JSON.stringify({name:"generalize-"+snap+"-"+simplify,error:String(error)})) }
+            }
+          }
+          const mesh=geom3ToIndexedMesh(solid)
+          const polygons=[]
+          for(let i=0;i<mesh.indices.length;i+=3)
+            polygons.push(mesh.indices.slice(i,i+3).map(index=>mesh.positions.slice(index*3,index*3+3)))
+          report("indexed-reconstruction",geometries.geom3.fromPoints(polygons))
+          
+          TS
+          bun .extrusion-probe.ts
