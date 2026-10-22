@@ -6,7 +6,7 @@ import {
   convertCircuitJsonToDrawingSvg,
   type DrawingOptions,
 } from "@tscircuit/circuit-json-to-drawing"
-import { createRectangularTubeModel } from "../../lib/models/rectangulartube/geometry"
+import { createRectangularTubeModel } from "../../lib/models/rectangulartube/model"
 import { readJscadNamedEdge } from "../../lib/named-edges"
 
 test("native JSCAD profiles and straight sides produce conventional dimensions", async () => {
@@ -19,7 +19,9 @@ test("native JSCAD profiles and straight sides produce conventional dimensions",
     innerRadius: 1,
   })
   const positions: number[] = []
-  for (const polygon of jscad.geometries.geom3.toPolygons(model.geometry))
+  const geometry = model.geometries[0]!
+  if (!jscad.geometries.geom3.isA(geometry)) throw new Error("Expected solid")
+  for (const polygon of jscad.geometries.geom3.toPolygons(geometry))
     for (let i = 1; i < polygon.vertices.length - 1; i++)
       for (const vertex of [
         polygon.vertices[0]!,

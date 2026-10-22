@@ -1,14 +1,11 @@
 import { expect, test } from "bun:test"
 import jscad from "@jscad/modeling"
-import {
-  createRectangularTubeGeom,
-  createRectangularTubeModel,
-} from "../lib/models/rectangulartube/geometry"
-import {
-  listJscadNamedEdges,
-  readJscadNamedEdge,
-  type NamedJscadModel,
-} from "../lib/named-edges"
+import { createElement } from "react"
+import { Custom } from "jscad-fiber/headless"
+import { renderToJscadModel } from "jscad-fiber/model"
+import { createRectangularTubeGeom } from "../lib/models/rectangulartube/geometry"
+import { createRectangularTubeModel } from "../lib/models/rectangulartube/model"
+import { listJscadNamedEdges, readJscadNamedEdge } from "../lib/named-edges"
 
 test("named native features preserve actual straight sides and complete curved profiles", () => {
   const parameters = {
@@ -20,6 +17,8 @@ test("named native features preserve actual straight sides and complete curved p
     innerRadius: 1,
   }
   const model = createRectangularTubeModel(parameters)
+  const geometry = model.geometries[0]!
+  if (!jscad.geometries.geom3.isA(geometry)) throw new Error("Expected solid")
   const before = JSON.stringify(model)
   expect(listJscadNamedEdges(model)).toEqual([
     "outer_profile",
@@ -44,7 +43,7 @@ test("named native features preserve actual straight sides and complete curved p
   })
 
   const bottomVertices = jscad.geometries.geom3
-    .toPolygons(jscad.geometries.geom3.clone(model.geometry))
+    .toPolygons(jscad.geometries.geom3.clone(geometry))
     .flatMap((polygon) => polygon.vertices)
     .filter((point) => Math.abs(point[2]!) < 1e-8)
   for (const name of listJscadNamedEdges(model)) {
@@ -66,7 +65,10 @@ test("named native features preserve actual straight sides and complete curved p
   expect(outline.points.some((p) => p.x > 17 && p.y > 7)).toBe(true)
   expect(readJscadNamedEdge(model, "inner_profile").closed).toBe(true)
   expect(JSON.stringify(model)).toBe(before)
-  expect(model.geometry).toEqual(createRectangularTubeGeom(parameters))
+  expect(jscad.measurements.measureVolume(geometry)).toBeCloseTo(
+    jscad.measurements.measureVolume(createRectangularTubeGeom(parameters)),
+    8,
+  )
 
   const sharp = createRectangularTubeModel({
     ...parameters,
@@ -80,7 +82,7 @@ test("named native features preserve actual straight sides and complete curved p
   ])
   expect(readJscadNamedEdge(sharp, "outer_profile").points).toHaveLength(4)
   expect(() => readJscadNamedEdge(model, "overall_width")).toThrow(
-    'does not define named edge "overall_width"',
+    'does not define named feature "overall_width"',
   )
   expect(() => readJscadNamedEdge(model, "toString")).toThrow()
 
@@ -102,10 +104,14 @@ test("named native features preserve actual straight sides and complete curved p
     [2, 3],
     [4, 1],
   ])
-  const pathModel: NamedJscadModel = {
-    geometry: model.geometry,
-    namedEdges: { bent: jscad.transforms.translate([5, 7], nativePath) },
-  }
+  const pathModel = renderToJscadModel(
+    createElement(Custom, {
+      name: "bent",
+      reference: true,
+      geometry: jscad.transforms.translate([5, 7], nativePath),
+    }),
+    jscad,
+  )
   const pathBefore = JSON.stringify(pathModel)
   expect(readJscadNamedEdge(pathModel, "bent")).toEqual({
     points: [
@@ -116,15 +122,17 @@ test("named native features preserve actual straight sides and complete curved p
     closed: false,
   })
   expect(JSON.stringify(pathModel)).toBe(pathBefore)
-  const multipleContours: NamedJscadModel = {
-    geometry: model.geometry,
-    namedEdges: {
-      ambiguous: jscad.booleans.subtract(
+  const multipleContours = renderToJscadModel(
+    createElement(Custom, {
+      name: "ambiguous",
+      reference: true,
+      geometry: jscad.booleans.subtract(
         jscad.primitives.rectangle({ size: [10, 10] }),
         jscad.primitives.rectangle({ size: [5, 5] }),
       ),
-    },
-  }
+    }),
+    jscad,
+  )
   expect(() => readJscadNamedEdge(multipleContours, "ambiguous")).toThrow(
     "name its boundaries separately",
   )

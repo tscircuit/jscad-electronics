@@ -1,9 +1,7 @@
 import { test } from "bun:test"
 import jscad from "@jscad/modeling"
-import {
-  createRectangularTubeMesh,
-  createRectangularTubeModel,
-} from "../../lib/models/rectangulartube/geometry"
+import { createRectangularTubeMesh } from "../../lib/models/rectangulartube/geometry"
+import { createRectangularTubeModel } from "../../lib/models/rectangulartube/model"
 import { expectPngSnapshot } from "../fixtures/expect-png-snapshot"
 import { renderModelSnapshot } from "../fixtures/render-model-snapshot"
 
@@ -18,14 +16,17 @@ test("rectangular tube native feature four-view snapshot", async () => {
   }
   const model = createRectangularTubeModel(p)
   const highlight = (name: string) => {
+    const native = model.referenceFeatures[name]!.geometry
+    if (
+      !jscad.geometries.geom2.isA(native) &&
+      !jscad.geometries.path2.isA(native)
+    )
+      throw new Error("Expected profile or path")
     // Display retained construction profiles on the far cut end. The same
     // features occur on both ends of this constant-section extrusion.
     const geometry = jscad.transforms.translate(
       [0, 0, p.length],
-      jscad.extrusions.extrudeRectangular(
-        { size: 0.28, height: 0.3 },
-        model.namedEdges[name]!,
-      ),
+      jscad.extrusions.extrudeRectangular({ size: 0.28, height: 0.3 }, native),
     )
     const positions: number[] = []
     const indices: number[] = []
@@ -41,7 +42,7 @@ test("rectangular tube native feature four-view snapshot", async () => {
   const target: [number, number, number] = [0, 0, 40]
   const png = await renderModelSnapshot({
     mesh: createRectangularTubeMesh(p),
-    title: "RectangularTube native named edges",
+    title: "RectangularTube Fiber named features",
     modelString:
       "rectangulartube_w40mm_h20mm_wall3mm_l80mm_outerr3mm_innerr1mm",
     footer:
@@ -76,7 +77,7 @@ test("rectangular tube native feature four-view snapshot", async () => {
       },
       {
         name: "SIDE",
-        detail: "Native features originate at model-local Z=0",
+        detail: "Features declared by Custom name/reference",
         eye: [290, 0, 40],
         target,
         span,

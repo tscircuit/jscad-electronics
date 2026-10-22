@@ -3,7 +3,6 @@ import {
   rectangularTubeModelPropsSchema,
   type RectangularTubeModelPropsInput,
 } from "@tscircuit/modelprinter"
-import type { NamedJscadModel } from "../../named-edges"
 const {
   booleans,
   primitives,
@@ -35,17 +34,15 @@ const roundedRect = (width: number, height: number, radius: number) =>
 export function createRectangularTubeGeom(
   input: RectangularTubeModelPropsInput,
 ) {
-  return createRectangularTubeModel(input).geometry
+  return createRectangularTubeConstruction(input).solid
 }
 
-/** Native geometry and named planar features are created together. The actual
- * outer/inner geom2 profiles feed extrusion; straight named sides are queried
- * from that same outer boundary, so rounded corners shorten them naturally.
- * All geometry is model-local CAD mm (+Z up), cut end at Z=0.
+/** Construction geometry shared by the solid and the Fiber component. Names
+ * belong to the component's JSX declarations, rather than this geometry helper.
  */
-export function createRectangularTubeModel(
+export function createRectangularTubeConstruction(
   input: RectangularTubeModelPropsInput,
-): NamedJscadModel {
+) {
   const p = rectangularTubeModelPropsSchema.parse(input)
   const outer = roundedRect(p.width, p.height, p.outerRadius)
   const inner = roundedRect(
@@ -72,13 +69,11 @@ export function createRectangularTubeModel(
   const topPath = sidePath(1, top)
   const leftPath = sidePath(0, left)
   return {
-    geometry: profile(subtract(outer, inner), p.length),
-    namedEdges: {
-      outer_profile: outer,
-      inner_profile: inner,
-      ...(topPath ? { outer_top: topPath } : {}),
-      ...(leftPath ? { outer_left: leftPath } : {}),
-    },
+    solid: profile(subtract(outer, inner), p.length),
+    outer,
+    inner,
+    topPath,
+    leftPath,
   }
 }
 export function createRectangularTubeMesh(

@@ -23,6 +23,23 @@ import {
 
 interface RenderContext {
   jscad: typeof jscadModeling
+  referenceFeatures?: Record<string, JscadReferenceFeature>
+  matrix?: jscadModeling.maths.mat4.Mat4
+}
+
+export type NativeGeometry =
+  | jscadModeling.geometries.geom2.Geom2
+  | jscadModeling.geometries.path2.Path2
+  | jscadModeling.geometries.geom3.Geom3
+
+export interface JscadReferenceFeature {
+  geometry: NativeGeometry
+  matrix: number[]
+}
+
+export interface JscadModel {
+  geometries: NativeGeometry[]
+  referenceFeatures: Record<string, JscadReferenceFeature>
 }
 
 export type ColoredGeom = {
@@ -52,6 +69,22 @@ const toVec3 = (v: any): [number, number, number] => {
   if (typeof v === "object" && v)
     return [Number(v.x) || 0, Number(v.y) || 0, Number(v.z) || 0]
   return [0, 0, 0]
+}
+
+const assertFiniteFeatureTransform = (values: readonly number[]) => {
+  if (!values.every(Number.isFinite))
+    throw new Error("JSCAD reference feature transforms must be finite")
+}
+
+const transformFeatureContext = (
+  context: RenderContext,
+  local: jscadModeling.maths.mat4.Mat4,
+): RenderContext => {
+  if (!context.referenceFeatures) return context
+  const { mat4 } = context.jscad.maths
+  const matrix = mat4.multiply(mat4.create(), context.matrix!, local)
+  assertFiniteFeatureTransform(matrix)
+  return { ...context, matrix }
 }
 
 function renderNode(
@@ -94,12 +127,23 @@ function renderNode(
 
   if (type === Translate) {
     // accept either `offset`, `center` (array or object), or x/y/z props
-    const off = toVec3(
-      props?.offset ??
-        props?.center ?? { x: props?.x, y: props?.y, z: props?.z },
+    const offset = props?.offset ??
+      props?.center ?? { x: props?.x, y: props?.y, z: props?.z }
+    if (renderCtx.referenceFeatures)
+      assertFiniteFeatureTransform(
+        (Array.isArray(offset)
+          ? offset.slice(0, 3)
+          : [offset?.x, offset?.y, offset?.z]
+        ).map((value) => Number(value ?? 0)),
+      )
+    const off = toVec3(offset)
+    const { mat4 } = renderCtx.jscad.maths
+    const childContext = transformFeatureContext(
+      renderCtx,
+      mat4.fromTranslation(mat4.create(), off),
     )
     const geoms = (children ?? []).flatMap((c) =>
-      renderNode(c, colorCtx, renderCtx),
+      renderNode(c, colorCtx, childContext),
     )
     return geoms.map(({ geom, color, material }) => ({
       material,
@@ -111,6 +155,19 @@ function renderNode(
   if (type === Rotate) {
     // Match jscad-fiber's angles prop while retaining the vanilla aliases.
     const angles = props?.angles ?? props?.rotation
+    if (renderCtx.referenceFeatures)
+      assertFiniteFeatureTransform(
+        (Array.isArray(angles)
+          ? angles.slice(0, 3)
+          : [props?.x, props?.y, props?.z]
+        ).map((value) =>
+          Number(
+            typeof value === "string"
+              ? value.replace(/\s*deg$/i, "")
+              : (value ?? 0),
+          ),
+        ),
+      )
     const rot: [number, number, number] = Array.isArray(angles)
       ? [degToRad(angles[0]), degToRad(angles[1]), degToRad(angles[2])]
       : [
@@ -118,8 +175,13 @@ function renderNode(
           degToRad(props?.y ?? 0),
           degToRad(props?.z ?? 0),
         ]
+    const { mat4 } = renderCtx.jscad.maths
+    const childContext = transformFeatureContext(
+      renderCtx,
+      mat4.fromTaitBryanRotation(mat4.create(), rot[2], rot[1], rot[0]),
+    )
     const geoms = (children ?? []).flatMap((c) =>
-      renderNode(c, colorCtx, renderCtx),
+      renderNode(c, colorCtx, childContext),
     )
     return geoms.map(({ geom, color, material }) => ({
       material,
@@ -152,6 +214,30 @@ function renderNode(
   }
 
   if (type === Custom) {
+    const { name, reference, geometry } = props
+    if (
+      (name !== undefined && (typeof name !== "string" || !name.trim())) ||
+      (reference && name === undefined)
+    )
+      throw new Error("Named JSCAD features require a nonblank name")
+    if (renderCtx.referenceFeatures && name !== undefined) {
+      if (Object.hasOwn(renderCtx.referenceFeatures, name))
+        throw new Error(`Duplicate JSCAD feature name "${name}"`)
+      if (
+        !geometries.geom2.isA(geometry) &&
+        !geometries.path2.isA(geometry) &&
+        !geometries.geom3.isA(geometry)
+      )
+        throw new Error(
+          `Named JSCAD feature "${name}" requires native geometry`,
+        )
+      assertFiniteFeatureTransform(renderCtx.matrix!)
+      renderCtx.referenceFeatures[name] = {
+        geometry,
+        matrix: [...renderCtx.matrix!],
+      }
+    }
+    if (reference) return []
     return [{ geom: props.geometry, color: colorCtx }]
   }
 
@@ -254,5 +340,41 @@ export function render(root: VNode, jscad: typeof jscadModeling): RenderResult {
         ? { ...entry, geom: { ...entry.geom, material: entry.material } }
         : entry,
     ),
+  }
+}
+
+/** Collect names declared by model components while rendering their solids.
+ * Features retain native geometry and a full model-space ancestor transform;
+ * applying that matrix after sampling preserves out-of-plane 2D references.
+ */
+export function renderToJscadModel(
+  root: VNode,
+  jscad: typeof jscadModeling,
+): JscadModel {
+  const referenceFeatures: Record<string, JscadReferenceFeature> =
+    Object.create(null)
+  const geometries = renderNode(root, undefined, {
+    jscad,
+    referenceFeatures,
+    matrix: jscad.maths.mat4.create(),
+  })
+  return {
+    geometries: geometries.map(({ geom, color }) => {
+      if (color === undefined) return geom
+      const { colors } = jscad
+      const rgb =
+        typeof color === "string"
+          ? color.startsWith("#")
+            ? colors.hexToRgb(
+                /^#[\da-f]{3,4}$/i.test(color)
+                  ? `#${[...color.slice(1)].map((c) => c + c).join("")}`
+                  : color,
+              )
+            : colors.colorNameToRgb(color)
+          : color
+      if (!rgb) throw new Error(`Unknown JSCAD color "${color}"`)
+      return colors.colorize(rgb, geom)
+    }),
+    referenceFeatures,
   }
 }

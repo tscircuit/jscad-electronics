@@ -8,6 +8,12 @@ import type * as jscadModeling from "@jscad/modeling"
 
 export { h, Fragment }
 export type { VNode, RenderResult, ColoredGeom }
+export { renderToJscadModel } from "./render"
+export type {
+  JscadModel,
+  JscadReferenceFeature,
+  NativeGeometry,
+} from "./render"
 
 export function getJscadModelForFootprint(
   footprint: string,

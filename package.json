@@ -44,6 +44,7 @@
   "dependencies": {
     "@tscircuit/mm": "^0.0.8",
     "earcut": "^3.2.3",
+    "jscad-fiber": "https://pkg.pr.new/jscad-fiber@d775747",
     "zod": "^3.25.67"
   },
   "devDependencies": {
@@ -60,7 +61,6 @@
     "bun-types": "^1.2.20",
     "bun-match-svg": "^0.0.17",
     "gl-matrix": "^3.4.4",
-    "jscad-fiber": "^0.0.89",
     "jscad-to-gltf": "^0.0.9",
     "looks-same": "^10.0.1",
     "pngjs": "^7.0.0",
@@ -76,15 +76,9 @@
     "@tscircuit/footprinter": "*",
     "@tscircuit/alphabet": "^0.0.24",
     "circuit-json": "^0.0.426",
-    "jscad-fiber": "^0.0.89",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "three": "^0.179.1"
-  },
-  "peerDependenciesMeta": {
-    "jscad-fiber": {
-      "optional": true
-    }
   },
   "engines": {
     "node": "24.x"
