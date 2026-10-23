@@ -9,7 +9,7 @@ import { getRectangularTubeProfiles } from "./profiles"
 function RectangularTube(props) {
   const { length, outerPoints, innerPoints } = getRectangularTubeProfiles(props)
   return <Colorize color="#929da9">
-    <Subtract repair>
+    <Subtract>
       <ExtrudeLinear height={length}
         topOutlineName="outer_top" bottomOutlineName="outer_bottom">
         <Polygon points={outerPoints} />
@@ -134,8 +134,7 @@ the extrusion; native feature extraction uses the model renderer. Feature
 geometry stays in the model reader, outside Circuit JSON. The drawing exporter
 remains a development dependency.
 
-The tube opts into `Subtract repair` to weld floating-point joins before native
-kernel triangulation. Both evaluators use the same relative tolerance and retain
-the original named profiles. The option applies only to that boolean operation;
-ordinary subtraction keeps its existing behavior. The native and built vanilla
-solids pass the existing manifold validator.
+The compatibility kernel automatically cleans native 3D subtraction joins.
+Both React and vanilla renderers use that kernel; model components need no
+repair flag. Mesh export delegates to `@tscircuit/jscad` through the existing
+`geom3ToIndexedMesh` entrypoint. Electronics contains no mesh-repair algorithm.

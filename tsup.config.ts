@@ -35,7 +35,12 @@ export default defineConfig(async () => {
       sourcemap: true,
       splitting: false,
       clean: true,
-      noExternal: ["@tscircuit/modelprinter", "@tscircuit/mm", "zod"],
+      noExternal: [
+        "@tscircuit/modelprinter",
+        "@tscircuit/mm",
+        "@tscircuit/jscad",
+        "zod",
+      ],
       onSuccess: writeContractProvenance,
     },
     {
@@ -48,6 +53,7 @@ export default defineConfig(async () => {
       noExternal: [
         "@tscircuit/modelprinter",
         "@tscircuit/mm",
+        "@tscircuit/jscad",
         "zod",
         "jscad-fiber",
         "react",

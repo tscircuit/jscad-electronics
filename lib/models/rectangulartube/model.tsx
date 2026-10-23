@@ -9,7 +9,10 @@ import { RectangularTube } from "./RectangularTube"
 export function createRectangularTubeModel(
   input: RectangularTubeModelPropsInput,
 ) {
-  const model = renderToJscadModel(<RectangularTube {...input} />, jscad)
+  const model = renderToJscadModel(
+    <RectangularTube {...input} />,
+    jscad as unknown as Parameters<typeof renderToJscadModel>[1],
+  )
   if (
     model.geometries.length !== 1 ||
     !jscad.geometries.geom3.isA(model.geometries[0])

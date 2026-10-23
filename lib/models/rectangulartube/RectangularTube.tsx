@@ -16,7 +16,7 @@ export function RectangularTube({
   const { length, outerPoints, innerPoints } = getRectangularTubeProfiles(props)
   return (
     <Colorize color={color}>
-      <Subtract repair>
+      <Subtract>
         <ExtrudeLinear
           height={length}
           topOutlineName="outer_top"

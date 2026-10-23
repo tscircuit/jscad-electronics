@@ -1,4 +1,4 @@
-import { repairGeom3 } from "./repair-geom3"
+import { withReferences } from "@tscircuit/jscad"
 import type { MaterialOptions } from "jscad-fiber"
 import type * as jscadModeling from "@jscad/modeling"
 
@@ -232,8 +232,6 @@ function renderNode(
     else if (type === Subtract)
       geom = booleans.subtract(geoms[0] as any, geoms.slice(1) as any)
     else geom = hulls.hull(geoms as any)
-    if (type === Subtract && props?.repair)
-      geom = repairGeom3(renderCtx.jscad, geom)
     return [
       {
         geom,
@@ -395,6 +393,9 @@ function renderNode(
 }
 
 export function render(root: VNode, jscad: typeof jscadModeling): RenderResult {
+  jscad = withReferences(
+    jscad as unknown as Parameters<typeof withReferences>[0],
+  ) as unknown as typeof jscadModeling
   const geometries = renderNode(root, undefined, { jscad })
   return {
     geometries: geometries.map((entry) =>
@@ -413,6 +414,9 @@ export function renderToJscadModel(
   root: VNode,
   jscad: typeof jscadModeling,
 ): JscadModel {
+  jscad = withReferences(
+    jscad as unknown as Parameters<typeof withReferences>[0],
+  ) as unknown as typeof jscadModeling
   const referenceFeatures: Record<string, JscadReferenceFeature> =
     Object.create(null)
   const geometries = renderNode(root, undefined, {

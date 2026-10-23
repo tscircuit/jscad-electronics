@@ -127,10 +127,10 @@ test("vanilla extrusion outlines retain holed profiles, signed height, twist and
       jscad.primitives.polygon({ points: inner as [number, number][] }),
     ),
   )
-  expect(jscad.measurements.measureVolume(tube)).toBeCloseTo(
-    jscad.measurements.measureVolume(expected),
-    8,
-  )
+  expect(
+    jscad.measurements.measureVolume(tube) /
+      jscad.measurements.measureVolume(expected),
+  ).toBeCloseTo(1, 8)
 
   const empty = h(ExtrudeLinear, {
     height: 4,
