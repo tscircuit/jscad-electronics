@@ -9,8 +9,9 @@ import {
 import { createRectangularTubeModel } from "../../lib/models/rectangulartube/model"
 import { geom3ToIndexedMesh } from "../../lib/mechanical/geom3-to-indexed-mesh"
 import { readJscadNamedEdge } from "../../lib/named-edges"
+import { prepareTubeDimensionLine } from "../fixtures/prepare-tube-dimension-line"
 
-test("named extrusion outlines produce conventional tube dimensions", async () => {
+test("native tube features prepare resolved paper-space dimension lines", async () => {
   const model = createRectangularTubeModel({
     width: 40,
     height: 20,
@@ -23,6 +24,20 @@ test("named extrusion outlines produce conventional tube dimensions", async () =
   const geometry = model.geometries[0]!
   if (!jscad.geometries.geom3.isA(geometry)) throw new Error("Expected solid")
   const mesh = geom3ToIndexedMesh(geometry)
+  const modelPoints = Array.from(
+    { length: mesh.positions.length / 3 },
+    (_, i) => ({
+      x: mesh.positions[i * 3]!,
+      y: mesh.positions[i * 3 + 1]!,
+      z: mesh.positions[i * 3 + 2]!,
+    }),
+  )
+  const [min, max] = jscad.measurements.measureBoundingBox(geometry)
+  const modelCenter = {
+    x: (min[0]! + max[0]!) / 2,
+    y: (min[1]! + max[1]!) / 2,
+    z: (min[2]! + max[2]!) / 2,
+  }
   for (let i = 0; i < mesh.positions.length; i += 3)
     positions.push(
       ...cadToGltf([
@@ -84,38 +99,60 @@ test("named extrusion outlines produce conventional tube dimensions", async () =
     center: { x, y },
     width,
     height,
+    scale: 1,
   })
-  const edge = (id: string, name: string, offset: number) => ({
-    type: "drawing_dimension",
-    drawing_dimension_id: id,
-    drawing_part_view_id: "end",
-    cad_component_id: cad.cad_component_id,
-    edge_name: name,
-    orientation: "horizontal",
-    offset,
-  })
+  const endView = view("end", "END PROFILE", "z_positive", -85, 35, 90, 90)
+  const sideView = view("side", "SIDE ELEVATION", "y_negative", 5, 20, 70, 140)
+  const bore = readJscadNamedEdge(model, "inner_top")
+  const outer = readJscadNamedEdge(model, "outer_top")
+  // Model interpretation and annotation layout happen before exporting. No
+  // model target, orientation, offset, precision or inference flag enters CJ.
+  const dimensions = [
+    prepareTubeDimensionLine("bore_width", endView, bore.points, modelCenter, {
+      orientation: "horizontal",
+      offset: 10,
+      clearanceSamples: outer.points,
+      edgeRefName: "inner_top",
+    }),
+    prepareTubeDimensionLine(
+      "outer_width",
+      endView,
+      outer.points,
+      modelCenter,
+      {
+        orientation: "horizontal",
+        offset: -10,
+        edgeRefName: "outer_top",
+      },
+    ),
+    prepareTubeDimensionLine(
+      "overall_height",
+      endView,
+      outer.points,
+      modelCenter,
+      {
+        orientation: "vertical",
+        offset: 10,
+      },
+    ),
+    prepareTubeDimensionLine(
+      "overall_length",
+      sideView,
+      modelPoints,
+      modelCenter,
+      {
+        orientation: "vertical",
+        offset: -10,
+      },
+    ),
+  ]
   const input = [
     page,
     cad,
-    view("end", "END PROFILE", "z_positive", -85, 35, 90, 90),
-    view("side", "SIDE ELEVATION", "y_negative", 5, 20, 70, 140),
+    endView,
+    sideView,
     view("iso", "ISOMETRIC", "isometric", 100, 20, 75, 115),
-    edge("bore_width", "inner_top", 10),
-    edge("outer_width", "outer_top", -10),
-    {
-      type: "drawing_dimension",
-      drawing_dimension_id: "overall_height",
-      drawing_part_view_id: "end",
-      height_of_view: true,
-      offset: 10,
-    },
-    {
-      type: "drawing_dimension",
-      drawing_dimension_id: "overall_length",
-      drawing_part_view_id: "side",
-      height_of_view: true,
-      offset: -10,
-    },
+    ...dimensions,
     {
       type: "drawing_page_title_block",
       drawing_page_title_block_id: "tube_title",
@@ -129,37 +166,43 @@ test("named extrusion outlines produce conventional tube dimensions", async () =
       number_of_sheets: 1,
     },
   ]
-  const resolveModelEdge: NonNullable<DrawingOptions["resolveModelEdge"]> = (
-    dimension,
-  ) => {
-    if (dimension.cad_component_id !== cad.cad_component_id)
-      throw new Error("Unknown model instance")
-    // This fixture uses identity placement. Placed instances transform every
-    // model-local reader sample before returning CAD world points to the exporter.
-    return readJscadNamedEdge(model, dimension.edge_name!)
-  }
+  const resolveModelEdges: NonNullable<DrawingOptions["resolveModelEdges"]> = (
+    view,
+  ) =>
+    view.drawing_part_view_id === "end"
+      ? [
+          { name: "inner_top", ...bore },
+          { name: "outer_top", ...outer },
+        ]
+      : []
   const svg = await convertCircuitJsonToDrawingSvg(input, {
     pixelsPerMm: 2,
     supersampling: 2,
     resolveScene: () => scene,
-    resolveModelEdge,
+    showEdgeNames: true,
+    resolveModelEdges,
   })
-  const measured = (id: string) =>
-    Number(
-      svg.match(
-        new RegExp(
-          `data-drawing-dimension-id="${id}" data-measured-value="([^"]+)"`,
-        ),
-      )?.[1],
+  expect(dimensions.map((dimension) => dimension.text)).toEqual([
+    "34.0",
+    "40.0",
+    "20.0",
+    "80.0",
+  ])
+  for (const dimension of dimensions) {
+    expect(
+      Math.hypot(
+        dimension.end.x - dimension.start.x,
+        dimension.end.y - dimension.start.y,
+      ),
+    ).toBeCloseTo(Number(dimension.text), 3)
+    expect(svg).toContain(
+      `data-drawing-dimension-line-id="${dimension.drawing_dimension_line_id}"`,
     )
-  expect(measured("bore_width")).toBeCloseTo(34, 3)
-  expect(measured("outer_width")).toBeCloseTo(40, 3)
-  expect(measured("overall_height")).toBeCloseTo(20, 3)
-  expect(measured("overall_length")).toBeCloseTo(80, 3)
-  expect(readJscadNamedEdge(model, "outer_top").closed).toBe(true)
-  expect(readJscadNamedEdge(model, "outer_top").points.length).toBeGreaterThan(
-    4,
-  )
-  expect(svg.match(/data-drawing-dimension-id=/g)).toHaveLength(4)
+  }
+  expect(bore.closed).toBe(true)
+  expect(outer.points.length).toBeGreaterThan(4)
+  expect(svg).toContain('data-drawing-edge-name="inner_top"')
+  expect(svg).toContain('data-drawing-edge-name="outer_top"')
+  expect(svg.match(/data-drawing-edge-name=/g)).toHaveLength(2)
   await expect(svg).toMatchSvgSnapshot(import.meta.path)
 })

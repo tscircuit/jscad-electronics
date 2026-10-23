@@ -48,7 +48,7 @@
     "zod": "^3.25.67"
   },
   "devDependencies": {
-    "@tscircuit/circuit-json-to-drawing": "https://github.com/tscircuit/circuit-json-to-drawing/archive/75ca612953330316da40248dd5154b7663ab9e01.tar.gz",
+    "@tscircuit/circuit-json-to-drawing": "https://github.com/tscircuit/circuit-json-to-drawing/archive/09f024aab55753254f922abfcb93de7bf92524ba.tar.gz",
     "@tscircuit/modelprinter": "latest",
     "@biomejs/biome": "^1.9.3",
     "@tscircuit/alphabet": "^0.0.24",

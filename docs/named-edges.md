@@ -82,9 +82,9 @@ unambiguous.
 `listJscadReferenceFeatures` exposes generic names, including features other than
 edges. `listJscadNamedEdges` filters supported planar paths and contours.
 `readJscadNamedEdge` preserves every native sample and the closed/open flag,
-checks placement matrices, and leaves source geometry unchanged. A horizontal or
-vertical dimension measures the full projected outline extent; an aligned
-dimension requires a straight open path.
+checks placement matrices, and leaves source geometry unchanged. Drawing
+preparation can measure the full projected extent of a closed outline or the
+length of a straight open path before producing its annotations.
 
 `createRectangularTubeModel(props)` renders the same component through this
 collector. `createRectangularTubeGeom` returns that collected solid, and
@@ -97,9 +97,36 @@ and placement contract.
 ## Drawing snapshots
 
 The model PNG highlights the actual top and bottom outlines. The drawing SVG uses
-the same collected solid and measures its bore width as 34 mm, outer width as
-40 mm, and inferred view height/length as 20/80 mm. Overall view width/height
-presets remain independent of named features.
+the same collected solid. Its test fixture prepares the bore width of 34 mm,
+outer width of 40 mm, height of 20 mm, and length of 80 mm from native profile
+samples and model bounds. Explicit 1:1 views make their paper placement
+independent of automatic camera fitting.
+
+The resulting Circuit JSON contains only resolved `drawing_dimension_line`
+elements: `start` and `end` are dimension-line endpoints in page-centered paper
+millimeters (+Y up), and `text` is already formatted by the caller. Optional
+`edge_ref_start` and `edge_ref_end` are the paper-space witness points used for
+extension lines. `edge_ref_name` retains the authored feature name for traceability.
+Model selection, feature interpretation, measurement, and annotation placement
+happen before exporting; model geometry remains in the native reader.
+
+```ts
+{
+  type: "drawing_dimension_line",
+  drawing_dimension_line_id: "bore_width",
+  drawing_part_view_id: "end",
+  start: { x: -102, y: 55 },
+  end: { x: -68, y: 55 },
+  text: "34.0",
+  edge_ref_start: { x: -102, y: 41 },
+  edge_ref_end: { x: -68, y: 41 },
+  edge_ref_name: "inner_top",
+}
+```
+
+The exporter draws those supplied paper-space lines and text. The fixture also
+demonstrates optional named-feature labels with `showEdgeNames` and a runtime
+model-reader callback, without storing native feature geometry in Circuit JSON.
 
 The viewer-free `jscad-fiber/model` entry evaluates these components with a supplied
 JSCAD kernel. Serializable operation plans retain the outline-name metadata on
