@@ -1,4 +1,6 @@
 export * from "./A01005"
+export * from "./named-edges"
+export * from "./mechanical/geom3-to-indexed-mesh"
 export * from "./A0201"
 export * from "./A0402"
 export * from "./A0603"
