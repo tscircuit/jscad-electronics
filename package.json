@@ -44,12 +44,12 @@
   "dependencies": {
     "@tscircuit/mm": "^0.0.8",
     "earcut": "^3.2.3",
-    "jscad-fiber": "https://pkg.pr.new/jscad-fiber@4c9b3bb",
+    "jscad-fiber": "^0.0.91",
     "zod": "^3.25.67",
-    "@tscircuit/jscad": "https://pkg.pr.new/tscircuit/jscad/@tscircuit/jscad@abc44a1"
+    "@tscircuit/jscad": "https://jscdn.tscircuit.com/@tscircuit/jscad/0.0.3.tgz"
   },
   "devDependencies": {
-    "@tscircuit/circuit-json-to-drawing": "https://github.com/tscircuit/circuit-json-to-drawing/archive/09f024aab55753254f922abfcb93de7bf92524ba.tar.gz",
+    "@tscircuit/circuit-json-to-drawing": "https://github.com/tscircuit/circuit-json-to-drawing/archive/a0e146576bae2aebd38fb1af6662b3ad44eaa89a.tar.gz",
     "@tscircuit/modelprinter": "latest",
     "@biomejs/biome": "^1.9.3",
     "@tscircuit/alphabet": "^0.0.24",
@@ -65,12 +65,13 @@
     "jscad-to-gltf": "^0.0.9",
     "looks-same": "^10.0.1",
     "pngjs": "^7.0.0",
-    "poppygl": "^0.0.34",
+    "poppygl": "^0.0.37",
     "react-cosmos": "7.0.0",
     "react-cosmos-plugin-vite": "7.0.0",
     "tsup": "^8.3.0",
     "vite": "^7.1.2",
-    "vite-tsconfig-paths": "^5.0.1"
+    "vite-tsconfig-paths": "^5.0.1",
+    "circuit-json": "^0.0.534"
   },
   "peerDependencies": {
     "@jscad/modeling": "^2.12.5",
