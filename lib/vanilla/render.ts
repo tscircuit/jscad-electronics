@@ -1,3 +1,4 @@
+import { withReferences } from "@tscircuit/jscad"
 import type { MaterialOptions } from "jscad-fiber"
 import type * as jscadModeling from "@jscad/modeling"
 
@@ -23,6 +24,23 @@ import {
 
 interface RenderContext {
   jscad: typeof jscadModeling
+  referenceFeatures?: Record<string, JscadReferenceFeature>
+  matrix?: jscadModeling.maths.mat4.Mat4
+}
+
+export type NativeGeometry =
+  | jscadModeling.geometries.geom2.Geom2
+  | jscadModeling.geometries.path2.Path2
+  | jscadModeling.geometries.geom3.Geom3
+
+export interface JscadReferenceFeature {
+  geometry: NativeGeometry
+  matrix: number[]
+}
+
+export interface JscadModel {
+  geometries: NativeGeometry[]
+  referenceFeatures: Record<string, JscadReferenceFeature>
 }
 
 export type ColoredGeom = {
@@ -52,6 +70,49 @@ const toVec3 = (v: any): [number, number, number] => {
   if (typeof v === "object" && v)
     return [Number(v.x) || 0, Number(v.y) || 0, Number(v.z) || 0]
   return [0, 0, 0]
+}
+
+const assertFiniteFeatureTransform = (values: readonly number[]) => {
+  if (!values.every(Number.isFinite))
+    throw new Error("JSCAD reference feature transforms must be finite")
+}
+
+const transformFeatureContext = (
+  context: RenderContext,
+  local: jscadModeling.maths.mat4.Mat4,
+): RenderContext => {
+  if (!context.referenceFeatures) return context
+  const { mat4 } = context.jscad.maths
+  const matrix = mat4.multiply(mat4.create(), context.matrix!, local)
+  assertFiniteFeatureTransform(matrix)
+  return { ...context, matrix }
+}
+
+const validateFeatureName = (name: unknown) => {
+  if (name !== undefined && (typeof name !== "string" || !name.trim()))
+    throw new Error("Named JSCAD features require a nonblank name")
+}
+
+const recordFeature = (
+  context: RenderContext,
+  name: string | undefined,
+  geometry: NativeGeometry,
+) => {
+  if (!context.referenceFeatures || name === undefined) return
+  if (Object.hasOwn(context.referenceFeatures, name))
+    throw new Error(`Duplicate JSCAD feature name "${name}"`)
+  const { geometries } = context.jscad
+  if (
+    !geometries.geom2.isA(geometry) &&
+    !geometries.path2.isA(geometry) &&
+    !geometries.geom3.isA(geometry)
+  )
+    throw new Error(`Named JSCAD feature "${name}" requires native geometry`)
+  assertFiniteFeatureTransform(context.matrix!)
+  context.referenceFeatures[name] = {
+    geometry,
+    matrix: [...context.matrix!],
+  }
 }
 
 function renderNode(
@@ -94,12 +155,23 @@ function renderNode(
 
   if (type === Translate) {
     // accept either `offset`, `center` (array or object), or x/y/z props
-    const off = toVec3(
-      props?.offset ??
-        props?.center ?? { x: props?.x, y: props?.y, z: props?.z },
+    const offset = props?.offset ??
+      props?.center ?? { x: props?.x, y: props?.y, z: props?.z }
+    if (renderCtx.referenceFeatures)
+      assertFiniteFeatureTransform(
+        (Array.isArray(offset)
+          ? offset.slice(0, 3)
+          : [offset?.x, offset?.y, offset?.z]
+        ).map((value) => Number(value ?? 0)),
+      )
+    const off = toVec3(offset)
+    const { mat4 } = renderCtx.jscad.maths
+    const childContext = transformFeatureContext(
+      renderCtx,
+      mat4.fromTranslation(mat4.create(), off),
     )
     const geoms = (children ?? []).flatMap((c) =>
-      renderNode(c, colorCtx, renderCtx),
+      renderNode(c, colorCtx, childContext),
     )
     return geoms.map(({ geom, color, material }) => ({
       material,
@@ -111,6 +183,19 @@ function renderNode(
   if (type === Rotate) {
     // Match jscad-fiber's angles prop while retaining the vanilla aliases.
     const angles = props?.angles ?? props?.rotation
+    if (renderCtx.referenceFeatures)
+      assertFiniteFeatureTransform(
+        (Array.isArray(angles)
+          ? angles.slice(0, 3)
+          : [props?.x, props?.y, props?.z]
+        ).map((value) =>
+          Number(
+            typeof value === "string"
+              ? value.replace(/\s*deg$/i, "")
+              : (value ?? 0),
+          ),
+        ),
+      )
     const rot: [number, number, number] = Array.isArray(angles)
       ? [degToRad(angles[0]), degToRad(angles[1]), degToRad(angles[2])]
       : [
@@ -118,8 +203,13 @@ function renderNode(
           degToRad(props?.y ?? 0),
           degToRad(props?.z ?? 0),
         ]
+    const { mat4 } = renderCtx.jscad.maths
+    const childContext = transformFeatureContext(
+      renderCtx,
+      mat4.fromTaitBryanRotation(mat4.create(), rot[2], rot[1], rot[0]),
+    )
     const geoms = (children ?? []).flatMap((c) =>
-      renderNode(c, colorCtx, renderCtx),
+      renderNode(c, colorCtx, childContext),
     )
     return geoms.map(({ geom, color, material }) => ({
       material,
@@ -152,33 +242,89 @@ function renderNode(
   }
 
   if (type === Custom) {
+    const { name, reference, geometry } = props
+    validateFeatureName(name)
+    if (reference && name === undefined)
+      throw new Error("Named JSCAD features require a nonblank name")
+    recordFeature(renderCtx, name, geometry)
+    if (reference) return []
     return [{ geom: props.geometry, color: colorCtx }]
   }
 
   if (type === Polygon) {
     const points: Array<[number, number]> = props?.points ?? []
-    const g2 = geometries.geom2.fromPoints(points as any)
+    const origin: [number, number] = points[0] ?? [0, 0]
+    const area = points.reduce((sum, point, index) => {
+      const next = points[(index + 1) % points.length]!
+      return (
+        sum +
+        (point[0] - origin[0]) * (next[1] - origin[1]) -
+        (next[0] - origin[0]) * (point[1] - origin[1])
+      )
+    }, 0)
+    const oriented = area < 0 ? [...points].reverse() : points
+    const g2 = geometries.geom2.fromPoints(oriented as any)
     return [{ geom: g2, color: colorCtx ?? props?.color }]
   }
 
   if (type === ExtrudeLinear) {
+    const { topOutlineName, bottomOutlineName, twistAngle, twistSteps } = props
+    const namedOutline =
+      topOutlineName !== undefined || bottomOutlineName !== undefined
+    const height = props?.height ?? props?.h ?? 1
+    validateFeatureName(topOutlineName)
+    validateFeatureName(bottomOutlineName)
+    if (namedOutline) {
+      if (!Number.isFinite(height) || !Number.isFinite(twistAngle ?? 0))
+        throw new Error(
+          "Named extrusion outlines require finite height and twistAngle",
+        )
+      if (
+        twistSteps !== undefined &&
+        (!Number.isInteger(twistSteps) || twistSteps < 1)
+      )
+        throw new Error(
+          "Named extrusion outlines require positive integer twistSteps",
+        )
+    }
     const entries = (children ?? []).flatMap((c) =>
       renderNode(c, colorCtx, renderCtx),
     )
     const geoms2 = entries.map((g) => g.geom)
     if (geoms2.length === 0) return []
+    if (namedOutline && geoms2.length !== 1)
+      throw new Error("Named extrusion outlines require exactly one profile")
     const base2 =
       geoms2.length > 1 ? (booleans.union as any)(geoms2) : geoms2[0]
-    const height = props?.height ?? props?.h ?? 1
-    let g3 = extrusions.extrudeLinear({ height }, base2)
-
-    if (g3.polygons) {
-      for (const poly of g3.polygons) {
-        if (!poly.plane || !poly.vertices || poly.vertices.length < 3) continue
-        // The `extrudeLinear` operation have an inverted winding order.
-        poly.vertices.reverse()
-      }
+    if (
+      namedOutline &&
+      !geometries.geom2.isA(base2) &&
+      !(geometries.path2.isA(base2) && base2.isClosed)
+    )
+      throw new Error(
+        "Named extrusion outlines require a geom2 or closed path2 profile",
+      )
+    if (namedOutline && renderCtx.referenceFeatures) {
+      const { mat4 } = renderCtx.jscad.maths
+      const topContext = transformFeatureContext(
+        renderCtx,
+        mat4.multiply(
+          mat4.create(),
+          mat4.fromTranslation(mat4.create(), [0, 0, height]),
+          mat4.fromZRotation(mat4.create(), twistAngle ?? 0),
+        ),
+      )
+      recordFeature(topContext, topOutlineName, base2)
+      recordFeature(renderCtx, bottomOutlineName, base2)
     }
+    const g3 = extrusions.extrudeLinear(
+      {
+        height,
+        ...(twistAngle !== undefined ? { twistAngle } : {}),
+        ...(twistSteps !== undefined ? { twistSteps } : {}),
+      },
+      base2,
+    )
 
     return [
       {
@@ -247,6 +393,9 @@ function renderNode(
 }
 
 export function render(root: VNode, jscad: typeof jscadModeling): RenderResult {
+  jscad = withReferences(
+    jscad as unknown as Parameters<typeof withReferences>[0],
+  ) as unknown as typeof jscadModeling
   const geometries = renderNode(root, undefined, { jscad })
   return {
     geometries: geometries.map((entry) =>
@@ -254,5 +403,44 @@ export function render(root: VNode, jscad: typeof jscadModeling): RenderResult {
         ? { ...entry, geom: { ...entry.geom, material: entry.material } }
         : entry,
     ),
+  }
+}
+
+/** Collect names declared by model components while rendering their solids.
+ * Features retain native geometry and a full model-space ancestor transform;
+ * applying that matrix after sampling preserves out-of-plane 2D references.
+ */
+export function renderToJscadModel(
+  root: VNode,
+  jscad: typeof jscadModeling,
+): JscadModel {
+  jscad = withReferences(
+    jscad as unknown as Parameters<typeof withReferences>[0],
+  ) as unknown as typeof jscadModeling
+  const referenceFeatures: Record<string, JscadReferenceFeature> =
+    Object.create(null)
+  const geometries = renderNode(root, undefined, {
+    jscad,
+    referenceFeatures,
+    matrix: jscad.maths.mat4.create(),
+  })
+  return {
+    geometries: geometries.map(({ geom, color }) => {
+      if (color === undefined) return geom
+      const { colors } = jscad
+      const rgb =
+        typeof color === "string"
+          ? color.startsWith("#")
+            ? colors.hexToRgb(
+                /^#[\da-f]{3,4}$/i.test(color)
+                  ? `#${[...color.slice(1)].map((c) => c + c).join("")}`
+                  : color,
+              )
+            : colors.colorNameToRgb(color)
+          : color
+      if (!rgb) throw new Error(`Unknown JSCAD color "${color}"`)
+      return colors.colorize(rgb, geom)
+    }),
+    referenceFeatures,
   }
 }

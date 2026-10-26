@@ -24,3 +24,12 @@ export type Color =
   | [number, number, number, number]
 
 export const Custom = Symbol("Custom")
+
+// The vanilla build aliases jscad-fiber/model to this module as well as its
+// components, so model factories share the same traversal without React.
+export { renderToJscadModel } from "./render"
+export type {
+  JscadModel,
+  JscadReferenceFeature,
+  NativeGeometry,
+} from "./render"

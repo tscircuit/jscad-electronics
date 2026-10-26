@@ -3,10 +3,18 @@ import { Footprinter3d } from "../Footprinter3d"
 import { Fragment, type VNode, h } from "./h"
 import { type ColoredGeom, type RenderResult, render } from "./render"
 export * from "./convertCSGToThreeGeom"
+export * from "../named-edges"
+export * from "../mechanical/geom3-to-indexed-mesh"
 import type * as jscadModeling from "@jscad/modeling"
 
 export { h, Fragment }
 export type { VNode, RenderResult, ColoredGeom }
+export { renderToJscadModel } from "./render"
+export type {
+  JscadModel,
+  JscadReferenceFeature,
+  NativeGeometry,
+} from "./render"
 
 export function getJscadModelForFootprint(
   footprint: string,
