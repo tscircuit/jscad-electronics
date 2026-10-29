@@ -87,6 +87,7 @@ import { SOT563 } from "./SOT-563"
 import { BGA } from "./BGA"
 import { UsbCMidmount } from "./UsbCMidmount"
 import { SOT143 } from "./SOT143"
+import { getDfnBodyDimensions } from "./utils/getDfnBodyDimensions"
 
 /**
  * Outputs a 3d model for any [footprinter string](https://github.com/tscircuit/footprinter)
@@ -122,6 +123,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     w: number
     p: number
     bodywidth?: number
+    bodylength?: number
     bodyheight?: number
     bodythickness?: number
     bh?: number
@@ -311,11 +313,12 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       const hasThermalPad =
         typeof fpJson.thermalpad?.x === "number" &&
         typeof fpJson.thermalpad?.y === "number"
+      const { bodyWidth, bodyLength } = getDfnBodyDimensions(fpJson)
       return (
         <DFN
           num_pins={fpJson.num_pins}
-          bodyWidth={fpJson.w}
-          bodyLength={fpJson.h}
+          bodyWidth={bodyWidth}
+          bodyLength={bodyLength}
           pitch={fpJson.p}
           padLength={fpJson.pl}
           padWidth={fpJson.pw}
