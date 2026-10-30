@@ -1,5 +1,7 @@
 import { LGA } from "../LGA"
 import { SSOP } from "../SSOP"
+import { DO219AD } from "../DO219AD"
+import { SOD323HE } from "../SOD323HE"
 
 export interface BodyFootprintParameters {
   fn: string
@@ -11,15 +13,46 @@ export interface BodyFootprintParameters {
   pl: number
   grid?: { x: number; y: number }
   bodywidth?: number
+  bodylength?: number
   bodyheight?: number
   bodythickness?: number
+  leadspan?: number
+  cathodelength?: number
+  cathodewidth?: number
+  anodelength?: number
+  anodewidth?: number
+  terminalthickness?: number
+  standoff?: number
+  taperinset?: number
+  markingwidth?: number
 }
 
-/** Consume only fields validated by Footprinter. Body height is Y in its
- * schema; body thickness is Z. Terminal dimensions are still approximations
- * until physical terminal fields are added upstream. No part lookup is used.
+/** Consume fields validated by Footprinter. SSOP/LGA bodyheight is the Y
+ * dimension and bodythickness is Z; flat-lead diodes use bodylength along X,
+ * bodywidth along Y and bodyheight above the Z=0 seating plane, all in mm.
+ * SSOP/LGA terminal dimensions remain approximations; diodes expose their
+ * physical terminal dimensions separately from the copper land pattern.
  */
 export function renderFootprinterBodyModel(p: BodyFootprintParameters) {
+  if (p.fn === "do219ad" || p.fn === "sod323he") {
+    const Diode = p.fn === "do219ad" ? DO219AD : SOD323HE
+    return (
+      <Diode
+        bodyLength={p.bodylength}
+        bodyWidth={p.bodywidth}
+        bodyHeight={p.bodyheight}
+        leadSpan={p.leadspan}
+        cathodeLength={p.cathodelength}
+        cathodeWidth={p.cathodewidth}
+        anodeLength={p.anodelength}
+        anodeWidth={p.anodewidth}
+        terminalThickness={p.terminalthickness}
+        standoff={p.standoff}
+        taperInset={p.taperinset}
+        markingWidth={p.markingwidth}
+      />
+    )
+  }
   if (
     p.bodywidth === undefined &&
     p.bodyheight === undefined &&
