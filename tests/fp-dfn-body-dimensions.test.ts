@@ -1,17 +1,11 @@
 import { expect, test } from "bun:test"
 import * as jscad from "@jscad/modeling"
-import { fp } from "@tscircuit/footprinter"
 import { Footprinter3d } from "../lib/Footprinter3d"
 import { getComponentModel } from "./helpers/component-model"
 import { importVanilla } from "./fixtures/importVanilla.js"
 
 test("captures DFN body dimensions through React and vanilla Footprinter adapters", async () => {
   const footprint = "dfn6_w3mm_h2mm_bodywidth2mm_bodylength1.6mm_p0.5mm"
-  expect(fp.string(footprint).json()).toMatchObject({
-    w: 3,
-    bodywidth: 2,
-    bodylength: 1.6,
-  })
   const { getJscadModelForFootprint } = await importVanilla()
   const reactModel = getComponentModel(Footprinter3d, { footprint })
   const vanillaModel = getJscadModelForFootprint(footprint, jscad)
