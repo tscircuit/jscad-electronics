@@ -25,8 +25,8 @@ test("captures DFN body dimensions through React and vanilla Footprinter adapter
       bodyLengthMm: Number((maximum[1] - minimum[1]).toFixed(3)),
     }).toMatchInlineSnapshot(`
       {
-        "bodyLengthMm": 5.3,
-        "bodyWidthMm": 3,
+        "bodyLengthMm": 1.6,
+        "bodyWidthMm": 2,
       }
     `)
   }

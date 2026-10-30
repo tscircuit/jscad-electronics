@@ -122,6 +122,7 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
     w: number
     p: number
     bodywidth?: number
+    bodylength?: number
     bodyheight?: number
     bodythickness?: number
     bh?: number
@@ -314,8 +315,8 @@ export const Footprinter3d = ({ footprint }: { footprint: string }) => {
       return (
         <DFN
           num_pins={fpJson.num_pins}
-          bodyWidth={fpJson.w}
-          bodyLength={fpJson.h}
+          bodyWidth={fpJson.bodywidth ?? fpJson.w}
+          bodyLength={fpJson.bodylength ?? fpJson.h}
           pitch={fpJson.p}
           padLength={fpJson.pl}
           padWidth={fpJson.pw}
