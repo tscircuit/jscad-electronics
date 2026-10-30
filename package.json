@@ -44,7 +44,7 @@
   "dependencies": {
     "@tscircuit/mm": "^0.0.8",
     "earcut": "^3.2.3",
-    "jscad-fiber": "^0.0.91",
+    "jscad-fiber": "^0.0.92",
     "zod": "^3.25.67",
     "@tscircuit/jscad": "https://jscdn.tscircuit.com/@tscircuit/jscad/0.0.3.tgz"
   },
