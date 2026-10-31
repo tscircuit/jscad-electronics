@@ -35,7 +35,6 @@
     "format": "node scripts/generate-model-renderers.mjs && biome format --write .",
     "format:check": "node scripts/generate-model-renderers.mjs && biome format .",
     "build:site": "node scripts/prepare-model-contracts.mjs && node scripts/generate-model-renderers.mjs && cosmos-export",
-    "postinstall": "node scripts/prepare-model-contracts.mjs --refresh",
     "prepare": "npm run build",
     "prepack": "npm run build",
     "test:vanilla": "bun run build && node tests/vanilla-smoke.mjs",

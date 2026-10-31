@@ -117,8 +117,9 @@ no pair, the build uses modelprinter main. `MODELPRINTER_REF=<full-commit-sha>`
 selects an exact contract commit instead of a PR. Each preparation records the
 resolved main SHA, paired SHA and merged source tree in ignored
 `.model-contracts/`. Subsequent commands reuse that input, including offline;
-`bun run contracts:refresh` fetches updated main and PR heads. A new install also
-refreshes it. Preparation failures never fall back to the npm bootstrap package.
+`bun run contracts:refresh` fetches updated main and PR heads. Source builds and
+tests prepare the selected input when needed. Preparation failures never fall
+back to the npm bootstrap package.
 To reproduce recorded contract inputs, set `MODELPRINTER_MAIN_REF` to the recorded
 main SHA and `MODELPRINTER_REF` to the paired SHA (omit the latter for main-only builds).
 
