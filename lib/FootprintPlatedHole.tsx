@@ -7,6 +7,7 @@ import {
   Cylinder,
   Subtract,
   Hull,
+  Rotate,
 } from "jscad-fiber"
 
 export const FootprintPlatedHole = ({
@@ -28,82 +29,101 @@ export const FootprintPlatedHole = ({
     )
   }
   if (hole.shape === "circular_hole_with_rect_pad") {
+    const rectPadWidth =
+      hole.rect_pad_width ?? (hole as any).outer_diameter ?? hole.hole_diameter
+    const rectPadHeight =
+      hole.rect_pad_height ??
+      hole.rect_pad_width ??
+      (hole as any).outer_diameter ??
+      hole.hole_diameter
+    const holeOffsetX = (hole as any).hole_offset_x ?? 0
+    const holeOffsetY = (hole as any).hole_offset_y ?? 0
     return (
       <Colorize color={color} material={componentMaterials.copper}>
         <Translate offset={[hole.x, hole.y, 0]}>
           <Subtract>
             <Cuboid
-              size={[hole.rect_pad_width, hole.rect_pad_height, 0.01]}
+              size={[rectPadWidth, rectPadHeight, 0.01]}
               center={[0, 0, 0]}
             />
-            <Cylinder radius={hole.hole_diameter / 2} height={0.01} />
+            <Cylinder
+              radius={hole.hole_diameter / 2}
+              height={0.01}
+              center={[holeOffsetX, holeOffsetY, 0]}
+            />
           </Subtract>
         </Translate>
       </Colorize>
     )
   }
-  if (hole.shape === "pill") {
-    const width = hole.outer_width
-    const height = hole.outer_height
+  if (hole.shape === "pill" || (hole as any).shape === "rotated_pill") {
+    const pillHole = hole as any
+    const width = pillHole.outer_width
+    const height = pillHole.outer_height
     const radius = Math.min(width, height) / 2
     const isHorizontal = width > height
 
-    const holeWidth = hole.hole_width ?? 0.8
-    const holeHeight = hole.hole_height ?? 0.8
+    const holeWidth = pillHole.hole_width ?? 0.8
+    const holeHeight = pillHole.hole_height ?? 0.8
+    const rotationRad = ((pillHole.ccw_rotation ?? 0) * Math.PI) / 180
+
+    const subtractedBody = (
+      <Subtract>
+        <Hull>
+          <Cylinder
+            radius={radius}
+            height={0.01}
+            center={[
+              isHorizontal ? -(width / 2 - radius) : 0,
+              isHorizontal ? 0 : -(height / 2 - radius),
+              0,
+            ]}
+          />
+          <Cylinder
+            radius={radius}
+            height={0.01}
+            center={[
+              isHorizontal ? width / 2 - radius : 0,
+              isHorizontal ? 0 : height / 2 - radius,
+              0,
+            ]}
+          />
+        </Hull>
+        {holeWidth === holeHeight ? (
+          <Cylinder radius={holeWidth / 2} height={0.01} />
+        ) : (
+          <Hull>
+            <Cylinder
+              radius={Math.min(holeWidth, holeHeight) / 2}
+              height={0.01}
+              center={[
+                holeWidth > holeHeight ? -(holeWidth / 2 - holeHeight / 2) : 0,
+                holeWidth > holeHeight ? 0 : -(holeHeight / 2 - holeWidth / 2),
+                0,
+              ]}
+            />
+            <Cylinder
+              radius={Math.min(holeWidth, holeHeight) / 2}
+              height={0.01}
+              center={[
+                holeWidth > holeHeight ? holeWidth / 2 - holeHeight / 2 : 0,
+                holeWidth > holeHeight ? 0 : holeHeight / 2 - holeWidth / 2,
+                0,
+              ]}
+            />
+          </Hull>
+        )}
+      </Subtract>
+    )
 
     return (
       <Colorize color={color} material={componentMaterials.copper}>
-        <Translate offset={[hole.x, hole.y, 0]}>
-          <Subtract>
-            <Hull>
-              <Cylinder
-                radius={radius}
-                height={0.01}
-                center={[
-                  isHorizontal ? -(width / 2 - radius) : 0,
-                  isHorizontal ? 0 : -(height / 2 - radius),
-                  0,
-                ]}
-              />
-              <Cylinder
-                radius={radius}
-                height={0.01}
-                center={[
-                  isHorizontal ? width / 2 - radius : 0,
-                  isHorizontal ? 0 : height / 2 - radius,
-                  0,
-                ]}
-              />
-            </Hull>
-            {holeWidth === holeHeight ? (
-              <Cylinder radius={holeWidth / 2} height={0.01} />
-            ) : (
-              <Hull>
-                <Cylinder
-                  radius={Math.min(holeWidth, holeHeight) / 2}
-                  height={0.01}
-                  center={[
-                    holeWidth > holeHeight
-                      ? -(holeWidth / 2 - holeHeight / 2)
-                      : 0,
-                    holeWidth > holeHeight
-                      ? 0
-                      : -(holeHeight / 2 - holeWidth / 2),
-                    0,
-                  ]}
-                />
-                <Cylinder
-                  radius={Math.min(holeWidth, holeHeight) / 2}
-                  height={0.01}
-                  center={[
-                    holeWidth > holeHeight ? holeWidth / 2 - holeHeight / 2 : 0,
-                    holeWidth > holeHeight ? 0 : holeHeight / 2 - holeWidth / 2,
-                    0,
-                  ]}
-                />
-              </Hull>
-            )}
-          </Subtract>
+        <Translate offset={[pillHole.x, pillHole.y, 0]}>
+          {rotationRad !== 0 ? (
+            <Rotate angles={[0, 0, rotationRad]}>{subtractedBody}</Rotate>
+          ) : (
+            subtractedBody
+          )}
         </Translate>
       </Colorize>
     )
