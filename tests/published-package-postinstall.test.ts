@@ -27,7 +27,8 @@ test("the packed package completes postinstall without repository scripts", asyn
     const packageArchive = (await readdir(packageDirectory)).find((filename) =>
       filename.endsWith(".tgz"),
     )
-    if (!packageArchive) throw new Error("bun pm pack did not create an archive")
+    if (!packageArchive)
+      throw new Error("bun pm pack did not create an archive")
 
     const extractedPackage = Bun.spawnSync([
       "tar",
