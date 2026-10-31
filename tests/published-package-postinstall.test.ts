@@ -13,11 +13,11 @@ test("the packed package completes postinstall without repository scripts", asyn
     // execute the published consumer postinstall below without skipping it.
     const packedPackage = Bun.spawnSync(
       [
-        "npm",
+        process.execPath,
+        "pm",
         "pack",
-        "--offline",
         "--ignore-scripts",
-        "--pack-destination",
+        "--destination",
         packageDirectory,
       ],
       { cwd: join(import.meta.dir, "..") },
@@ -27,7 +27,7 @@ test("the packed package completes postinstall without repository scripts", asyn
     const packageArchive = (await readdir(packageDirectory)).find((filename) =>
       filename.endsWith(".tgz"),
     )
-    if (!packageArchive) throw new Error("npm pack did not create an archive")
+    if (!packageArchive) throw new Error("bun pm pack did not create an archive")
 
     const extractedPackage = Bun.spawnSync([
       "tar",
