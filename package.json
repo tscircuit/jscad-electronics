@@ -45,7 +45,7 @@
     "earcut": "^3.2.3",
     "jscad-fiber": "^0.0.92",
     "zod": "^3.25.67",
-    "@tscircuit/jscad": "https://jscdn.tscircuit.com/@tscircuit/jscad/0.0.3.tgz"
+    "@tscircuit/jscad": "^0.0.6"
   },
   "devDependencies": {
     "@tscircuit/circuit-json-to-drawing": "https://github.com/tscircuit/circuit-json-to-drawing/archive/a0e146576bae2aebd38fb1af6662b3ad44eaa89a.tar.gz",
