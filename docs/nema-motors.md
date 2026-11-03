@@ -63,6 +63,11 @@ are mutually exclusive; React and vanilla props use `backFaceHoles`,
 `backFaceScrews` or `backFacePlain` booleans.
 
 The rear face is at Z=-bodyLength. Heads project outward along -Z.
+NEMA23's representative model routes its default wires out of the front
+sidewall (-Y, `wireSideAngle={270}`). Its 50 × 32 mm rear screw pattern keeps
+the same X/Y orientation; the body does not rotate to move the wires.
+`nema23_wireangle0deg` or `wireSideAngle={0}` selects the +X side explicitly.
+
 `backFaceHoleSpacing`, `backFaceHoleDiameter`, `backFaceHoleDepth`, and
 `backFaceScrewSize` configure the rear features independently of the front
 mounting holes. String modifiers are `backholespacing`, `backholediameter`,
