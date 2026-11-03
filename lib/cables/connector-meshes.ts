@@ -1,6 +1,7 @@
 import { createBulletMeshes } from "./bullet-meshes"
 import { componentMaterials } from "../materials"
 import jscad from "@jscad/modeling"
+import { getJstMotorConnector } from "@tscircuit/modelprinter"
 import { geometryToCableMesh } from "./geometry-to-mesh"
 import type {
   CableColor,
@@ -40,6 +41,13 @@ function createJstMeshes(
     pitch,
   } = connector
   const opening = pitch === 1 ? 0.55 : 1.05
+  const profile = getJstMotorConnector(
+    `jst-${connector.kind === "jst_ph_housing" ? "ph" : "sh"}-${pinCount}`,
+  )!
+  // Connector-local right-handed mm: -X pin 1, +Z tip -> wire exit.
+  // A narrow nose enters the socket; the full-width shoulder stays above
+  // its lip. SH contacts sit 0.25 mm off the cavity's center in thickness.
+  const shoulderStart = profile.plugInsertionDepth + 0.1
   const holes = Array.from({ length: pinCount }, (_, index) => {
     const x = (index - (pinCount - 1) / 2) * pitch
     return cuboid({
@@ -60,12 +68,22 @@ function createJstMeshes(
     center: [0, height / 2, depth * 0.65],
   })
   const body = subtract(
-    roundedCuboid({
-      size: [width, height, depth],
-      center: [0, 0, depth / 2],
-      roundRadius: 0.1,
-      segments: 8,
-    }),
+    union(
+      roundedCuboid({
+        size: [width, height, depth - shoulderStart],
+        center: [0, 0, (depth + shoulderStart) / 2],
+        roundRadius: 0.1,
+        segments: 8,
+      }),
+      cuboid({
+        size: [
+          profile.plugTipWidth,
+          profile.plugTipHeight,
+          shoulderStart + 0.1,
+        ],
+        center: [0, -profile.contactOffsetZ, (shoulderStart + 0.1) / 2],
+      }),
+    ),
     ...holes,
     ...backHoles,
     latchCut,
