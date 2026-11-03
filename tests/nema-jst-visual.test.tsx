@@ -1,5 +1,4 @@
 import { expect, test } from "bun:test"
-import { PNG } from "pngjs"
 import {
   getJstMotorConnector,
   getNemaMotorReferencePoints,
@@ -7,10 +6,11 @@ import {
 import "./fixtures/png-matcher"
 import { NemaMotor } from "../lib/NemaMotor"
 import { renderComponent } from "./helpers/render-component"
+import { createAnnotatedViewSheet } from "./fixtures/annotated-view-sheet"
 
 test("JST PH and SH headers show their mating faces on the motor", async () => {
-  // Range endpoints plus the existing PH6 model pin both new families and
-  // backwards-compatible geometry. Each image pairs placement with a closeup
+  // Range endpoints plus the existing PH6 model cover both families.
+  // Each image pairs placement with a closeup
   // large enough to inspect individual contacts and the open mating face.
   for (const wireConnection of [
     "jst-ph-2",
@@ -42,20 +42,15 @@ test("JST PH and SH headers show their mating faces on the motor", async () => {
         showGrid: false,
       }),
     ]
-    const sheet = new PNG({ width: 1600, height: 600 })
-    for (const [i, view] of views.entries()) {
-      PNG.bitblt(
-        PNG.sync.read(Buffer.from(view)),
-        sheet,
-        0,
-        0,
-        800,
-        600,
-        i * 800,
-        0,
-      )
-    }
-    await expect(PNG.sync.write(sheet)).toMatchPngSnapshot(
+    const model = `nema17_${wireConnection.replaceAll("-", "")}`
+    const sheet = createAnnotatedViewSheet(
+      views.map((png, index) => ({
+        png,
+        annotation: `${model}\n${index === 0 ? "MOTOR / CONNECTOR PLACEMENT" : "SOCKET DETAIL / OPEN MOUTH AND CONTACTS"}`,
+      })),
+      { columns: 2, fontSize: 22, annotationHeight: 90 },
+    )
+    await expect(sheet).toMatchPngSnapshot(
       import.meta.path,
       `nema-${wireConnection}`,
     )
