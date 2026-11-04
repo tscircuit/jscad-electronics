@@ -3,7 +3,10 @@ import type { ColoredGeom } from "../../lib/vanilla/render"
 import { importVanilla } from "./importVanilla.js"
 import { renderModelSnapshot } from "./render-model-snapshot"
 
-export async function renderNema23RearProfile(modelString: string) {
+export async function renderNema23RearProfile(
+  modelString: string,
+  { topSpan = 76 }: { topSpan?: number } = {},
+) {
   const vanilla = await importVanilla()
   const { geometries } = vanilla.getJscadModelForFootprint(modelString, jscad)
   const meshes = geometries.map(({ geom, color }: ColoredGeom) => {
@@ -45,7 +48,7 @@ export async function renderNema23RearProfile(modelString: string) {
         detail: "REAR VIEW / 50 X 32 MM PATTERN / R5 AND R2.5 ARCS",
         eye: [0, 0, -200],
         target: [0, 0, -51],
-        span: 76,
+        span: topSpan,
       },
       {
         name: "FRONT",
