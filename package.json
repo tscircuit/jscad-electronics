@@ -70,7 +70,8 @@
     "tsup": "^8.3.0",
     "vite": "^7.1.2",
     "vite-tsconfig-paths": "^5.0.1",
-    "circuit-json": "^0.0.534"
+    "circuit-json": "^0.0.534",
+    "@tscircuit/cableprinter": "^0.0.6"
   },
   "peerDependencies": {
     "@jscad/modeling": "^2.12.5",

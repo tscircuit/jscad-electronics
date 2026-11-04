@@ -71,9 +71,17 @@ export function createNemaMotorWireGeometry(input: NemaMotorModelPropsInput) {
     return wires
   }
   const connector = getJstMotorConnector(p.wireConnection!)!
-  const { pinCount, pitch, bodyWidth, bodyHeight, matingDepth } = connector
+  const {
+    pinCount,
+    pitch,
+    bodyWidth,
+    bodyHeight,
+    matingDepth,
+    cavityFloorDepth,
+    contactLength,
+    contactOffsetZ,
+  } = connector
   const wall = pitch === 2 ? 0.6 : 0.3
-  const contactLength = pitch === 2 ? 3.4 : 2.4
   const contactSize = pitch === 2 ? 0.5 : 0.3
   const shell = jscad.booleans.subtract(
     jscad.primitives.cuboid({
@@ -81,8 +89,12 @@ export function createNemaMotorWireGeometry(input: NemaMotorModelPropsInput) {
       center: [(matingDepth - 0.1) / 2, 0, 0],
     }),
     jscad.primitives.cuboid({
-      size: [matingDepth - 0.5, bodyWidth - 2 * wall, bodyHeight - 2 * wall],
-      center: [matingDepth / 2 + 0.55, 0, 0],
+      size: [
+        matingDepth - cavityFloorDepth + 0.1,
+        bodyWidth - 2 * wall,
+        bodyHeight - 2 * wall,
+      ],
+      center: [(matingDepth + cavityFloorDepth + 0.1) / 2, 0, 0],
     }),
   )
   return [
@@ -92,7 +104,11 @@ export function createNemaMotorWireGeometry(input: NemaMotorModelPropsInput) {
       geometry: place(
         jscad.primitives.cuboid({
           size: [contactLength, contactSize, contactSize],
-          center: [contactLength / 2, (i - (pinCount - 1) / 2) * pitch, 0],
+          center: [
+            contactLength / 2,
+            (i - (pinCount - 1) / 2) * pitch,
+            contactOffsetZ,
+          ],
         }),
       ),
     })),

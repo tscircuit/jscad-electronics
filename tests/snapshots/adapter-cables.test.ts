@@ -14,17 +14,14 @@ for (const { name, modelString, definition } of adapterCableExamples) {
         [0, 0, 70],
       ],
     })
-    const positions: number[] = []
-    const indices: number[] = []
-    for (const mesh of meshes) {
-      const offset = positions.length / 3
-      positions.push(...mesh.positions)
-      indices.push(...mesh.indices.map((index) => index + offset))
-    }
     const target: [number, number, number] = [0, 0, 35]
     const span = 115
     const png = await renderModelSnapshot({
-      mesh: { positions, indices },
+      mesh: meshes[0]!,
+      color: meshes[0]!.color,
+      additionalMeshes: meshes
+        .slice(1)
+        .map((mesh) => ({ mesh, color: mesh.color })),
       title: `Adapter cable / ${name}`,
       modelString,
       views: [
