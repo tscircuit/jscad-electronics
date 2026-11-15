@@ -56,18 +56,16 @@ export const FootprintPlatedHole = ({
       </Colorize>
     )
   }
-  if (hole.shape === "pill" || hole.shape === "rotated_pill") {
-    const width = hole.outer_width
-    const height = hole.outer_height
+  if (hole.shape === "pill" || (hole as any).shape === "rotated_pill") {
+    const pillHole = hole as any
+    const width = pillHole.outer_width
+    const height = pillHole.outer_height
     const radius = Math.min(width, height) / 2
     const isHorizontal = width > height
 
-    const holeWidth = hole.hole_width ?? 0.8
-    const holeHeight = hole.hole_height ?? 0.8
-    const rotationRad =
-      hole.shape === "rotated_pill"
-        ? (((hole as any).ccw_rotation ?? 0) * Math.PI) / 180
-        : 0
+    const holeWidth = pillHole.hole_width ?? 0.8
+    const holeHeight = pillHole.hole_height ?? 0.8
+    const rotationRad = ((pillHole.ccw_rotation ?? 0) * Math.PI) / 180
 
     const subtractedBody = (
       <Subtract>
@@ -120,8 +118,8 @@ export const FootprintPlatedHole = ({
 
     return (
       <Colorize color={color} material={componentMaterials.copper}>
-        <Translate offset={[hole.x, hole.y, 0]}>
-          {hole.shape === "rotated_pill" ? (
+        <Translate offset={[pillHole.x, pillHole.y, 0]}>
+          {rotationRad !== 0 ? (
             <Rotate angles={[0, 0, rotationRad]}>{subtractedBody}</Rotate>
           ) : (
             subtractedBody
