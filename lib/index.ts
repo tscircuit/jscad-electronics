@@ -106,5 +106,6 @@ export * from "./TwoPadCrystal"
 
 export * from "./CeramicChipAntenna"
 export * from "./MelfResistor"
+export * from "./PowerRelay"
 
 export * from "./generated/models"
