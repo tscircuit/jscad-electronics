@@ -113,5 +113,5 @@ export const FootprintPad = ({
     )
   }
 
-  throw new Error("Shape not supported: " + pad.shape)
+  throw new Error("Shape not supported: " + (pad as any).shape)
 }
