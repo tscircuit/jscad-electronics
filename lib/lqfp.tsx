@@ -11,12 +11,14 @@ const LegacyLQFP = ({
   leadWidth,
   padContactLength,
   bodyWidth,
+  bodyLength,
 }: {
   pinCount: number
   pitch?: number
   leadWidth?: number
   padContactLength?: number
   bodyWidth?: number
+  bodyLength?: number
 }) => {
   const sidePinCount = pinCount / 4
   if (sidePinCount !== Math.floor(sidePinCount)) {
@@ -28,14 +30,19 @@ const LegacyLQFP = ({
   if (!padContactLength) padContactLength = 0.6
   if (!leadWidth) leadWidth = 0.22
   if (!bodyWidth) bodyWidth = pitch * (sidePinCount + 4)
+  if (!bodyLength) bodyLength = bodyWidth
 
-  const bodyLength = bodyWidth
   const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2
+  const fullWidth = bodyWidth + 3.3 * padContactLength
   const fullLength = bodyLength + 3.3 * padContactLength
-  const fullWidth = fullLength
   const leadHeight = 0.8
   const leadThickness = 0.2
-  const bodyDistance = (fullWidth - bodyWidth) / 2 + 0.4
+  const bodyDistanceX = (fullWidth - bodyWidth) / 2 + 0.4
+  const bodyDistanceY = (fullLength - bodyLength) / 2 + 0.4
+  const minBodySide = Math.min(bodyWidth, bodyLength)
+  const chamferSize = Math.min(0.7, minBodySide * 0.1)
+  const notchRadius = Math.min(1.5 / 2, minBodySide * 0.1)
+  const notchInset = Math.min(1.5, minBodySide * 0.25)
 
   return (
     <>
@@ -51,7 +58,7 @@ const LegacyLQFP = ({
           width={leadWidth}
           thickness={leadThickness}
           padContactLength={padContactLength}
-          bodyDistance={bodyDistance}
+          bodyDistance={bodyDistanceX}
           height={leadHeight}
         />
       ))}
@@ -69,7 +76,7 @@ const LegacyLQFP = ({
           width={leadWidth}
           thickness={leadThickness}
           padContactLength={padContactLength}
-          bodyDistance={bodyDistance}
+          bodyDistance={bodyDistanceX}
           height={leadHeight}
         />
       ))}
@@ -87,7 +94,7 @@ const LegacyLQFP = ({
           width={leadWidth}
           thickness={leadThickness}
           padContactLength={padContactLength}
-          bodyDistance={bodyDistance}
+          bodyDistance={bodyDistanceY}
           height={leadHeight}
         />
       ))}
@@ -105,7 +112,7 @@ const LegacyLQFP = ({
           width={leadWidth}
           thickness={leadThickness}
           padContactLength={padContactLength}
-          bodyDistance={bodyDistance}
+          bodyDistance={bodyDistanceY}
           height={leadHeight}
         />
       ))}
@@ -117,13 +124,13 @@ const LegacyLQFP = ({
         height={1.5}
         heightAboveSurface={0.1}
         taperRatio={0.04}
-        chamferSize={0.7}
+        chamferSize={chamferSize}
         notchPosition={{
-          x: -(bodyLength / 2 - 1.5),
-          y: bodyLength / 2 - 1.5,
+          x: -(bodyWidth / 2 - notchInset),
+          y: bodyLength / 2 - notchInset,
           z: 1.5,
         }}
-        notchRadius={1.5 / 2}
+        notchRadius={notchRadius}
       />
     </>
   )
