@@ -1,20 +1,49 @@
 import { ChipBody } from "./ChipBody"
 import { SmdChipLead } from "./SmdChipLead"
 
-export const TQFP = () => {
-  const pinCount = 64
-  const pitch = 0.5
-  const leadWidth = 0.2
-  const padContactLength = 0.45
-  const bodyWidth = 9
+export interface TQFPProps {
+  pinCount?: number
+  pitch?: number
+  leadWidth?: number
+  padContactLength?: number
+  bodyWidth?: number
+  bodyLength?: number
+}
+
+export const TQFP = ({
+  pinCount = 64,
+  pitch,
+  leadWidth,
+  padContactLength,
+  bodyWidth,
+  bodyLength,
+}: TQFPProps = {}) => {
   const sidePinCount = pinCount / 4
-  const bodyLength = bodyWidth
-  const pinOffsetToCenter = ((sidePinCount - 1) * pitch) / 2
-  const fullLength = bodyLength + 2 * padContactLength + 0.6
-  const fullWidth = fullLength
+  if (!Number.isInteger(sidePinCount) || sidePinCount < 1) {
+    throw new Error(`TQFP pinCount must be divisible by 4, got ${pinCount}`)
+  }
+
+  const resolvedPitch = pitch ?? (pinCount === 32 ? 0.8 : 0.5)
+  const resolvedLeadWidth =
+    leadWidth ?? (pinCount === 32 ? 0.55 : pinCount === 144 ? 0.25 : 0.3)
+  const footprintPadLength =
+    padContactLength ?? (pinCount === 144 ? 1.6 : 1.475)
+  const resolvedBodyWidth = bodyWidth ?? resolvedPitch * (sidePinCount + 4)
+  const resolvedBodyLength = bodyLength ?? resolvedBodyWidth
+
+  const pinOffsetToCenter = ((sidePinCount - 1) * resolvedPitch) / 2
+  const leadReach = footprintPadLength * 0.5
+  const fullWidth = resolvedBodyWidth + 2 * leadReach
+  const fullLength = resolvedBodyLength + 2 * leadReach
   const leadHeight = 0.65
-  const leadThickness = 0.25
-  const bodyDistance = (fullWidth - bodyWidth) / 2 + 0.2
+  const leadThickness = 0.15
+  const bodyDistance = leadReach
+  const fullPadContactLength = leadReach * 0.5
+  const curveLength = leadReach * 0.18
+  const minBodySide = Math.min(resolvedBodyWidth, resolvedBodyLength)
+  const chamferSize = Math.min(0.7, minBodySide * 0.1)
+  const notchRadius = Math.min(0.6, minBodySide * 0.08)
+  const notchInset = Math.min(1.5, minBodySide * 0.22)
 
   return (
     <>
@@ -24,13 +53,14 @@ export const TQFP = () => {
           key={`left-${i}`}
           position={{
             x: -fullWidth / 2,
-            y: i * pitch - pinOffsetToCenter,
+            y: i * resolvedPitch - pinOffsetToCenter,
             z: leadThickness / 2,
           }}
-          width={leadWidth}
+          width={resolvedLeadWidth}
           thickness={leadThickness}
-          padContactLength={padContactLength}
+          padContactLength={fullPadContactLength}
           bodyDistance={bodyDistance}
+          curveLength={curveLength}
           height={leadHeight}
         />
       ))}
@@ -42,13 +72,14 @@ export const TQFP = () => {
           rotation={Math.PI}
           position={{
             x: fullWidth / 2,
-            y: i * pitch - pinOffsetToCenter,
+            y: i * resolvedPitch - pinOffsetToCenter,
             z: leadThickness / 2,
           }}
-          width={leadWidth}
+          width={resolvedLeadWidth}
           thickness={leadThickness}
-          padContactLength={padContactLength}
+          padContactLength={fullPadContactLength}
           bodyDistance={bodyDistance}
+          curveLength={curveLength}
           height={leadHeight}
         />
       ))}
@@ -59,14 +90,15 @@ export const TQFP = () => {
           key={`bottom-${i}`}
           rotation={Math.PI / 2}
           position={{
-            x: i * pitch - pinOffsetToCenter,
+            x: i * resolvedPitch - pinOffsetToCenter,
             y: -fullLength / 2,
             z: leadThickness / 2,
           }}
-          width={leadWidth}
+          width={resolvedLeadWidth}
           thickness={leadThickness}
-          padContactLength={padContactLength}
+          padContactLength={fullPadContactLength}
           bodyDistance={bodyDistance}
+          curveLength={curveLength}
           height={leadHeight}
         />
       ))}
@@ -77,27 +109,32 @@ export const TQFP = () => {
           key={`top-${i}`}
           rotation={-Math.PI / 2}
           position={{
-            x: i * pitch - pinOffsetToCenter,
+            x: i * resolvedPitch - pinOffsetToCenter,
             y: fullLength / 2,
             z: leadThickness / 2,
           }}
-          width={leadWidth}
+          width={resolvedLeadWidth}
           thickness={leadThickness}
-          padContactLength={padContactLength}
+          padContactLength={fullPadContactLength}
           bodyDistance={bodyDistance}
+          curveLength={curveLength}
           height={leadHeight}
         />
       ))}
 
       <ChipBody
         center={{ x: 0, y: 0, z: 0 }}
-        width={bodyWidth}
-        length={bodyLength}
+        width={resolvedBodyWidth}
+        length={resolvedBodyLength}
         height={1.2}
-        chamferSize={0.7}
+        chamferSize={chamferSize}
         taperRatio={0.05}
-        notchPosition={{ x: -3.5, y: 3.5, z: 1.2 }}
-        notchRadius={1.2 / 2}
+        notchPosition={{
+          x: -(resolvedBodyWidth / 2 - notchInset),
+          y: resolvedBodyLength / 2 - notchInset,
+          z: 1.2,
+        }}
+        notchRadius={notchRadius}
       />
     </>
   )
