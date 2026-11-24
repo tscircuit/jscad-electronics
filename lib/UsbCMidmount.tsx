@@ -1,5 +1,4 @@
 import { componentMaterials } from "./materials"
-import { mm } from "@tscircuit/mm"
 import { fp } from "@tscircuit/footprinter"
 import {
   Colorize,
@@ -33,9 +32,12 @@ export const UsbCMidmount = ({
 }: { footprint?: string }) => {
   const canonical = footprint.replace(/_pin1location\([^)]*\)/g, "")
   const builder = fp.string(canonical)
-  // Older Footprinter peers retain authored dimensions in params() but omit
-  // them from json(). Prefer the validated millimetre values when available.
-  const params = { ...builder.params(), ...builder.json() }
+  // Footprinter 0.0.452 types json() as an array but returns one definition.
+  type UsbCParams = Extract<
+    ReturnType<typeof builder.json>[number],
+    { fn: "usbcmidmount" }
+  >
+  const params = builder.json() as unknown as UsbCParams
   const elements = builder.circuitJson()
   const pads = elements.filter(
     (e) => e.type === "pcb_smtpad" && e.shape === "rect",
@@ -54,9 +56,9 @@ export const UsbCMidmount = ({
   const width = 8.94
   const height = 3.2
   const centerZ = 1.65
-  const wall = mm(params.shellwall ?? 0.22)
+  const wall = params.shellwall ?? 0.22
   const front = -params.bodybottom
-  const depth = mm(params.shelldepth ?? params.rowy + 0.23 - front)
+  const depth = params.shelldepth ?? params.rowy + 0.23 - front
   const back = front + depth
   const centerY = front + depth / 2
   if (!Number.isFinite(depth) || depth < 3 || slots.length !== 4)
@@ -64,9 +66,9 @@ export const UsbCMidmount = ({
       "UsbCMidmount requires four mounting slots and a shell depth of at least 3 mm",
     )
 
-  const cavity = mm(params.cavitydepth ?? depth - 1.15)
-  const setback = mm(params.tonguesetback ?? 0.85)
-  const thickness = mm(params.tonguethickness ?? 0.7)
+  const cavity = params.cavitydepth ?? depth - 1.15
+  const setback = params.tonguesetback ?? 0.85
+  const thickness = params.tonguethickness ?? 0.7
   if (!(wall > 0 && thickness > 0 && thickness + 0.07 < height - 2 * wall))
     throw new Error("USB-C tongue and contacts must fit inside the shell walls")
   if (!(0 <= setback && setback < cavity && cavity < depth))
