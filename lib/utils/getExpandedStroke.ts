@@ -22,12 +22,22 @@ export function getExpandedStroke(
   strokeInput: (Point | [number, number] | number[])[],
   width: number,
 ): Point[] {
-  if (strokeInput.length < 2) {
-    throw new Error("Stroke must have at least two points")
-  }
-  const stroke: Point[] = Array.isArray(strokeInput[0])
+  const inputPoints: Point[] = Array.isArray(strokeInput[0])
     ? (strokeInput as any).map(([x, y]: [number, number]) => ({ x, y }))
     : strokeInput
+
+  // Consecutive identical points form zero-length segments, whose normals are
+  // undefined, so drop them before any normal is computed.
+  const stroke: Point[] = inputPoints.filter(
+    (point, i) =>
+      i === 0 ||
+      point.x !== inputPoints[i - 1]!.x ||
+      point.y !== inputPoints[i - 1]!.y,
+  )
+
+  if (stroke.length < 2) {
+    throw new Error("Stroke must have at least two points")
+  }
 
   const halfWidth = width / 2
   const leftSide: Point[] = []
@@ -73,7 +83,9 @@ export function getExpandedStroke(
 
     // Check if miter is too long (sharp corner)
     const miterLimit = 2 // Adjust this value to control when to bevel
-    if (miterLength / 2 > miterLimit * halfWidth) {
+    // A full reversal makes the normals cancel out, so the miter direction is
+    // undefined; fall back to a bevel join instead of dividing by zero.
+    if (miterLength < 1e-9 || miterLength / 2 > miterLimit * halfWidth) {
       // Use bevel join
       addPoint(current, normalPrev, 1)
       addPoint(current, normalNext, 1)
