@@ -44,6 +44,7 @@
     "@tscircuit/mm": "^0.0.8",
     "earcut": "^3.2.3",
     "jscad-fiber": "^0.0.93",
+    "react-reconciler": "0.32.0",
     "zod": "^3.25.67",
     "@tscircuit/jscad": "^0.0.6"
   },
