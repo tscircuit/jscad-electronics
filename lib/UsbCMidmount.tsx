@@ -32,12 +32,10 @@ export const UsbCMidmount = ({
 }: { footprint?: string }) => {
   const canonical = footprint.replace(/_pin1location\([^)]*\)/g, "")
   const builder = fp.string(canonical)
-  // Footprinter 0.0.452 types json() as an array but returns one definition.
-  type UsbCParams = Extract<
-    ReturnType<typeof builder.json>[number],
-    { fn: "usbcmidmount" }
-  >
-  const params = builder.json() as unknown as UsbCParams
+  const params = builder.json()
+  if (params.fn !== "usbcmidmount") {
+    throw new Error("UsbCMidmount requires a usbcmidmount footprint")
+  }
   const elements = builder.circuitJson()
   const pads = elements.filter(
     (e) => e.type === "pcb_smtpad" && e.shape === "rect",
