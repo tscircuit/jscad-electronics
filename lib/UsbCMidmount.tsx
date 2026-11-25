@@ -31,11 +31,14 @@ export const UsbCMidmount = ({
   footprint = "usbcmidmount16",
 }: { footprint?: string }) => {
   const canonical = footprint.replace(/_pin1location\([^)]*\)/g, "")
-  const params = fp.string(canonical).json() as unknown as {
-    bodybottom: number
-    rowy: number
-  }
-  const elements = fp.string(canonical).circuitJson()
+  const builder = fp.string(canonical)
+  // Footprinter 0.0.452 types json() as an array but returns one definition.
+  type UsbCParams = Extract<
+    ReturnType<typeof builder.json>[number],
+    { fn: "usbcmidmount" }
+  >
+  const params = builder.json() as unknown as UsbCParams
+  const elements = builder.circuitJson()
   const pads = elements.filter(
     (e) => e.type === "pcb_smtpad" && e.shape === "rect",
   )
@@ -50,18 +53,44 @@ export const UsbCMidmount = ({
     first && target && "x" in target
       ? Math.atan2(target.y, target.x) - Math.atan2(first.y, first.x)
       : 0
-  const width = 8.94,
-    height = 3.2,
-    wall = 0.22
-  const back = params.rowy + 0.23,
-    front = -params.bodybottom
-  const depth = back - front,
-    centerY = (back + front) / 2,
-    centerZ = 1.65
+  const width = 8.94
+  const height = 3.2
+  const centerZ = 1.65
+  const wall = params.shellwall ?? 0.22
+  const front = -params.bodybottom
+  const depth = params.shelldepth ?? params.rowy + 0.23 - front
+  const back = front + depth
+  const centerY = front + depth / 2
   if (!Number.isFinite(depth) || depth < 3 || slots.length !== 4)
     throw new Error(
-      "UsbCMidmount requires four mounting slots and a positive body depth",
+      "UsbCMidmount requires four mounting slots and a shell depth of at least 3 mm",
     )
+
+  const cavity = params.cavitydepth ?? depth - 1.15
+  const setback = params.tonguesetback ?? 0.85
+  const thickness = params.tonguethickness ?? 0.7
+  if (!(wall > 0 && thickness > 0 && thickness + 0.07 < height - 2 * wall))
+    throw new Error("USB-C tongue and contacts must fit inside the shell walls")
+  if (!(0 <= setback && setback < cavity && cavity < depth))
+    throw new Error(
+      "USB-C requires 0 <= tonguesetback < cavitydepth < shelldepth",
+    )
+
+  const insulatorFront = front + cavity
+  const tongueFront = front + setback
+  // With no authored cavity the legacy rectangular tongue extends into the
+  // rear block. An explicit cavity terminates the exposed tongue at its wall.
+  const tongueBack =
+    params.cavitydepth === undefined ? back - 0.25 : insulatorFront
+  const tongueLength = tongueBack - tongueFront
+  const customTongue =
+    params.cavitydepth !== undefined || params.tonguesetback !== undefined
+  const contactInset = Math.min(0.15, tongueLength / 4)
+  const contactLength = customTongue
+    ? tongueLength - 2 * contactInset
+    : depth - 2
+  const tongueCenter = (tongueFront + tongueBack) / 2
+  const contactCenter = customTongue ? tongueCenter : centerY + 0.1
   // Reach the sidewall at its widest point while preserving slot insertion depth.
   const tabBottom = -0.9,
     tabTop = centerZ + 0.1
@@ -81,10 +110,20 @@ export const UsbCMidmount = ({
       </Colorize>
       <Colorize color="#242529" material={componentMaterials.moldedPlastic}>
         <Cuboid
-          size={[6.65, depth - 1.1, 0.7]}
-          center={[0, centerY + 0.3, centerZ]}
+          size={[6.65, tongueLength, thickness]}
+          center={[0, tongueCenter, centerZ]}
         />
-        <Cuboid size={[7.6, 1, 2.45]} center={[0, back - 0.65, centerZ]} />
+        {params.cavitydepth === undefined ? (
+          <Cuboid size={[7.6, 1, 2.45]} center={[0, back - 0.65, centerZ]} />
+        ) : (
+          <Translate offset={[0, (insulatorFront + back) / 2, centerZ]}>
+            <Capsule
+              width={width - 2 * wall}
+              height={height - 2 * wall}
+              depth={depth - cavity}
+            />
+          </Translate>
+        )}
         {holes.map((hole, i) =>
           "x" in hole && "hole_diameter" in hole ? (
             <Cylinder
@@ -101,8 +140,12 @@ export const UsbCMidmount = ({
           [-2.75, -2.25, -1.25, -0.25, 0.25, 1.25, 2.25, 2.75].map((x) => (
             <Cuboid
               key={`${side}-${x}`}
-              size={[0.24, depth - 2, 0.04]}
-              center={[x, centerY + 0.1, centerZ + side * 0.365]}
+              size={[0.24, contactLength, 0.04]}
+              center={[
+                x,
+                contactCenter,
+                centerZ + side * (thickness / 2 + 0.015),
+              ]}
             />
           )),
         )}

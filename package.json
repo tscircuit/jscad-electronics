@@ -44,6 +44,7 @@
     "@tscircuit/mm": "^0.0.8",
     "earcut": "^3.2.3",
     "jscad-fiber": "^0.0.93",
+    "react-reconciler": "0.32.0",
     "zod": "^3.25.67",
     "@tscircuit/jscad": "^0.0.6"
   },
@@ -52,7 +53,7 @@
     "@tscircuit/modelprinter": "latest",
     "@biomejs/biome": "^1.9.3",
     "@tscircuit/alphabet": "^0.0.24",
-    "@tscircuit/footprinter": "^0.0.431",
+    "@tscircuit/footprinter": "^0.0.452",
     "@types/earcut": "^3.0.0",
     "@types/pngjs": "^6.0.5",
     "@types/react": "19",
@@ -75,7 +76,7 @@
   },
   "peerDependencies": {
     "@jscad/modeling": "^2.12.5",
-    "@tscircuit/footprinter": "*",
+    "@tscircuit/footprinter": ">=0.0.452",
     "@tscircuit/alphabet": "^0.0.24",
     "circuit-json": "^0.0.426",
     "react": "19.1.0",
